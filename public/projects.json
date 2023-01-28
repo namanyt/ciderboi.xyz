@@ -1,0 +1,40 @@
+{
+	"projects": [
+		{
+			"id": "webowser",
+			"title": "Webowser",
+			"description": "Webowser is a modern web browser",
+			"category": "Apps",
+			"tags": ["web", "browser", "electron", "nodejs"],
+			"image": "https://raw.githubusercontent.com/namanyt/Webowser/main/static/images/DetailLogo.png",
+			"url": "https://github.com/namanyt/webowser#webrowser"
+		},
+		{
+			"id": "flappy-bird",
+			"title": "Flappy Bird",
+			"description": "Flappy Bird game made in C++",
+			"category": "Games",
+			"tags": ["flappy", "bird", "game", "c++"],
+			"image": "https://upload.wikimedia.org/wikipedia/en/0/0a/Flappy_Bird_icon.png",
+			"url": "https://github.com/Ciderboi123/Flappy-Bird"
+		},
+		{
+			"id": "dbt",
+			"title": "Discord Bot Template",
+			"description": "An Discord bot template [DBT] for making custom bots",
+			"category": "Bot",
+			"tags": ["discord", "bot"],
+			"image": "",
+			"url": "https://github.com/Ciderboi123/DBT"
+		},
+		{
+			"id": "chatto",
+			"title": "Chatto",
+			"description": "A unified API wrapper for YouTube and Twitch chat bots.",
+			"category": "Bot",
+			"tags": ["chat-bot", "lib"],
+			"image": "",
+			"url": "https://github.com/parafoxia/chatto"
+		}
+	]
+}
