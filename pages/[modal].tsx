@@ -15,7 +15,6 @@ export default function Model() {
 	} else if (r == 'webowser') {
 		return <meta httpEquiv="refresh" content={`0; url=https://webowser.com`} />;
 	} else {
-		console.log(r);
 		return <meta httpEquiv="refresh" content={`0; url=/?page=${modal}`} />;
 	}
 }

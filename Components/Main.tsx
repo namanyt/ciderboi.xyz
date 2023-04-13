@@ -94,7 +94,7 @@ export function Main({ opened, setOpened }: { opened: boolean; setOpened: any })
 									<MediaQuery
 										smallerThan={'sm'}
 										styles={(theme) => ({
-											marginTop: '50px',	
+											marginTop: '50px',
 										})}
 									>
 										<Center style={styles}>
@@ -148,6 +148,7 @@ export function Main({ opened, setOpened }: { opened: boolean; setOpened: any })
 												size="lg"
 												radius="md"
 												color={'gray'}
+												key={buttons.indexOf(button)}
 											>
 												{button.title}
 											</Button>
