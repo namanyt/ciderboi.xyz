@@ -1,6 +1,15 @@
 {
 	"projects": [
 		{
+			"id": "koding-books",
+			"title": "Koding Books",
+			"description": "The Online Books Library [This a project for the Inter DPS Capital Competition]",
+			"category": "Educational",
+			"tags": ["Competition Entry", "Educational", "Book Library"],
+			"image": "https://raw.githubusercontent.com/namanyt/kodingbooks/main/public/logo.svg",
+			"url": "https://capitall.ciderboi.xyz"
+		},
+		{
 			"id": "webowser",
 			"title": "Webowser",
 			"description": "Webowser is a modern web browser",
