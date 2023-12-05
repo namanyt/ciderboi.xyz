@@ -3,6 +3,7 @@ import {
 	Box,
 	Center,
 	CloseButton,
+	Grid,
 	Image,
 	MediaQuery,
 	Paper,
@@ -22,10 +23,11 @@ import {
 	IconBrandSoundcloud,
 	IconBrandSpotify,
 	IconBrandTwitter,
+	IconBrandYoutube,
 } from '@tabler/icons-react';
 import { songs } from '@/public/songs.json';
 import { projects } from '@/public/projects.json';
-import { MusicFrame } from './Frame/MusicFrame';
+import { MusicFrame, MusicFrameAlbum } from './Frame/MusicFrame';
 import { ProjectFrame } from './Frame/ProjectFrame';
 import { LinkFrame } from './Frame/LinkFrame';
 
@@ -167,12 +169,26 @@ export function Modal(props: ModalProps) {
 			);
 			model.body = (
 				<>
-					<MediaQuery smallerThan={'sm'} styles={(theme) => ({ height: '80vh' })}>
-						<ScrollArea /* style={{ height: 400 }} */ h={400} w={675} mt={50} ml={100}>
-							{list.reverse().map((song, i) => {
-								return <MusicFrame key={song.title} url={song.url} index={i} />;
-							})}
+					<MediaQuery smallerThan={'sm'} styles={(theme) => ({ height: '80vh', width: '50vh' })}>
+						<ScrollArea h={400} w={675} mt={50} ml={100}>
+							<Grid h="100%" w={'100%'}>
+								{list.reverse().map((song, i) => {
+									if (song.type == 'song') return <Grid.Col span={6}>
+										<MusicFrame key={song.title} url={song.url} index={i} />
+									</Grid.Col>;
+									else if (song.type == 'album') return <Grid.Col span={10}>
+										<MusicFrameAlbum key={song.title} url={song.url} index={i} />
+									</Grid.Col>;
+								})}
+							</Grid>
 						</ScrollArea>
+
+						{/* <ScrollArea h={400} w={675} mt={50} ml={100}>
+							{list.reverse().map((song, i) => {
+								if (song.type == 'song') return <MusicFrame key={song.title} url={song.url} index={i} />;
+								else if (song.type == 'album') return <MusicFrameAlbum key={song.title} url={song.url} index={i} />;
+							})}
+						</ScrollArea> */}
 					</MediaQuery>
 				</>
 			);
@@ -205,9 +221,9 @@ export function Modal(props: ModalProps) {
 					icon: <IconBrandSoundcloud />,
 				},
 				{
-					title: 'Discord',
-					url: '/discord',
-					icon: <IconBrandDiscord />,
+					title: 'YouTube',
+					url: '/youtube',
+					icon: <IconBrandYoutube />,
 				},
 			];
 

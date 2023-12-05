@@ -2,55 +2,73 @@
 	"songs": [
 		{
 			"title": "Groovy Ghost",
-			"url": "https://open.spotify.com/embed/track/54OYLgO0ZOZYh43y9yl6RT"
+			"url": "https://open.spotify.com/embed/track/54OYLgO0ZOZYh43y9yl6RT",
+			"type": "song"
 		},
 		{
 			"title": "Quick Beat",
-			"url": "https://open.spotify.com/embed/track/2gPXNOiZPH4dbvUoZwkJAV"
+			"url": "https://open.spotify.com/embed/track/2gPXNOiZPH4dbvUoZwkJAV",
+			"type": "song"
 		},
 		{
 			"title": "AfterBurner",
-			"url": "https://open.spotify.com/embed/track/2a9CojkCOevzsLodWAzhW6"
+			"url": "https://open.spotify.com/embed/track/2a9CojkCOevzsLodWAzhW6",
+			"type": "song"
 		},
 		{
 			"title": "Party Vibes",
-			"url": "https://open.spotify.com/embed/track/1bRr5BUcIq2M3yEe9yXjvU"
+			"url": "https://open.spotify.com/embed/track/1bRr5BUcIq2M3yEe9yXjvU",
+			"type": "song"
 		},
 		{
 			"title": "Deep Sleep",
-			"url": "https://open.spotify.com/embed/track/2jS2ff1rtwWdJR9OvTtZxu"
+			"url": "https://open.spotify.com/embed/track/2jS2ff1rtwWdJR9OvTtZxu",
+			"type": "song"
 		},
 		{
 			"title": "Nightingale",
-			"url": "https://open.spotify.com/embed/track/7iOn2opbetiDoSrJUDcGvJ"
+			"url": "https://open.spotify.com/embed/track/7iOn2opbetiDoSrJUDcGvJ",
+			"type": "song"
 		},
 		{
 			"title": "Odyssey",
-			"url": "https://open.spotify.com/embed/track/5Wuoe8VwPAxPYMpuxxfHEW"
+			"url": "https://open.spotify.com/embed/track/5Wuoe8VwPAxPYMpuxxfHEW",
+			"type": "song"
 		},
 		{
 			"title": "Origin",
-			"url": "https://open.spotify.com/embed/track/0zgtfQijIBkbSxVasftDzp"
+			"url": "https://open.spotify.com/embed/track/0zgtfQijIBkbSxVasftDzp",
+			"type": "song"
 		},
 		{
 			"title": "Titan",
-			"url": "https://open.spotify.com/embed/track/1wxLehxgqunhJ1FSTqP0Kq"
+			"url": "https://open.spotify.com/embed/track/1wxLehxgqunhJ1FSTqP0Kq",
+			"type": "song"
 		},
 		{
 			"title": "Days",
-			"url": "https://open.spotify.com/embed/track/4vJQkoEERVm9mdd1JOks4n"
+			"url": "https://open.spotify.com/embed/track/4vJQkoEERVm9mdd1JOks4n",
+			"type": "song"
 		},
 		{
 			"title": "Leave this Behind",
-			"url": "https://open.spotify.com/embed/track/71v3R534iJBa4ueX5wNQos"
+			"url": "https://open.spotify.com/embed/track/71v3R534iJBa4ueX5wNQos",
+			"type": "song"
 		},
 		{
 			"title": "Tired of Love",
-			"url": "https://open.spotify.com/embed/track/6U2GTxLEQ1OQV0Uvmdt2ZG"
+			"url": "https://open.spotify.com/embed/track/6U2GTxLEQ1OQV0Uvmdt2ZG",
+			"type": "song"
 		},
 		{
 			"title": "I'm Alone",
-			"url": "https://open.spotify.com/embed/track/5mqcVXAmbGWoe6OLETVrzt"
+			"url": "https://open.spotify.com/embed/track/5mqcVXAmbGWoe6OLETVrzt",
+			"type": "song"
+		},
+		{
+			"title": "Just Another Day",
+			"url": "https://open.spotify.com/embed/album/6arNUbYvotC0tzAZ9RiADP",
+			"type": "album"
 		}
 	]
 }
