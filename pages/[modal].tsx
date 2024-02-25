@@ -9,12 +9,15 @@ export default function Model() {
 
 	let r = Array.isArray(modal) ? modal[0] : modal;
 	let social = s as { [key: string]: string };
+	let modalList = ["about", "music", "projects", "links"]
 
 	if (r && r in social) {
 		return <meta httpEquiv="refresh" content={`0; url=${social[r]}`} />;
 	} else if (r == 'webowser') {
 		return <meta httpEquiv="refresh" content={`0; url=https://webowser.com`} />;
-	} else {
+	} else if (r && r in modalList) {
 		return <meta httpEquiv="refresh" content={`0; url=/?page=${modal}`} />;
+	} else {
+		return <meta httpEquiv="refresh" content={`0; url=/404`} />;
 	}
 }

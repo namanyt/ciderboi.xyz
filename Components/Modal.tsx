@@ -100,7 +100,7 @@ export function Modal(props: ModalProps) {
 						/>
 					</Center>
 					<Text id="About-Body" ml={50} style={{ marginTop: 250, ...BodyStyle }}>
-						I am Nitya Naman and I'm a 11th grader from Delhi Public School, Jaipur. I'm passionate about technology and
+						I am Nitya Naman and I'm a 12th grader from Delhi Public School, Jaipur. I'm passionate about technology and
 						have been actively developing web applications since the last two years. Recently, I've also started
 						exploring music production on Spotify.
 					</Text>

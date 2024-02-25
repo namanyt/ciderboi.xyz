@@ -1,6 +1,6 @@
 {
 	"name": "ciderboi.xyz",
-	"version": "0.1.0",
+	"version": "26.02.2024",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
@@ -9,6 +9,12 @@
 		"lint": "next lint",
 		"prettier": "prettier . --write"
 	},
+	"author": {
+		"email": "me@ciderboi.xyz",
+		"name": "Cider Boi",
+		"url": "https://ciderboi.xyz"
+	},
+	"homepage": "https://ciderboi.xyz",
 	"dependencies": {
 		"@emotion/react": "^11.10.5",
 		"@emotion/server": "^11.10.0",

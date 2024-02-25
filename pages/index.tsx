@@ -76,7 +76,7 @@ export default function Home() {
 						fontFamily: 'Indie Flower, cursive',
 					}}
 				>
-					<Center>©️ 2023 Nitya Naman | Cider Boi</Center>
+					<Center>©️ 2024 Nitya Naman | Cider Boi</Center>
 				</Box>
 			</AppShell>
 		</>
