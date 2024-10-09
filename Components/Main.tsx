@@ -1,75 +1,55 @@
 import { Box, Button, Center, Container, Divider, Flex, MediaQuery, Space, Text, Transition } from '@mantine/core';
-import { ReactElement, useEffect, useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Modal } from './Modal';
 
 export function Main({ opened, setOpened }: { opened: boolean; setOpened: any }) {
-	let router = useRouter();
-	let { page } = router.query;
+	const router = useRouter();
+	const { page } = router.query;
 
-	let [transition, setTransition] = useState(false);
-	let [model, setModel] = useState(0);
+	const [transition, setTransition] = useState(false);
+	const [model, setModel] = useState(0);
+
 	const buttons = [
-		{
-			title: 'About',
-			transition: transition,
-			setTransition: setTransition,
-		},
-		{
-			title: 'Projects',
-			transition: transition,
-			setTransition: setTransition,
-		},
-		{
-			title: 'Music',
-			transition: transition,
-			setTransition: setTransition,
-		},
-		{
-			title: 'Links',
-			transition: transition,
-			setTransition: setTransition,
-		},
+		{ title: 'About', id: 'about' },
+		{ title: 'Projects', id: 'projects' },
+		{ title: 'Music', id: 'music' },
+		{ title: 'Links', id: 'links' },
 	];
 
-	useEffect(() => {
-		let id = page as string;
-
-		if (id) {
-			// check if the id is in the buttons.title
-			buttons.forEach((button) => {
-				if (button.title.toLowerCase() == id) {
-					let page = 0;
-
-					switch (id) {
-						case 'about':
-							page = 0;
-							break;
-						case 'projects':
-							page = 1;
-							break;
-						case 'music':
-							page = 2;
-							break;
-						case 'links':
-							page = 3;
-							break;
-						default:
-							page = 0;
-							break;
-					}
-
-					setModel(parseInt(page.toString()));
-					setOpened(true);
-					setTransition(true);
-					return;
-				}
-			});
+	// Function to open the modal based on the page
+	const openModalByPage = (id: string) => {
+		const buttonIndex = buttons.findIndex((button) => button.id === id);
+		if (buttonIndex !== -1) {
+			setModel(buttonIndex);
+			setOpened(true);
+			setTransition(true);
 		}
-	}, [page, buttons]);
+	};
 
-	let font = 'Barlow, sans-serif',
+	// Effect to open modal based on the query parameter
+	useEffect(() => {
+		if (page) {
+			openModalByPage(page as string);
+		}
+	}, [page]);
+
+	// Handle closing modal with escape key
+	useEffect(() => {
+		const handleEscape = (event: KeyboardEvent) => {
+			if (event.key === 'Escape' && opened) {
+				setOpened(false);
+				setTransition(false);
+			}
+		};
+		window.addEventListener('keydown', handleEscape);
+
+		return () => {
+			window.removeEventListener('keydown', handleEscape);
+		};
+	}, [opened]);
+
+	const font = 'Barlow, sans-serif',
 		title = 'Nitya Naman',
 		subtitle = 'A Developer, Producer and Student';
 
@@ -83,7 +63,13 @@ export function Main({ opened, setOpened }: { opened: boolean; setOpened: any })
 			>
 				<Box mt={80}>
 					<Center>
-						<Modal setTransition={setTransition} model={model} transition={transition} setOpened={setOpened} />
+						<Modal
+							setTransition={setTransition}
+							model={model}
+							transition={transition}
+							setOpened={setOpened}
+							opened={opened}
+						/>
 					</Center>
 
 					{/* Title */}
@@ -111,7 +97,7 @@ export function Main({ opened, setOpened }: { opened: boolean; setOpened: any })
 											id="Title"
 											mt={-25}
 											style={{ fontSize: 55, fontFamily: 'Rajdhani, sans-serif', fontWeight: 300, color: 'white' }}
-										// tt="uppercase"
+											// tt="uppercase"
 										>
 											{title}
 										</Text>
@@ -126,7 +112,7 @@ export function Main({ opened, setOpened }: { opened: boolean; setOpened: any })
 												fontWeight: 100,
 												color: 'whtie',
 											}}
-										// tt="uppercase"
+											// tt="uppercase"
 										>
 											{subtitle}
 										</Text>

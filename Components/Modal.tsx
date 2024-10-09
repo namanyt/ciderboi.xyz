@@ -15,40 +15,35 @@ import {
 	Transition,
 	useMantineTheme,
 } from '@mantine/core';
-import { CSSProperties, ReactElement, useEffect } from 'react';
+import { CSSProperties, ReactElement, useEffect, useRef } from 'react';
 import {
-	IconBrandDiscord,
 	IconBrandGithub,
-	IconBrandInstagram,
-	IconBrandSoundcloud,
 	IconBrandSpotify,
+	IconBrandInstagram,
 	IconBrandTwitter,
+	IconBrandSoundcloud,
 	IconBrandYoutube,
 } from '@tabler/icons-react';
+import { MusicFrame, MusicFrameAlbum } from '@/Components/Frame/MusicFrame';
+import { ProjectFrame } from '@/Components/Frame/ProjectFrame';
+import { LinkFrame } from '@/Components/Frame/LinkFrame';
 import { songs } from '@/public/songs.json';
 import { projects } from '@/public/projects.json';
-import { MusicFrame, MusicFrameAlbum } from './Frame/MusicFrame';
-import { ProjectFrame } from './Frame/ProjectFrame';
-import { LinkFrame } from './Frame/LinkFrame';
 
 export interface ModalProps {
 	transition: boolean;
 	setTransition: any;
-
 	model: number;
 	setOpened?: any;
+	opened: boolean;
 }
 
-type Modal = {
-	title: ReactElement<any>;
-	body: ReactElement<any>;
-	img?: string;
-};
-
 export function Modal(props: ModalProps) {
-	let model: Modal = {
-		title: <>blank title</>,
-		body: <>blank body</>,
+	const modalRef = useRef<HTMLDivElement>(null);
+
+	let model = {
+		title: <Title style={{ fontSize: 50 }}>blank title</Title>,
+		body: <Text>blank body</Text>,
 		img: '',
 	};
 
@@ -58,12 +53,9 @@ export function Modal(props: ModalProps) {
 		marginTop: 40,
 		marginLeft: 50,
 		fontWeight: 300,
-
 		textDecoration: 'underline',
 		textDecorationColor: 'white',
 		textDecorationThickness: 1,
-		textDecorationStyle: 'solid',
-		// put gap between the underline and the text
 		textUnderlineOffset: 10,
 	};
 
@@ -74,9 +66,9 @@ export function Modal(props: ModalProps) {
 		textAlign: 'center',
 	};
 
+	// Define models based on props.model
 	switch (props.model) {
 		case 0:
-			let theme = useMantineTheme();
 			model.title = (
 				<Title id="About-Title" style={TitleStyle}>
 					About
@@ -84,7 +76,7 @@ export function Modal(props: ModalProps) {
 			);
 			model.body = (
 				<>
-					<Center style={{ borderRadius: 20 }}>
+					<Center>
 						<Image
 							src="/image/pfp.gif"
 							style={{
@@ -93,10 +85,9 @@ export function Modal(props: ModalProps) {
 								zIndex: -10,
 								marginTop: 200,
 								boxShadow: '0 0 50px 10px rgba(0,0,0,1)',
-								backgroundColor: '#101113',
 							}}
 							radius={30}
-							alt={'pfp'}
+							alt="pfp"
 						/>
 					</Center>
 					<Text id="About-Body" ml={50} style={{ marginTop: 250, ...BodyStyle }}>
@@ -135,10 +126,7 @@ export function Modal(props: ModalProps) {
 
 			model.body = (
 				<>
-					<MediaQuery
-						smallerThan={'sm'}
-						styles={{ height: '80vh' }}
-					>
+					<MediaQuery smallerThan={'sm'} styles={{ height: '80vh' }}>
 						<ScrollArea h={400} w={800} mt={50}>
 							{projects.map((project) => {
 								return (
@@ -173,12 +161,18 @@ export function Modal(props: ModalProps) {
 						<ScrollArea h={400} w={675} mt={50} ml={100}>
 							<Grid h="100%" w={'100%'}>
 								{list.reverse().map((song, i) => {
-									if (song.type == 'song') return <Grid.Col span={6}>
-										<MusicFrame key={song.title} url={song.url} index={i} />
-									</Grid.Col>;
-									else if (song.type == 'album') return <Grid.Col span={10}>
-										<MusicFrameAlbum key={song.title} url={song.url} index={i} />
-									</Grid.Col>;
+									if (song.type == 'song')
+										return (
+											<Grid.Col span={6}>
+												<MusicFrame key={song.title} url={song.url} index={i} />
+											</Grid.Col>
+										);
+									else if (song.type == 'album')
+										return (
+											<Grid.Col span={10}>
+												<MusicFrameAlbum key={song.title} url={song.url} index={i} />
+											</Grid.Col>
+										);
 								})}
 							</Grid>
 						</ScrollArea>
@@ -248,42 +242,54 @@ export function Modal(props: ModalProps) {
 			break;
 	}
 
+	// Handle closing modal on Escape key press
 	useEffect(() => {
-		const handleEsc = (event: any) => {
-			if (event.keyCode === 27) {
+		const handleEsc = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') {
 				props.setTransition(false);
 				props.setOpened(false);
 			}
 		};
-		// window.addEventListener('keydown', handleEsc);
-
+		window.addEventListener('keydown', handleEsc);
 		return () => {
 			window.removeEventListener('keydown', handleEsc);
 		};
-	}, []);
+	}, [props]);
+
+	// Handle closing modal on outside click
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+				props.setTransition(false);
+				props.setOpened(false);
+			}
+		};
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [props]);
 
 	return (
-		<Transition mounted={props.transition} transition={'slide-up'} duration={700} timingFunction={'ease'}>
+		<Transition mounted={props.transition} transition="slide-up" duration={700} timingFunction="ease">
 			{(styles) => (
 				<MediaQuery
-					smallerThan={'sm'}
-					styles={(theme) => ({
-						backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
+					smallerThan="sm"
+					styles={{
+						backgroundColor: 'rgba(0,0,0,0.6)',
 						position: 'absolute',
 						zIndex: 100,
-						borderRadius: 10,
-						boxShadow: '0 0 50px 0 rgba(0, 0, 0, .3)',
 						width: '100%',
 						height: '100%',
 						top: 0,
 						left: 0,
-						marginTop: 0,
-					})}
+					}}
 				>
 					<Paper
 						w={800}
 						h={600}
 						mt={200}
+						ref={modalRef}
 						style={{ ...styles }}
 						sx={(theme) => ({
 							backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
@@ -300,7 +306,7 @@ export function Modal(props: ModalProps) {
 								props.setOpened(false);
 							}}
 						/>
-						<Box pos={'relative'}>
+						<Box pos="relative">
 							{model.title}
 							{model.body}
 						</Box>

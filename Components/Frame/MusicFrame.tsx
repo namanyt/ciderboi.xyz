@@ -26,5 +26,5 @@ export function MusicFrameAlbum({ url, index }: MusicFrameProps) {
 			frameBorder="0"
 			allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
 		/>
-	)
+	);
 }

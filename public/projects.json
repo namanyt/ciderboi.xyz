@@ -1,6 +1,15 @@
 {
 	"projects": [
 		{
+			"id": "lab-of-shadows",
+			"title": "Lab of Shadows",
+			"description": "a horror science teaching game",
+			"category": "Educational",
+			"tags": ["Competition Entry", "Game", "Teaching aid"],
+			"image": "/image/los.png",
+			"url": "/los.pdf"
+		},
+		{
 			"id": "koding-books",
 			"title": "Koding Books",
 			"description": "The Online Books Library",
