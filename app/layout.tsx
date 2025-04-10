@@ -37,7 +37,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-            <main className="hide-scrollbar">
+            <main>
               {children}
             </main>
         </ThemeProvider>

@@ -14,16 +14,16 @@ import React, { Suspense, useEffect, useRef } from "react";
 5: Links component / back button to page 3
 */
 
-const pages: { name: string, obj: any }[] = [
-  { name: 'Music Production', obj: dynamic(() => import("../components/pages/Music"), { ssr: false }) },
-  { name: 'About Me', obj: dynamic(() => import("../components/pages/Home"), { ssr: false }) },
-  { name: 'Photogrpahy', obj: dynamic(() => import("../components/pages/Photo"), { ssr: false }) },
-]
+const pages: { name: string, obj: any, default?: boolean }[] = [
+  { name: 'Music Production', obj: dynamic(() => import("../components/pages/Music"), { ssr: false }), default: false },
+  { name: 'About Me', obj: dynamic(() => import("../components/pages/Home"), { ssr: false }), default: true },
+  { name: 'Photogrpahy', obj: dynamic(() => import("../components/pages/Photo"), { ssr: false }), default: false },
+];
 
 export default function Root() {
   const [brightness, setBrightness] = React.useState(0.8);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [page, setPage] = React.useState(2);
+  const [page, setPage] = React.useState(pages.findIndex((p) => p.default) ?? 0);
   const [loaded, setLoaded] = React.useState(false);
 
   const scroll = (index: number) => {
