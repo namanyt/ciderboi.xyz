@@ -115,27 +115,25 @@ const HorizontalScroll = React.forwardRef<
     const el = container.current;
     if (!el) return;
 
-    const preventDefault = (e: Event) => e.preventDefault();
+    const preventHorizontalScroll = (e: WheelEvent) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+      }
+    };
 
-    const blockKeys = (e: KeyboardEvent) => {
-      const keys = [
-        "ArrowLeft", "ArrowRight",
-        "ArrowUp", "ArrowDown",
-        "PageUp", "PageDown", " ",
-      ];
+    const blockHorizontalKeys = (e: KeyboardEvent) => {
+      const keys = ["ArrowLeft", "ArrowRight", "PageUp", "PageDown"];
       if (keys.includes(e.key)) e.preventDefault();
     };
 
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden"; // body should still be locked
 
-    el.addEventListener("wheel", preventDefault, { passive: false });
-    el.addEventListener("touchmove", preventDefault, { passive: false });
-    window.addEventListener("keydown", blockKeys, { passive: false });
+    el.addEventListener("wheel", preventHorizontalScroll, { passive: false });
+    window.addEventListener("keydown", blockHorizontalKeys, { passive: false });
 
     return () => {
-      el.removeEventListener("wheel", preventDefault);
-      el.removeEventListener("touchmove", preventDefault);
-      window.removeEventListener("keydown", blockKeys);
+      el.removeEventListener("wheel", preventHorizontalScroll);
+      window.removeEventListener("keydown", blockHorizontalKeys);
       document.body.style.overflow = "auto";
     };
   }, [ref]);
