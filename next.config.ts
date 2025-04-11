@@ -4,4 +4,13 @@ const nextConfig: NextConfig = {
   /* config options here */
 };
 
-export default nextConfig;
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+})
+
+const devNextConfig = withBundleAnalyzer({
+
+})
+
+// export default nextConfig;
+export default devNextConfig;

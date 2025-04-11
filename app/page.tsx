@@ -1,23 +1,15 @@
 "use client";
 
 import LoadingScreen from "@/components/loading";
+import { backgroundImageBlurDataURL } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { Suspense, useEffect, useRef } from "react";
 
-// TODO: Change these to use the respective components
-/*
-1: About component / back button to page 3
-2: Music component / back button to page 3
-3: Home page having buttons to jump to each page
-4: Photography component / back button to page 3
-5: Links component / back button to page 3
-*/
-
-const pages: { name: string, obj: any, default?: boolean }[] = [
+const pages = [
   { name: 'Music Production', obj: dynamic(() => import("../components/pages/Music"), { ssr: false }), default: false },
   { name: 'About Me', obj: dynamic(() => import("../components/pages/Home"), { ssr: false }), default: true },
-  { name: 'Photogrpahy', obj: dynamic(() => import("../components/pages/Photo"), { ssr: false }), default: false },
+  { name: 'Photography', obj: dynamic(() => import("../components/pages/Photo"), { ssr: false }), default: false },
 ];
 
 export default function Root() {
@@ -29,41 +21,35 @@ export default function Root() {
   const scroll = (index: number) => {
     const container = scrollRef.current;
     if (!container) return;
-
     container.scrollTo({
       left: index * window.innerWidth,
       behavior: "smooth",
     });
-
     setPage(index);
   };
 
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
-
-    // Jump instantly to page 3 (index 2) without animation
     container.scrollTo({
       left: page * window.innerWidth,
-      behavior: "auto", // instant
+      behavior: "auto",
     });
-
-    // After next tick, show content
     requestAnimationFrame(() => setLoaded(true));
   }, []);
 
   return (
-    <div className="hide-scrollbar">
+    <div className="hide-scrollbar relative w-screen h-screen overflow-hidden">
       <BackgroundPicture brightness={brightness} />
 
-      {/* Jump buttons */}
-      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[200] flex justify-between w-[30rem]">
+      {/* Responsive navigation buttons */}
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[200] flex flex-wrap justify-center gap-2 px-4 w-full max-w-[90vw] sm:max-w-[35rem]">
         {pages.map((p, index) => (
           <button
             key={index}
             onClick={() => scroll(index)}
-            className={`w-36 py-2 rounded-sm font-medium text-center transition
-        ${page === index
+            className={`flex-1 min-w-[8rem] px-4 py-2 rounded-md font-medium text-center text-sm transition
+              ${page === index
                 ? "bg-white text-black"
                 : "bg-white/50 text-gray-800 hover:bg-white"}`}
           >
@@ -72,7 +58,7 @@ export default function Root() {
         ))}
       </div>
 
-
+      {/* Page content */}
       <div className={`${!loaded ? "opacity-0 pointer-events-none" : "opacity-100"} transition-opacity duration-300`}>
         <HorizontalScroll ref={scrollRef}>
           {pages.map((DynamicPageOBJ, index) => (
@@ -86,31 +72,27 @@ export default function Root() {
   );
 }
 
-function BackgroundPicture({ brightness = 0.8 }: { brightness: number }) {
-  const scaling = 1;
-
+function BackgroundPicture({ brightness = 0.8, scaling = 1 }: { brightness: number, scaling?: number }) {
   return (
-    <div className="absolute inset-0 overflow-hidden hide-scrollbar">
-      {/* background image */}
+    <div className="absolute inset-0 overflow-hidden">
       <Image
-        src="/pictures/background.jpg"
+        src="/pictures/background.webp"
         alt="Background"
-        width={4032 / scaling}
-        height={2268 / scaling}
+        fill
+        placeholder="blur"
+        blurDataURL={backgroundImageBlurDataURL()}
+        quality={60}
+        sizes="100vw"
         style={{
           filter: `blur(8px) brightness(${brightness})`,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          overflow: "hidden",
+          transform: `scale(${scaling})`,
+          objectFit: "cover",
           zIndex: -1,
-          transition: "filter 0.5s ease-in-out",
+          transition: "filter 0.5s ease-in-out, transform 0.5s ease-in-out",
         }}
+        priority
       />
 
-      {/* info about the image for screen reader */}
       <div
         className="sr-only"
         aria-hidden="true"
@@ -137,13 +119,9 @@ const HorizontalScroll = React.forwardRef<
 
     const blockKeys = (e: KeyboardEvent) => {
       const keys = [
-        "ArrowLeft",
-        "ArrowRight",
-        "ArrowUp",
-        "ArrowDown",
-        "PageUp",
-        "PageDown",
-        " ",
+        "ArrowLeft", "ArrowRight",
+        "ArrowUp", "ArrowDown",
+        "PageUp", "PageDown", " ",
       ];
       if (keys.includes(e.key)) e.preventDefault();
     };
@@ -166,21 +144,12 @@ const HorizontalScroll = React.forwardRef<
     <div
       ref={ref}
       className="flex w-screen h-screen overflow-hidden"
-      style={{
-        scrollSnapType: "x mandatory",
-      }}
+      style={{ scrollSnapType: "x mandatory" }}
     >
       {React.Children.map(children, (child) => (
         <div
-          style={{
-            flexShrink: 0,
-            width: "100vw",
-            height: "100vh",
-            scrollSnapAlign: "center",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          className="flex items-center justify-center w-screen h-screen flex-shrink-0"
+          style={{ scrollSnapAlign: "center" }}
         >
           {child}
         </div>
@@ -188,3 +157,4 @@ const HorizontalScroll = React.forwardRef<
     </div>
   );
 });
+
