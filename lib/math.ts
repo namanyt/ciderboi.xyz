@@ -16,16 +16,16 @@ export function cubicBezier(p0: number, p1: number, p2: number, p3: number) {
       let t2 = x;
       for (let i = 0; i < 5; i++) {
         const x2 = sampleCurveX(t2) - x;
-        const d2 = sampleCurveDerivativeX(t2);;
+        const d2 = sampleCurveDerivativeX(t2);
         if (Math.abs(x2) < 1e-6) return t2;
         if (d2 == 0) break;
         t2 -= x2 / d2;
       }
       return t2;
-    }
+    };
 
     return sampleCurveY(solveCurveX(t));
-  }
+  };
 }
 
 export function parse(easing: string) {
@@ -44,13 +44,10 @@ export function parse(easing: string) {
   return Easing.linear;
 }
 
-export const Easing: Record<string, (t:number) => number> = {
+export const Easing: Record<string, (t: number) => number> = {
   linear: (t) => t,
   ease: cubicBezier(0.25, 0.1, 0.25, 1),
   "ease-in": cubicBezier(0.42, 0, 1, 1),
   "ease-out": cubicBezier(0, 0, 0.58, 1),
   "ease-in-out": cubicBezier(0.42, 0, 0.58, 1),
-}
-
-
-
+};

@@ -6,11 +6,9 @@ const nextConfig: NextConfig = {
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
-})
+});
 
-const devNextConfig = withBundleAnalyzer({
-
-})
+const devNextConfig = withBundleAnalyzer({});
 
 // export default nextConfig;
 export default devNextConfig;

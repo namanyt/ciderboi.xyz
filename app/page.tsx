@@ -7,9 +7,9 @@ import Image from "next/image";
 import React, { Suspense, useEffect, useRef } from "react";
 
 const pages = [
-  { name: 'Music Production', obj: dynamic(() => import("../components/pages/Music"), { ssr: false }), default: false },
-  { name: 'About Me', obj: dynamic(() => import("../components/pages/Home"), { ssr: false }), default: true },
-  { name: 'Photography', obj: dynamic(() => import("../components/pages/Photo"), { ssr: false }), default: false },
+  { name: "Music Production", obj: dynamic(() => import("../components/pages/Music"), { ssr: false }), default: false },
+  { name: "About Me", obj: dynamic(() => import("../components/pages/Home"), { ssr: false }), default: true },
+  { name: "Photography", obj: dynamic(() => import("../components/pages/Photo"), { ssr: false }), default: false },
 ];
 
 export default function Root() {
@@ -36,7 +36,7 @@ export default function Root() {
       behavior: "auto",
     });
     requestAnimationFrame(() => setLoaded(true));
-  }, []);
+  });
 
   return (
     <div className="hide-scrollbar relative w-screen h-screen overflow-hidden">
@@ -49,9 +49,7 @@ export default function Root() {
             key={index}
             onClick={() => scroll(index)}
             className={`flex-1 min-w-[8rem] px-4 py-2 rounded-md font-medium text-center text-sm transition
-              ${page === index
-                ? "bg-white text-black"
-                : "bg-white/50 text-gray-800 hover:bg-white"}`}
+              ${page === index ? "bg-white text-black" : "bg-white/50 text-gray-800 hover:bg-white"}`}
           >
             {p.name}
           </button>
@@ -72,7 +70,7 @@ export default function Root() {
   );
 }
 
-function BackgroundPicture({ brightness = 0.8, scaling = 1 }: { brightness: number, scaling?: number }) {
+function BackgroundPicture({ brightness = 0.8, scaling = 1 }: { brightness: number; scaling?: number }) {
   return (
     <div className="absolute inset-0 overflow-hidden">
       <Image
@@ -93,23 +91,14 @@ function BackgroundPicture({ brightness = 0.8, scaling = 1 }: { brightness: numb
         priority
       />
 
-      <div
-        className="sr-only"
-        aria-hidden="true"
-        role="img"
-        aria-label="A beautiful background image"
-      >
-        A landscape scene of Derahdun, Haridwar, India. Picture taken by Nitya
-        Naman using a Samsung Galaxy A54 phone.
+      <div className="sr-only" aria-hidden="true" role="img" aria-label="A beautiful background image">
+        A landscape scene of Derahdun, Haridwar, India. Picture taken by Nitya Naman using a Samsung Galaxy A54 phone.
       </div>
     </div>
   );
 }
 
-const HorizontalScroll = React.forwardRef<
-  HTMLDivElement,
-  { children: React.ReactNode }
->(({ children }, ref) => {
+const HorizontalScroll = React.forwardRef<HTMLDivElement, { children: React.ReactNode }>(({ children }, ref) => {
   useEffect(() => {
     const container = ref as React.RefObject<HTMLDivElement>;
     const el = container.current;
@@ -139,11 +128,7 @@ const HorizontalScroll = React.forwardRef<
   }, [ref]);
 
   return (
-    <div
-      ref={ref}
-      className="flex w-screen h-screen overflow-hidden"
-      style={{ scrollSnapType: "x mandatory" }}
-    >
+    <div ref={ref} className="flex w-screen h-screen overflow-hidden" style={{ scrollSnapType: "x mandatory" }}>
       {React.Children.map(children, (child) => (
         <div
           className="flex items-center justify-center w-screen h-screen flex-shrink-0"
@@ -155,4 +140,4 @@ const HorizontalScroll = React.forwardRef<
     </div>
   );
 });
-
+HorizontalScroll.displayName = "HorizontalScroll";
