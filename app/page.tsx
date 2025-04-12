@@ -36,7 +36,7 @@ export default function Root() {
       behavior: "auto",
     });
     requestAnimationFrame(() => setLoaded(true));
-  });
+  }, []);
 
   return (
     <div className="hide-scrollbar relative w-screen h-screen overflow-hidden">
