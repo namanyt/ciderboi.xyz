@@ -6,21 +6,27 @@
 - [ ] Optimize images for faster loading.
 - [ ] Configure SEO metadata for all pages.
 
-### Routing (`pages.tsx`)
+### UX
 
 - [x] Create routing for all pages in `pages.tsx`.
-- [ ] Add dynamic imports for better performance in `pages.tsx`.
+- [x] Add dynamic imports for better performance in `pages.tsx`.
+- [x] Refactor `pages.tsx` to improve code readability and maintainability.
 - [ ] Implement error handling for missing or invalid routes in `pages.tsx`.
-- [ ] Refactor `pages.tsx` to improve code readability and maintainability.
-
-### Deployment
-
-- [ ] Deploy the website to the production server.
-- [ ] Set up continuous integration and deployment (CI/CD) pipeline.
-- [ ] Add Vercel deployment configuration and Analytics.
+- [ ] Separate SEO metadata for each page in `pages.tsx`.
+- [ ] Handle socials links
+- [ ] Make a built-in shortened links for Projects, Songs and Photos
+- [ ] Handle Loading states in `pages.tsx`.
 
 ### DX
 
 - [x] Standardize code formatting using Prettier.
 - [x] Set up ESLint for code quality checks.
 - [ ] Add TypeScript type definitions for all components.
+- [ ] Add Documentation for all components and functions.
+- [ ] Dynamically fetching projects, songs and photos from json lists.
+
+### Deployment
+
+- [ ] Deploy the website to the production server.
+- [ ] Set up continuous integration and deployment (CI/CD) pipeline.
+- [ ] Add Vercel deployment configuration and Analytics.
