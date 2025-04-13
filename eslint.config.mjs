@@ -31,6 +31,7 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-non-null-assertion": "warn",
       "@typescript-eslint/no-empty-function": "warn",
+      "react/no-unescaped-entities": "off",
       "react/prop-types": "off",
       "react/display-name": "warn",
       "max-len": ["warn", { code: 120 }],
