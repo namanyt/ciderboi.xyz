@@ -22,7 +22,7 @@ export default function Root() {
   );
 }
 
-export function App() {
+function App() {
   const [brightness, setBrightness] = React.useState(0.8);
   const [loaded, setLoaded] = React.useState(false);
   const { setScrollRef, page, scrollRef } = useScroll();
