@@ -3,12 +3,13 @@
 import React from "react";
 import Image from "next/image";
 import { useScroll } from "@/components/context/Scroll";
+import PageTransition from "@/components/PageTransition";
 
 export default function Home() {
   const { scrollToPage } = useScroll();
 
   return (
-    <div className="h-screen w-full bg-[url('/path/to/background.jpg')] bg-cover bg-center overflow-hidden">
+    <PageTransition className="h-screen w-full bg-cover bg-center overflow-hidden">
       {/* Scrollable Card */}
       <div className="h-[90vh] w-[95vw] max-w-5xl mx-auto my-6 p-8 rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white overflow-y-auto scroll-smooth space-y-12">
         {/* Profile Section */}
@@ -41,13 +42,13 @@ export default function Home() {
           <h3 className="text-xl font-semibold mb-4 text-center">Quick Links</h3>
           <div className="flex flex-wrap justify-center gap-4">
             <button
-              onClick={() => scrollToPage(0)}
+              onClick={() => scrollToPage("/music")}
               className="w-32 px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition border border-white/10 text-sm text-center cursor-pointer"
             >
               🎧 Music
             </button>
             <button
-              onClick={() => scrollToPage(2)}
+              onClick={() => scrollToPage("/photos")}
               className="w-32 px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition border border-white/10 text-sm text-center cursor-pointer"
             >
               📸 Photos
@@ -63,11 +64,10 @@ export default function Home() {
             {projects.map((project, index) => (
               <ProjectCard key={index} title={project.title} description={project.description} link={project.link} />
             ))}
-            {/* Add more projects as needed */}
           </div>
         </div>
       </div>
-    </div>
+    </PageTransition>
   );
 }
 
