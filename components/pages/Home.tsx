@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useScroll } from "@/components/context/Scroll";
 
 export default function Home() {
-  const { scrollToPage, } = useScroll();
+  const { scrollToPage } = useScroll();
 
   return (
     <div className="h-screen w-full bg-[url('/path/to/background.jpg')] bg-cover bg-center overflow-hidden">

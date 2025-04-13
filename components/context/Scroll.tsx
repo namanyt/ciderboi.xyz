@@ -1,14 +1,6 @@
 "use client";
 
-import React, {
-  createContext,
-  useContext,
-  useCallback,
-  ReactNode,
-  useState,
-  useEffect,
-  RefObject,
-} from "react";
+import React, { createContext, useContext, useCallback, ReactNode, useState, useEffect, RefObject } from "react";
 
 interface ScrollContextType {
   page: number;
