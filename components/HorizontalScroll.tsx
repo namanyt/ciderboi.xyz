@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import { useScroll } from "@/components/context/Scroll";
 import { BackgroundPicture } from "@/components/BackgroundPicture";
 import LoadingScreen from "@/components/loading";
@@ -97,13 +96,6 @@ export default function HorizontalLayout({ children }: { children: React.ReactNo
     };
   }, [pathname]);
 
-  // Determine the direction for animations
-  const getDirection = (path: string) => {
-    const currentRouteIndex = ROUTES.indexOf(pathname);
-    const targetRouteIndex = ROUTES.indexOf(path);
-    return targetRouteIndex > currentRouteIndex ? 1 : -1;
-  };
-
   return (
     <div className="hide-scrollbar relative w-screen h-screen overflow-hidden">
       <BackgroundPicture brightness={brightness} />
@@ -122,9 +114,9 @@ export default function HorizontalLayout({ children }: { children: React.ReactNo
               style={{ scrollSnapAlign: "center" }}
             >
               {pathname === route && (
-                <motion.div key={route} className="w-full h-full">
+                <div key={route} className="w-full h-full">
                   <React.Suspense fallback={<LoadingScreen />}>{children}</React.Suspense>
-                </motion.div>
+                </div>
               )}
             </div>
           ))}
