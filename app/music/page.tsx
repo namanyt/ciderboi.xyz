@@ -14,7 +14,7 @@ export type Props = {
 // server side query the songs from /data/songs.json
 const fetchData = async () => {
   // file is at /public/data/songs.json
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `http://localhost:3000`;
+  const baseUrl = "https://cdn.ciderboi.xyz";
   const res = await fetch(`${baseUrl}/data/songs.json`);
   const data = await res.json();
 
