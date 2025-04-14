@@ -12,6 +12,12 @@
       "tracks": [
         {
           "title": "Afternoons",
+          "artists": [
+            {
+              "name": "Cider Gamer",
+              "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+            }
+          ],
           "id": "7qKjpcRnjR6PjFRVYeIUwm",
           "url": "https://open.spotify.com/track/7qKjpcRnjR6PjFRVYeIUwm",
           "release_date": null,
@@ -23,6 +29,12 @@
         },
         {
           "title": "Animals",
+          "artists": [
+            {
+              "name": "Cider Gamer",
+              "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+            }
+          ],
           "id": "6DdtQFz0jMDY7ZjhsHVCHB",
           "url": "https://open.spotify.com/track/6DdtQFz0jMDY7ZjhsHVCHB",
           "release_date": null,
@@ -34,6 +46,12 @@
         },
         {
           "title": "Tick Tock",
+          "artists": [
+            {
+              "name": "Cider Gamer",
+              "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+            }
+          ],
           "id": "4vRLb3an1hbL8mUkFi53BZ",
           "url": "https://open.spotify.com/track/4vRLb3an1hbL8mUkFi53BZ",
           "release_date": null,
@@ -45,6 +63,12 @@
         },
         {
           "title": "Vibes",
+          "artists": [
+            {
+              "name": "Cider Gamer",
+              "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+            }
+          ],
           "id": "2KbuO4JCUZVc5gJjjyXTgO",
           "url": "https://open.spotify.com/track/2KbuO4JCUZVc5gJjjyXTgO",
           "release_date": null,
@@ -56,6 +80,12 @@
         },
         {
           "title": "Music",
+          "artists": [
+            {
+              "name": "Cider Gamer",
+              "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+            }
+          ],
           "id": "7nfvEJAnmoaO470aLs0aXV",
           "url": "https://open.spotify.com/track/7nfvEJAnmoaO470aLs0aXV",
           "release_date": null,
@@ -71,6 +101,12 @@
   "singles": [
     {
       "title": "Im Alone",
+      "artists": [
+        {
+          "name": "Cider Gamer",
+          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+        }
+      ],
       "id": "5mqcVXAmbGWoe6OLETVrzt",
       "url": "https://open.spotify.com/track/5mqcVXAmbGWoe6OLETVrzt",
       "release_date": "2023-07-02",
@@ -82,6 +118,12 @@
     },
     {
       "title": "Tired of Love",
+      "artists": [
+        {
+          "name": "Cider Gamer",
+          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+        }
+      ],
       "id": "6U2GTxLEQ1OQV0Uvmdt2ZG",
       "url": "https://open.spotify.com/track/6U2GTxLEQ1OQV0Uvmdt2ZG",
       "release_date": "2023-05-15",
@@ -93,6 +135,12 @@
     },
     {
       "title": "Leave This Behind",
+      "artists": [
+        {
+          "name": "Cider Gamer",
+          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+        }
+      ],
       "id": "71v3R534iJBa4ueX5wNQos",
       "url": "https://open.spotify.com/track/71v3R534iJBa4ueX5wNQos",
       "release_date": "2022-12-28",
@@ -104,6 +152,12 @@
     },
     {
       "title": "Days",
+      "artists": [
+        {
+          "name": "Cider Gamer",
+          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+        }
+      ],
       "id": "4vJQkoEERVm9mdd1JOks4n",
       "url": "https://open.spotify.com/track/4vJQkoEERVm9mdd1JOks4n",
       "release_date": "2022-12-19",
@@ -115,6 +169,12 @@
     },
     {
       "title": "Titan",
+      "artists": [
+        {
+          "name": "Cider Gamer",
+          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+        }
+      ],
       "id": "1wxLehxgqunhJ1FSTqP0Kq",
       "url": "https://open.spotify.com/track/1wxLehxgqunhJ1FSTqP0Kq",
       "release_date": "2022-11-08",
@@ -126,6 +186,12 @@
     },
     {
       "title": "Origin",
+      "artists": [
+        {
+          "name": "Cider Gamer",
+          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+        }
+      ],
       "id": "0zgtfQijIBkbSxVasftDzp",
       "url": "https://open.spotify.com/track/0zgtfQijIBkbSxVasftDzp",
       "release_date": "2022-09-05",
@@ -137,6 +203,12 @@
     },
     {
       "title": "Odyssey",
+      "artists": [
+        {
+          "name": "Cider Gamer",
+          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+        }
+      ],
       "id": "5Wuoe8VwPAxPYMpuxxfHEW",
       "url": "https://open.spotify.com/track/5Wuoe8VwPAxPYMpuxxfHEW",
       "release_date": "2022-06-30",

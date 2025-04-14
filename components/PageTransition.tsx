@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
 // Define our routes in the exact order they should appear in the scroll
@@ -29,5 +28,5 @@ export default function PageTransition({ children, className = "" }: PageTransit
 
   const direction = getDirection();
 
-  return <motion.div className={className}>{children}</motion.div>;
+  return <div className={className}>{children}</div>;
 }

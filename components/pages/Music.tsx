@@ -1,21 +1,64 @@
 "use client";
 
 import React from "react";
-import { useScroll } from "@/components/context/Scroll";
-import PageTransition from "@/components/PageTransition";
+// No external library imports needed
+import { useScroll } from "@/components/context/Scroll"; // Assuming correct path
+import PageTransition from "@/components/PageTransition"; // Assuming correct path
+import { Props } from "@/app/music/page"; // Assuming correct path
+import { SongPlayerAlbum, SongPlayerTrack } from "@/components/ui/song-card"; // Assuming correct path
 
-export default function Music() {
+export default function Music({ data }: Props) {
   const { scrollToPage } = useScroll();
 
+  console.log(data);
+
   return (
-    <PageTransition className="text-white w-full h-full flex flex-col items-center justify-center">
-      <h1 className="text-4xl mb-8">Music Page</h1>
+    <PageTransition className="text-white w-full min-h-screen flex flex-col items-center py-12 px-4">
       <button
         onClick={() => scrollToPage("/")}
-        className="z-50 relative cursor-pointer w-32 px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition border border-white/10 text-sm text-center"
+        className="z-10 fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
       >
-        back
+        Back Home
       </button>
+      <h1 className="text-3xl sm:text-4xl mb-6 text-center font-semibold">Featured Music</h1>
+
+      <div className="w-full max-w-7xl mx-auto">
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-x">
+          {data.albums.map((album, i) => (
+            <div key={`album-${album.id}_${i}`} className="break-inside-avoid mb-6">
+              {" "}
+              <SongPlayerAlbum
+                title={album.title}
+                artists={album.artists}
+                id={album.id}
+                url={album.url}
+                releaseDate={album.releaseDate}
+                thumbnail={album.thumbnail}
+                thumbnailSize={album.thumbnailSize}
+                tracks={album.tracks}
+              />
+            </div>
+          ))}
+
+          {data.singles.map((track, i) => (
+            <div key={`track-${track.id}_${i}`} className="break-inside-avoid mb-6">
+              {" "}
+              <SongPlayerTrack
+                title={track.title}
+                artists={track.artists}
+                id={track.id}
+                url={track.url}
+                releaseDate={track.releaseDate}
+                thumbnail={track.thumbnail}
+                thumbnailSize={track.thumbnailSize}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* add vertical space */}
+      <div className="h-20" />
+      {/* end vertical space */}
     </PageTransition>
   );
 }
