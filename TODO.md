@@ -15,7 +15,7 @@
 - [ ] Separate SEO metadata for each page in `pages.tsx`.
 - [ ] Handle socials links
 - [ ] Make a built-in shortened links for Projects, Songs and Photos
-- [ ] Handle Loading states in `pages.tsx`.
+- [x] Handle Loading states in `pages.tsx`.
 
 ### DX
 
