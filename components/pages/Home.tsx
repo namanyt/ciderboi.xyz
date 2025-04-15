@@ -3,9 +3,12 @@
 import React from "react";
 import Image from "next/image";
 import { useNetwork } from "@/components/context/Network";
+import { Project } from "@/app/page";
 
-export default function Home() {
+export default function Home({ projects }: { projects: Project[] }) {
   const { setPage } = useNetwork();
+
+  console.log(projects);
 
   return (
     <div className="h-screen w-full bg-cover bg-center overflow-hidden">
@@ -61,7 +64,7 @@ export default function Home() {
           <div className="space-y-4">
             {/* Example Project Card */}
             {projects.map((project, index) => (
-              <ProjectCard key={index} title={project.title} description={project.description} link={project.link} />
+              <ProjectCard key={index} title={project.title} description={project.description} link={project.url} />
             ))}
           </div>
         </div>
@@ -83,16 +86,16 @@ const ProjectCard = ({ title, description, link }: { title: string; description:
 };
 
 // TODO: Add Actual Projects here
-const projects = [
-  {
-    title: "🌐 Portfolio Website",
-    description: "My personal website built with React and TailwindCSS.",
-    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  },
-  {
-    title: "📱 Music Player App",
-    description: "A beautiful music app built using Flutter and Spotify API.",
-    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  },
-  // Add more projects as needed
-];
+// const projects = [
+//   {
+//     title: "🌐 Portfolio Website",
+//     description: "My personal website built with React and TailwindCSS.",
+//     link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+//   },
+//   {
+//     title: "📱 Music Player App",
+//     description: "A beautiful music app built using Flutter and Spotify API.",
+//     link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+//   },
+//   // Add more projects as needed
+// ];

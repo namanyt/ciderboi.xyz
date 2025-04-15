@@ -2,6 +2,8 @@ import Music from "@/components/pages/Music";
 import fs from "fs/promises";
 import path from "path";
 import { Album, Track } from "@/components/ui/song-card";
+import { Suspense } from "react";
+import LoadingScreen from "@/components/loading";
 
 export type SongData = {
   albums: Album[];
@@ -32,5 +34,9 @@ const fetchData = async () => {
 export default async function MusicPage() {
   const data = await fetchData();
 
-  return <Music data={data.props.data} />;
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <Music data={data.props.data} />
+    </Suspense>
+  );
 }
