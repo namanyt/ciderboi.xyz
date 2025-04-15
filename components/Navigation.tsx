@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { useScroll } from "@/components/context/Scroll";
+import { useNetwork } from "@/components/context/Network";
 import { usePathname } from "next/navigation";
 
 export default function Navigation() {
-  const { scrollToPage } = useScroll();
+  const { setPage } = useNetwork();
   const pathname = usePathname();
 
   const routes = [
@@ -19,7 +19,7 @@ export default function Navigation() {
       {routes.map((route) => (
         <button
           key={route.path}
-          onClick={() => scrollToPage(route.path)}
+          onClick={() => setPage(route.path)}
           className={`flex-1 min-w-[8rem] px-4 py-2 rounded-md font-medium text-center text-sm transition
             ${pathname === route.path ? "bg-white text-black" : "bg-white/50 text-gray-800 hover:bg-white"}`}
         >

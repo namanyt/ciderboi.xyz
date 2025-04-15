@@ -2,20 +2,19 @@
 
 import React from "react";
 // No external library imports needed
-import { useScroll } from "@/components/context/Scroll"; // Assuming correct path
-import PageTransition from "@/components/PageTransition"; // Assuming correct path
+import { useNetwork } from "@/components/context/Network"; // Assuming correct path
 import { Props } from "@/app/music/page"; // Assuming correct path
 import { SongPlayerAlbum, SongPlayerTrack } from "@/components/ui/song-card"; // Assuming correct path
 
 export default function Music({ data }: Props) {
-  const { scrollToPage } = useScroll();
+  const { setPage } = useNetwork();
 
   console.log(data);
 
   return (
-    <PageTransition className="text-white w-full min-h-screen flex flex-col items-center py-12 px-4">
+    <div className="text-white w-full min-h-screen flex flex-col items-center py-12 px-4">
       <button
-        onClick={() => scrollToPage("/")}
+        onClick={() => setPage("/")}
         className="z-10 fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
       >
         Back Home
@@ -59,6 +58,6 @@ export default function Music({ data }: Props) {
       {/* add vertical space */}
       <div className="h-20" />
       {/* end vertical space */}
-    </PageTransition>
+    </div>
   );
 }
