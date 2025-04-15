@@ -3,16 +3,16 @@
 import React, { createContext, useContext, useCallback, ReactNode, RefObject } from "react";
 import { useRouter } from "next/navigation";
 
-interface ScrollContextType {
+interface NetworkContextType {
   setPage: (routePath: string) => void;
   setRef: (ref: HTMLDivElement) => void;
   ref: RefObject<HTMLDivElement | null>;
 }
 
-const ScrollContext = createContext<ScrollContextType | null>(null);
+const NetworkContext = createContext<NetworkContextType | null>(null);
 
 export const useNetwork = () => {
-  const ctx = useContext(ScrollContext);
+  const ctx = useContext(NetworkContext);
   if (!ctx) {
     throw new Error("useNetwork must be used within NetworkContext");
   }
@@ -35,5 +35,5 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
     [router],
   );
 
-  return <ScrollContext.Provider value={{ setPage, setRef, ref }}>{children}</ScrollContext.Provider>;
+  return <NetworkContext.Provider value={{ setPage, setRef, ref }}>{children}</NetworkContext.Provider>;
 };
