@@ -1,14 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useNetwork } from "@/components/context/Network";
 import { Project } from "@/lib/types";
+import { ExternalLink } from "lucide-react";
 
 export default function Home({ projects }: { projects: Project[] }) {
   const { setPage } = useNetwork();
-
-  console.log(projects);
 
   return (
     <div className="h-screen w-full bg-cover bg-center overflow-hidden">
@@ -61,10 +60,10 @@ export default function Home({ projects }: { projects: Project[] }) {
         {/* Projects Section */}
         <div>
           <h3 className="text-xl font-semibold mb-4">Projects</h3>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Example Project Card */}
             {projects.map((project, index) => (
-              <ProjectCard key={index} title={project.title} description={project.description} link={project.url} />
+              <ProjectCard key={index} project={project} />
             ))}
           </div>
         </div>
@@ -73,14 +72,97 @@ export default function Home({ projects }: { projects: Project[] }) {
   );
 }
 
-const ProjectCard = ({ title, description, link }: { title: string; description: string; link: string }) => {
+// const ProjectCard = ({ title, description, link }: { title: string; description: string; link: string }) => {
+//   return (
+//     <div className="bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-sm">
+//       <h4 className="font-medium">{title}</h4>
+//       <p className="text-white/70 text-sm">{description}</p>
+//       <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+//         View Project
+//       </a>
+//     </div>
+//   );
+// };
+
+function ProjectCard({ project }: { project: Project }) {
+  const { id, title, description, category, tags, image, url } = project;
+
+  const fallbackLetter = title ? title.charAt(0).toUpperCase() : "P";
+  const [fallbackBgColor, setFallbackBgColor] = useState<string>("");
+
+  useEffect(() => {
+    const generatePastelColor = () => {
+      const hue = Math.floor(Math.random() * 360);
+      return `hsl(${hue}, 70%, 80%)`;
+    };
+
+    setFallbackBgColor(generatePastelColor());
+  }, []);
+
   return (
-    <div className="bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-sm">
-      <h4 className="font-medium">{title}</h4>
-      <p className="text-white/70 text-sm">{description}</p>
-      <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
-        View Project
-      </a>
+    <div
+      key={`${id}-${category}`}
+      className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 z-0"></div>
+      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
+        {/* Image/Icon Section */}
+        <div className="w-16 h-16">
+          {image ? (
+            <div className="relative w-full h-full">
+              <Image
+                src={image}
+                alt={title}
+                fill
+                sizes="64px"
+                style={{ objectFit: "contain" }}
+                className="rounded-lg drop-shadow-lg shadow"
+                priority
+              />
+            </div>
+          ) : (
+            <div
+              className="w-full h-full rounded-lg flex items-center shadow justify-center text-white font-bold text-xl drop-shadow-lg"
+              style={{ backgroundColor: fallbackBgColor }}
+            >
+              {fallbackLetter}
+            </div>
+          )}
+        </div>
+
+        {/* Text Content */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="text-lg font-semibold text-white">
+              <span className="hover:underline cursor-pointer" onClick={() => window.open(url, "_blank")}>
+                {title}
+              </span>
+            </h3>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/70 hover:text-white transition-colors"
+            >
+              <ExternalLink size={16} />
+            </a>
+          </div>
+
+          <p className="text-white/80 text-sm">{description}</p>
+
+          <div className="flex flex-wrap justify-center gap-2 mt-2">
+            {tags &&
+              tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
+                >
+                  {tag}
+                </span>
+              ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
+}

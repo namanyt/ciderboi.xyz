@@ -18,6 +18,16 @@ const devNextConfig = withBundleAnalyzer({
         hostname: "i.scdn.co",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+        pathname: "/**",
+      },
     ],
   },
 });
