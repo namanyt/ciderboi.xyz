@@ -27,6 +27,7 @@ export default function PageTransition({ children, className = "" }: PageTransit
   };
 
   const direction = getDirection();
+  console.log(direction);
 
   return <div className={className}>{children}</div>;
 }

@@ -1,7 +1,6 @@
-import { Play, Heart, Music, MusicIcon } from "lucide-react";
+import { Play, Heart } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { name } from "eslint-config-prettier/flat";
 
 export type Artist = {
   name: string;
@@ -108,6 +107,7 @@ export function SongPlayerTrack({ title, artists, id, url, releaseDate, thumbnai
       // Consider adding min-h-[value] if needed for consistent card height in columns/grid
       className={`relative w-full rounded-2xl ${thumbnail ? "backdrop-blur-sm" : "bg-white/10"} border border-white/20 shadow-xl overflow-hidden p-4`}
       style={thumbnail ? { backgroundColor: bgColor } : {}}
+      key={id}
     >
       <div className="flex items-center space-x-4">
         {/* Album art */}
@@ -245,6 +245,7 @@ export function SongPlayerAlbum({ title, id, url, releaseDate, thumbnail, thumbn
     <div
       className={`relative w-full rounded-2xl ${thumbnail ? "backdrop-blur-sm" : "bg-white/10"} border border-white/20 shadow-xl overflow-hidden p-4`}
       style={thumbnail ? { backgroundColor: bgColor } : {}}
+      key={id}
     >
       <div className="flex items-center space-x-4 mb-6">
         {/* Album art */}

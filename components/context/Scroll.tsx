@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useCallback, ReactNode, RefObject } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface ScrollContextType {
   scrollToPage: (routePath: string) => void;
@@ -21,7 +21,6 @@ export const useScroll = () => {
 
 export const ScrollProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
-  const pathname = usePathname();
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
 
   const setScrollRef = (ref: HTMLDivElement) => {
