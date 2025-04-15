@@ -59,6 +59,15 @@ function extractColor(imgSrc: string): Promise<string> {
   });
 }
 
+const formatDate = (releaseDate: string) => {
+  const date = new Date(releaseDate);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+
 export function SongPlayerTrack({ title, artists, id, url, releaseDate, thumbnail, thumbnailSize }: Track) {
   const [bgColor, setBgColor] = useState("rgba(103, 58, 183, 0.3)"); // Default tint
   const hasFetchedColor = useRef(false);
@@ -106,65 +115,49 @@ export function SongPlayerTrack({ title, artists, id, url, releaseDate, thumbnai
         {/* Song info and controls */}
         <div className="flex-1 min-w-0">
           {" "}
-          {/* Added min-w-0 to prevent overflow issues in flex children */}
-          {/* --- FIX for Song Title Hover --- */}
-          <h3
-            className="text-white font-bold text-lg truncate" // Added truncate for long titles
-          >
+          <h3 className="text-white font-bold text-lg truncate">
             <span
-              className="hover:underline cursor-pointer" // Apply hover/click to inner span
+              className="hover:underline cursor-pointer"
               onClick={() => window.open(url, "_blank")}
-              title={songName} // Tooltip for truncated titles
+              title={songName}
             >
               {songName}
             </span>
           </h3>
-          {/* --- END FIX --- */}
-          {/* --- FIX for Artist Hover --- */}
           {artistDisplayList ? (
             artistDisplayList.map((artist) => (
-              <p
-                key={artist.name}
-                // Keep block margin for vertical spacing, text style on <p>
-                className="text-white/80 text-sm truncate" // Added truncate for long artist names
-              >
+              <p key={artist.name} className="text-white/80 text-sm truncate">
                 <span
-                  className="hover:underline cursor-pointer" // Apply hover/click to inner span
+                  className="hover:underline cursor-pointer"
                   onClick={(e) => {
-                    e.stopPropagation(); // Prevent potential clicks on parent elements if nested differently later
+                    e.stopPropagation();
                     window.open(artist.url, "_blank");
                   }}
-                  title={artist.name} // Tooltip for truncated names
+                  title={artist.name}
                 >
                   {artist.name}
-                </span>
+                </span>{" "}
+                • {formatDate(releaseDate)}
               </p>
             ))
           ) : (
             <p className="text-white/80 text-sm">Unknown Artist</p> // Fallback
           )}
-          {/* --- END FIX --- */}
-          {/* Controls - moved margin-top here */}
           <div className="flex items-center space-x-3 mt-3">
             {" "}
-            {/* Added margin-top */}
-            {/* Play button */}
             <button
               className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white/30 border border-white/30 flex items-center justify-center text-white transition-all flex-shrink-0 cursor-pointer" // Adjusted size, added flex-shrink-0
               onClick={() => window.open(url, "_blank")}
-              aria-label={`Play ${songName}`} // Accessibility
+              aria-label={`Play ${songName}`}
             >
-              <Play size={16} fill="currentColor" /> {/* Adjusted icon size */}
+              <Play size={16} fill="currentColor" />
             </button>
-            {/* Spotify Link */}
             <a
               href={url}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-green-500 hover:bg-green-600 text-white text-sm font-medium transition-colors"
             >
-              {/*View on Spotify*/}
-              {/*if the window width is small like a mobile, instead of "View on Spotify" show the link icon*/}
               <span className="hidden sm:inline">View on Spotify</span>
               <span className="sm:hidden">
                 <svg
@@ -194,17 +187,16 @@ export function SongPlayerTrack({ title, artists, id, url, releaseDate, thumbnai
               <Heart size={16} fill="currentColor" />
             </button>
           </div>
-          {/* Release date - moved below controls */}
-          <p className="text-xs sm:text-sm text-white/60 mt-2">{releaseDate}</p>
         </div>
       </div>
     </div>
   );
 }
 
-export function SongPlayerAlbum({ title, id, url, releaseDate, thumbnail, thumbnailSize, tracks }: Album) {
+export function SongPlayerAlbum({ title, id, url, releaseDate, thumbnail, thumbnailSize, tracks, artists }: Album) {
   const [bgColor, setBgColor] = useState("rgba(103, 58, 183, 0.3)"); // Default tint
   const hasFetchedColor = useRef(false);
+  const artistDisplayList = artists && artists.length > 0 ? artists : null;
 
   // Extract color from thumbnail
   useEffect(() => {
@@ -241,9 +233,33 @@ export function SongPlayerAlbum({ title, id, url, releaseDate, thumbnail, thumbn
 
         {/* Album info */}
         <div className="flex-1">
-          <h3 className="text-white font-bold text-xl">{title}</h3>
-          <p className="text-white/80 text-sm mb-2">{tracks.length} tracks</p>
-          <p className="text-white/60 text-sm">{releaseDate}</p>
+          <h3 className="text-white font-bold text-xl">
+            <span className="hover:underline cursor-pointer" onClick={() => window.open(url, "_blank")}>
+              {title}
+            </span>
+          </h3>
+          {artistDisplayList ? (
+            artistDisplayList.map((artist) => (
+              <p key={artist.name} className="text-white/80 text-sm truncate">
+                <span
+                  className="hover:underline cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(artist.url, "_blank");
+                  }}
+                  title={artist.name}
+                >
+                  {artist.name}
+                </span>{" "}
+                • {formatDate(releaseDate)}
+              </p>
+            ))
+          ) : (
+            <p className="text-white/80 text-sm">Unknown Artist</p> // Fallback
+          )}
+          <p className="text-white/80 text-sm mb-2">
+            {tracks.length} tracks • {formatDate(releaseDate)}
+          </p>
 
           <a
             href={url}
@@ -264,25 +280,18 @@ export function SongPlayerAlbum({ title, id, url, releaseDate, thumbnail, thumbn
             <div key={track.id} className="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all">
               <div className="w-6 text-white/60 mr-3 text-center">{index + 1}</div>
 
-              {track.thumbnail && (
-                <div className="relative w-10 h-10 mr-3">
-                  <Image
-                    src={track.thumbnail}
-                    alt={track.title}
-                    width={track.thumbnailSize?.width || 40}
-                    height={track.thumbnailSize?.height || 40}
-                    className="object-cover rounded"
-                  />
-                </div>
-              )}
-
               <div className="flex-1">
-                <p className="text-white font-medium">{track.title}</p>
+                <p
+                  className="cursor-pointer hover:underline text-white font-medium"
+                  onClick={() => window.open(track.url)}
+                >
+                  {track.title}
+                </p>
                 <p className="text-white/60 text-xs">{track.releaseDate}</p>
               </div>
 
               <button
-                className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white"
+                className="w-8 h-8 cursor-pointer rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center text-white"
                 onClick={() => window.open(track.url, "_blank")}
               >
                 <Play size={14} fill="white" />

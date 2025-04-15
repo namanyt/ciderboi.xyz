@@ -2,10 +2,16 @@
   "albums": [
     {
       "title": "Just a Another Day",
-      "release_date": "2023-11-14",
+      "releaseDate": "2023-11-14",
+      "artists": [
+        {
+          "name": "Cider Gamer",
+          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+        }
+      ],
       "url": "https://open.spotify.com/album/3P8MnBkyMpgcz4yo3ZI9yt",
       "thumbnail": "https://i.scdn.co/image/ab67616d0000b27326c4655ac6cd4436911df48a",
-      "thumbnail_size": {
+      "thumbnailSize": {
         "width": 640,
         "height": 640
       },
@@ -20,9 +26,9 @@
           ],
           "id": "7qKjpcRnjR6PjFRVYeIUwm",
           "url": "https://open.spotify.com/track/7qKjpcRnjR6PjFRVYeIUwm",
-          "release_date": null,
+          "releaseDate": null,
           "thumbnail": null,
-          "thumbnail_size": {
+          "thumbnailSize": {
             "width": null,
             "height": null
           }
@@ -37,9 +43,9 @@
           ],
           "id": "6DdtQFz0jMDY7ZjhsHVCHB",
           "url": "https://open.spotify.com/track/6DdtQFz0jMDY7ZjhsHVCHB",
-          "release_date": null,
+          "releaseDate": null,
           "thumbnail": null,
-          "thumbnail_size": {
+          "thumbnailSize": {
             "width": null,
             "height": null
           }
@@ -54,9 +60,9 @@
           ],
           "id": "4vRLb3an1hbL8mUkFi53BZ",
           "url": "https://open.spotify.com/track/4vRLb3an1hbL8mUkFi53BZ",
-          "release_date": null,
+          "releaseDate": null,
           "thumbnail": null,
-          "thumbnail_size": {
+          "thumbnailSize": {
             "width": null,
             "height": null
           }
@@ -71,9 +77,9 @@
           ],
           "id": "2KbuO4JCUZVc5gJjjyXTgO",
           "url": "https://open.spotify.com/track/2KbuO4JCUZVc5gJjjyXTgO",
-          "release_date": null,
+          "releaseDate": null,
           "thumbnail": null,
-          "thumbnail_size": {
+          "thumbnailSize": {
             "width": null,
             "height": null
           }
@@ -88,9 +94,9 @@
           ],
           "id": "7nfvEJAnmoaO470aLs0aXV",
           "url": "https://open.spotify.com/track/7nfvEJAnmoaO470aLs0aXV",
-          "release_date": null,
+          "releaseDate": null,
           "thumbnail": null,
-          "thumbnail_size": {
+          "thumbnailSize": {
             "width": null,
             "height": null
           }
@@ -109,9 +115,9 @@
       ],
       "id": "5mqcVXAmbGWoe6OLETVrzt",
       "url": "https://open.spotify.com/track/5mqcVXAmbGWoe6OLETVrzt",
-      "release_date": "2023-07-02",
+      "releaseDate": "2023-07-02",
       "thumbnail": "https://i.scdn.co/image/ab67616d0000b2735aecebafeecdc00a951202ad",
-      "thumbnail_size": {
+      "thumbnailSize": {
         "width": 640,
         "height": 640
       }
@@ -126,9 +132,9 @@
       ],
       "id": "6U2GTxLEQ1OQV0Uvmdt2ZG",
       "url": "https://open.spotify.com/track/6U2GTxLEQ1OQV0Uvmdt2ZG",
-      "release_date": "2023-05-15",
+      "releaseDate": "2023-05-15",
       "thumbnail": "https://i.scdn.co/image/ab67616d0000b273bdb6f7b9f0db67cf064757ba",
-      "thumbnail_size": {
+      "thumbnailSize": {
         "width": 640,
         "height": 640
       }
@@ -143,9 +149,9 @@
       ],
       "id": "71v3R534iJBa4ueX5wNQos",
       "url": "https://open.spotify.com/track/71v3R534iJBa4ueX5wNQos",
-      "release_date": "2022-12-28",
+      "releaseDate": "2022-12-28",
       "thumbnail": "https://i.scdn.co/image/ab67616d0000b273355994088f0cff5fe2ff7883",
-      "thumbnail_size": {
+      "thumbnailSize": {
         "width": 640,
         "height": 640
       }
@@ -160,9 +166,9 @@
       ],
       "id": "4vJQkoEERVm9mdd1JOks4n",
       "url": "https://open.spotify.com/track/4vJQkoEERVm9mdd1JOks4n",
-      "release_date": "2022-12-19",
+      "releaseDate": "2022-12-19",
       "thumbnail": "https://i.scdn.co/image/ab67616d0000b2738c4950b3e48d53d4ef4aebb2",
-      "thumbnail_size": {
+      "thumbnailSize": {
         "width": 640,
         "height": 640
       }
@@ -177,9 +183,9 @@
       ],
       "id": "1wxLehxgqunhJ1FSTqP0Kq",
       "url": "https://open.spotify.com/track/1wxLehxgqunhJ1FSTqP0Kq",
-      "release_date": "2022-11-08",
+      "releaseDate": "2022-11-08",
       "thumbnail": "https://i.scdn.co/image/ab67616d0000b2736228e8d312d8dbccf335cbd0",
-      "thumbnail_size": {
+      "thumbnailSize": {
         "width": 640,
         "height": 640
       }
@@ -194,9 +200,9 @@
       ],
       "id": "0zgtfQijIBkbSxVasftDzp",
       "url": "https://open.spotify.com/track/0zgtfQijIBkbSxVasftDzp",
-      "release_date": "2022-09-05",
+      "releaseDate": "2022-09-05",
       "thumbnail": "https://i.scdn.co/image/ab67616d0000b27347ac21bea1a3f1f7b7f6bae2",
-      "thumbnail_size": {
+      "thumbnailSize": {
         "width": 640,
         "height": 640
       }
@@ -211,9 +217,9 @@
       ],
       "id": "5Wuoe8VwPAxPYMpuxxfHEW",
       "url": "https://open.spotify.com/track/5Wuoe8VwPAxPYMpuxxfHEW",
-      "release_date": "2022-06-30",
+      "releaseDate": "2022-06-30",
       "thumbnail": "https://i.scdn.co/image/ab67616d0000b273de4155511806cb16bb77f37a",
-      "thumbnail_size": {
+      "thumbnailSize": {
         "width": 640,
         "height": 640
       }

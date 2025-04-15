@@ -1,15 +1,12 @@
 "use client";
 
 import React from "react";
-// No external library imports needed
-import { useNetwork } from "@/components/context/Network"; // Assuming correct path
-import { Props } from "@/app/music/page"; // Assuming correct path
-import { SongPlayerAlbum, SongPlayerTrack } from "@/components/ui/song-card"; // Assuming correct path
+import { useNetwork } from "@/components/context/Network";
+import { Props } from "@/app/music/page";
+import { SongPlayerAlbum, SongPlayerTrack } from "@/components/ui/song-card";
 
 export default function Music({ data }: Props) {
   const { setPage } = useNetwork();
-
-  console.log(data);
 
   return (
     <div className="text-white w-full min-h-screen flex flex-col items-center py-12 px-4">
@@ -55,9 +52,8 @@ export default function Music({ data }: Props) {
           ))}
         </div>
       </div>
-      {/* add vertical space */}
+      {/* added vertical space */}
       <div className="h-20" />
-      {/* end vertical space */}
     </div>
   );
 }
