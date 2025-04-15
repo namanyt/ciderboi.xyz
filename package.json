@@ -24,6 +24,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@next/bundle-analyzer": "^15.3.0",
+    "@next/eslint-plugin-next": "15.3.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -32,10 +33,11 @@
     "eslint-config-next": "15.2.4",
     "eslint-config-prettier": "10.1.2",
     "eslint-plugin-prettier": "5.2.6",
+    "eslint-plugin-react-hooks": "5.2.0",
     "prettier": "3.5.3",
     "prettier-eslint": "16.3.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab"
+  "packageManager": "pnpm@10.8.1"
 }
