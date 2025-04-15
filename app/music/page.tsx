@@ -20,6 +20,11 @@ const fetchData = async () => {
   };
 };
 
+export const metadata = {
+  title: "Music",
+  description: "My music collection",
+};
+
 export default async function MusicPage() {
   const data = await fetchData();
 
