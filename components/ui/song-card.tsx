@@ -1,32 +1,7 @@
 import { Play, Heart } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-
-export type Artist = {
-  name: string;
-  url: string;
-};
-
-export type Track = {
-  title: string;
-  artists: Artist[];
-  id: string;
-  url: string;
-  releaseDate: string;
-  thumbnail?: string;
-  thumbnailSize: { width?: number; height?: number };
-};
-
-export type Album = {
-  title: string;
-  artists: Artist[];
-  id: string;
-  url: string;
-  releaseDate: string;
-  thumbnail?: string;
-  thumbnailSize: { width?: number; height?: number };
-  tracks: Track[];
-};
+import { Album, Track } from "@/lib/types";
 
 // Function to extract dominant color from an image
 function extractColor(imgSrc: string): Promise<string> {

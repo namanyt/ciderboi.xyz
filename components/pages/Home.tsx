@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useNetwork } from "@/components/context/Network";
-import { Project } from "@/app/page";
+import { Project } from "@/lib/types";
 
 export default function Home({ projects }: { projects: Project[] }) {
   const { setPage } = useNetwork();
@@ -84,18 +84,3 @@ const ProjectCard = ({ title, description, link }: { title: string; description:
     </div>
   );
 };
-
-// TODO: Add Actual Projects here
-// const projects = [
-//   {
-//     title: "🌐 Portfolio Website",
-//     description: "My personal website built with React and TailwindCSS.",
-//     link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-//   },
-//   {
-//     title: "📱 Music Player App",
-//     description: "A beautiful music app built using Flutter and Spotify API.",
-//     link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-//   },
-//   // Add more projects as needed
-// ];

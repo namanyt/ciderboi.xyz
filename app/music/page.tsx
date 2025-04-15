@@ -1,14 +1,9 @@
 import Music from "@/components/pages/Music";
 import fs from "fs/promises";
 import path from "path";
-import { Album, Track } from "@/components/ui/song-card";
 import { Suspense } from "react";
 import LoadingScreen from "@/components/loading";
-
-export type SongData = {
-  albums: Album[];
-  singles: Track[];
-};
+import { SongData } from "@/lib/types";
 
 export type Props = {
   data: SongData;
