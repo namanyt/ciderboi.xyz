@@ -1,0 +1,73 @@
+{
+  "skillGroups": [
+    {
+      "title": "Music",
+      "skills": [
+        "Acoustic Guitar",
+        "Electric Guitar",
+        "Bass Guitar",
+        "Piano",
+        "FL Studio",
+        "Ableton Live",
+        "Music Production",
+        "Music Theory",
+        "Production Music",
+        "Music Creation"
+      ]
+    },
+    {
+      "title": "Programming",
+      "skills": [
+        "JavaScript",
+        "TypeScript",
+        "HTML",
+        "CSS",
+        "Node.js",
+        "Full-Stack Development",
+        "Python",
+        "Java",
+        "Front-End Development",
+        "Back-End Web Development",
+        "Game Development",
+        "C#",
+        "SQL",
+        "Programming",
+        "Computer Literacy"
+      ]
+    },
+    {
+      "title": "Video & Photography",
+      "skills": [
+        "Adobe Premiere Pro",
+        "After Effects",
+        "Editing",
+        "Film Editing",
+        "Video Post-Production",
+        "Photography",
+        "Event Photography",
+        "Adobe Lightroom",
+        "Travel Photography",
+        "Studio Photography",
+        "Video Production",
+        "Video Editing"
+      ]
+    },
+    {
+      "title": "Game Development",
+      "skills": [
+        "Unity",
+        "Game Design",
+        "Game Programming"
+      ]
+    },
+    {
+      "title": "Leadership",
+      "skills": [
+        "Teamwork",
+        "Leadership",
+        "Project Management",
+        "Team Management"
+      ]
+    }
+  ]
+}

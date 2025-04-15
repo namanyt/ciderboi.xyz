@@ -1,0 +1,45 @@
+{
+  "experiences": [
+    {
+      "id": "1",
+      "title": "Photographer",
+      "company": "Self-employed",
+      "startDate": "Jul 2023",
+      "endDate": "Mar 2025",
+      "description": "Developed photography skills through self-guided learning and personal projects. Focused on capturing high-quality photographs for events and creative works. Built an online portfolio to showcase the work created during this learning phase.",
+      "tags": ["Photography", "Event Photography", "Adobe Lightroom", "Photography Techniques"],
+      "logo": ""
+    },
+    {
+      "id": "2",
+      "title": "Head of Techformers",
+      "company": "Delhi Public School - India",
+      "location": "Jaipur, Rajasthan, India",
+      "startDate": "Apr 2023",
+      "endDate": "Mar 2025",
+      "description": "Leading and managing the Techformers club, overseeing projects, fostering collaboration among team members, and ensuring the successful execution of initiatives and events. Part-time, on-site role.",
+      "tags": ["Leadership", "Project Management", "Team Management", "Teamwork"],
+      "logo": ""
+    },
+    {
+      "id": "3",
+      "title": "Music Producer",
+      "company": "Self-employed",
+      "startDate": "Mar 2020",
+      "endDate": "Oct 2024",
+      "description": "Composing, producing, and self-releasing original music across major streaming platforms, including Spotify and YouTube Music. Handling all aspects of production, from music composition to final mixing and mastering.",
+      "tags": ["Music Creation", "FL Studio", "Music Production", "Ableton Live", "Music Theory"],
+      "logo": ""
+    },
+    {
+      "id": "4",
+      "title": "Programmer",
+      "company": "Self-employed",
+      "startDate": "Jun 2014",
+      "endDate": "Sep 2024",
+      "description": "Self-taught in various computer programming languages, system architecture, and server management. Gained extensive experience in software development, problem-solving, and coding techniques through independent study and practical application.",
+      "tags": ["Programming", "JavaScript", "Python", "Java", "C++", "SQL"],
+      "logo": ""
+    }
+  ]
+}

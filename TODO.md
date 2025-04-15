@@ -1,10 +1,12 @@
 ### General
 
 - [x] Set up the homepage layout.
-- [ ] Implement responsive design for mobile and tablet views.
+- [x] Add Experiences and Skills sections.
+- [x] Implement responsive design for mobile and tablet views.
 - [ ] Add a contact form with validation.
-- [ ] Optimize images for faster loading.
+- [x] Optimize images for faster loading.
 - [ ] Configure SEO metadata for all pages.
+- [ ] Add a favicon and other necessary assets.
 
 ### UX
 
