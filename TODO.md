@@ -6,7 +6,7 @@
 - [ ] Add a contact form with validation.
 - [x] Optimize images for faster loading.
 - [ ] Configure SEO metadata for all pages.
-- [ ] Add a favicon and other necessary assets.
+- [x] Add a favicon and other necessary assets.
 
 ### UX
 
@@ -16,16 +16,18 @@
 - [ ] Implement error handling for missing or invalid routes in `pages.tsx`.
 - [ ] Separate SEO metadata for each page in `pages.tsx`.
 - [ ] Handle socials links
-- [ ] Make a built-in shortened links for Projects, Songs and Photos
+- [x] Make a built-in shortened links for Projects, Songs and Photos
 - [x] Handle Loading states in `pages.tsx`.
+- [ ] Add a loading spinner or skeleton screen for better UX.
+- [ ] ADD LINKS TO THE PHOTOS
 
 ### DX
 
 - [x] Standardize code formatting using Prettier.
 - [x] Set up ESLint for code quality checks.
-- [ ] Add TypeScript type definitions for all components.
+- [x] Add TypeScript type definitions for all components.
 - [ ] Add Documentation for all components and functions.
-- [ ] Dynamically fetching projects, songs and photos from json lists.
+- [x] Dynamically fetching projects, songs and photos from json lists.
 
 ### Deployment
 

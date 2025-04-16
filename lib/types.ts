@@ -39,6 +39,32 @@ export type SongData = {
   singles: Track[];
 };
 
+export type PhotoMetadata = {
+  uuid: string;
+  url: string;
+  webpPath: string;
+  blurPath: string;
+  size: {
+    width: number;
+    height: number;
+  };
+  metadata: {
+    make: string;
+    camera: string;
+    software: string;
+    orientation: number;
+    focalLength: string;
+    aperture: string;
+    iso: number;
+    shutterSpeed: string;
+    datetime: string;
+    gps: {
+      latitude: number;
+      longitude: number;
+    };
+  };
+};
+
 export type Experience = {
   id: string;
   title: string;

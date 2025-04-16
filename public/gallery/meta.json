@@ -1,9 +1,9 @@
 [
   {
-    "uuid": "7c7a3452",
-    "link": "",
-    "webpPath": "low\\7c7a3452.low.webp",
-    "blurPath": "blur\\7c7a3452.blur.webp",
+    "uuid": "85efc93f",
+    "url": "",
+    "webpPath": "low/85efc93f.low.webp",
+    "blurPath": "blur/85efc93f.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -13,18 +13,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 320,
-      "shutter_speed": "1/10s",
+      "shutterSpeed": "1/10s",
       "datetime": "2023:08:02 19:41:47"
     }
   },
   {
-    "uuid": "cf21ebb4",
-    "link": "",
-    "webpPath": "low\\cf21ebb4.low.webp",
-    "blurPath": "blur\\cf21ebb4.blur.webp",
+    "uuid": "64187c7d",
+    "url": "",
+    "webpPath": "low/64187c7d.low.webp",
+    "blurPath": "blur/64187c7d.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -34,18 +34,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2024:06:19 16:58:45"
     }
   },
   {
-    "uuid": "7a42f059",
-    "link": "",
-    "webpPath": "low\\7a42f059.low.webp",
-    "blurPath": "blur\\7a42f059.blur.webp",
+    "uuid": "f69b0102",
+    "url": "",
+    "webpPath": "low/f69b0102.low.webp",
+    "blurPath": "blur/f69b0102.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -55,18 +55,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 400,
-      "shutter_speed": "1/30s",
+      "shutterSpeed": "1/30s",
       "datetime": "2024:06:21 19:44:57"
     }
   },
   {
-    "uuid": "70a29a71",
-    "link": "",
-    "webpPath": "low\\70a29a71.low.webp",
-    "blurPath": "blur\\70a29a71.blur.webp",
+    "uuid": "79082656",
+    "url": "",
+    "webpPath": "low/79082656.low.webp",
+    "blurPath": "blur/79082656.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -76,18 +76,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 100,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2024:06:23 13:58:47"
     }
   },
   {
-    "uuid": "cf15bce0",
-    "link": "",
-    "webpPath": "low\\cf15bce0.low.webp",
-    "blurPath": "blur\\cf15bce0.blur.webp",
+    "uuid": "4a68eda0",
+    "url": "",
+    "webpPath": "low/4a68eda0.low.webp",
+    "blurPath": "blur/4a68eda0.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -97,18 +97,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 100,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2024:06:23 13:58:47"
     }
   },
   {
-    "uuid": "1a06c556",
-    "link": "",
-    "webpPath": "low\\1a06c556.low.webp",
-    "blurPath": "blur\\1a06c556.blur.webp",
+    "uuid": "409c99b9",
+    "url": "",
+    "webpPath": "low/409c99b9.low.webp",
+    "blurPath": "blur/409c99b9.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -118,18 +118,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 100,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2024:06:23 13:58:47"
     }
   },
   {
-    "uuid": "91b46888",
-    "link": "",
-    "webpPath": "low\\91b46888.low.webp",
-    "blurPath": "blur\\91b46888.blur.webp",
+    "uuid": "9f228f6f",
+    "url": "",
+    "webpPath": "low/9f228f6f.low.webp",
+    "blurPath": "blur/9f228f6f.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -139,18 +139,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 40,
-      "shutter_speed": "1/7042s",
+      "shutterSpeed": "1/7042s",
       "datetime": "2024:06:23 15:03:31"
     }
   },
   {
-    "uuid": "c53ecae4",
-    "link": "",
-    "webpPath": "low\\c53ecae4.low.webp",
-    "blurPath": "blur\\c53ecae4.blur.webp",
+    "uuid": "ae1ed98e",
+    "url": "",
+    "webpPath": "low/ae1ed98e.low.webp",
+    "blurPath": "blur/ae1ed98e.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -160,18 +160,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 100,
-      "shutter_speed": "1/90s",
+      "shutterSpeed": "1/90s",
       "datetime": "2024:07:05 15:10:16"
     }
   },
   {
-    "uuid": "5333ffe0",
-    "link": "",
-    "webpPath": "low\\5333ffe0.low.webp",
-    "blurPath": "blur\\5333ffe0.blur.webp",
+    "uuid": "9f8528b0",
+    "url": "",
+    "webpPath": "low/9f8528b0.low.webp",
+    "blurPath": "blur/9f8528b0.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -181,18 +181,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 100,
-      "shutter_speed": "1/750s",
+      "shutterSpeed": "1/750s",
       "datetime": "2024:07:05 15:15:01"
     }
   },
   {
-    "uuid": "ada42e7d",
-    "link": "",
-    "webpPath": "low\\ada42e7d.low.webp",
-    "blurPath": "blur\\ada42e7d.blur.webp",
+    "uuid": "dde17e72",
+    "url": "",
+    "webpPath": "low/dde17e72.low.webp",
+    "blurPath": "blur/dde17e72.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -202,18 +202,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 250,
-      "shutter_speed": "1/50s",
+      "shutterSpeed": "1/50s",
       "datetime": "2024:07:12 19:34:32"
     }
   },
   {
-    "uuid": "c4492f43",
-    "link": "",
-    "webpPath": "low\\c4492f43.low.webp",
-    "blurPath": "blur\\c4492f43.blur.webp",
+    "uuid": "0be32880",
+    "url": "",
+    "webpPath": "low/0be32880.low.webp",
+    "blurPath": "blur/0be32880.blur.webp",
     "size": {
       "width": 800,
       "height": 951
@@ -225,10 +225,10 @@
     }
   },
   {
-    "uuid": "f1f1bd3d",
-    "link": "",
-    "webpPath": "low\\f1f1bd3d.low.webp",
-    "blurPath": "blur\\f1f1bd3d.blur.webp",
+    "uuid": "d12a518f",
+    "url": "",
+    "webpPath": "low/d12a518f.low.webp",
+    "blurPath": "blur/d12a518f.blur.webp",
     "size": {
       "width": 800,
       "height": 999
@@ -238,18 +238,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "1.7mm",
-      "aperture": "f/2.2",
+      "focalLength": "1.7mm",
+      "aperture": "2.2",
       "iso": 200,
-      "shutter_speed": "1/33s",
+      "shutterSpeed": "1/33s",
       "datetime": "2024:07:12 23:56:23"
     }
   },
   {
-    "uuid": "9b204cd8",
-    "link": "",
-    "webpPath": "low\\9b204cd8.low.webp",
-    "blurPath": "blur\\9b204cd8.blur.webp",
+    "uuid": "f31e4a19",
+    "url": "",
+    "webpPath": "low/f31e4a19.low.webp",
+    "blurPath": "blur/f31e4a19.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -259,18 +259,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 500,
-      "shutter_speed": "1/50s",
+      "shutterSpeed": "1/50s",
       "datetime": "2024:07:12 23:59:58"
     }
   },
   {
-    "uuid": "df7d1218",
-    "link": "",
-    "webpPath": "low\\df7d1218.low.webp",
-    "blurPath": "blur\\df7d1218.blur.webp",
+    "uuid": "6e91e71d",
+    "url": "",
+    "webpPath": "low/6e91e71d.low.webp",
+    "blurPath": "blur/6e91e71d.blur.webp",
     "size": {
       "width": 800,
       "height": 600
@@ -281,10 +281,10 @@
     }
   },
   {
-    "uuid": "72abafe1",
-    "link": "",
-    "webpPath": "low\\72abafe1.low.webp",
-    "blurPath": "blur\\72abafe1.blur.webp",
+    "uuid": "c3fadaad",
+    "url": "",
+    "webpPath": "low/c3fadaad.low.webp",
+    "blurPath": "blur/c3fadaad.blur.webp",
     "size": {
       "width": 800,
       "height": 450
@@ -295,10 +295,10 @@
     }
   },
   {
-    "uuid": "817adefc",
-    "link": "",
-    "webpPath": "low\\817adefc.low.webp",
-    "blurPath": "blur\\817adefc.blur.webp",
+    "uuid": "c46200d9",
+    "url": "",
+    "webpPath": "low/c46200d9.low.webp",
+    "blurPath": "blur/c46200d9.blur.webp",
     "size": {
       "width": 800,
       "height": 599
@@ -308,18 +308,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 80,
-      "shutter_speed": "1/1000s",
+      "shutterSpeed": "1/1000s",
       "datetime": "2024:07:13 19:21:46"
     }
   },
   {
-    "uuid": "aff4af12",
-    "link": "",
-    "webpPath": "low\\aff4af12.low.webp",
-    "blurPath": "blur\\aff4af12.blur.webp",
+    "uuid": "6f329108",
+    "url": "",
+    "webpPath": "low/6f329108.low.webp",
+    "blurPath": "blur/6f329108.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -329,18 +329,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 80,
-      "shutter_speed": "1/3000s",
+      "shutterSpeed": "1/3000s",
       "datetime": "2024:07:28 15:53:21"
     }
   },
   {
-    "uuid": "80f9a076",
-    "link": "",
-    "webpPath": "low\\80f9a076.low.webp",
-    "blurPath": "blur\\80f9a076.blur.webp",
+    "uuid": "9f2ba04d",
+    "url": "",
+    "webpPath": "low/9f2ba04d.low.webp",
+    "blurPath": "blur/9f2ba04d.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -350,18 +350,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 40,
-      "shutter_speed": "1/1269s",
+      "shutterSpeed": "1/1269s",
       "datetime": "2024:07:28 18:29:58"
     }
   },
   {
-    "uuid": "27b13433",
-    "link": "",
-    "webpPath": "low\\27b13433.low.webp",
-    "blurPath": "blur\\27b13433.blur.webp",
+    "uuid": "fc97fe89",
+    "url": "",
+    "webpPath": "low/fc97fe89.low.webp",
+    "blurPath": "blur/fc97fe89.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -371,18 +371,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/180s",
+      "shutterSpeed": "1/180s",
       "datetime": "2024:07:28 19:06:25"
     }
   },
   {
-    "uuid": "4c472cc9",
-    "link": "",
-    "webpPath": "low\\4c472cc9.low.webp",
-    "blurPath": "blur\\4c472cc9.blur.webp",
+    "uuid": "7a450a11",
+    "url": "",
+    "webpPath": "low/7a450a11.low.webp",
+    "blurPath": "blur/7a450a11.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -393,10 +393,10 @@
     }
   },
   {
-    "uuid": "e4d25784",
-    "link": "",
-    "webpPath": "low\\e4d25784.low.webp",
-    "blurPath": "blur\\e4d25784.blur.webp",
+    "uuid": "75a015f7",
+    "url": "",
+    "webpPath": "low/75a015f7.low.webp",
+    "blurPath": "blur/75a015f7.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -406,18 +406,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 3200,
-      "shutter_speed": "1/15s",
+      "shutterSpeed": "1/15s",
       "datetime": "2024:08:14 22:04:01"
     }
   },
   {
-    "uuid": "c7f85c98",
-    "link": "",
-    "webpPath": "low\\c7f85c98.low.webp",
-    "blurPath": "blur\\c7f85c98.blur.webp",
+    "uuid": "930fbabc",
+    "url": "",
+    "webpPath": "low/930fbabc.low.webp",
+    "blurPath": "blur/930fbabc.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -427,18 +427,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 3200,
-      "shutter_speed": "1/15s",
+      "shutterSpeed": "1/15s",
       "datetime": "2024:08:14 22:05:47"
     }
   },
   {
-    "uuid": "19bf9344",
-    "link": "",
-    "webpPath": "low\\19bf9344.low.webp",
-    "blurPath": "blur\\19bf9344.blur.webp",
+    "uuid": "699a617f",
+    "url": "",
+    "webpPath": "low/699a617f.low.webp",
+    "blurPath": "blur/699a617f.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -448,18 +448,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 3200,
-      "shutter_speed": "1/15s",
+      "shutterSpeed": "1/15s",
       "datetime": "2024:08:14 22:05:47"
     }
   },
   {
-    "uuid": "26060837",
-    "link": "",
-    "webpPath": "low\\26060837.low.webp",
-    "blurPath": "blur\\26060837.blur.webp",
+    "uuid": "3b7414c3",
+    "url": "",
+    "webpPath": "low/3b7414c3.low.webp",
+    "blurPath": "blur/3b7414c3.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -469,18 +469,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 125,
-      "shutter_speed": "500/1000s",
+      "shutterSpeed": "500/1000s",
       "datetime": "2024:09:03 21:58:17"
     }
   },
   {
-    "uuid": "700575fc",
-    "link": "",
-    "webpPath": "low\\700575fc.low.webp",
-    "blurPath": "blur\\700575fc.blur.webp",
+    "uuid": "5ed2b691",
+    "url": "",
+    "webpPath": "low/5ed2b691.low.webp",
+    "blurPath": "blur/5ed2b691.blur.webp",
     "size": {
       "width": 800,
       "height": 999
@@ -488,10 +488,10 @@
     "metadata": {}
   },
   {
-    "uuid": "2af48f52",
-    "link": "",
-    "webpPath": "low\\2af48f52.low.webp",
-    "blurPath": "blur\\2af48f52.blur.webp",
+    "uuid": "60d0226d",
+    "url": "",
+    "webpPath": "low/60d0226d.low.webp",
+    "blurPath": "blur/60d0226d.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -501,18 +501,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 3200,
-      "shutter_speed": "1/50s",
+      "shutterSpeed": "1/50s",
       "datetime": "2024:10:12 19:17:36"
     }
   },
   {
-    "uuid": "7a8eb4e8",
-    "link": "",
-    "webpPath": "low\\7a8eb4e8.low.webp",
-    "blurPath": "blur\\7a8eb4e8.blur.webp",
+    "uuid": "ea7014a4",
+    "url": "",
+    "webpPath": "low/ea7014a4.low.webp",
+    "blurPath": "blur/ea7014a4.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -522,18 +522,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 125,
-      "shutter_speed": "1/180s",
+      "shutterSpeed": "1/180s",
       "datetime": "2024:10:16 18:06:22"
     }
   },
   {
-    "uuid": "b7be5d33",
-    "link": "",
-    "webpPath": "low\\b7be5d33.low.webp",
-    "blurPath": "blur\\b7be5d33.blur.webp",
+    "uuid": "5eb51f0f",
+    "url": "",
+    "webpPath": "low/5eb51f0f.low.webp",
+    "blurPath": "blur/5eb51f0f.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -543,18 +543,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 125,
-      "shutter_speed": "1/180s",
+      "shutterSpeed": "1/180s",
       "datetime": "2024:10:16 18:06:22"
     }
   },
   {
-    "uuid": "e9ae9c81",
-    "link": "",
-    "webpPath": "low\\e9ae9c81.low.webp",
-    "blurPath": "blur\\e9ae9c81.blur.webp",
+    "uuid": "af506bd0",
+    "url": "",
+    "webpPath": "low/af506bd0.low.webp",
+    "blurPath": "blur/af506bd0.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -564,18 +564,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 500,
-      "shutter_speed": "1/250s",
+      "shutterSpeed": "1/250s",
       "datetime": "2024:10:31 22:22:18"
     }
   },
   {
-    "uuid": "a729a7ec",
-    "link": "",
-    "webpPath": "low\\a729a7ec.low.webp",
-    "blurPath": "blur\\a729a7ec.blur.webp",
+    "uuid": "9fd7c38b",
+    "url": "",
+    "webpPath": "low/9fd7c38b.low.webp",
+    "blurPath": "blur/9fd7c38b.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -585,18 +585,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 500,
-      "shutter_speed": "333/10000s",
+      "shutterSpeed": "333/10000s",
       "datetime": "2024:10:31 22:09:18"
     }
   },
   {
-    "uuid": "4fbd5ab3",
-    "link": "",
-    "webpPath": "low\\4fbd5ab3.low.webp",
-    "blurPath": "blur\\4fbd5ab3.blur.webp",
+    "uuid": "0173d787",
+    "url": "",
+    "webpPath": "low/0173d787.low.webp",
+    "blurPath": "blur/0173d787.blur.webp",
     "size": {
       "width": 800,
       "height": 995
@@ -606,18 +606,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 80,
-      "shutter_speed": "1/750s",
+      "shutterSpeed": "1/750s",
       "datetime": "2024:11:02 17:11:29"
     }
   },
   {
-    "uuid": "aa2c51b2",
-    "link": "",
-    "webpPath": "low\\aa2c51b2.low.webp",
-    "blurPath": "blur\\aa2c51b2.blur.webp",
+    "uuid": "d581a8a2",
+    "url": "",
+    "webpPath": "low/d581a8a2.low.webp",
+    "blurPath": "blur/d581a8a2.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -627,18 +627,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 160,
-      "shutter_speed": "1/500s",
+      "shutterSpeed": "1/500s",
       "datetime": "2024:12:18 16:34:01"
     }
   },
   {
-    "uuid": "cdb0e270",
-    "link": "",
-    "webpPath": "low\\cdb0e270.low.webp",
-    "blurPath": "blur\\cdb0e270.blur.webp",
+    "uuid": "c3835f4c",
+    "url": "",
+    "webpPath": "low/c3835f4c.low.webp",
+    "blurPath": "blur/c3835f4c.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -648,18 +648,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 800,
-      "shutter_speed": "1/45s",
+      "shutterSpeed": "1/45s",
       "datetime": "2025:01:09 18:18:16"
     }
   },
   {
-    "uuid": "6927b74b",
-    "link": "",
-    "webpPath": "low\\6927b74b.low.webp",
-    "blurPath": "blur\\6927b74b.blur.webp",
+    "uuid": "29920b2d",
+    "url": "",
+    "webpPath": "low/29920b2d.low.webp",
+    "blurPath": "blur/29920b2d.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -669,18 +669,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 800,
-      "shutter_speed": "1/45s",
+      "shutterSpeed": "1/45s",
       "datetime": "2025:01:09 18:18:16"
     }
   },
   {
-    "uuid": "723e89b3",
-    "link": "",
-    "webpPath": "low\\723e89b3.low.webp",
-    "blurPath": "blur\\723e89b3.blur.webp",
+    "uuid": "9e7da237",
+    "url": "",
+    "webpPath": "low/9e7da237.low.webp",
+    "blurPath": "blur/9e7da237.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -690,18 +690,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 320,
-      "shutter_speed": "1/33s",
+      "shutterSpeed": "1/33s",
       "datetime": "2025:02:12 21:45:01"
     }
   },
   {
-    "uuid": "b74a3727",
-    "link": "",
-    "webpPath": "low\\b74a3727.low.webp",
-    "blurPath": "blur\\b74a3727.blur.webp",
+    "uuid": "8161a706",
+    "url": "",
+    "webpPath": "low/8161a706.low.webp",
+    "blurPath": "blur/8161a706.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -711,18 +711,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 1600,
-      "shutter_speed": "1/10s",
+      "shutterSpeed": "1/10s",
       "datetime": "2023:06:21 20:01:52"
     }
   },
   {
-    "uuid": "0f9091d7",
-    "link": "",
-    "webpPath": "low\\0f9091d7.low.webp",
-    "blurPath": "blur\\0f9091d7.blur.webp",
+    "uuid": "1a586df4",
+    "url": "",
+    "webpPath": "low/1a586df4.low.webp",
+    "blurPath": "blur/1a586df4.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -732,18 +732,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS2AWC6",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2023:06:29 06:26:53"
     }
   },
   {
-    "uuid": "2625cbb7",
-    "link": "",
-    "webpPath": "low\\2625cbb7.low.webp",
-    "blurPath": "blur\\2625cbb7.blur.webp",
+    "uuid": "058b229d",
+    "url": "",
+    "webpPath": "low/058b229d.low.webp",
+    "blurPath": "blur/058b229d.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -753,18 +753,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS2AWC6",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2023:06:29 06:30:01"
     }
   },
   {
-    "uuid": "ebbf2501",
-    "link": "",
-    "webpPath": "low\\ebbf2501.low.webp",
-    "blurPath": "blur\\ebbf2501.blur.webp",
+    "uuid": "949e6646",
+    "url": "",
+    "webpPath": "low/949e6646.low.webp",
+    "blurPath": "blur/949e6646.blur.webp",
     "size": {
       "width": 800,
       "height": 997
@@ -772,10 +772,10 @@
     "metadata": {}
   },
   {
-    "uuid": "c3a8519d",
-    "link": "",
-    "webpPath": "low\\c3a8519d.low.webp",
-    "blurPath": "blur\\c3a8519d.blur.webp",
+    "uuid": "95fcc355",
+    "url": "",
+    "webpPath": "low/95fcc355.low.webp",
+    "blurPath": "blur/95fcc355.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -783,10 +783,10 @@
     "metadata": {}
   },
   {
-    "uuid": "5c963e44",
-    "link": "",
-    "webpPath": "low\\5c963e44.low.webp",
-    "blurPath": "blur\\5c963e44.blur.webp",
+    "uuid": "1cddf4fb",
+    "url": "",
+    "webpPath": "low/1cddf4fb.low.webp",
+    "blurPath": "blur/1cddf4fb.blur.webp",
     "size": {
       "width": 800,
       "height": 999
@@ -794,10 +794,10 @@
     "metadata": {}
   },
   {
-    "uuid": "fe9b6bf9",
-    "link": "",
-    "webpPath": "low\\fe9b6bf9.low.webp",
-    "blurPath": "blur\\fe9b6bf9.blur.webp",
+    "uuid": "962567b2",
+    "url": "",
+    "webpPath": "low/962567b2.low.webp",
+    "blurPath": "blur/962567b2.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -807,18 +807,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXU2AWDB",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 250,
-      "shutter_speed": "1/20s",
+      "shutterSpeed": "1/20s",
       "datetime": "2023:08:01 21:27:45"
     }
   },
   {
-    "uuid": "2ed59477",
-    "link": "",
-    "webpPath": "low\\2ed59477.low.webp",
-    "blurPath": "blur\\2ed59477.blur.webp",
+    "uuid": "19227aef",
+    "url": "",
+    "webpPath": "low/19227aef.low.webp",
+    "blurPath": "blur/19227aef.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -828,18 +828,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXU2AWDB",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 250,
-      "shutter_speed": "1/20s",
+      "shutterSpeed": "1/20s",
       "datetime": "2023:08:01 21:27:46"
     }
   },
   {
-    "uuid": "6d8c666e",
-    "link": "",
-    "webpPath": "low\\6d8c666e.low.webp",
-    "blurPath": "blur\\6d8c666e.blur.webp",
+    "uuid": "52566107",
+    "url": "",
+    "webpPath": "low/52566107.low.webp",
+    "blurPath": "blur/52566107.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -849,18 +849,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXU2AWDB",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 400,
-      "shutter_speed": "1/10s",
+      "shutterSpeed": "1/10s",
       "datetime": "2023:08:02 19:41:12"
     }
   },
   {
-    "uuid": "fda7b5d7",
-    "link": "",
-    "webpPath": "low\\fda7b5d7.low.webp",
-    "blurPath": "blur\\fda7b5d7.blur.webp",
+    "uuid": "ce98721d",
+    "url": "",
+    "webpPath": "low/ce98721d.low.webp",
+    "blurPath": "blur/ce98721d.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -870,18 +870,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXU2AWDB",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 320,
-      "shutter_speed": "1/10s",
+      "shutterSpeed": "1/10s",
       "datetime": "2023:08:02 19:41:47"
     }
   },
   {
-    "uuid": "644fe03a",
-    "link": "",
-    "webpPath": "low\\644fe03a.low.webp",
-    "blurPath": "blur\\644fe03a.blur.webp",
+    "uuid": "88674f51",
+    "url": "",
+    "webpPath": "low/88674f51.low.webp",
+    "blurPath": "blur/88674f51.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -891,18 +891,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXU2AWDB",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 320,
-      "shutter_speed": "1/10s",
+      "shutterSpeed": "1/10s",
       "datetime": "2023:08:02 19:41:51"
     }
   },
   {
-    "uuid": "f8ac8b87",
-    "link": "",
-    "webpPath": "low\\f8ac8b87.low.webp",
-    "blurPath": "blur\\f8ac8b87.blur.webp",
+    "uuid": "aa71d648",
+    "url": "",
+    "webpPath": "low/aa71d648.low.webp",
+    "blurPath": "blur/aa71d648.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -910,10 +910,10 @@
     "metadata": {}
   },
   {
-    "uuid": "f0e8640e",
-    "link": "",
-    "webpPath": "low\\f0e8640e.low.webp",
-    "blurPath": "blur\\f0e8640e.blur.webp",
+    "uuid": "bca98686",
+    "url": "",
+    "webpPath": "low/bca98686.low.webp",
+    "blurPath": "blur/bca98686.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -921,10 +921,10 @@
     "metadata": {}
   },
   {
-    "uuid": "bf43935f",
-    "link": "",
-    "webpPath": "low\\bf43935f.low.webp",
-    "blurPath": "blur\\bf43935f.blur.webp",
+    "uuid": "d8b1a17b",
+    "url": "",
+    "webpPath": "low/d8b1a17b.low.webp",
+    "blurPath": "blur/d8b1a17b.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -934,18 +934,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 125,
-      "shutter_speed": "1/125s",
+      "shutterSpeed": "1/125s",
       "datetime": "2023:08:06 17:44:51"
     }
   },
   {
-    "uuid": "d25e74e1",
-    "link": "",
-    "webpPath": "low\\d25e74e1.low.webp",
-    "blurPath": "blur\\d25e74e1.blur.webp",
+    "uuid": "0780a032",
+    "url": "",
+    "webpPath": "low/0780a032.low.webp",
+    "blurPath": "blur/0780a032.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -955,18 +955,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 400,
-      "shutter_speed": "1/4000s",
+      "shutterSpeed": "1/4000s",
       "datetime": "2023:09:20 18:28:04"
     }
   },
   {
-    "uuid": "b8bf58d3",
-    "link": "",
-    "webpPath": "low\\b8bf58d3.low.webp",
-    "blurPath": "blur\\b8bf58d3.blur.webp",
+    "uuid": "bff803af",
+    "url": "",
+    "webpPath": "low/bff803af.low.webp",
+    "blurPath": "blur/bff803af.blur.webp",
     "size": {
       "width": 800,
       "height": 450
@@ -976,18 +976,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 160,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2023:10:01 16:34:45"
     }
   },
   {
-    "uuid": "5472e70c",
-    "link": "",
-    "webpPath": "low\\5472e70c.low.webp",
-    "blurPath": "blur\\5472e70c.blur.webp",
+    "uuid": "3bde6ae6",
+    "url": "",
+    "webpPath": "low/3bde6ae6.low.webp",
+    "blurPath": "blur/3bde6ae6.blur.webp",
     "size": {
       "width": 800,
       "height": 450
@@ -997,18 +997,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 160,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2023:10:01 16:45:13"
     }
   },
   {
-    "uuid": "4a0654e2",
-    "link": "",
-    "webpPath": "low\\4a0654e2.low.webp",
-    "blurPath": "blur\\4a0654e2.blur.webp",
+    "uuid": "4f024ea3",
+    "url": "",
+    "webpPath": "low/4f024ea3.low.webp",
+    "blurPath": "blur/4f024ea3.blur.webp",
     "size": {
       "width": 800,
       "height": 450
@@ -1018,18 +1018,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2023:10:02 09:45:28"
     }
   },
   {
-    "uuid": "55438d2d",
-    "link": "",
-    "webpPath": "low\\55438d2d.low.webp",
-    "blurPath": "blur\\55438d2d.blur.webp",
+    "uuid": "ef1249e9",
+    "url": "",
+    "webpPath": "low/ef1249e9.low.webp",
+    "blurPath": "blur/ef1249e9.blur.webp",
     "size": {
       "width": 800,
       "height": 450
@@ -1039,18 +1039,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 160,
-      "shutter_speed": "1/350s",
+      "shutterSpeed": "1/350s",
       "datetime": "2023:10:06 20:04:33"
     }
   },
   {
-    "uuid": "f94f0e69",
-    "link": "",
-    "webpPath": "low\\f94f0e69.low.webp",
-    "blurPath": "blur\\f94f0e69.blur.webp",
+    "uuid": "5b76b941",
+    "url": "",
+    "webpPath": "low/5b76b941.low.webp",
+    "blurPath": "blur/5b76b941.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1060,18 +1060,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 1000,
-      "shutter_speed": "1/20s",
+      "shutterSpeed": "1/20s",
       "datetime": "2023:10:07 19:07:29"
     }
   },
   {
-    "uuid": "59947fa3",
-    "link": "",
-    "webpPath": "low\\59947fa3.low.webp",
-    "blurPath": "blur\\59947fa3.blur.webp",
+    "uuid": "4c8ba706",
+    "url": "",
+    "webpPath": "low/4c8ba706.low.webp",
+    "blurPath": "blur/4c8ba706.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1081,18 +1081,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 125,
-      "shutter_speed": "250/1000s",
+      "shutterSpeed": "250/1000s",
       "datetime": "2023:10:07 19:07:41"
     }
   },
   {
-    "uuid": "feb9c2c5",
-    "link": "",
-    "webpPath": "low\\feb9c2c5.low.webp",
-    "blurPath": "blur\\feb9c2c5.blur.webp",
+    "uuid": "ab251e6f",
+    "url": "",
+    "webpPath": "low/ab251e6f.low.webp",
+    "blurPath": "blur/ab251e6f.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1102,18 +1102,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 40,
-      "shutter_speed": "1/260s",
+      "shutterSpeed": "1/260s",
       "datetime": "2023:10:14 17:52:12"
     }
   },
   {
-    "uuid": "61385f88",
-    "link": "",
-    "webpPath": "low\\61385f88.low.webp",
-    "blurPath": "blur\\61385f88.blur.webp",
+    "uuid": "a64c6c76",
+    "url": "",
+    "webpPath": "low/a64c6c76.low.webp",
+    "blurPath": "blur/a64c6c76.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1123,18 +1123,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 100,
-      "shutter_speed": "1/1000s",
+      "shutterSpeed": "1/1000s",
       "datetime": "2023:10:14 17:52:28"
     }
   },
   {
-    "uuid": "3bb1b169",
-    "link": "",
-    "webpPath": "low\\3bb1b169.low.webp",
-    "blurPath": "blur\\3bb1b169.blur.webp",
+    "uuid": "34444dee",
+    "url": "",
+    "webpPath": "low/34444dee.low.webp",
+    "blurPath": "blur/34444dee.blur.webp",
     "size": {
       "width": 800,
       "height": 450
@@ -1144,18 +1144,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 160,
-      "shutter_speed": "1/2000s",
+      "shutterSpeed": "1/2000s",
       "datetime": "2023:10:23 21:20:12"
     }
   },
   {
-    "uuid": "1b9366d5",
-    "link": "",
-    "webpPath": "low\\1b9366d5.low.webp",
-    "blurPath": "blur\\1b9366d5.blur.webp",
+    "uuid": "dab69c3a",
+    "url": "",
+    "webpPath": "low/dab69c3a.low.webp",
+    "blurPath": "blur/dab69c3a.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1165,18 +1165,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 250,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2023:10:28 17:34:32"
     }
   },
   {
-    "uuid": "f5ca8031",
-    "link": "",
-    "webpPath": "low\\f5ca8031.low.webp",
-    "blurPath": "blur\\f5ca8031.blur.webp",
+    "uuid": "0c61427a",
+    "url": "",
+    "webpPath": "low/0c61427a.low.webp",
+    "blurPath": "blur/0c61427a.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1186,18 +1186,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 64,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2023:11:10 08:29:59"
     }
   },
   {
-    "uuid": "cc85f7fa",
-    "link": "",
-    "webpPath": "low\\cc85f7fa.low.webp",
-    "blurPath": "blur\\cc85f7fa.blur.webp",
+    "uuid": "4e587dca",
+    "url": "",
+    "webpPath": "low/4e587dca.low.webp",
+    "blurPath": "blur/4e587dca.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1207,18 +1207,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 160,
-      "shutter_speed": "1/4000s",
+      "shutterSpeed": "1/4000s",
       "datetime": "2023:11:12 20:48:34"
     }
   },
   {
-    "uuid": "6c26e6b2",
-    "link": "",
-    "webpPath": "low\\6c26e6b2.low.webp",
-    "blurPath": "blur\\6c26e6b2.blur.webp",
+    "uuid": "a6d52c37",
+    "url": "",
+    "webpPath": "low/a6d52c37.low.webp",
+    "blurPath": "blur/a6d52c37.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1228,18 +1228,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 250,
-      "shutter_speed": "1/1000s",
+      "shutterSpeed": "1/1000s",
       "datetime": "2023:11:12 20:52:31"
     }
   },
   {
-    "uuid": "9063dc52",
-    "link": "",
-    "webpPath": "low\\9063dc52.low.webp",
-    "blurPath": "blur\\9063dc52.blur.webp",
+    "uuid": "0bb993fe",
+    "url": "",
+    "webpPath": "low/0bb993fe.low.webp",
+    "blurPath": "blur/0bb993fe.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1249,18 +1249,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS4AWG1",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 100,
-      "shutter_speed": "1/1500s",
+      "shutterSpeed": "1/1500s",
       "datetime": "2023:11:13 16:54:57"
     }
   },
   {
-    "uuid": "46aae5c1",
-    "link": "",
-    "webpPath": "low\\46aae5c1.low.webp",
-    "blurPath": "blur\\46aae5c1.blur.webp",
+    "uuid": "9d0b7b8d",
+    "url": "",
+    "webpPath": "low/9d0b7b8d.low.webp",
+    "blurPath": "blur/9d0b7b8d.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1270,18 +1270,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS6BXA2",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/250s",
+      "shutterSpeed": "1/250s",
       "datetime": "2024:02:26 18:11:12"
     }
   },
   {
-    "uuid": "c179024e",
-    "link": "",
-    "webpPath": "low\\c179024e.low.webp",
-    "blurPath": "blur\\c179024e.blur.webp",
+    "uuid": "bee4c9f8",
+    "url": "",
+    "webpPath": "low/bee4c9f8.low.webp",
+    "blurPath": "blur/bee4c9f8.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1291,18 +1291,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 64,
-      "shutter_speed": "1/50s",
+      "shutterSpeed": "1/50s",
       "datetime": "2024:03:08 16:25:03"
     }
   },
   {
-    "uuid": "20d1f477",
-    "link": "",
-    "webpPath": "low\\20d1f477.low.webp",
-    "blurPath": "blur\\20d1f477.blur.webp",
+    "uuid": "a0d9c7be",
+    "url": "",
+    "webpPath": "low/a0d9c7be.low.webp",
+    "blurPath": "blur/a0d9c7be.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -1310,10 +1310,10 @@
     "metadata": {}
   },
   {
-    "uuid": "16c6f086",
-    "link": "",
-    "webpPath": "low\\16c6f086.low.webp",
-    "blurPath": "blur\\16c6f086.blur.webp",
+    "uuid": "ef12431a",
+    "url": "",
+    "webpPath": "low/ef12431a.low.webp",
+    "blurPath": "blur/ef12431a.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1323,18 +1323,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS6BXA2",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 400,
-      "shutter_speed": "1/2000s",
+      "shutterSpeed": "1/2000s",
       "datetime": "2024:03:09 18:28:32"
     }
   },
   {
-    "uuid": "a76fb8ab",
-    "link": "",
-    "webpPath": "low\\a76fb8ab.low.webp",
-    "blurPath": "blur\\a76fb8ab.blur.webp",
+    "uuid": "c06a2393",
+    "url": "",
+    "webpPath": "low/c06a2393.low.webp",
+    "blurPath": "blur/c06a2393.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -1342,10 +1342,10 @@
     "metadata": {}
   },
   {
-    "uuid": "f17be397",
-    "link": "",
-    "webpPath": "low\\f17be397.low.webp",
-    "blurPath": "blur\\f17be397.blur.webp",
+    "uuid": "582615dd",
+    "url": "",
+    "webpPath": "low/582615dd.low.webp",
+    "blurPath": "blur/582615dd.blur.webp",
     "size": {
       "width": 800,
       "height": 369
@@ -1355,18 +1355,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS6BXAE",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/750s",
+      "shutterSpeed": "1/750s",
       "datetime": "2024:04:04 18:09:45"
     }
   },
   {
-    "uuid": "3d60534c",
-    "link": "",
-    "webpPath": "low\\3d60534c.low.webp",
-    "blurPath": "blur\\3d60534c.blur.webp",
+    "uuid": "ba339cbf",
+    "url": "",
+    "webpPath": "low/ba339cbf.low.webp",
+    "blurPath": "blur/ba339cbf.blur.webp",
     "size": {
       "width": 800,
       "height": 369
@@ -1376,18 +1376,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS6BXAE",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/750s",
+      "shutterSpeed": "1/750s",
       "datetime": "2024:04:04 18:09:54"
     }
   },
   {
-    "uuid": "62ad5228",
-    "link": "",
-    "webpPath": "low\\62ad5228.low.webp",
-    "blurPath": "blur\\62ad5228.blur.webp",
+    "uuid": "db9e9294",
+    "url": "",
+    "webpPath": "low/db9e9294.low.webp",
+    "blurPath": "blur/db9e9294.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1397,18 +1397,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS6BXAE",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 64,
-      "shutter_speed": "1/350s",
+      "shutterSpeed": "1/350s",
       "datetime": "2024:04:04 18:16:22"
     }
   },
   {
-    "uuid": "962e4afa",
-    "link": "",
-    "webpPath": "low\\962e4afa.low.webp",
-    "blurPath": "blur\\962e4afa.blur.webp",
+    "uuid": "731d7d6c",
+    "url": "",
+    "webpPath": "low/731d7d6c.low.webp",
+    "blurPath": "blur/731d7d6c.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -1418,18 +1418,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 100,
-      "shutter_speed": "1/125s",
+      "shutterSpeed": "1/125s",
       "datetime": "2024:04:04 18:38:25"
     }
   },
   {
-    "uuid": "be6456ce",
-    "link": "",
-    "webpPath": "low\\be6456ce.low.webp",
-    "blurPath": "blur\\be6456ce.blur.webp",
+    "uuid": "f6a5e847",
+    "url": "",
+    "webpPath": "low/f6a5e847.low.webp",
+    "blurPath": "blur/f6a5e847.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1439,18 +1439,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS6BXAE",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 80,
-      "shutter_speed": "1/6000s",
+      "shutterSpeed": "1/6000s",
       "datetime": "2024:04:06 18:01:26"
     }
   },
   {
-    "uuid": "40ca65e4",
-    "link": "",
-    "webpPath": "low\\40ca65e4.low.webp",
-    "blurPath": "blur\\40ca65e4.blur.webp",
+    "uuid": "1c6edea0",
+    "url": "",
+    "webpPath": "low/1c6edea0.low.webp",
+    "blurPath": "blur/1c6edea0.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1460,18 +1460,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS6BXAE",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 125,
-      "shutter_speed": "1/1500s",
+      "shutterSpeed": "1/1500s",
       "datetime": "2024:04:06 18:02:20"
     }
   },
   {
-    "uuid": "fe38e078",
-    "link": "",
-    "webpPath": "low\\fe38e078.low.webp",
-    "blurPath": "blur\\fe38e078.blur.webp",
+    "uuid": "4abad8e9",
+    "url": "",
+    "webpPath": "low/4abad8e9.low.webp",
+    "blurPath": "blur/4abad8e9.blur.webp",
     "size": {
       "width": 800,
       "height": 369
@@ -1481,18 +1481,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS6BXAE",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 64,
-      "shutter_speed": "1/1000s",
+      "shutterSpeed": "1/1000s",
       "datetime": "2024:04:06 18:16:46"
     }
   },
   {
-    "uuid": "dd67d688",
-    "link": "",
-    "webpPath": "low\\dd67d688.low.webp",
-    "blurPath": "blur\\dd67d688.blur.webp",
+    "uuid": "17168ec2",
+    "url": "",
+    "webpPath": "low/17168ec2.low.webp",
+    "blurPath": "blur/17168ec2.blur.webp",
     "size": {
       "width": 800,
       "height": 369
@@ -1502,18 +1502,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS6BXAE",
       "orientation": 3,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 64,
-      "shutter_speed": "1/500s",
+      "shutterSpeed": "1/500s",
       "datetime": "2024:04:06 18:37:46"
     }
   },
   {
-    "uuid": "2757a3f9",
-    "link": "",
-    "webpPath": "low\\2757a3f9.low.webp",
-    "blurPath": "blur\\2757a3f9.blur.webp",
+    "uuid": "472f4fd0",
+    "url": "",
+    "webpPath": "low/472f4fd0.low.webp",
+    "blurPath": "blur/472f4fd0.blur.webp",
     "size": {
       "width": 800,
       "height": 369
@@ -1523,18 +1523,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS6BXAE",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 500,
-      "shutter_speed": "1/90s",
+      "shutterSpeed": "1/90s",
       "datetime": "2024:04:06 19:03:30"
     }
   },
   {
-    "uuid": "eff39c86",
-    "link": "",
-    "webpPath": "low\\eff39c86.low.webp",
-    "blurPath": "blur\\eff39c86.blur.webp",
+    "uuid": "1ecc705e",
+    "url": "",
+    "webpPath": "low/1ecc705e.low.webp",
+    "blurPath": "blur/1ecc705e.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -1544,18 +1544,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 160,
-      "shutter_speed": "1/50s",
+      "shutterSpeed": "1/50s",
       "datetime": "2024:04:16 17:32:22"
     }
   },
   {
-    "uuid": "b6a8dbab",
-    "link": "",
-    "webpPath": "low\\b6a8dbab.low.webp",
-    "blurPath": "blur\\b6a8dbab.blur.webp",
+    "uuid": "0d14075d",
+    "url": "",
+    "webpPath": "low/0d14075d.low.webp",
+    "blurPath": "blur/0d14075d.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1565,18 +1565,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXU7CXDD",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 250,
-      "shutter_speed": "1/30s",
+      "shutterSpeed": "1/30s",
       "datetime": "2024:05:30 14:44:39"
     }
   },
   {
-    "uuid": "0f1f1a4a",
-    "link": "",
-    "webpPath": "low\\0f1f1a4a.low.webp",
-    "blurPath": "blur\\0f1f1a4a.blur.webp",
+    "uuid": "d541f41f",
+    "url": "",
+    "webpPath": "low/d541f41f.low.webp",
+    "blurPath": "blur/d541f41f.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1586,18 +1586,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS8CXE2",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 250,
-      "shutter_speed": "1/30s",
+      "shutterSpeed": "1/30s",
       "datetime": "2024:06:08 19:35:43"
     }
   },
   {
-    "uuid": "e07637a3",
-    "link": "",
-    "webpPath": "low\\e07637a3.low.webp",
-    "blurPath": "blur\\e07637a3.blur.webp",
+    "uuid": "89d01d05",
+    "url": "",
+    "webpPath": "low/89d01d05.low.webp",
+    "blurPath": "blur/89d01d05.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1607,18 +1607,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS8CXE2",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 800,
-      "shutter_speed": "1/20s",
+      "shutterSpeed": "1/20s",
       "datetime": "2024:06:08 21:15:24"
     }
   },
   {
-    "uuid": "ec0261a0",
-    "link": "",
-    "webpPath": "low\\ec0261a0.low.webp",
-    "blurPath": "blur\\ec0261a0.blur.webp",
+    "uuid": "4ad7bab5",
+    "url": "",
+    "webpPath": "low/4ad7bab5.low.webp",
+    "blurPath": "blur/4ad7bab5.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1628,18 +1628,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS8CXE2",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 3200,
-      "shutter_speed": "1/45s",
+      "shutterSpeed": "1/45s",
       "datetime": "2024:06:15 05:09:09"
     }
   },
   {
-    "uuid": "f9442c37",
-    "link": "",
-    "webpPath": "low\\f9442c37.low.webp",
-    "blurPath": "blur\\f9442c37.blur.webp",
+    "uuid": "79a3b4a3",
+    "url": "",
+    "webpPath": "low/79a3b4a3.low.webp",
+    "blurPath": "blur/79a3b4a3.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1649,18 +1649,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS8CXE2",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 3200,
-      "shutter_speed": "1/45s",
+      "shutterSpeed": "1/45s",
       "datetime": "2024:06:15 05:09:15"
     }
   },
   {
-    "uuid": "469f87a5",
-    "link": "",
-    "webpPath": "low\\469f87a5.low.webp",
-    "blurPath": "blur\\469f87a5.blur.webp",
+    "uuid": "fb8a5c3e",
+    "url": "",
+    "webpPath": "low/fb8a5c3e.low.webp",
+    "blurPath": "blur/fb8a5c3e.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1670,18 +1670,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS8CXE2",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/90s",
+      "shutterSpeed": "1/90s",
       "datetime": "2024:06:15 05:39:42"
     }
   },
   {
-    "uuid": "de925f09",
-    "link": "",
-    "webpPath": "low\\de925f09.low.webp",
-    "blurPath": "blur\\de925f09.blur.webp",
+    "uuid": "d4c0c520",
+    "url": "",
+    "webpPath": "low/d4c0c520.low.webp",
+    "blurPath": "blur/d4c0c520.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1691,18 +1691,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS8CXE2",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/90s",
+      "shutterSpeed": "1/90s",
       "datetime": "2024:06:15 05:39:57"
     }
   },
   {
-    "uuid": "21c07c7b",
-    "link": "",
-    "webpPath": "low\\21c07c7b.low.webp",
-    "blurPath": "blur\\21c07c7b.blur.webp",
+    "uuid": "0e7d1ae3",
+    "url": "",
+    "webpPath": "low/0e7d1ae3.low.webp",
+    "blurPath": "blur/0e7d1ae3.blur.webp",
     "size": {
       "width": 800,
       "height": 369
@@ -1712,18 +1712,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS8CXE2",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/90s",
+      "shutterSpeed": "1/90s",
       "datetime": "2024:06:15 05:41:22"
     }
   },
   {
-    "uuid": "3dce4ba3",
-    "link": "",
-    "webpPath": "low\\3dce4ba3.low.webp",
-    "blurPath": "blur\\3dce4ba3.blur.webp",
+    "uuid": "f3fc9279",
+    "url": "",
+    "webpPath": "low/f3fc9279.low.webp",
+    "blurPath": "blur/f3fc9279.blur.webp",
     "size": {
       "width": 800,
       "height": 369
@@ -1733,18 +1733,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS8CXE2",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/90s",
+      "shutterSpeed": "1/90s",
       "datetime": "2024:06:15 05:41:24"
     }
   },
   {
-    "uuid": "cd88f30d",
-    "link": "",
-    "webpPath": "low\\cd88f30d.low.webp",
-    "blurPath": "blur\\cd88f30d.blur.webp",
+    "uuid": "fcf32760",
+    "url": "",
+    "webpPath": "low/fcf32760.low.webp",
+    "blurPath": "blur/fcf32760.blur.webp",
     "size": {
       "width": 800,
       "height": 369
@@ -1754,18 +1754,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS8CXE2",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/90s",
+      "shutterSpeed": "1/90s",
       "datetime": "2024:06:15 05:41:25"
     }
   },
   {
-    "uuid": "c53600e1",
-    "link": "",
-    "webpPath": "low\\c53600e1.low.webp",
-    "blurPath": "blur\\c53600e1.blur.webp",
+    "uuid": "b70d39a6",
+    "url": "",
+    "webpPath": "low/b70d39a6.low.webp",
+    "blurPath": "blur/b70d39a6.blur.webp",
     "size": {
       "width": 800,
       "height": 1732
@@ -1775,18 +1775,18 @@
       "camera": "Galaxy A54 5G",
       "software": "A546EXXS8CXE2",
       "orientation": 6,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 250,
-      "shutter_speed": "1/50s",
+      "shutterSpeed": "1/50s",
       "datetime": "2024:07:12 19:34:32"
     }
   },
   {
-    "uuid": "191b2e8f",
-    "link": "",
-    "webpPath": "low\\191b2e8f.low.webp",
-    "blurPath": "blur\\191b2e8f.blur.webp",
+    "uuid": "f1fd0553",
+    "url": "",
+    "webpPath": "low/f1fd0553.low.webp",
+    "blurPath": "blur/f1fd0553.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -1794,10 +1794,10 @@
     "metadata": {}
   },
   {
-    "uuid": "9abbe36f",
-    "link": "",
-    "webpPath": "low\\9abbe36f.low.webp",
-    "blurPath": "blur\\9abbe36f.blur.webp",
+    "uuid": "ce4fe587",
+    "url": "",
+    "webpPath": "low/ce4fe587.low.webp",
+    "blurPath": "blur/ce4fe587.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -1807,18 +1807,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 80,
-      "shutter_speed": "1/50s",
+      "shutterSpeed": "1/50s",
       "datetime": "2024:09:05 23:40:08"
     }
   },
   {
-    "uuid": "e631351e",
-    "link": "",
-    "webpPath": "low\\e631351e.low.webp",
-    "blurPath": "blur\\e631351e.blur.webp",
+    "uuid": "c4216631",
+    "url": "",
+    "webpPath": "low/c4216631.low.webp",
+    "blurPath": "blur/c4216631.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -1828,18 +1828,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 200,
-      "shutter_speed": "1/50s",
+      "shutterSpeed": "1/50s",
       "datetime": "2024:09:07 22:47:51"
     }
   },
   {
-    "uuid": "0d1a86c9",
-    "link": "",
-    "webpPath": "low\\0d1a86c9.low.webp",
-    "blurPath": "blur\\0d1a86c9.blur.webp",
+    "uuid": "fe5a57e6",
+    "url": "",
+    "webpPath": "low/fe5a57e6.low.webp",
+    "blurPath": "blur/fe5a57e6.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1849,18 +1849,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/15s",
+      "shutterSpeed": "1/15s",
       "datetime": "2024:09:13 14:09:41"
     }
   },
   {
-    "uuid": "7ffab347",
-    "link": "",
-    "webpPath": "low\\7ffab347.low.webp",
-    "blurPath": "blur\\7ffab347.blur.webp",
+    "uuid": "58232f88",
+    "url": "",
+    "webpPath": "low/58232f88.low.webp",
+    "blurPath": "blur/58232f88.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1870,18 +1870,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 50,
-      "shutter_speed": "1/15s",
+      "shutterSpeed": "1/15s",
       "datetime": "2024:09:13 14:10:49"
     }
   },
   {
-    "uuid": "22068523",
-    "link": "",
-    "webpPath": "low\\22068523.low.webp",
-    "blurPath": "blur\\22068523.blur.webp",
+    "uuid": "d152984f",
+    "url": "",
+    "webpPath": "low/d152984f.low.webp",
+    "blurPath": "blur/d152984f.blur.webp",
     "size": {
       "width": 800,
       "height": 999
@@ -1891,18 +1891,18 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.0",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 800,
-      "shutter_speed": "166/1000s",
+      "shutterSpeed": "166/1000s",
       "datetime": "2024:12:20 21:14:35"
     }
   },
   {
-    "uuid": "2666f728",
-    "link": "",
-    "webpPath": "low\\2666f728.low.webp",
-    "blurPath": "blur\\2666f728.blur.webp",
+    "uuid": "ca69962f",
+    "url": "",
+    "webpPath": "low/ca69962f.low.webp",
+    "blurPath": "blur/ca69962f.blur.webp",
     "size": {
       "width": 800,
       "height": 1421
@@ -1910,10 +1910,10 @@
     "metadata": {}
   },
   {
-    "uuid": "15de923a",
-    "link": "",
-    "webpPath": "low\\15de923a.low.webp",
-    "blurPath": "blur\\15de923a.blur.webp",
+    "uuid": "fa61be2a",
+    "url": "",
+    "webpPath": "low/fa61be2a.low.webp",
+    "blurPath": "blur/fa61be2a.blur.webp",
     "size": {
       "width": 640,
       "height": 640
@@ -1924,10 +1924,10 @@
     }
   },
   {
-    "uuid": "962ac532",
-    "link": "",
-    "webpPath": "low\\962ac532.low.webp",
-    "blurPath": "blur\\962ac532.blur.webp",
+    "uuid": "2f3d8591",
+    "url": "",
+    "webpPath": "low/2f3d8591.low.webp",
+    "blurPath": "blur/2f3d8591.blur.webp",
     "size": {
       "width": 800,
       "height": 450
@@ -1937,10 +1937,10 @@
       "camera": "Galaxy A54 5G",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "5.5mm",
-      "aperture": "f/1.8",
+      "focalLength": "5.5mm",
+      "aperture": "1.8",
       "iso": 320,
-      "shutter_speed": "1/3000s",
+      "shutterSpeed": "1/3000s",
       "datetime": "2025:04:03 06:29:06",
       "gps": {
         "latitude": 26.896427777777777,
@@ -1949,10 +1949,10 @@
     }
   },
   {
-    "uuid": "f743d7b1",
-    "link": "",
-    "webpPath": "low\\f743d7b1.low.webp",
-    "blurPath": "blur\\f743d7b1.blur.webp",
+    "uuid": "e392fa34",
+    "url": "",
+    "webpPath": "low/e392fa34.low.webp",
+    "blurPath": "blur/e392fa34.blur.webp",
     "size": {
       "width": 800,
       "height": 1424
@@ -1964,10 +1964,10 @@
     }
   },
   {
-    "uuid": "fed63e77",
-    "link": "",
-    "webpPath": "low\\fed63e77.low.webp",
-    "blurPath": "blur\\fed63e77.blur.webp",
+    "uuid": "c7245dca",
+    "url": "",
+    "webpPath": "low/c7245dca.low.webp",
+    "blurPath": "blur/c7245dca.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -1978,10 +1978,10 @@
     }
   },
   {
-    "uuid": "24cd38d5",
-    "link": "",
-    "webpPath": "low\\24cd38d5.low.webp",
-    "blurPath": "blur\\24cd38d5.blur.webp",
+    "uuid": "bb910ed0",
+    "url": "",
+    "webpPath": "low/bb910ed0.low.webp",
+    "blurPath": "blur/bb910ed0.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -1989,10 +1989,10 @@
     "metadata": {}
   },
   {
-    "uuid": "6f21af94",
-    "link": "",
-    "webpPath": "low\\6f21af94.low.webp",
-    "blurPath": "blur\\6f21af94.blur.webp",
+    "uuid": "3c825673",
+    "url": "",
+    "webpPath": "low/3c825673.low.webp",
+    "blurPath": "blur/3c825673.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -2000,10 +2000,10 @@
     "metadata": {}
   },
   {
-    "uuid": "97ff7422",
-    "link": "",
-    "webpPath": "low\\97ff7422.low.webp",
-    "blurPath": "blur\\97ff7422.blur.webp",
+    "uuid": "64672e74",
+    "url": "",
+    "webpPath": "low/64672e74.low.webp",
+    "blurPath": "blur/64672e74.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -2014,10 +2014,10 @@
     }
   },
   {
-    "uuid": "46b2ae9c",
-    "link": "",
-    "webpPath": "low\\46b2ae9c.low.webp",
-    "blurPath": "blur\\46b2ae9c.blur.webp",
+    "uuid": "ae6e1f87",
+    "url": "",
+    "webpPath": "low/ae6e1f87.low.webp",
+    "blurPath": "blur/ae6e1f87.blur.webp",
     "size": {
       "width": 800,
       "height": 640
@@ -2025,10 +2025,10 @@
     "metadata": {}
   },
   {
-    "uuid": "83e61aa5",
-    "link": "",
-    "webpPath": "low\\83e61aa5.low.webp",
-    "blurPath": "blur\\83e61aa5.blur.webp",
+    "uuid": "acd33ff5",
+    "url": "",
+    "webpPath": "low/acd33ff5.low.webp",
+    "blurPath": "blur/acd33ff5.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -2036,10 +2036,10 @@
     "metadata": {}
   },
   {
-    "uuid": "bdb85f2e",
-    "link": "",
-    "webpPath": "low\\bdb85f2e.low.webp",
-    "blurPath": "blur\\bdb85f2e.blur.webp",
+    "uuid": "dd7ecc1b",
+    "url": "",
+    "webpPath": "low/dd7ecc1b.low.webp",
+    "blurPath": "blur/dd7ecc1b.blur.webp",
     "size": {
       "width": 800,
       "height": 600
@@ -2049,18 +2049,18 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 800,
-      "shutter_speed": "1/25s",
+      "shutterSpeed": "1/25s",
       "datetime": "2024:11:04 18:39:45"
     }
   },
   {
-    "uuid": "7477b0c4",
-    "link": "",
-    "webpPath": "low\\7477b0c4.low.webp",
-    "blurPath": "blur\\7477b0c4.blur.webp",
+    "uuid": "dbef2568",
+    "url": "",
+    "webpPath": "low/dbef2568.low.webp",
+    "blurPath": "blur/dbef2568.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -2070,10 +2070,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 32,
-      "shutter_speed": "1/702s",
+      "shutterSpeed": "1/702s",
       "datetime": "2024:11:15 14:06:00",
       "gps": {
         "latitude": 28.565072222222224,
@@ -2082,10 +2082,10 @@
     }
   },
   {
-    "uuid": "bcc7cf9f",
-    "link": "",
-    "webpPath": "low\\bcc7cf9f.low.webp",
-    "blurPath": "blur\\bcc7cf9f.blur.webp",
+    "uuid": "4b997387",
+    "url": "",
+    "webpPath": "low/4b997387.low.webp",
+    "blurPath": "blur/4b997387.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -2095,10 +2095,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 32,
-      "shutter_speed": "1/254s",
+      "shutterSpeed": "1/254s",
       "datetime": "2024:11:16 16:19:54",
       "gps": {
         "latitude": 25.309169444444446,
@@ -2107,10 +2107,10 @@
     }
   },
   {
-    "uuid": "d0b2ba22",
-    "link": "",
-    "webpPath": "low\\d0b2ba22.low.webp",
-    "blurPath": "blur\\d0b2ba22.blur.webp",
+    "uuid": "61034192",
+    "url": "",
+    "webpPath": "low/61034192.low.webp",
+    "blurPath": "blur/61034192.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -2120,10 +2120,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 40,
-      "shutter_speed": "1/100s",
+      "shutterSpeed": "1/100s",
       "datetime": "2024:11:16 16:59:20",
       "gps": {
         "latitude": 25.30523888888889,
@@ -2132,10 +2132,10 @@
     }
   },
   {
-    "uuid": "6ef742fa",
-    "link": "",
-    "webpPath": "low\\6ef742fa.low.webp",
-    "blurPath": "blur\\6ef742fa.blur.webp",
+    "uuid": "a6f68d0d",
+    "url": "",
+    "webpPath": "low/a6f68d0d.low.webp",
+    "blurPath": "blur/a6f68d0d.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -2145,10 +2145,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 40,
-      "shutter_speed": "1/100s",
+      "shutterSpeed": "1/100s",
       "datetime": "2024:11:16 17:02:23",
       "gps": {
         "latitude": 25.302458333333334,
@@ -2157,10 +2157,10 @@
     }
   },
   {
-    "uuid": "230b2f4d",
-    "link": "",
-    "webpPath": "low\\230b2f4d.low.webp",
-    "blurPath": "blur\\230b2f4d.blur.webp",
+    "uuid": "5f86ee84",
+    "url": "",
+    "webpPath": "low/5f86ee84.low.webp",
+    "blurPath": "blur/5f86ee84.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -2170,10 +2170,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 250,
-      "shutter_speed": "1/100s",
+      "shutterSpeed": "1/100s",
       "datetime": "2024:11:16 19:07:17",
       "gps": {
         "latitude": 25.306919444444446,
@@ -2182,10 +2182,10 @@
     }
   },
   {
-    "uuid": "778294cd",
-    "link": "",
-    "webpPath": "low\\778294cd.low.webp",
-    "blurPath": "blur\\778294cd.blur.webp",
+    "uuid": "5a37e0c2",
+    "url": "",
+    "webpPath": "low/5a37e0c2.low.webp",
+    "blurPath": "blur/5a37e0c2.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -2195,10 +2195,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 32,
-      "shutter_speed": "1/5236s",
+      "shutterSpeed": "1/5236s",
       "datetime": "2024:11:17 12:28:21",
       "gps": {
         "latitude": 25.44981111111111,
@@ -2207,10 +2207,10 @@
     }
   },
   {
-    "uuid": "4f619ea3",
-    "link": "",
-    "webpPath": "low\\4f619ea3.low.webp",
-    "blurPath": "blur\\4f619ea3.blur.webp",
+    "uuid": "bc82804b",
+    "url": "",
+    "webpPath": "low/bc82804b.low.webp",
+    "blurPath": "blur/bc82804b.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -2218,10 +2218,10 @@
     "metadata": {}
   },
   {
-    "uuid": "f7843950",
-    "link": "",
-    "webpPath": "low\\f7843950.low.webp",
-    "blurPath": "blur\\f7843950.blur.webp",
+    "uuid": "c8a0afc2",
+    "url": "",
+    "webpPath": "low/c8a0afc2.low.webp",
+    "blurPath": "blur/c8a0afc2.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -2231,10 +2231,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 800,
-      "shutter_speed": "1/25s",
+      "shutterSpeed": "1/25s",
       "datetime": "2024:12:19 20:20:50",
       "gps": {
         "latitude": 26.899627777777777,
@@ -2243,10 +2243,10 @@
     }
   },
   {
-    "uuid": "af0e6e95",
-    "link": "",
-    "webpPath": "low\\af0e6e95.low.webp",
-    "blurPath": "blur\\af0e6e95.blur.webp",
+    "uuid": "e56acf51",
+    "url": "",
+    "webpPath": "low/e56acf51.low.webp",
+    "blurPath": "blur/e56acf51.blur.webp",
     "size": {
       "width": 800,
       "height": 999
@@ -2256,10 +2256,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 640,
-      "shutter_speed": "1/33s",
+      "shutterSpeed": "1/33s",
       "datetime": "2024:12:20 21:45:54",
       "gps": {
         "latitude": 26.907280555555555,
@@ -2268,10 +2268,10 @@
     }
   },
   {
-    "uuid": "ec197889",
-    "link": "",
-    "webpPath": "low\\ec197889.low.webp",
-    "blurPath": "blur\\ec197889.blur.webp",
+    "uuid": "3f11d881",
+    "url": "",
+    "webpPath": "low/3f11d881.low.webp",
+    "blurPath": "blur/3f11d881.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -2281,10 +2281,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 40,
-      "shutter_speed": "1/22s",
+      "shutterSpeed": "1/22s",
       "datetime": "2025:03:05 03:12:06",
       "gps": {
         "latitude": 26.90709722222222,
@@ -2293,10 +2293,10 @@
     }
   },
   {
-    "uuid": "7853537b",
-    "link": "",
-    "webpPath": "low\\7853537b.low.webp",
-    "blurPath": "blur\\7853537b.blur.webp",
+    "uuid": "ae7299f7",
+    "url": "",
+    "webpPath": "low/ae7299f7.low.webp",
+    "blurPath": "blur/ae7299f7.blur.webp",
     "size": {
       "width": 800,
       "height": 1416
@@ -2307,10 +2307,10 @@
     }
   },
   {
-    "uuid": "77bdac98",
-    "link": "",
-    "webpPath": "low\\77bdac98.low.webp",
-    "blurPath": "blur\\77bdac98.blur.webp",
+    "uuid": "04acddaa",
+    "url": "",
+    "webpPath": "low/04acddaa.low.webp",
+    "blurPath": "blur/04acddaa.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -2320,10 +2320,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 32,
-      "shutter_speed": "1/573s",
+      "shutterSpeed": "1/573s",
       "datetime": "2025:03:12 15:17:37",
       "gps": {
         "latitude": 27.335030555555555,
@@ -2332,10 +2332,10 @@
     }
   },
   {
-    "uuid": "d56f9b3b",
-    "link": "",
-    "webpPath": "low\\d56f9b3b.low.webp",
-    "blurPath": "blur\\d56f9b3b.blur.webp",
+    "uuid": "5b574be6",
+    "url": "",
+    "webpPath": "low/5b574be6.low.webp",
+    "blurPath": "blur/5b574be6.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -2345,10 +2345,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 32,
-      "shutter_speed": "1/7692s",
+      "shutterSpeed": "1/7692s",
       "datetime": "2025:03:12 17:18:41",
       "gps": {
         "latitude": 28.60732777777778,
@@ -2357,10 +2357,10 @@
     }
   },
   {
-    "uuid": "98cce806",
-    "link": "",
-    "webpPath": "low\\98cce806.low.webp",
-    "blurPath": "blur\\98cce806.blur.webp",
+    "uuid": "9e0d34a2",
+    "url": "",
+    "webpPath": "low/9e0d34a2.low.webp",
+    "blurPath": "blur/9e0d34a2.blur.webp",
     "size": {
       "width": 800,
       "height": 450
@@ -2370,10 +2370,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 32,
-      "shutter_speed": "1/1218s",
+      "shutterSpeed": "1/1218s",
       "datetime": "2025:03:15 17:34:06",
       "gps": {
         "latitude": 30.267669444444444,
@@ -2382,10 +2382,10 @@
     }
   },
   {
-    "uuid": "89e94667",
-    "link": "",
-    "webpPath": "low\\89e94667.low.webp",
-    "blurPath": "blur\\89e94667.blur.webp",
+    "uuid": "5dae4766",
+    "url": "",
+    "webpPath": "low/5dae4766.low.webp",
+    "blurPath": "blur/5dae4766.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -2395,10 +2395,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 40,
-      "shutter_speed": "1/22727s",
+      "shutterSpeed": "1/22727s",
       "datetime": "2025:03:17 13:13:29",
       "gps": {
         "latitude": 28.55063611111111,
@@ -2407,10 +2407,10 @@
     }
   },
   {
-    "uuid": "9b54103b",
-    "link": "",
-    "webpPath": "low\\9b54103b.low.webp",
-    "blurPath": "blur\\9b54103b.blur.webp",
+    "uuid": "6ea341ad",
+    "url": "",
+    "webpPath": "low/6ea341ad.low.webp",
+    "blurPath": "blur/6ea341ad.blur.webp",
     "size": {
       "width": 800,
       "height": 600
@@ -2420,10 +2420,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 32,
-      "shutter_speed": "1/2625s",
+      "shutterSpeed": "1/2625s",
       "datetime": "2025:03:17 18:25:09",
       "gps": {
         "latitude": 26.865483333333334,
@@ -2432,10 +2432,10 @@
     }
   },
   {
-    "uuid": "2d060b07",
-    "link": "",
-    "webpPath": "low\\2d060b07.low.webp",
-    "blurPath": "blur\\2d060b07.blur.webp",
+    "uuid": "6e815e6c",
+    "url": "",
+    "webpPath": "low/6e815e6c.low.webp",
+    "blurPath": "blur/6e815e6c.blur.webp",
     "size": {
       "width": 800,
       "height": 600
@@ -2445,10 +2445,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 32,
-      "shutter_speed": "1/2625s",
+      "shutterSpeed": "1/2625s",
       "datetime": "2025:03:17 18:25:15",
       "gps": {
         "latitude": 26.865794444444447,
@@ -2457,10 +2457,10 @@
     }
   },
   {
-    "uuid": "42ddc4ca",
-    "link": "",
-    "webpPath": "low\\42ddc4ca.low.webp",
-    "blurPath": "blur\\42ddc4ca.blur.webp",
+    "uuid": "cace2fb7",
+    "url": "",
+    "webpPath": "low/cace2fb7.low.webp",
+    "blurPath": "blur/cace2fb7.blur.webp",
     "size": {
       "width": 800,
       "height": 600
@@ -2470,10 +2470,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 32,
-      "shutter_speed": "1/1362s",
+      "shutterSpeed": "1/1362s",
       "datetime": "2025:03:17 18:25:37",
       "gps": {
         "latitude": 26.86698611111111,
@@ -2482,10 +2482,10 @@
     }
   },
   {
-    "uuid": "5933d615",
-    "link": "",
-    "webpPath": "low\\5933d615.low.webp",
-    "blurPath": "blur\\5933d615.blur.webp",
+    "uuid": "f5836be6",
+    "url": "",
+    "webpPath": "low/f5836be6.low.webp",
+    "blurPath": "blur/f5836be6.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -2495,10 +2495,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 32,
-      "shutter_speed": "1/200s",
+      "shutterSpeed": "1/200s",
       "datetime": "2025:03:17 18:32:23",
       "gps": {
         "latitude": 26.880547222222223,
@@ -2507,10 +2507,10 @@
     }
   },
   {
-    "uuid": "f129d20f",
-    "link": "",
-    "webpPath": "low\\f129d20f.low.webp",
-    "blurPath": "blur\\f129d20f.blur.webp",
+    "uuid": "4b040d60",
+    "url": "",
+    "webpPath": "low/4b040d60.low.webp",
+    "blurPath": "blur/4b040d60.blur.webp",
     "size": {
       "width": 800,
       "height": 1066
@@ -2520,10 +2520,10 @@
       "camera": "iPhone 11",
       "software": "Snapseed 2.25.642066665",
       "orientation": 1,
-      "focal_length": "4.2mm",
-      "aperture": "f/1.8",
+      "focalLength": "4.2mm",
+      "aperture": "1.8",
       "iso": 32,
-      "shutter_speed": "1/154s",
+      "shutterSpeed": "1/154s",
       "datetime": "2025:03:17 18:37:46",
       "gps": {
         "latitude": 26.889622222222222,
@@ -2532,10 +2532,10 @@
     }
   },
   {
-    "uuid": "5412b44e",
-    "link": "",
-    "webpPath": "low\\5412b44e.low.webp",
-    "blurPath": "blur\\5412b44e.blur.webp",
+    "uuid": "2fdfad7f",
+    "url": "",
+    "webpPath": "low/2fdfad7f.low.webp",
+    "blurPath": "blur/2fdfad7f.blur.webp",
     "size": {
       "width": 800,
       "height": 1422
@@ -2546,10 +2546,10 @@
     }
   },
   {
-    "uuid": "b7edeb75",
-    "link": "",
-    "webpPath": "low\\b7edeb75.low.webp",
-    "blurPath": "blur\\b7edeb75.blur.webp",
+    "uuid": "79e097c4",
+    "url": "",
+    "webpPath": "low/79e097c4.low.webp",
+    "blurPath": "blur/79e097c4.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -2560,10 +2560,10 @@
     }
   },
   {
-    "uuid": "f46a9dae",
-    "link": "",
-    "webpPath": "low\\f46a9dae.low.webp",
-    "blurPath": "blur\\f46a9dae.blur.webp",
+    "uuid": "402c20dd",
+    "url": "",
+    "webpPath": "low/402c20dd.low.webp",
+    "blurPath": "blur/402c20dd.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -2574,10 +2574,10 @@
     }
   },
   {
-    "uuid": "86e9c1b0",
-    "link": "",
-    "webpPath": "low\\86e9c1b0.low.webp",
-    "blurPath": "blur\\86e9c1b0.blur.webp",
+    "uuid": "dc54919c",
+    "url": "",
+    "webpPath": "low/dc54919c.low.webp",
+    "blurPath": "blur/dc54919c.blur.webp",
     "size": {
       "width": 800,
       "height": 1001
@@ -2588,10 +2588,10 @@
     }
   },
   {
-    "uuid": "4ebeed52",
-    "link": "",
-    "webpPath": "low\\4ebeed52.low.webp",
-    "blurPath": "blur\\4ebeed52.blur.webp",
+    "uuid": "7280493a",
+    "url": "",
+    "webpPath": "low/7280493a.low.webp",
+    "blurPath": "blur/7280493a.blur.webp",
     "size": {
       "width": 800,
       "height": 1001
@@ -2602,10 +2602,10 @@
     }
   },
   {
-    "uuid": "3d8f5e84",
-    "link": "",
-    "webpPath": "low\\3d8f5e84.low.webp",
-    "blurPath": "blur\\3d8f5e84.blur.webp",
+    "uuid": "7ba8844e",
+    "url": "",
+    "webpPath": "low/7ba8844e.low.webp",
+    "blurPath": "blur/7ba8844e.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -2616,10 +2616,10 @@
     }
   },
   {
-    "uuid": "bc881eb6",
-    "link": "",
-    "webpPath": "low\\bc881eb6.low.webp",
-    "blurPath": "blur\\bc881eb6.blur.webp",
+    "uuid": "5421cd65",
+    "url": "",
+    "webpPath": "low/5421cd65.low.webp",
+    "blurPath": "blur/5421cd65.blur.webp",
     "size": {
       "width": 800,
       "height": 1422
@@ -2629,10 +2629,10 @@
     }
   },
   {
-    "uuid": "87dd1cf1",
-    "link": "",
-    "webpPath": "low\\87dd1cf1.low.webp",
-    "blurPath": "blur\\87dd1cf1.blur.webp",
+    "uuid": "f0ac7a62",
+    "url": "",
+    "webpPath": "low/f0ac7a62.low.webp",
+    "blurPath": "blur/f0ac7a62.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
@@ -2644,10 +2644,10 @@
     }
   },
   {
-    "uuid": "daf5091b",
-    "link": "",
-    "webpPath": "low\\daf5091b.low.webp",
-    "blurPath": "blur\\daf5091b.blur.webp",
+    "uuid": "5ce5bccb",
+    "url": "",
+    "webpPath": "low/5ce5bccb.low.webp",
+    "blurPath": "blur/5ce5bccb.blur.webp",
     "size": {
       "width": 800,
       "height": 1000
