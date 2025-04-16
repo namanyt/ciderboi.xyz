@@ -3,10 +3,18 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useNetwork } from "@/components/context/Network";
-import { Project } from "@/lib/types";
+import { Project, Experience, SkillGroup } from "@/lib/types";
 import { ExternalLink } from "lucide-react";
 
-export default function Home({ projects }: { projects: Project[] }) {
+export default function Home({
+  projects,
+  skills,
+  experiences,
+}: {
+  projects: Project[];
+  experiences: Experience[];
+  skills: SkillGroup[];
+}) {
   const { setPage } = useNetwork();
 
   return (
@@ -57,9 +65,31 @@ export default function Home({ projects }: { projects: Project[] }) {
           </div>
         </div>
 
-        {/* Projects Section */}
+        {/* Experience Section */}
         <div>
-          <h3 className="text-xl font-semibold mb-4">Projects</h3>
+          <h3 className="text-xl font-semibold mb-4">Experience</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+            {/* Example Experience Card */}
+            {experiences.map((experience, index) => (
+              <ExperienceCard key={index} experience={experience} />
+            ))}
+          </div>
+        </div>
+
+        {/* Skills Section */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">Skills</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Example Skills Card */}
+            {skills.map((skillGroup, index) => (
+              <SkillsCard key={index} title={skillGroup.title} skills={skillGroup.skills} />
+            ))}
+          </div>
+        </div>
+
+        {/* Personal Projects Section */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">Personal Projects</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Example Project Card */}
             {projects.map((project, index) => (
@@ -161,6 +191,95 @@ function ProjectCard({ project }: { project: Project }) {
                 </span>
               ))}
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ExperienceCard({ experience }: { experience: Experience }) {
+  const { id, title, company, location, startDate, endDate, description, tags, logo } = experience;
+
+  const fallbackLetter = company ? title.charAt(0).toUpperCase() : "E";
+  const [fallbackBgColor, setFallbackBgColor] = useState<string>("");
+
+  useEffect(() => {
+    const generatePastelColor = () => {
+      const hue = Math.floor(Math.random() * 360);
+      return `hsl(${hue}, 70%, 80%)`;
+    };
+    setFallbackBgColor(generatePastelColor());
+  }, []);
+
+  return (
+    <div
+      key={id}
+      className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 z-0"></div>
+      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
+        {/* Logo or Icon */}
+        <div className="w-16 h-16">
+          {logo ? (
+            <div className="relative w-full h-full">
+              <Image fill src={logo} alt={company} className="rounded-lg object-contain w-full h-full shadow" />
+            </div>
+          ) : (
+            <div
+              className="w-full h-full rounded-lg flex items-center justify-center text-white font-bold text-xl shadow"
+              style={{ backgroundColor: fallbackBgColor }}
+            >
+              {fallbackLetter}
+            </div>
+          )}
+        </div>
+
+        {/* Experience Info */}
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-white">{title}</h3>
+          <p className="text-white/70 text-sm">
+            {company}
+            {location ? ` • ${location}` : ""}
+          </p>
+          <p className="text-white/60 text-sm italic">
+            {startDate} — {endDate || "Present"}
+          </p>
+
+          {description && <p className="text-white/80 text-sm mt-1">{description}</p>}
+
+          {tags && tags.length > 0 && (
+            <div className="flex flex-wrap justify-center gap-2 mt-2">
+              {tags.map((tag, idx) => (
+                <span
+                  key={idx}
+                  className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SkillsCard({ title, skills }: { title: string; skills: string[] }) {
+  return (
+    <div className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20">
+      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 z-0"></div>
+      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
+        <h3 className="text-lg font-semibold text-white">{title}</h3>
+        <div className="flex flex-wrap justify-center gap-2 mt-2">
+          {skills.map((skill, index) => (
+            <span
+              key={index}
+              className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
+            >
+              {skill}
+            </span>
+          ))}
         </div>
       </div>
     </div>

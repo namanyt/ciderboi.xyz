@@ -38,3 +38,20 @@ export type SongData = {
   albums: Album[];
   singles: Track[];
 };
+
+export type Experience = {
+  id: string;
+  title: string;
+  company: string;
+  location?: string;
+  startDate: string;
+  endDate?: string;
+  description?: string;
+  tags?: string[];
+  logo?: string; // Optional company logo
+};
+
+export type SkillGroup = {
+  title: string;
+  skills: string[];
+};
