@@ -16,6 +16,7 @@ export default function Home({
   skills: SkillGroup[];
 }) {
   const { setPage } = useNetwork();
+  const [showFullAbout, setShowFullAbout] = useState(false);
 
   return (
     <div className="h-screen w-full bg-cover bg-center overflow-hidden">
@@ -39,25 +40,73 @@ export default function Home({
         </div>
 
         {/* About Me Section */}
+        {/* About Me Section */}
         <div>
-          <h3 className="text-xl font-semibold mb-2">About Me</h3>
-          <p className="text-white/80 leading-relaxed text-sm">
-            <span className="block mb-2">
-              A versatile software developer with a strong foundation in both front-end and back-end development. With a
-              focus on building scalable and efficient applications, I leverage my expertise to create seamless,
-              user-centered experiences. My approach blends technical precision with a keen eye for design, enabling me
-              to optimize performance and deliver innovative solutions.
+          <h3
+            className="text-xl font-semibold mb-4 flex items-center cursor-pointer group"
+            onClick={() => setShowFullAbout(!showFullAbout)}
+          >
+            About Me
+            <span className="ml-2 text-sm text-white/60 group-hover:text-white/80 transition-colors">
+              {showFullAbout ? "(Click to collapse)" : "(Click to expand)"}
             </span>
-            <span className="block mb-2">
-              In addition to leading the Techformers Club, I have worked on a wide range of projects, combining
-              problem-solving with creativity to drive impactful results. Outside of programming, I am also a musician,
-              filmmaker, and photographer, drawing inspiration from the arts to fuel my work.
-            </span>
-            <span className="block mb-2">
-              Always seeking new challenges, I aim to continue evolving and crafting experiences that make a meaningful
-              impact through technology.
-            </span>
+          </h3>
+
+          {/* Brief version always shown */}
+          <p
+            className={`text-white/80 leading-relaxed text-sm mb-3 ${showFullAbout ? "" : "cursor-pointer"}`}
+            onClick={() => setShowFullAbout(true)}
+          >
+            Hey! I’m a recent high school graduate who loves building stuff that lives at the edge of code, design, and
+            storytelling. Whether it&#39;s a full-on horror game, a functional web app, or a weird little
+            hardware-software mashup, I’m all about turning random ideas into working things—especially when there’s
+            creative chaos involved and a bunch of problem-solving along the way.{" "}
           </p>
+
+          {/* Full version shown conditionally */}
+          {showFullAbout && (
+            <div className="space-y-4 text-white/80 leading-relaxed text-sm mt-4 animate-fadeIn">
+              <p>
+                My project portfolio includes developing a chemistry-themed escape game in just seven days with a single
+                teammate, launching a full-fledged coding book library platform overnight, and engineering a
+                posture-correction device with companion mobile application. These experiences have honed my skills in
+                rapid development, debugging under pressure, and translating concepts into practical solutions.
+              </p>
+
+              <p>
+                Over the past few years, I’ve dived into a bunch of side quests. Built a spooky chemistry escape game in
+                seven days with just one other teammate (science meets scary, literally), launched a full coding book
+                library site overnight just for the fun of it, and put together a posture-correcting device with an
+                actual working app. They weren’t perfect, but they were real—and I learned a ton about time-crunches,
+                fixing bugs at weird hours, and figuring out how to turn big ideas into something that works.
+              </p>
+
+              <p>
+                I’ve also spent time behind-the-scenes at events—handling AV systems, syncing up lights for live
+                performances, and helping design and set up booths at big inter-school exhibitions. That’s where I
+                realized how much the small stuff—like where a light goes or how people move through a space—actually
+                matters a lot.
+              </p>
+
+              <p>
+                At school, I led the tech club, which honestly was more about vibing with other curious folks than
+                anything official. We tried out random tools, hosted workshops, built things that sometimes broke (and
+                sometimes didn’t), and mostly just geeked out together.
+              </p>
+
+              <p>
+                Outside the tech world, I’m into music, filmmaking, and photography—and that creativity bleeds into the
+                way I design, build, and think through projects. Whether it’s crafting smoother UI, storytelling through
+                gameplay, or setting a visual mood, I like blending logic with feeling.
+              </p>
+
+              <p>
+                Now, as I head into college, I’m just excited to keep learning, work with people who challenge me, and
+                keep making things that feel fun, thoughtful, or straight-up bizarre in the best way. Especially the
+                kind where code, creativity, and real-world impact all come together.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Pinned / Quick Links Section */}
@@ -124,18 +173,6 @@ export default function Home({
     </div>
   );
 }
-
-// const ProjectCard = ({ title, description, link }: { title: string; description: string; link: string }) => {
-//   return (
-//     <div className="bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-sm">
-//       <h4 className="font-medium">{title}</h4>
-//       <p className="text-white/70 text-sm">{description}</p>
-//       <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
-//         View Project
-//       </a>
-//     </div>
-//   );
-// };
 
 function ProjectCard({ project }: { project: Project }) {
   const { id, title, description, category, tags, image, url } = project;
