@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { backgroundImageBlurDataURL } from "@/lib/utils";
 
-export function BackgroundPicture({ brightness = 0.8, scaling = 1 }: { brightness: number; scaling?: number }) {
+export function BackgroundPicture({ brightness, scaling = 1 }: { brightness: number; scaling?: number }) {
   return (
     <div className="fixed z-[-10] inset-0 overflow-hidden">
       <Image

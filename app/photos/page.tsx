@@ -2,6 +2,7 @@ import Photo from "@/components/pages/Photo";
 import fs from "fs/promises";
 import path from "path";
 import { PhotoMetadata } from "@/lib/types";
+import { notFound } from "next/navigation";
 
 export const metadata = {
   title: "Photos",
@@ -19,5 +20,7 @@ const fetchPhotos = async () => {
 };
 
 export default async function PhotosPage() {
-  return <Photo photos={(await fetchPhotos()).props.photos} />;
+  const data = (await fetchPhotos()).props.photos;
+  if (!data) notFound();
+  return <Photo photos={data} />;
 }

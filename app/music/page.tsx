@@ -1,4 +1,5 @@
 import Music from "@/components/pages/Music";
+import { notFound } from "next/navigation";
 import fs from "fs/promises";
 import path from "path";
 import { Suspense } from "react";
@@ -27,6 +28,7 @@ export const metadata = {
 
 export default async function MusicPage() {
   const data = await fetchData();
+  if (!data.props.data) notFound();
 
   return (
     <Suspense fallback={<LoadingScreen />}>
