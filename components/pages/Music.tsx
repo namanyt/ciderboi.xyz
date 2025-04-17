@@ -55,8 +55,6 @@ export default function Music({ data }: Props) {
           </div>
         </div>
       </ScrollArea>
-      {/* added vertical space */}
-      <div className="h-20" />
     </div>
   );
 }

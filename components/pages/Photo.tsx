@@ -90,7 +90,7 @@ export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }
           <h2 className="text-lg font-medium text-white">Photo Details</h2>
           <button
             onClick={() => setIsVisible(false)}
-            className="p-2 rounded-full bg-black/90 border border-white/20 text-white hover:bg-gray-800 transition-all cursor-pointer"
+            className="p-1 rounded-full bg-black/90 border border-white/20 text-white hover:bg-gray-800 transition-all cursor-pointer"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -233,7 +233,7 @@ export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged 
         {/* Close button */}
         <button
           onClick={() => setIsVisible(false)}
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-black/90 border border-white/20 text-white hover:bg-gray-800 transition-all cursor-pointer"
+          className="absolute top-2 right-2 z-50 p-2 rounded-full bg-black/90 border border-white/20 text-white hover:bg-gray-800 transition-all cursor-pointer"
           aria-label="Close dialog"
         >
           <X className="w-6 h-6" />
@@ -249,7 +249,7 @@ export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged 
           {/* Left side - Photo container */}
           <div className="w-2/3 h-full flex items-center justify-center p-8 border-r border-white/10">
             <div
-              className={`relative cursor-zoom-in transition-opacity duration-500 ${isVisible ? "opacity-100" : "opacity-0"}`}
+              className={`relative ${enlarged ? "cursor-zoom-out" : "cursor-zoom-in"} transition-opacity duration-500 ${isVisible ? "opacity-100" : "opacity-0"}`}
               onClick={() => setEnlarged(!enlarged)}
             >
               <Image

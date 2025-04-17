@@ -7,6 +7,7 @@
 - [x] Optimize images for faster loading.
 - [ ] Configure SEO metadata for all pages.
 - [x] Add a favicon and other necessary assets.
+- [x] Add Proper about me section
 
 ### UX
 

@@ -24,25 +24,39 @@ export default function Home({
         {/* Profile Section */}
         <div className="flex flex-col md:flex-row items-center gap-6">
           <Image
-            src="/pictures/pfp.webp"
+            // src="/pictures/pfp.webp"
+            src="/pictures/pfp-2.webp" // TODO: Update This PFP when Pushing to PROD
             alt="Profile"
-            width={578}
-            height={542}
+            width={1288}
+            height={1285}
             className="w-32 h-32 rounded-full object-cover border-2 border-white/30 shadow-md"
           />
           <div>
             <h2 className="text-3xl font-bold">Nitya Naman</h2>
             {/*TODO: change this quote when website is complete*/}
-            <p className="text-white/70 text-sm">&#34;A Dumb Bastard. Website is still WIP&#34;</p>
+            <p className="text-white/70 text-sm">“Engineering imagination, one pixel at a time.”</p>
           </div>
         </div>
 
         {/* About Me Section */}
         <div>
           <h3 className="text-xl font-semibold mb-2">About Me</h3>
-          <p className="text-white/80 leading-relaxed">
-            I&#39;m a curious soul who loves design, code, music, and capturing moments. Welcome to my little space on
-            the web 🌸✨
+          <p className="text-white/80 leading-relaxed text-sm">
+            <span className="block mb-2">
+              A versatile software developer with a strong foundation in both front-end and back-end development. With a
+              focus on building scalable and efficient applications, I leverage my expertise to create seamless,
+              user-centered experiences. My approach blends technical precision with a keen eye for design, enabling me
+              to optimize performance and deliver innovative solutions.
+            </span>
+            <span className="block mb-2">
+              In addition to leading the Techformers Club, I have worked on a wide range of projects, combining
+              problem-solving with creativity to drive impactful results. Outside of programming, I am also a musician,
+              filmmaker, and photographer, drawing inspiration from the arts to fuel my work.
+            </span>
+            <span className="block mb-2">
+              Always seeking new challenges, I aim to continue evolving and crafting experiences that make a meaningful
+              impact through technology.
+            </span>
           </p>
         </div>
 
