@@ -16,6 +16,52 @@ const fetchData = async () => {
   };
 };
 
+export const metadata = {
+  title: "Nitya Naman",
+  description: "code. music. chaos.",
+  keywords: [
+    "Nitya Naman",
+    "nitya",
+    "naman",
+    "portfolio",
+    "developer",
+    "programmer",
+    "software engineer",
+    "web developer",
+    "full stack developer",
+    "react developer",
+    "typescript developer",
+  ],
+  openGraph: {
+    title: "Nitya Naman",
+    description: "code. music. chaos.",
+    url: "https://ciderboi.xyz",
+    siteName: "Nitya Naman",
+    images: [
+      {
+        url: "/pictures/embed/home.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en-US",
+    type: "website",
+  },
+  twitter: {
+    title: "Nitya Naman",
+    description: "code. music. chaos.",
+    card: "summary_large_image",
+    creator: "@ciderboi123",
+    images: [
+      {
+        url: "/pictures/embed/home.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+};
+
 export default async function HomePage() {
   const data = await fetchData();
   return (

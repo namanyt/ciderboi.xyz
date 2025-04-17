@@ -5,8 +5,36 @@ import { PhotoMetadata } from "@/lib/types";
 import { notFound } from "next/navigation";
 
 export const metadata = {
-  title: "Photos",
-  description: "My photo collection",
+  title: "Photography",
+  description: "Frames from the real world.",
+  openGraph: {
+    title: "Photography",
+    description: "Frames from the real world.",
+    url: "https://ciderboi.xyz/photos",
+    siteName: "Nitya Naman",
+    images: [
+      {
+        url: "/pictures/embed/photo.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en-US",
+    type: "website",
+  },
+  twitter: {
+    title: "Photography",
+    description: "Frames from the real world.",
+    card: "summary_large_image",
+    creator: "@ciderboi123",
+    images: [
+      {
+        url: "/pictures/embed/photo.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 };
 
 const fetchPhotos = async () => {

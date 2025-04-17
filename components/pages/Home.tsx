@@ -62,7 +62,16 @@ export default function Home({
 
         {/* Pinned / Quick Links Section */}
         <div>
-          <h3 className="text-xl font-semibold mb-4 text-center">Quick Links</h3>
+          <h3 className="text-xl font-semibold mb-4 text-center">
+            <button
+              onClick={() => {
+                setPage("/links");
+              }}
+              className="text-white/80 underline-offset-1 hover:underline hover:text-white transition-all cursor-pointer"
+            >
+              Quick Links
+            </button>
+          </h3>
           <div className="flex flex-wrap justify-center gap-4">
             <button
               onClick={() => setPage("/music")}
