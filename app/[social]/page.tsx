@@ -15,10 +15,10 @@ type SocialsProps = {
   [key: string]: string;
 };
 
-export default async function Socials({ params }: { params: { social: string } }) {
+export default async function Socials({ params }: { params: Promise<{ social: string }> }) {
   const links = (await fetchData()).data;
-  const page: string = (await params).social.toLowerCase();
+  const { social } = await params;
 
-  if (links[page]) redirect(links[page]);
+  if (links[social.toLowerCase()]) redirect(links[social.toLowerCase()]);
   else notFound();
 }
