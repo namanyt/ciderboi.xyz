@@ -59,6 +59,39 @@ const colorMap = {
   linkedin: "hover:bg-blue-700 hover:text-white",
 };
 
+export const metadata = {
+  title: "Connect With Me",
+  description: "Find me across the web",
+  openGraph: {
+    title: "Connect With Me",
+    description: "Find me across the web",
+    url: "https://ciderboi.xyz/links",
+    siteName: "Nitya Naman",
+    images: [
+      {
+        url: "/pictures/og_embed/default-og.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en-US",
+    type: "website",
+  },
+  twitter: {
+    title: "Connect With Me",
+    description: "Find me across the web",
+    card: "summary_large_image",
+    creator: "@ciderboi123",
+    images: [
+      {
+        url: "/pictures/twitter_embed/default-twitter.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+};
+
 export default async function Links() {
   const { links, error } = (await fetchLinks()).props;
 
