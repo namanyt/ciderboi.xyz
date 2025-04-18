@@ -67,13 +67,6 @@ export default function Home({
           {showFullAbout && (
             <div className="space-y-4 text-white/80 leading-relaxed text-sm mt-4 animate-fadeIn">
               <p>
-                My project portfolio includes developing a chemistry-themed escape game in just seven days with a single
-                teammate, launching a full-fledged coding book library platform overnight, and engineering a
-                posture-correction device with companion mobile application. These experiences have honed my skills in
-                rapid development, debugging under pressure, and translating concepts into practical solutions.
-              </p>
-
-              <p>
                 Over the past few years, I’ve dived into a bunch of side quests. Built a spooky chemistry escape game in
                 seven days with just one other teammate (science meets scary, literally), launched a full coding book
                 library site overnight just for the fun of it, and put together a posture-correcting device with an
