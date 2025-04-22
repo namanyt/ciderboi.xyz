@@ -13,7 +13,7 @@ const MOBILE_SCALING = 1;
 const DESKTOP_ENLARGED_SCALE = 1.5;
 const DESKTOP_SCALING = 1;
 
-export default function Photo({ photos }: { photos: PhotoMetadata[] }) {
+export default function Photo({ photos, photoId }: { photos: PhotoMetadata[]; photoId: string | undefined }) {
   const { setPage } = useNetwork();
 
   return (
@@ -29,7 +29,7 @@ export default function Photo({ photos }: { photos: PhotoMetadata[] }) {
       <ScrollArea className="w-[90vw] h-full max-h-[calc(80vh)] overflow-y-auto">
         <div className="w-full max-w-[1800px] columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-6 space-y-6 px-6">
           {photos.map((photo) => (
-            <PhotoCard key={photo.uuid} photo={photo} />
+            <PhotoCard key={photo.uuid} photo={photo} isIdProvided={photoId} />
           ))}
         </div>
       </ScrollArea>
@@ -168,14 +168,16 @@ export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }
             </div>
 
             {/* Instagram button - larger touch target */}
-            <button
-              onClick={() => window.open(photo.url, "_blank")}
-              className="w-full py-4 rounded-lg border border-white/20 hover:border-white/40 text-white
+            {photo.url && (
+              <button
+                onClick={() => window.open(photo.url, "_blank")}
+                className="w-full py-4 rounded-lg border border-white/20 hover:border-white/40 text-white
               bg-white/5 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer"
-            >
-              <Instagram className="w-5 h-5" />
-              <span>View on Instagram</span>
-            </button>
+              >
+                <Instagram className="w-5 h-5" />
+                <span>View on Instagram</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -280,7 +282,6 @@ export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged 
               ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"}`}
           >
             <h3 className="text-xl font-medium mb-6">Photo Info</h3>
-
             <div className="space-y-4 mb-8">
               {photo.metadata.make && (
                 <div className="flex flex-col">
@@ -324,22 +325,18 @@ export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged 
                   <span className="text-lg">{photo.metadata.iso}</span>
                 </div>
               )}
-              {photo.metadata.gps && (
-                <div className="flex flex-col">
-                  <span className="font-medium text-white/80">GPS Coordinates</span>
-                  <span className="text-lg">{`${photo.metadata.gps.latitude}, ${photo.metadata.gps.longitude}`}</span>
-                </div>
-              )}
             </div>
 
-            <button
-              onClick={() => window.open(photo.url, "_blank")}
-              className="w-full py-3 px-4 rounded-lg border border-white/20 hover:border-white/40 text-white
+            {photo.url && (
+              <button
+                onClick={() => window.open(photo.url, "_blank")}
+                className="w-full py-3 px-4 rounded-lg border border-white/20 hover:border-white/40 text-white
               bg-white/5 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer"
-            >
-              <Instagram className="w-5 h-5" />
-              <span>View on Instagram</span>
-            </button>
+              >
+                <Instagram className="w-5 h-5" />
+                <span>View on Instagram</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -348,7 +345,7 @@ export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged 
 }
 
 // PhotoCard component with responsive modal selection
-function PhotoCard({ photo }: { photo: PhotoMetadata }) {
+function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided?: string | undefined }) {
   const [open, setOpen] = useState(false);
   const [enlarged, setEnlarged] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -366,9 +363,14 @@ function PhotoCard({ photo }: { photo: PhotoMetadata }) {
     // Add event listener for window resize
     window.addEventListener("resize", checkIsMobile);
 
+    // check if id is same as photo id, if yes, open the modal
+    if (isIdProvided == photo.uuid) {
+      setOpen(true);
+    }
+
     // Cleanup
     return () => window.removeEventListener("resize", checkIsMobile);
-  }, []);
+  }, [isIdProvided]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
