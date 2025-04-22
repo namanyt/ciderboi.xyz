@@ -13,7 +13,13 @@ const MOBILE_SCALING = 1;
 const DESKTOP_ENLARGED_SCALE = 1.5;
 const DESKTOP_SCALING = 1;
 
-export default function Photo({ photos, photoId }: { photos: PhotoMetadata[]; photoId: string | undefined }) {
+export default function Photo({
+  photos,
+  photoId,
+}: {
+  photos: PhotoMetadata[];
+  photoId: string | string[] | undefined;
+}) {
   const { setPage } = useNetwork();
 
   return (
@@ -345,7 +351,7 @@ export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged 
 }
 
 // PhotoCard component with responsive modal selection
-function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided?: string | undefined }) {
+function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided?: string | string[] | undefined }) {
   const [open, setOpen] = useState(false);
   const [enlarged, setEnlarged] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -364,7 +370,7 @@ function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided
     window.addEventListener("resize", checkIsMobile);
 
     // check if id is same as photo id, if yes, open the modal
-    if (isIdProvided == photo.uuid) {
+    if ((Array.isArray(isIdProvided) ? isIdProvided[0] : isIdProvided) === photo.uuid) {
       setOpen(true);
     }
 

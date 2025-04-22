@@ -47,8 +47,11 @@ const fetchPhotos = async () => {
   };
 };
 
-// @ts-expect-error idk why searchParams is not a params of this function...
-export default async function PhotosPage({ searchParams }: Promise<{ [key: string]: string | string[] | undefined }>) {
+export default async function PhotosPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const data = (await fetchPhotos()).props.photos;
   const id = (await searchParams).id;
   if (!data) notFound();
