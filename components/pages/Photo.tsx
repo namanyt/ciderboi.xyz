@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNetwork } from "@/components/context/Network";
+import { useRouter, useSearchParams } from "next/navigation";
 import { PhotoMetadata } from "@/lib/types";
 import Image from "next/image";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
@@ -54,6 +55,7 @@ type MobilePhotoModalProps = {
 // Mobile-optimized Photo Modal Component with transitions
 export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }: MobilePhotoModalProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
 
   // Handle transition effects
   useEffect(() => {
@@ -80,6 +82,11 @@ export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }
     return null;
   }
 
+  const handleClose = () => {
+    setIsVisible(false);
+    router.push("/photos?id=");
+  };
+
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md transition-all duration-300 ease-in-out
@@ -95,7 +102,7 @@ export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }
         <div className="flex items-center justify-between p-4 border-b border-white/10">
           <h2 className="text-lg font-medium text-white">Photo Details</h2>
           <button
-            onClick={() => setIsVisible(false)}
+            onClick={handleClose}
             className="p-1 rounded-full bg-black/90 border border-white/20 text-white hover:bg-gray-800 transition-all cursor-pointer"
             aria-label="Close dialog"
           >
@@ -202,6 +209,7 @@ type DesktopPhotoModalProps = {
 // Desktop-optimized Photo Modal Component with transitions
 export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged }: DesktopPhotoModalProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
 
   // Handle transition effects
   useEffect(() => {
@@ -228,6 +236,11 @@ export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged 
     return null;
   }
 
+  const handleClose = () => {
+    setIsVisible(false);
+    router.push("/photos?id=");
+  };
+
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out
@@ -240,7 +253,7 @@ export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged 
       >
         {/* Close button */}
         <button
-          onClick={() => setIsVisible(false)}
+          onClick={handleClose}
           className="absolute top-2 right-2 z-50 p-2 rounded-full bg-black/90 border border-white/20 text-white hover:bg-gray-800 transition-all cursor-pointer"
           aria-label="Close dialog"
         >
@@ -355,6 +368,8 @@ function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided
   const [open, setOpen] = useState(false);
   const [enlarged, setEnlarged] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const scaling = 1;
 
   // Check if screen is mobile size on mount and when window resizes
@@ -378,8 +393,15 @@ function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided
     return () => window.removeEventListener("resize", checkIsMobile);
   }, [isIdProvided]);
 
+  const handleClick = () => {
+    setOpen(true);
+    const params = new URLSearchParams(searchParams);
+    params.set("id", photo.uuid);
+    router.push(`/photos?${params.toString()}`);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleClick}>
       <DialogTrigger asChild>
         <div className="cursor-pointer break-inside-avoid overflow-hidden rounded-xl shadow-lg bg-black/30 backdrop-blur-sm border border-white/5 hover:border-white/20 hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]">
           <Image
