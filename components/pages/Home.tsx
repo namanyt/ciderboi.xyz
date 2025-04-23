@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useNetwork } from "@/components/context/Network";
 import { Project, Experience, SkillGroup } from "@/lib/types";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Info } from "lucide-react";
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 export default function Home({
   projects,
@@ -20,6 +21,20 @@ export default function Home({
 
   return (
     <div className="h-screen w-full bg-cover bg-center overflow-hidden">
+      {/* About the Image Icon */}
+      <TooltipProvider>
+        <Tooltip delayDuration={500}>
+          <TooltipTrigger asChild onClick={() => setPage("/photos?id=9e0d34a2")}>
+            <div className="fixed bottom-4 right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-[250ms] z-50">
+              <Info />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side={"left"}>
+            <p>About the Background</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       {/* Scrollable Card */}
       <div className="h-[90vh] w-[95vw] max-w-5xl mx-auto my-6 p-8 rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white overflow-y-auto scroll-smooth space-y-12">
         {/* Profile Section */}
@@ -39,7 +54,6 @@ export default function Home({
           </div>
         </div>
 
-        {/* About Me Section */}
         {/* About Me Section */}
         <div>
           <h3
