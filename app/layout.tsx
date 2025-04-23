@@ -30,6 +30,46 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Nitya Naman",
+              alternateName: "Cider Boi",
+              url: "https://ciderboi.xyz",
+              image: "https://ciderboi.xyz/pictures/embed/home.png",
+              sameAs: [
+                "https://twitter.com/ciderboi123",
+                "https://instagram.com/nnthegamer",
+                "https://github.com/namanyt",
+                "https://linkedin.com/in/nityanaman",
+              ],
+              jobTitle: "Creative Developer",
+              description:
+                "Creative developer blending code, design, and chaos through web projects, games, and music.",
+              knowsAbout: [
+                "JavaScript",
+                "TypeScript",
+                "React",
+                "Next.js",
+                "Web Development",
+                "Game Development",
+                "Digital Art",
+                "Design",
+                "Storytelling",
+                "Creative Coding",
+              ],
+              alumniOf: {
+                "@type": "EducationalOrganization",
+                name: "Delhi Public School, Jaipur",
+              },
+            }),
+          }}
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <NetworkProvider>
