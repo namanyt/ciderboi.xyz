@@ -7,5 +7,5 @@ Disallow: /private/
 Disallow: /server/
 Disallow: /anything-else-you-dont-want-crawled/
 
-Sitemap: https://your-website.com/sitemap.xml
+Sitemap: https://dev.ciderboi.xyz/sitemap.xml
 
