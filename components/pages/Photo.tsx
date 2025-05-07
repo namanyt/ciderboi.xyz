@@ -22,23 +22,25 @@ export default function Photo({
   photoId: string | string[] | undefined;
 }) {
   return (
-    <div className="text-white w-full min-h-screen flex flex-col items-center py-12">
+    <>
       <NavigationButton
         href={"/"}
-        className="z-[60] fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
+        className="z-[60] fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md overflow-visible"
       >
         Back Home
       </NavigationButton>
-      <h1 className="text-3xl sm:text-4xl mb-6 text-center font-semibold">Gallery</h1>
+      <div className="w-[95vw] mx-auto my-6 p-8 rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white overflow-y-auto scroll-smooth space-y-12">
+        <h1 className="text-3xl sm:text-4xl mb-6 text-center font-semibold">Gallery</h1>
 
-      <ScrollArea className="w-[90vw] h-full max-h-[calc(80vh)] overflow-y-auto">
-        <div className="w-full max-w-[1800px] columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-6 space-y-6 px-6">
-          {photos.map((photo) => (
-            <PhotoCard key={photo.uuid} photo={photo} isIdProvided={photoId} />
-          ))}
-        </div>
-      </ScrollArea>
-    </div>
+        <ScrollArea className="max-h-[calc(80vh)] overflow-y-auto">
+          <div className="w-full max-w-[1800px] columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-6 space-y-6 px-6">
+            {photos.map((photo) => (
+              <PhotoCard key={photo.uuid} photo={photo} isIdProvided={photoId} />
+            ))}
+          </div>
+        </ScrollArea>
+      </div>
+    </>
   );
 }
 

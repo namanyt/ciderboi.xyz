@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import { ImmediateLoadingOverlay, NetworkProvider } from "@/components/context/Network";
+import { NetworkProvider } from "@/components/context/Network";
 import { BackgroundPicture } from "@/components/BackgroundPicture";
 import { Suspense } from "react";
 import LoadingScreen from "@/components/loading";

@@ -2,8 +2,6 @@ import Music from "@/components/pages/Music";
 import { notFound } from "next/navigation";
 import fs from "fs/promises";
 import path from "path";
-import { Suspense } from "react";
-import LoadingScreen from "@/components/loading";
 import { SongData } from "@/lib/types";
 
 export type Props = {

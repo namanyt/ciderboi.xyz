@@ -1,8 +1,6 @@
-import { Suspense } from "react";
 import Home from "@/components/pages/Home";
 import fs from "fs/promises";
 import path from "path";
-import LoadingScreen from "@/components/loading";
 import { Project, Experience, SkillGroup } from "@/lib/types";
 
 const fetchData = async () => {
