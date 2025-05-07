@@ -6,6 +6,7 @@ import { useNetwork } from "@/components/context/Network";
 import { Project, Experience, SkillGroup } from "@/lib/types";
 import { ExternalLink, Info } from "lucide-react";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import NavigationButton from "@/components/NavigationButton";
 
 export default function Home({
   projects,
@@ -45,6 +46,8 @@ export default function Home({
             alt="Profile"
             width={1288}
             height={1285}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            style={{ objectFit: "contain" }}
             className="w-32 h-32 rounded-full object-cover border-2 border-white/30 shadow-md"
           />
           <div>
@@ -119,28 +122,26 @@ export default function Home({
         {/* Pinned / Quick Links Section */}
         <div>
           <h3 className="text-xl font-semibold mb-4 text-center">
-            <button
-              onClick={() => {
-                setPage("/links");
-              }}
+            <NavigationButton
+              href="/links"
               className="text-white/80 underline-offset-1 hover:underline hover:text-white transition-all cursor-pointer"
             >
               Quick Links
-            </button>
+            </NavigationButton>
           </h3>
           <div className="flex flex-wrap justify-center gap-4">
-            <button
-              onClick={() => setPage("/music")}
+            <NavigationButton
+              href="/music"
               className="w-32 px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition border border-white/10 text-sm text-center cursor-pointer"
             >
               🎧 Music
-            </button>
-            <button
-              onClick={() => setPage("/photos")}
+            </NavigationButton>
+            <NavigationButton
+              href="/photos"
               className="w-32 px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition border border-white/10 text-sm text-center cursor-pointer"
             >
               📸 Photos
-            </button>
+            </NavigationButton>
           </div>
         </div>
 

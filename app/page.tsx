@@ -97,9 +97,5 @@ export const metadata = {
 
 export default async function HomePage() {
   const data = await fetchData();
-  return (
-    <Suspense fallback={<LoadingScreen />}>
-      <Home projects={data.projects} experiences={data.experiences} skills={data.skills} />
-    </Suspense>
-  );
+  return <Home projects={data.projects} experiences={data.experiences} skills={data.skills} />;
 }

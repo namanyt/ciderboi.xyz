@@ -214,6 +214,12 @@
   }
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-in-out;
+::selection {
+  background: rgba(200, 168, 240, 0.3); /* Change this to your desired highlight background color */
+  color: #ffffff; /* Change this to your desired highlight text color */
+}
+
+::-moz-selection {
+  background: rgba(200, 168, 240, 0.3); /* Change this to your desired highlight background color for Firefox */
+  color: #ffffff; /* Change this to your desired highlight text color for Firefox */
 }

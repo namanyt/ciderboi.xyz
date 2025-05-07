@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import { NetworkProvider } from "@/components/context/Network";
+import { ImmediateLoadingOverlay, NetworkProvider } from "@/components/context/Network";
 import { BackgroundPicture } from "@/components/BackgroundPicture";
+import { Suspense } from "react";
+import LoadingScreen from "@/components/loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -73,11 +75,13 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <NetworkProvider>
-            <main>{children}</main>
+            <Suspense fallback={<LoadingScreen />}>
+              <main>{children}</main>
+            </Suspense>
           </NetworkProvider>
           <BackgroundPicture brightness={0.8} />
 
-          <div className="absolute bottom-0 w-full text-center py-4 text-gray-400 opacity-50 text-sm">
+          <div className="absolute bottom-0 w-full text-center py-4 text-gray-400 opacity-50 text-sm z-[50]">
             &copy; {new Date().getFullYear()} Nitya Naman. All rights reserved.
           </div>
         </ThemeProvider>

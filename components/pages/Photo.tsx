@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useNetwork } from "@/components/context/Network";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PhotoMetadata } from "@/lib/types";
 import Image from "next/image";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { X, ZoomIn, ZoomOut, Instagram } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import NavigationButton from "@/components/NavigationButton";
 
 const MOBILE_ENLARGED_SCALE = 1.2;
 const MOBILE_SCALING = 1;
@@ -21,16 +21,14 @@ export default function Photo({
   photos: PhotoMetadata[];
   photoId: string | string[] | undefined;
 }) {
-  const { setPage } = useNetwork();
-
   return (
     <div className="text-white w-full min-h-screen flex flex-col items-center py-12">
-      <button
-        onClick={() => setPage("/")}
-        className="z-10 fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
+      <NavigationButton
+        href={"/"}
+        className="z-[60] fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
       >
         Back Home
-      </button>
+      </NavigationButton>
       <h1 className="text-3xl sm:text-4xl mb-6 text-center font-semibold">Gallery</h1>
 
       <ScrollArea className="w-[90vw] h-full max-h-[calc(80vh)] overflow-y-auto">

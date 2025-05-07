@@ -13,6 +13,7 @@ import {
   FaLinkedin,
 } from "react-icons/fa";
 import React from "react";
+import NavigationButton from "@/components/NavigationButton";
 
 const fetchLinks: {
   (): Promise<{ props: { links: Record<string, string>; error?: string } }>;
@@ -135,12 +136,12 @@ export default async function Links() {
         </div>
       </div>
 
-      <a
+      <NavigationButton
         href={"/"}
-        className="z-10 fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
+        className="z-[60] fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
       >
         Back Home
-      </a>
+      </NavigationButton>
     </div>
   );
 }

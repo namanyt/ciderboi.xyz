@@ -33,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const allRoutes = [...staticRoutes, ...galleryRoutes, ...socialRoutes];
 
-  const sitemap: MetadataRoute.Sitemap = allRoutes.map((route) => {
+  return allRoutes.map((route) => {
     const entry: MetadataRoute.Sitemap[number] = {
       url: `${BASE_URL}${route.path}`,
       lastModified: new Date().toISOString(),
@@ -43,6 +43,4 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     return entry;
   });
-
-  return sitemap;
 }

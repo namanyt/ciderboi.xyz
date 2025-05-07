@@ -58,9 +58,5 @@ export default async function MusicPage() {
   const data = await fetchData();
   if (!data.props.data) notFound();
 
-  return (
-    <Suspense fallback={<LoadingScreen />}>
-      <Music data={data.props.data} />
-    </Suspense>
-  );
+  return <Music data={data.props.data} />;
 }

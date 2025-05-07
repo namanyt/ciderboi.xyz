@@ -1,11 +1,6 @@
 User-agent: *
 
 Allow: /
-Disallow: /api/
-Disallow: /dynamic/
-Disallow: /private/
-Disallow: /server/
-Disallow: /anything-else-you-dont-want-crawled/
 
 Sitemap: https://dev.ciderboi.xyz/sitemap.xml
 
