@@ -15,11 +15,11 @@ export default function Music({ data }: Props) {
       >
         Back Home
       </NavigationButton>
-      <div className="w-[95vw] max-w-5xl mx-auto my-6 p-8 rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white overflow-y-auto scroll-smooth space-y-12">
+      <div className="w-[95vw] max-w-7xl mx-auto my-6 sm:p-4 md:p-4 lg:p-8 rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white overflow-y-visible scroll-smooth space-y-12">
         <h1 className="text-3xl sm:text-4xl mb-6 text-center font-semibold">Featured Music</h1>
 
         <ScrollArea className="w-full h-full max-h-[calc(80vh)] overflow-y-auto">
-          <div className="w-full max-w-7xl mx-auto px-6">
+          <div className="w-full max-w-7xl">
             <div className="columns-1 sm:columns-1 md:columns-1 lg:columns-2 gap-6">
               {data.albums.map((album, i) => (
                 <div key={`album-${album.id}_${i}`} className="break-inside-avoid mb-6">
