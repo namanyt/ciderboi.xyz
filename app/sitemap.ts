@@ -1,7 +1,6 @@
 import { MetadataRoute } from "next";
 import path from "path";
 import fs from "fs/promises";
-import { PhotoMetadata } from "@/lib/types";
 
 // TODO: Update this when merging with main
 const BASE_URL = "https://dev.ciderboi.xyz";
@@ -22,16 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changefreq: "yearly",
   }));
 
-  const galleryData = await fs.readFile(path.join(process.cwd(), "public", "gallery", "meta.json"), "utf-8");
-  const gallery: PhotoMetadata[] = JSON.parse(galleryData);
-  const galleryRoutes = gallery.map((photo) => ({
-    path: `/photos/${photo.uuid}`,
-    priority: 0.9,
-    changefreq: "yearly",
-    image: `${BASE_URL}${photo.webpPath || photo.url}`, // Prefer webp if available
-  }));
-
-  const allRoutes = [...staticRoutes, ...galleryRoutes, ...socialRoutes];
+  const allRoutes = [...staticRoutes, ...socialRoutes];
 
   return allRoutes.map((route) => {
     const entry: MetadataRoute.Sitemap[number] = {
