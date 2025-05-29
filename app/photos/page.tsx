@@ -3,6 +3,8 @@ import fs from "fs/promises";
 import path from "path";
 import { PhotoMetadata } from "@/lib/types";
 import { notFound } from "next/navigation";
+import LoadingScreen from "@/components/loading";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Photography",
@@ -55,5 +57,9 @@ export default async function PhotosPage({
   const data = (await fetchPhotos()).props.photos;
   const id = (await searchParams).id;
   if (!data) notFound();
-  return <Photo photos={data} photoId={id} />;
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <Photo photos={data} photoId={id} />
+    </Suspense>
+  );
 }

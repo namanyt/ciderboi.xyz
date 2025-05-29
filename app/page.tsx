@@ -2,6 +2,8 @@ import Home from "@/components/pages/Home";
 import fs from "fs/promises";
 import path from "path";
 import { Project, Experience, SkillGroup } from "@/lib/types";
+import LoadingScreen from "@/components/loading";
+import { Suspense } from "react";
 
 const fetchData = async () => {
   const projects = await fs.readFile(path.join(process.cwd(), "public", "data", "projects.json"), "utf8");
@@ -95,5 +97,9 @@ export const metadata = {
 
 export default async function HomePage() {
   const data = await fetchData();
-  return <Home projects={data.projects} experiences={data.experiences} skills={data.skills} />;
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <Home projects={data.projects} experiences={data.experiences} skills={data.skills} />
+    </Suspense>
+  );
 }

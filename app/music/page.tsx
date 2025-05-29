@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import fs from "fs/promises";
 import path from "path";
 import { SongData } from "@/lib/types";
+import LoadingScreen from "@/components/loading";
+import { Suspense } from "react";
 
 export type Props = {
   data: SongData;
@@ -56,5 +58,9 @@ export default async function MusicPage() {
   const data = await fetchData();
   if (!data.props.data) notFound();
 
-  return <Music data={data.props.data} />;
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <Music data={data.props.data} />
+    </Suspense>
+  );
 }

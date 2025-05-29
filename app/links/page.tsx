@@ -12,8 +12,9 @@ import {
   FaDiscord,
   FaLinkedin,
 } from "react-icons/fa";
-import React from "react";
+import React, { Suspense } from "react";
 import NavigationButton from "@/components/NavigationButton";
+import LoadingScreen from "@/components/loading";
 
 const fetchLinks: {
   (): Promise<{ props: { links: Record<string, string>; error?: string } }>;
@@ -105,43 +106,45 @@ export default async function Links() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="relative z-10 max-w-4xl w-full mx-auto">
-        <div className="backdrop-blur-lg bg-white/10 rounded-3xl p-8 shadow-xl border border-white/40">
-          <h1 className="text-4xl font-bold text-center mb-2 text-gray-100">Connect With Me</h1>
-          <p className="text-center text-gray-300 text-lg mb-8">Find me across the web</p>
+    <Suspense fallback={<LoadingScreen />}>
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="relative z-10 max-w-4xl w-full mx-auto">
+          <div className="backdrop-blur-lg bg-white/10 rounded-3xl p-8 shadow-xl border border-white/40">
+            <h1 className="text-4xl font-bold text-center mb-2 text-gray-100">Connect With Me</h1>
+            <p className="text-center text-gray-300 text-lg mb-8">Find me across the web</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {Object.entries(links).map(([platform]) => {
-              const Icon = iconMap[platform as keyof typeof iconMap] || null;
-              const hoverColor = colorMap[platform as keyof typeof colorMap] || "hover:bg-blue-500 hover:text-white";
-              const baseColor = `${colorMap[platform as keyof typeof colorMap]}`;
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {Object.entries(links).map(([platform]) => {
+                const Icon = iconMap[platform as keyof typeof iconMap] || null;
+                const hoverColor = colorMap[platform as keyof typeof colorMap] || "hover:bg-blue-500 hover:text-white";
+                const baseColor = `${colorMap[platform as keyof typeof colorMap]}`;
 
-              return (
-                <a
-                  key={platform}
-                  href={`/${platform}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`backdrop-blur-3xl ${baseColor} rounded-xl p-4 flex items-center
+                return (
+                  <a
+                    key={platform}
+                    href={`/${platform}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`backdrop-blur-3xl ${baseColor} rounded-xl p-4 flex items-center
                     transition-all duration-300 ease-in-out transform hover:scale-105
                     hover:shadow-lg border border-white/40 ${hoverColor}`}
-                >
-                  {Icon && <Icon className="text-2xl mr-3 duration-300" />}
-                  <span className="capitalize font-medium duration-300">{platform}</span>
-                </a>
-              );
-            })}
+                  >
+                    {Icon && <Icon className="text-2xl mr-3 duration-300" />}
+                    <span className="capitalize font-medium duration-300">{platform}</span>
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
 
-      <NavigationButton
-        href={"/"}
-        className="z-[60] fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
-      >
-        Back Home
-      </NavigationButton>
-    </div>
+        <NavigationButton
+          href={"/"}
+          className="z-[60] fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
+        >
+          Back Home
+        </NavigationButton>
+      </div>
+    </Suspense>
   );
 }

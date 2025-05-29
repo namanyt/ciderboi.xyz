@@ -4,8 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { NetworkProvider } from "@/components/context/Network";
 import { BackgroundPicture } from "@/components/BackgroundPicture";
-import { Suspense } from "react";
-import LoadingScreen from "@/components/loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -75,9 +73,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <NetworkProvider>
-            <Suspense fallback={<LoadingScreen />}>
-              <main>{children}</main>
-            </Suspense>
+            <main>{children}</main>
           </NetworkProvider>
           <BackgroundPicture brightness={0.8} />
 
