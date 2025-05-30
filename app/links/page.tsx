@@ -1,6 +1,3 @@
-import fs from "fs/promises";
-import path from "path";
-
 // Icons for social platforms
 import {
   FaGithub,
@@ -19,6 +16,8 @@ import LoadingScreen from "@/components/loading";
 const fetchLinks: {
   (): Promise<{ props: { links: Record<string, string>; error?: string } }>;
 } = async () => {
+  const fs = (await import("fs/promises")).default;
+  const path = (await import("path")).default;
   try {
     const file = await fs.readFile(path.join(process.cwd(), "public", "data", "social.json"), "utf8");
     const data = JSON.parse(file);

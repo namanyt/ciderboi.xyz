@@ -1,7 +1,5 @@
 import Music from "@/components/pages/Music";
 import { notFound } from "next/navigation";
-import fs from "fs/promises";
-import path from "path";
 import { SongData } from "@/lib/types";
 import LoadingScreen from "@/components/loading";
 import { Suspense } from "react";
@@ -11,6 +9,8 @@ export type Props = {
 };
 
 const fetchData = async () => {
+  const fs = (await import("fs/promises")).default;
+  const path = (await import("path")).default;
   const file = await fs.readFile(path.join(process.cwd(), "public", "data", "songs.json"), "utf8");
   const data = JSON.parse(file) as SongData;
 

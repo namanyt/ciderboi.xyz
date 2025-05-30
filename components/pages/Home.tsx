@@ -41,12 +41,13 @@ export default function Home({
         {/* Profile Section */}
         <div className="flex flex-col md:flex-row items-center gap-6">
           <Image
-            // src="/pictures/pfp.webp"
-            src="/pictures/pfp-2.webp" // TODO: Update This PFP when Pushing to PROD
+            src="/pictures/pfp-3.webp"
             alt="Profile"
             width={1288}
-            height={1285}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            height={1288}
+            loading="lazy"
+            draggable={false}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
             style={{ objectFit: "contain" }}
             className="w-32 h-32 rounded-full object-cover border-2 border-white/30 shadow-md"
           />
@@ -215,7 +216,7 @@ function ProjectCard({ project }: { project: Project }) {
                 sizes="64px"
                 style={{ objectFit: "contain" }}
                 className="rounded-lg drop-shadow-lg shadow"
-                priority
+                loading={"lazy"}
               />
             </div>
           ) : (
