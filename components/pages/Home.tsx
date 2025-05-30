@@ -26,7 +26,7 @@ export default function Home({
       <TooltipProvider>
         <Tooltip delayDuration={500}>
           <TooltipTrigger asChild onClick={() => setPage("/photos?id=9e0d34a2")}>
-            <div className="fixed bottom-4 right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-[250ms] z-50">
+            <div className="fixed bottom-4 right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-[250ms] z-[60]">
               <Info />
             </div>
           </TooltipTrigger>
