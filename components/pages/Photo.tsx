@@ -391,7 +391,7 @@ function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided
 
     // Cleanup
     return () => window.removeEventListener("resize", checkIsMobile);
-  }, [isIdProvided]);
+  }, [isIdProvided, photo.uuid]);
 
   const handleClick = () => {
     setOpen(true);
