@@ -47,11 +47,10 @@ export const metadata = {
     "digital storyteller",
     "developer artist",
   ],
-  // TODO: Update this when merging to main
-  // metadataBase: new URL("https://ciderboi.xyz"),
-  // alternates: {
-  //   canonical: "https://ciderboi.xyz",
-  // },
+  metadataBase: new URL("https://ciderboi.xyz"),
+  alternates: {
+    canonical: "https://ciderboi.xyz",
+  },
   robots: {
     index: true,
     follow: true,

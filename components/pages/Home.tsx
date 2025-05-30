@@ -53,7 +53,6 @@ export default function Home({
           />
           <div>
             <h2 className="text-3xl font-bold">Nitya Naman</h2>
-            {/*TODO: change this quote when website is complete*/}
             <p className="text-white/70 text-sm">“Engineering imagination, one pixel at a time.”</p>
           </div>
         </div>

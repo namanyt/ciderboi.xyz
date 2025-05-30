@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs/promises";
 
 // TODO: Update this when merging with main
-const BASE_URL = "https://dev.ciderboi.xyz";
+const BASE_URL = "https://ciderboi.xyz";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
