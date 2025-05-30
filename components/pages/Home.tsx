@@ -7,6 +7,7 @@ import { Project, Experience, SkillGroup } from "@/lib/types";
 import { ExternalLink, Info } from "lucide-react";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import NavigationButton from "@/components/NavigationButton";
+import { redirect } from "next/navigation";
 
 export default function Home({
   projects,
@@ -17,7 +18,6 @@ export default function Home({
   experiences: Experience[];
   skills: SkillGroup[];
 }) {
-  const { setPage } = useNetwork();
   const [showFullAbout, setShowFullAbout] = useState(false);
 
   return (
@@ -25,7 +25,13 @@ export default function Home({
       {/* About the Image Icon */}
       <TooltipProvider>
         <Tooltip delayDuration={500}>
-          <TooltipTrigger asChild onClick={() => setPage("/photos?id=81cb0ed1")}>
+          <TooltipTrigger
+            asChild
+            onClick={(e) => {
+              e.preventDefault();
+              redirect("/photos?id=81cb0ed1");
+            }}
+          >
             <div className="fixed bottom-4 right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-[250ms] z-[60]">
               <Info />
             </div>
