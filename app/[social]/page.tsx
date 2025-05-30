@@ -1,8 +1,8 @@
 import { notFound, redirect } from "next/navigation";
+import fs from "fs/promises";
+import path from "path";
 
 const fetchData = async () => {
-  const fs = (await import("fs/promises")).default;
-  const path = (await import("path")).default;
   const file = await fs.readFile(path.join(process.cwd(), "public", "data", "social.json"), "utf-8");
   const data = JSON.parse(file) as SocialsProps;
 

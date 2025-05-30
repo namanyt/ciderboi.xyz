@@ -12,12 +12,12 @@ import {
 import React, { Suspense } from "react";
 import NavigationButton from "@/components/NavigationButton";
 import LoadingScreen from "@/components/loading";
+import fs from "fs/promises";
+import path from "path";
 
 const fetchLinks: {
   (): Promise<{ props: { links: Record<string, string>; error?: string } }>;
 } = async () => {
-  const fs = (await import("fs/promises")).default;
-  const path = (await import("path")).default;
   try {
     const file = await fs.readFile(path.join(process.cwd(), "public", "data", "social.json"), "utf8");
     const data = JSON.parse(file);
