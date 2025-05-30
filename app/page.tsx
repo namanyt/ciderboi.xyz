@@ -2,11 +2,10 @@ import Home from "@/components/pages/Home";
 import { Project, Experience, SkillGroup } from "@/lib/types";
 import LoadingScreen from "@/components/loading";
 import { Suspense } from "react";
+import fs from "fs/promises";
+import path from "path";
 
 const fetchData = async () => {
-  const fs = (await import("fs/promises")).default;
-  const path = (await import("path")).default;
-
   const projects = await fs.readFile(path.join(process.cwd(), "public", "data", "projects.json"), "utf8");
   const experiences = await fs.readFile(path.join(process.cwd(), "public", "data", "experiences.json"), "utf8");
   const skills = await fs.readFile(path.join(process.cwd(), "public", "data", "skills.json"), "utf8");

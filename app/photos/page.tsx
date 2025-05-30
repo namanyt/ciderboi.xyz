@@ -3,6 +3,8 @@ import { PhotoMetadata } from "@/lib/types";
 import { notFound } from "next/navigation";
 import LoadingScreen from "@/components/loading";
 import { Suspense } from "react";
+import fs from "fs/promises";
+import path from "path";
 
 export const metadata = {
   title: "Photography",
@@ -38,9 +40,6 @@ export const metadata = {
 };
 
 const fetchPhotos = async () => {
-  const fs = (await import("fs/promises")).default;
-  const path = (await import("path")).default;
-
   return {
     props: {
       photos: JSON.parse(
