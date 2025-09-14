@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="dark">
       <head>
         <script
           type="application/ld+json"
@@ -69,9 +69,23 @@ export default function RootLayout({
             }),
           }}
         />
+        {/* Immediately force dark on first paint to avoid flash and override stored/system theme */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('dark');
+try{localStorage.setItem('theme','dark')}catch(e){};
+document.documentElement.style.colorScheme='dark';`,
+          }}
+        />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          forcedTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
           <NetworkProvider>
             <main>{children}</main>
           </NetworkProvider>

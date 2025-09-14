@@ -80,46 +80,47 @@ export default function Home({
             className={`text-white/80 leading-relaxed text-sm mb-3 ${showFullAbout ? "" : "cursor-pointer"}`}
             onClick={() => setShowFullAbout(true)}
           >
-            Hey! I’m a recent high school graduate who loves building stuff that lives at the edge of code, design, and
-            storytelling. Whether it&#39;s a full-on horror game, a functional web app, or a weird little
-            hardware-software mashup, I’m all about turning random ideas into working things—especially when there’s
-            creative chaos involved and a bunch of problem-solving along the way.{" "}
+            Hey! I’m a first-year BTech CSE student at UPES who loves making stuff that lives at the edge of code,
+            design, and storytelling. Whether it’s a quirky little project, a functional web app, or something that
+            mixes hardware and creativity, I’m all about turning random ideas into working things—especially when
+            there’s chaos, problem-solving, and fun involved.{" "}
           </p>
 
           {/* Full version shown conditionally */}
           {showFullAbout && (
             <div className="space-y-4 text-white/80 leading-relaxed text-sm mt-4 animate-fadeIn">
               <p>
-                Over the past few years, I’ve dived into a bunch of side quests. Built a spooky chemistry escape game in
-                seven days with just one other teammate (science meets scary, literally), launched a full coding book
-                library site overnight just for the fun of it, and put together a posture-correcting device with an
-                actual working app. They weren’t perfect, but they were real—and I learned a ton about time-crunches,
-                fixing bugs at weird hours, and figuring out how to turn big ideas into something that works.
+                Back in school, I went on a bunch of wild side quests—like building a spooky chemistry escape game in
+                just seven days with one teammate (science meets scary, literally), putting together a full coding
+                library site overnight just for fun, and even making a posture-correcting device with an actual working
+                app. None of them were perfect, but they were real—and they taught me a ton about deadlines, bug-hunting
+                at weird hours, and how to bring big ideas to life.
               </p>
 
               <p>
-                I’ve also spent time behind-the-scenes at events—handling AV systems, syncing up lights for live
-                performances, and helping design and set up booths at big inter-school exhibitions. That’s where I
-                realized how much the small stuff—like where a light goes or how people move through a space—actually
-                matters a lot.
+                I also got to work behind the scenes at events—running AV systems, syncing lights for live performances,
+                and helping design booths for inter-school exhibitions. That’s when I realized how much the small
+                details—like where a light goes or how people move through a space—actually matter in creating an
+                experience.
               </p>
 
               <p>
-                At school, I led the tech club, which honestly was more about vibing with other curious folks than
-                anything official. We tried out random tools, hosted workshops, built things that sometimes broke (and
-                sometimes didn’t), and mostly just geeked out together.
+                Back in high school, I was the Head of the Techformers Club, which honestly was less about the
+                “position” and more about vibing with other curious folks. We tried out random tools, hosted workshops,
+                built things that sometimes broke (and sometimes didn’t), and mostly just geeked out together.
               </p>
 
               <p>
-                Outside the tech world, I’m into music, filmmaking, and photography—and that creativity bleeds into the
-                way I design, build, and think through projects. Whether it’s crafting smoother UI, storytelling through
-                gameplay, or setting a visual mood, I like blending logic with feeling.
+                Now, I’ve just started my journey at UPES as a first-year BTech CSE student. I recently took part in the
+                Smart India Hackathon, and right now I’m exploring university life while experimenting with a few
+                personal projects on the side. I’m excited about the road ahead—bigger builds, new collaborations, and
+                joining more communities as I grow here.
               </p>
 
               <p>
-                Now, as I head into college, I’m just excited to keep learning, work with people who challenge me, and
-                keep making things that feel fun, thoughtful, or straight-up bizarre in the best way. Especially the
-                kind where code, creativity, and real-world impact all come together.
+                Outside of tech, I keep up with photography—sharing my latest shots on Instagram—and that creative side
+                still bleeds into how I design and build things. Looking ahead, I’m super excited to explore projects
+                that mix code, creativity, and real-world impact.
               </p>
             </div>
           )}
@@ -175,7 +176,7 @@ export default function Home({
 
         {/* Personal Projects Section */}
         <div>
-          <h3 className="text-xl font-semibold mb-4">Personal Projects</h3>
+          <h3 className="text-xl font-semibold mb-4">Projects</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Example Project Card */}
             {projects.map((project, index) => (
@@ -238,18 +239,25 @@ function ProjectCard({ project }: { project: Project }) {
         <div className="space-y-2">
           <div className="flex items-center justify-between gap-2">
             <h3 className="text-lg font-semibold text-white">
-              <span className="hover:underline cursor-pointer" onClick={() => window.open(url, "_blank")}>
+              <span
+                className="hover:underline cursor-pointer"
+                onClick={() => {
+                  if (url) window.open(url, "_blank");
+                }}
+              >
                 {title}
               </span>
             </h3>
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/70 hover:text-white transition-colors"
-            >
-              <ExternalLink size={16} />
-            </a>
+            {url && (
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/70 hover:text-white transition-colors"
+              >
+                <ExternalLink size={16} />
+              </a>
+            )}
           </div>
 
           <p className="text-white/80 text-sm">{description}</p>

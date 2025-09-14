@@ -1,6 +1,23 @@
 {
   "projects": [
     {
+      "id": "SIH",
+      "title": "Smart India Hackathon",
+      "description": "Integrates NAMASTE and ICD-11 codes using FHIR for unified healthcare interoperability.",
+      "category": "Healthcare Informatics",
+      "tags": [
+        "FHIR",
+        "ICD-11",
+        "NAMASTE",
+        "Healthcare",
+        "Interoperability",
+        "Docker",
+        "SIH2025"
+      ],
+      "image": "/pictures/sih.jpg",
+      "url": ""
+    },
+    {
       "id": "lab-of-shadows",
       "title": "Lab of Shadows",
       "description": "A horror-themed science game with interactive learning.",
