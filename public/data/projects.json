@@ -1,6 +1,20 @@
 {
   "projects": [
     {
+      "id": "aifsm2025",
+      "title": "All India Forest Sports Meet 2025",
+      "description": "A comprehensive web application for managing the All India Forest Sports Meet 2025 for Government of Uttarakhand",
+      "category": "FullStack Web Development",
+      "tags": [
+        "Event",
+        "Sports",
+        "Full Stack Web Dev",
+        "Web Application"
+      ],
+      "image": "https://raw.githubusercontent.com/namanyt/aifsm2025.in/refs/heads/master/public/logo.svg",
+      "url": "https://aifsm2025.in"
+    },
+    {
       "id": "SIH",
       "title": "Smart India Hackathon",
       "description": "Integrates NAMASTE and ICD-11 codes using FHIR for unified healthcare interoperability.",

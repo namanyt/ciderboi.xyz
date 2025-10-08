@@ -4,6 +4,7 @@ import LoadingScreen from "@/components/loading";
 import { Suspense } from "react";
 import fs from "fs/promises";
 import path from "path";
+import { Metadata } from "next";
 
 const fetchData = async () => {
   const projects = await fs.readFile(path.join(process.cwd(), "public", "data", "projects.json"), "utf8");
@@ -16,7 +17,7 @@ const fetchData = async () => {
   };
 };
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Nitya Naman",
   description: "code. music. chaos.",
   keywords: [

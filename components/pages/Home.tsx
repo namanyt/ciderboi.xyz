@@ -157,9 +157,13 @@ export default function Home({
           <h3 className="text-xl font-semibold mb-4">Experience</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
             {/* Example Experience Card */}
-            {experiences.map((experience, index) => (
-              <ExperienceCard key={index} experience={experience} />
-            ))}
+            {experiences
+              .sort((a, b) => {
+                return parseInt(a.id) - parseInt(b.id);
+              })
+              .map((experience, index) => (
+                <ExperienceCard key={index} experience={experience} />
+              ))}
           </div>
         </div>
 
@@ -238,7 +242,7 @@ function ProjectCard({ project }: { project: Project }) {
         {/* Text Content */}
         <div className="space-y-2">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="text-lg font-semibold text-white">
+            <h3 className="text-lg font-semibold text-white text-left">
               <span
                 className="hover:underline cursor-pointer"
                 onClick={() => {

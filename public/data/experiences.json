@@ -1,13 +1,18 @@
 {
   "experiences": [
     {
-      "id": "1",
+      "id": "5",
       "title": "Photographer",
       "company": "Self-employed",
       "startDate": "Jul 2023",
       "endDate": "Mar 2025",
       "description": "Developed photography skills through self-guided learning and personal projects. Focused on capturing high-quality photographs for events and creative works. Built an online portfolio to showcase the work created during this learning phase.",
-      "tags": ["Photography", "Event Photography", "Adobe Lightroom", "Photography Techniques"],
+      "tags": [
+        "Photography",
+        "Event Photography",
+        "Adobe Lightroom",
+        "Photography Techniques"
+      ],
       "logo": ""
     },
     {
@@ -18,28 +23,63 @@
       "startDate": "Apr 2023",
       "endDate": "Mar 2025",
       "description": "Leading and managing the Techformers club, overseeing projects, fostering collaboration among team members, and ensuring the successful execution of initiatives and events. Part-time, on-site role.",
-      "tags": ["Leadership", "Project Management", "Team Management", "Teamwork"],
-      "logo": ""
+      "tags": [
+        "Leadership",
+        "Project Management",
+        "Team Management",
+        "Teamwork"
+      ],
+      "logo": "https://scontent-del1-1.cdninstagram.com/v/t51.2885-19/275841252_702762347802466_2174286142361325386_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45ODkuYzIifQ&_nc_ht=scontent-del1-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QEIq8pi2uzkCmMll2qQUjev_MecfGERnPWuEaKu7r2HUj2_PUhr52bnbNoE_OZla8U&_nc_ohc=OHlhkiWuSSEQ7kNvwFCQ3Ym&_nc_gid=4R1RGau-qqDfmo7-ZUrMww&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AffQxvDZ8kWVe-i6gyreclYlAEQDNUaWZElwYt9KLXxkAw&oe=68EBEA30&_nc_sid=7a9f4b"
     },
     {
-      "id": "3",
+      "id": "4",
       "title": "Music Producer",
       "company": "Self-employed",
       "startDate": "Mar 2020",
       "endDate": "Oct 2024",
       "description": "Composing, producing, and self-releasing original music across major streaming platforms, including Spotify and YouTube Music. Handling all aspects of production, from music composition to final mixing and mastering.",
-      "tags": ["Music Creation", "FL Studio", "Music Production", "Ableton Live", "Music Theory"],
+      "tags": [
+        "Music Creation",
+        "FL Studio",
+        "Music Production",
+        "Ableton Live",
+        "Music Theory"
+      ],
       "logo": ""
     },
     {
-      "id": "4",
+      "id": "1",
       "title": "Programmer",
       "company": "Self-employed",
       "startDate": "Jun 2014",
       "endDate": "Sep 2024",
       "description": "Self-taught in various computer programming languages, system architecture, and server management. Gained extensive experience in software development, problem-solving, and coding techniques through independent study and practical application.",
-      "tags": ["Programming", "JavaScript", "Python", "Java", "C++", "SQL"],
-      "logo": ""
+      "tags": [
+        "Programming",
+        "JavaScript",
+        "Python",
+        "Java",
+        "C++",
+        "SQL"
+      ],
+      "logo": "https://avatars.githubusercontent.com/u/95750217?s=400&v=4"
+    },
+    {
+      "id": "3",
+      "title": "Full Stack Developer",
+      "company": "Freelance",
+      "startDate": "Sept 2025",
+      "endDate": "Present",
+      "description": "Collaborated with the Government of Uttarakhand to develop the official AIFSM 2025 website (aifsm2025.in), delivering end-to-end solutions across both frontend and backend. Ensured a robust, user-friendly, and scalable platform to support the event's digital presence.",
+      "tags": [
+        "Full Stack Development",
+        "React",
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "Responsive Design"
+      ],
+      "logo": "https://raw.githubusercontent.com/namanyt/aifsm2025.in/refs/heads/master/public/logo.svg"
     }
   ]
 }
