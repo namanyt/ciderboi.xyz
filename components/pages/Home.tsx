@@ -47,7 +47,7 @@ export default function Home({
         {/* Profile Section */}
         <div className="flex flex-col md:flex-row items-center gap-6">
           <Image
-            src="/pictures/pfp-3.webp"
+            src="/pictures/pfp-4.webp"
             alt="Profile"
             width={1288}
             height={1288}
