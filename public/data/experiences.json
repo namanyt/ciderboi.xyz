@@ -16,7 +16,7 @@
       "logo": ""
     },
     {
-      "id": "2",
+      "id": "3",
       "title": "Head of Techformers",
       "company": "Delhi Public School - India",
       "location": "Jaipur, Rajasthan, India",
@@ -48,7 +48,7 @@
       "logo": ""
     },
     {
-      "id": "1",
+      "id": "2",
       "title": "Programmer",
       "company": "Self-employed",
       "startDate": "Jun 2014",
@@ -65,10 +65,10 @@
       "logo": "https://avatars.githubusercontent.com/u/95750217?s=400&v=4"
     },
     {
-      "id": "3",
+      "id": "1",
       "title": "Full Stack Developer",
       "company": "Freelance",
-      "startDate": "Sept 2025",
+      "startDate": "Oct 2025",
       "endDate": "Present",
       "description": "Collaborated with the Government of Uttarakhand to develop the official AIFSM 2025 website (aifsm2025.in), delivering end-to-end solutions across both frontend and backend. Ensured a robust, user-friendly, and scalable platform to support the event's digital presence.",
       "tags": [
