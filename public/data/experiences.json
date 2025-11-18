@@ -5,7 +5,7 @@
       "title": "Photographer",
       "company": "Self-employed",
       "startDate": "Jul 2023",
-      "endDate": "Mar 2025",
+      "endDate": "Jun 2025",
       "description": "Developed photography skills through self-guided learning and personal projects. Focused on capturing high-quality photographs for events and creative works. Built an online portfolio to showcase the work created during this learning phase.",
       "tags": [
         "Photography",
@@ -36,7 +36,7 @@
       "title": "Music Producer",
       "company": "Self-employed",
       "startDate": "Mar 2020",
-      "endDate": "Oct 2024",
+      "endDate": "Jun 2025",
       "description": "Composing, producing, and self-releasing original music across major streaming platforms, including Spotify and YouTube Music. Handling all aspects of production, from music composition to final mixing and mastering.",
       "tags": [
         "Music Creation",
@@ -52,7 +52,7 @@
       "title": "Programmer",
       "company": "Self-employed",
       "startDate": "Jun 2014",
-      "endDate": "Sep 2024",
+      "endDate": "Jun 2025",
       "description": "Self-taught in various computer programming languages, system architecture, and server management. Gained extensive experience in software development, problem-solving, and coding techniques through independent study and practical application.",
       "tags": [
         "Programming",
@@ -68,8 +68,8 @@
       "id": "1",
       "title": "Full Stack Developer",
       "company": "Freelance",
-      "startDate": "Sept 2025",
-      "endDate": "Present",
+      "startDate": "Oct 2025",
+      "endDate": "Nov 2025",
       "description": "Collaborated with the Government of Uttarakhand to develop the official AIFSM 2025 website (aifsm2025.in), delivering end-to-end solutions across both frontend and backend. Ensured a robust, user-friendly, and scalable platform to support the event's digital presence.",
       "tags": [
         "Full Stack Development",
