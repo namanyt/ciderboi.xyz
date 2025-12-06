@@ -1,16 +1,12 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
-const devNextConfig = withBundleAnalyzer({
-  ...nextConfig,
+const nextConfig: NextConfig = {
   reactStrictMode: true,
+  turbopack: {},
   images: {
     remotePatterns: [
       {
@@ -45,7 +41,6 @@ const devNextConfig = withBundleAnalyzer({
       },
     ],
   },
-});
+};
 
-// export default nextConfig;
-export default devNextConfig;
+export default withBundleAnalyzer(nextConfig);
