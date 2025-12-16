@@ -36,8 +36,8 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "scontent-del1-1.cdninstagram.com",
-        pathname: "/**",
+        hostname: "www.dpsjhakri.com",
+        pathname: "/images/dps_logo1.png",
       },
     ],
   },

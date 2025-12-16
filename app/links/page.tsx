@@ -61,33 +61,61 @@ const colorMap = {
 };
 
 export const metadata = {
-  title: "Connect With Me",
-  description: "Find me across the web",
+  title: "Connect With Me | Nitya Naman",
+  description:
+    "Find me across social platforms - GitHub, Twitter, Instagram, LinkedIn, Spotify, YouTube, SoundCloud, and Discord.",
+  keywords: [
+    "Nitya Naman",
+    "Cider Boi",
+    "social links",
+    "GitHub",
+    "Twitter",
+    "Instagram",
+    "LinkedIn",
+    "Spotify",
+    "YouTube",
+    "SoundCloud",
+    "Discord",
+    "connect",
+    "developer",
+  ],
+  metadataBase: new URL("https://ciderboi.xyz"),
+  alternates: {
+    canonical: "https://ciderboi.xyz/links",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+  },
   openGraph: {
-    title: "Connect With Me",
-    description: "Find me across the web",
+    title: "Connect With Me | Nitya Naman",
+    description:
+      "Find me across social platforms - GitHub, Twitter, Instagram, LinkedIn, Spotify, YouTube, SoundCloud, and Discord.",
     url: "https://ciderboi.xyz/links",
     siteName: "Nitya Naman",
     images: [
       {
-        url: "/pictures/og_embed/default-og.png",
+        url: "https://ciderboi.xyz/pictures/og_embed/default-og.png",
         width: 1200,
         height: 630,
+        alt: "Connect with Nitya Naman",
       },
     ],
     locale: "en-US",
     type: "website",
   },
   twitter: {
-    title: "Connect With Me",
-    description: "Find me across the web",
+    title: "Connect With Me | Nitya Naman",
+    description: "Find me across social platforms.",
     card: "summary_large_image",
     creator: "@ciderboi123",
     images: [
       {
-        url: "/pictures/twitter_embed/default-twitter.png",
+        url: "https://ciderboi.xyz/pictures/twitter_embed/default-twitter.png",
         width: 1200,
         height: 630,
+        alt: "Connect with Nitya Naman",
       },
     ],
   },
@@ -139,7 +167,7 @@ export default async function Links() {
 
         <NavigationButton
           href={"/"}
-          className="z-[60] fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
+          className="z-60 fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
         >
           Back Home
         </NavigationButton>

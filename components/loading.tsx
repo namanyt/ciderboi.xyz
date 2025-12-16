@@ -29,7 +29,7 @@ export default function LoadingScreen() {
 
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center z-50">
-      <div className={`absolute inset-0 bg-gradient-to-br ${bgColor} backdrop-blur-lg z-0`}></div>
+      <div className={`absolute inset-0 bg-linear-to-br ${bgColor} backdrop-blur-lg z-0`}></div>
       <div className="relative z-10 flex flex-col items-center gap-4">
         <div className={`w-16 h-16 border-4 ${color} border-t-transparent rounded-full animate-spin`}></div>
         <h2 className="text-xl font-semibold text-white">{message}</h2>

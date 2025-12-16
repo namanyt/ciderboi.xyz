@@ -32,7 +32,7 @@ export default function Home({
               redirect("/photos?id=81cb0ed1");
             }}
           >
-            <div className="fixed bottom-4 right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-[250ms] z-[60]">
+            <div className="fixed bottom-4 right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-250 z-60">
               <Info />
             </div>
           </TooltipTrigger>
@@ -45,10 +45,10 @@ export default function Home({
       {/* Scrollable Card */}
       <div className="h-[90vh] w-[95vw] max-w-5xl mx-auto my-6 p-8 rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white overflow-y-auto scroll-smooth space-y-12">
         {/* Profile Section */}
-        <div className="flex flex-col md:flex-row items-center gap-6">
+        <section className="flex flex-col md:flex-row items-center gap-6">
           <Image
             src="/pictures/pfp-4.webp"
-            alt="Profile"
+            alt="Nitya Naman - Creative Developer and Software Engineer at UPES"
             width={1288}
             height={1288}
             loading="lazy"
@@ -58,14 +58,14 @@ export default function Home({
             className="w-32 h-32 rounded-full object-cover border-2 border-white/30 shadow-md"
           />
           <div>
-            <h2 className="text-3xl font-bold">Nitya Naman</h2>
-            <p className="text-white/70 text-sm">“Engineering imagination, one pixel at a time.”</p>
+            <h1 className="text-3xl font-bold">Nitya Naman</h1>
+            <p className="text-white/70 text-sm">"Engineering imagination, one pixel at a time."</p>
           </div>
-        </div>
+        </section>
 
         {/* About Me Section */}
-        <div>
-          <h3
+        <section>
+          <h2
             className="text-xl font-semibold mb-4 flex items-center cursor-pointer group"
             onClick={() => setShowFullAbout(!showFullAbout)}
           >
@@ -73,7 +73,7 @@ export default function Home({
             <span className="ml-2 text-sm text-white/60 group-hover:text-white/80 transition-colors">
               {showFullAbout ? "(Click to collapse)" : "(Click to expand)"}
             </span>
-          </h3>
+          </h2>
 
           {/* Brief version always shown */}
           <p
@@ -124,10 +124,10 @@ export default function Home({
               </p>
             </div>
           )}
-        </div>
+        </section>
 
         {/* Pinned / Quick Links Section */}
-        <div>
+        <section>
           <h3 className="text-xl font-semibold mb-4 text-center">
             <NavigationButton
               href="/links"
@@ -150,11 +150,11 @@ export default function Home({
               📸 Photos
             </NavigationButton>
           </div>
-        </div>
+        </section>
 
         {/* Experience Section */}
-        <div>
-          <h3 className="text-xl font-semibold mb-4">Experience</h3>
+        <section>
+          <h2 className="text-xl font-semibold mb-4">Experience</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
             {/* Example Experience Card */}
             {experiences
@@ -165,29 +165,29 @@ export default function Home({
                 <ExperienceCard key={index} experience={experience} />
               ))}
           </div>
-        </div>
+        </section>
 
         {/* Skills Section */}
-        <div>
-          <h3 className="text-xl font-semibold mb-4">Skills</h3>
+        <section>
+          <h2 className="text-xl font-semibold mb-4">Skills</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Example Skills Card */}
             {skills.map((skillGroup, index) => (
               <SkillsCard key={index} title={skillGroup.title} skills={skillGroup.skills} />
             ))}
           </div>
-        </div>
+        </section>
 
         {/* Personal Projects Section */}
-        <div>
-          <h3 className="text-xl font-semibold mb-4">Projects</h3>
+        <section>
+          <h2 className="text-xl font-semibold mb-4">Projects</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Example Project Card */}
             {projects.map((project, index) => (
               <ProjectCard key={index} project={project} />
             ))}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
@@ -213,7 +213,7 @@ function ProjectCard({ project }: { project: Project }) {
       key={`${id}-${category}`}
       className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 z-0"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
       <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
         {/* Image/Icon Section */}
         <div className="w-16 h-16">
@@ -221,7 +221,7 @@ function ProjectCard({ project }: { project: Project }) {
             <div className="relative w-full h-full">
               <Image
                 src={image}
-                alt={title}
+                alt={`${title} - ${category || "project"} by Nitya Naman`}
                 fill
                 sizes="64px"
                 style={{ objectFit: "contain" }}
@@ -302,12 +302,12 @@ function ExperienceCard({ experience }: { experience: Experience }) {
       key={id}
       className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 z-0"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
       <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
         {/* Logo or Icon */}
         <div className="w-16 h-16">
           {logo ? (
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full rounded-lg overflow-hidden shadow">
               <Image fill src={logo} alt={company} className="rounded-lg object-contain w-full h-full shadow" />
             </div>
           ) : (
@@ -354,7 +354,7 @@ function ExperienceCard({ experience }: { experience: Experience }) {
 function SkillsCard({ title, skills }: { title: string; skills: string[] }) {
   return (
     <div className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20">
-      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 z-0"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
       <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
         <h3 className="text-lg font-semibold text-white">{title}</h3>
         <div className="flex flex-wrap justify-center gap-2 mt-2">

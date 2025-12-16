@@ -25,7 +25,7 @@ export default function Photo({
     <>
       <NavigationButton
         href={"/"}
-        className="z-[60] fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md overflow-visible"
+        className="z-60 fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md overflow-visible"
       >
         Back Home
       </NavigationButton>
@@ -117,7 +117,7 @@ export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }
             <div className="relative touch-manipulation cursor-zoom-in" onClick={() => setEnlarged(!enlarged)}>
               <Image
                 src={`/gallery/${photo.webpPath}`}
-                alt={photo.uuid}
+                alt={`Photography by Nitya Naman - ${photo.uuid}`}
                 width={enlarged ? photo.size.width * MOBILE_ENLARGED_SCALE : photo.size.width * MOBILE_SCALING}
                 height={enlarged ? photo.size.height * MOBILE_ENLARGED_SCALE : photo.size.height * MOBILE_SCALING}
                 className={`max-h-[50vh] w-auto object-contain rounded-lg shadow-xl transition-all duration-300 ${enlarged ? "scale-110" : "scale-100"}`}
@@ -138,7 +138,7 @@ export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }
           </div>
 
           {/* Info panel - stacked below image */}
-          <div className="w-full p-5 bg-black/60 border-t border-white/10 text-white flex-shrink-0">
+          <div className="w-full p-5 bg-black/60 border-t border-white/10 text-white shrink-0">
             <h3 className="text-lg font-medium mb-4">Photo Info</h3>
 
             <div className="grid grid-cols-2 gap-3 mb-6">
@@ -275,7 +275,7 @@ export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged 
             >
               <Image
                 src={`/gallery/${photo.webpPath}`}
-                alt={photo.uuid}
+                alt={`Photography by Nitya Naman - ${photo.uuid}`}
                 width={enlarged ? photo.size.width * DESKTOP_ENLARGED_SCALE : photo.size.width * DESKTOP_SCALING}
                 height={enlarged ? photo.size.height * DESKTOP_ENLARGED_SCALE : photo.size.height * DESKTOP_SCALING}
                 className={`max-h-[80vh] max-w-full object-contain rounded-lg shadow-xl transition-all duration-300 ${enlarged ? "scale-125" : "scale-100"}`}
@@ -406,7 +406,7 @@ function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided
         <div className="cursor-pointer break-inside-avoid overflow-hidden rounded-xl shadow-lg bg-black/30 backdrop-blur-sm border border-white/5 hover:border-white/20 hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]">
           <Image
             src={`/gallery/${photo.webpPath}`}
-            alt={photo.uuid}
+            alt={`Photography by Nitya Naman - Gallery`}
             width={photo.size.width * scaling}
             height={photo.size.height * scaling}
             className="w-full h-auto transition-all duration-500 rounded-xl hover:brightness-110"

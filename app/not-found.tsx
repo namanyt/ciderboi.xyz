@@ -1,6 +1,16 @@
 // app/not-found.tsx
+import type { Metadata } from "next";
 import { BackgroundPicture } from "@/components/BackgroundPicture";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Page Not Found | Nitya Naman",
+  description: "This page doesn't exist. Return to the portfolio homepage.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function NotFound() {
   return (
@@ -21,7 +31,7 @@ export default function NotFound() {
         </Link>
       </div>
 
-      <span className="opacity-[75%]">
+      <span className="opacity-75">
         <BackgroundPicture brightness={0.8} />
       </span>
     </main>

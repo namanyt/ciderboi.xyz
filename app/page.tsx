@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     siteName: "Nitya Naman",
     images: [
       {
-        url: "/pictures/embed/home.png",
+        url: "https://ciderboi.xyz/pictures/embed/home.png",
         width: 1200,
         height: 630,
         alt: "Nitya Naman Portfolio Preview",
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
     creator: "@ciderboi123",
     images: [
       {
-        url: "/pictures/embed/home.png",
+        url: "https://ciderboi.xyz/pictures/embed/home.png",
         width: 1200,
         height: 630,
         alt: "Nitya Naman Portfolio",

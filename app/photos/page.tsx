@@ -7,33 +7,57 @@ import fs from "fs/promises";
 import path from "path";
 
 export const metadata = {
-  title: "Photography",
-  description: "Frames from the real world.",
+  title: "Photography | Nitya Naman",
+  description: "Frames from the real world - explore my photography portfolio and visual storytelling.",
+  keywords: [
+    "photography",
+    "Nitya Naman",
+    "Cider Boi",
+    "photos",
+    "gallery",
+    "visual art",
+    "photographer",
+    "portfolio",
+    "images",
+    "creative",
+    "visual storytelling",
+  ],
+  metadataBase: new URL("https://ciderboi.xyz"),
+  alternates: {
+    canonical: "https://ciderboi.xyz/photos",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+  },
   openGraph: {
-    title: "Photography",
-    description: "Frames from the real world.",
+    title: "Photography | Nitya Naman",
+    description: "Frames from the real world - explore my photography portfolio and visual storytelling.",
     url: "https://ciderboi.xyz/photos",
     siteName: "Nitya Naman",
     images: [
       {
-        url: "/pictures/embed/photo.png",
+        url: "https://ciderboi.xyz/pictures/embed/photo.png",
         width: 1200,
         height: 630,
+        alt: "Photography - Frames from the Real World by Nitya Naman",
       },
     ],
     locale: "en-US",
     type: "website",
   },
   twitter: {
-    title: "Photography",
+    title: "Photography | Nitya Naman",
     description: "Frames from the real world.",
     card: "summary_large_image",
     creator: "@ciderboi123",
     images: [
       {
-        url: "/pictures/embed/photo.png",
+        url: "https://ciderboi.xyz/pictures/embed/photo.png",
         width: 1200,
         height: 630,
+        alt: "Photography - Nitya Naman",
       },
     ],
   },

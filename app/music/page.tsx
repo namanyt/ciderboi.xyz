@@ -22,33 +22,57 @@ const fetchData = async () => {
 };
 
 export const metadata = {
-  title: "Music",
-  description: "The soundtrack of my life.",
+  title: "Music | Nitya Naman",
+  description: "The soundtrack of my life - explore my favorite albums, singles, and musical influences.",
+  keywords: [
+    "music",
+    "Nitya Naman",
+    "Cider Boi",
+    "Spotify",
+    "playlist",
+    "albums",
+    "tracks",
+    "songs",
+    "artist",
+    "creative",
+    "soundtrack",
+  ],
+  metadataBase: new URL("https://ciderboi.xyz"),
+  alternates: {
+    canonical: "https://ciderboi.xyz/music",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+  },
   openGraph: {
-    title: "Music",
-    description: "The soundtrack of my life.",
+    title: "Music | Nitya Naman",
+    description: "The soundtrack of my life - explore my favorite albums, singles, and musical influences.",
     url: "https://ciderboi.xyz/music",
     siteName: "Nitya Naman",
     images: [
       {
-        url: "/pictures/embed/music.png",
+        url: "https://ciderboi.xyz/pictures/embed/music.png",
         width: 1200,
         height: 630,
+        alt: "Music - The Soundtrack of Nitya Naman's Life",
       },
     ],
     locale: "en-US",
     type: "website",
   },
   twitter: {
-    title: "Music",
+    title: "Music | Nitya Naman",
     description: "The soundtrack of my life.",
     card: "summary_large_image",
     creator: "@ciderboi123",
     images: [
       {
-        url: "/pictures/embed/music.png",
+        url: "https://ciderboi.xyz/pictures/embed/music.png",
         width: 1200,
         height: 630,
+        alt: "Music - Nitya Naman",
       },
     ],
   },
