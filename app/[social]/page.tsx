@@ -35,6 +35,13 @@ export async function generateMetadata({ params }: { params: Promise<{ social: s
   return {
     title: `${socialName} | Nitya Naman`,
     description: `Connect with me on ${socialName}`,
+    robots: {
+      index: false,
+      follow: true,
+    },
+    alternates: {
+      canonical: `https://ciderboi.xyz/${social}`,
+    },
     openGraph: {
       images: [
         {
@@ -46,7 +53,7 @@ export async function generateMetadata({ params }: { params: Promise<{ social: s
       ],
       title: `${socialName} | Nitya Naman`,
       description: `Connect with me on ${socialName}`,
-      url: `https://ciderboi.xyz/social/${social}`,
+      url: `https://ciderboi.xyz/${social}`,
       siteName: "Nitya Naman",
       type: "website",
       locale: "en-US",
