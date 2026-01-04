@@ -2,28 +2,10 @@ import { Play, Heart } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Album, Track } from "@/lib/types";
-
-function parseDateMs(dateString: string | null | undefined): number | null {
-  if (!dateString) return null;
-  const ms = Date.parse(dateString);
-  return Number.isFinite(ms) ? ms : null;
-}
-
-function formatCountdown(msRemaining: number): string {
-  const totalSeconds = Math.max(0, Math.floor(msRemaining / 1000));
-  const days = Math.floor(totalSeconds / 86400);
-  const hours = Math.floor((totalSeconds % 86400) / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-
-  if (days > 0) return `${days}d ${hours.toString().padStart(2, "0")}h ${minutes.toString().padStart(2, "0")}m`;
-  if (hours > 0) return `${hours}h ${minutes.toString().padStart(2, "0")}m`;
-  if (minutes > 0) return `${minutes}m ${seconds.toString().padStart(2, "0")}s`;
-  return `${seconds}s`;
-}
+import { formatCountdown, parseReleaseMs } from "@/lib/release-time";
 
 function useReleaseCountdown(releaseDate: string | null | undefined) {
-  const targetMs = parseDateMs(releaseDate);
+  const targetMs = parseReleaseMs(releaseDate);
   const [nowMs, setNowMs] = useState(() => Date.now());
 
   useEffect(() => {
@@ -98,7 +80,8 @@ function extractColor(imgSrc: string): Promise<string> {
 
 const formatDate = (releaseDate: string | null | undefined) => {
   if (!releaseDate) return "";
-  const date = new Date(releaseDate);
+  const ms = parseReleaseMs(releaseDate);
+  const date = ms ? new Date(ms) : new Date(releaseDate);
   return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",

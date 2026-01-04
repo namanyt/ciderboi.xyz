@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useNetwork } from "@/components/context/Network";
 import { Project, Experience, SkillGroup } from "@/lib/types";
-import { ExternalLink, Info } from "lucide-react";
+import { ChevronDown, ExternalLink, Info } from "lucide-react";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import NavigationButton from "@/components/NavigationButton";
 import { redirect } from "next/navigation";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 export default function Home({
   projects,
@@ -21,7 +22,7 @@ export default function Home({
   const [showFullAbout, setShowFullAbout] = useState(false);
 
   return (
-    <div className="h-screen w-full bg-cover bg-center overflow-hidden">
+    <div className="h-screen w-full bg-cover bg-center overflow-auto">
       {/* About the Image Icon */}
       <TooltipProvider>
         <Tooltip delayDuration={500}>
@@ -65,65 +66,75 @@ export default function Home({
 
         {/* About Me Section */}
         <section>
-          <h2
-            className="text-xl font-semibold mb-4 flex items-center cursor-pointer group"
-            onClick={() => setShowFullAbout(!showFullAbout)}
-          >
-            About Me
-            <span className="ml-2 text-sm text-white/60 group-hover:text-white/80 transition-colors">
-              {showFullAbout ? "(Click to collapse)" : "(Click to expand)"}
-            </span>
+          <h2 className="text-xl font-semibold mb-4 flex items-center">
+            <button
+              type="button"
+              className="flex items-center gap-2 cursor-pointer"
+              aria-expanded={showFullAbout}
+              aria-controls="about-me-content"
+              onClick={() => setShowFullAbout(!showFullAbout)}
+            >
+              About Me
+              <ChevronDown
+                aria-hidden="true"
+                className={`h-4 w-4 text-white/70 transition-transform duration-200 ${showFullAbout ? "rotate-180" : "rotate-0"}`}
+              />
+            </button>
           </h2>
 
-          {/* Brief version always shown */}
-          <p
-            className={`text-white/80 leading-relaxed text-sm mb-3 ${showFullAbout ? "" : "cursor-pointer"}`}
-            onClick={() => setShowFullAbout(true)}
-          >
-            Hey! I’m a first-year BTech CSE student at UPES who loves making stuff that lives at the edge of code,
-            design, and storytelling. Whether it’s a quirky little project, a functional web app, or something that
-            mixes hardware and creativity, I’m all about turning random ideas into working things—especially when
-            there’s chaos, problem-solving, and fun involved.{" "}
-          </p>
+          <div id="about-me-content">
+            {/* Brief version always shown */}
+            <p
+              className={`text-white/80 leading-relaxed text-sm mb-3 ${showFullAbout ? "" : "cursor-pointer"}`}
+              onClick={() => setShowFullAbout(true)}
+            >
+              Hey! I’m a first-year BTech CSE student at UPES who loves making stuff that lives at the edge of code,
+              design, and storytelling. Whether it’s a quirky little project, a functional web app, or something that
+              mixes hardware and creativity, I’m all about turning random ideas into working things—especially when
+              there’s chaos, problem-solving, and fun involved.{" "}
+              {!showFullAbout && <span className="ml-1 text-xs text-white/70 underline">Read more...</span>}
+            </p>
 
-          {/* Full version shown conditionally */}
-          {showFullAbout && (
-            <div className="space-y-4 text-white/80 leading-relaxed text-sm mt-4 animate-fadeIn">
-              <p>
-                Back in school, I went on a bunch of wild side quests—like building a spooky chemistry escape game in
-                just seven days with one teammate (science meets scary, literally), putting together a full coding
-                library site overnight just for fun, and even making a posture-correcting device with an actual working
-                app. None of them were perfect, but they were real—and they taught me a ton about deadlines, bug-hunting
-                at weird hours, and how to bring big ideas to life.
-              </p>
+            {/* Full version shown conditionally */}
+            {showFullAbout && (
+              <div className="space-y-4 text-white/80 leading-relaxed text-sm mt-4 animate-fadeIn">
+                <p>
+                  Back in school, I went on a bunch of wild side quests—like building a spooky chemistry escape game in
+                  just seven days with one teammate (science meets scary, literally), putting together a full coding
+                  library site overnight just for fun, and even making a posture-correcting device with an actual
+                  working app. None of them were perfect, but they were real—and they taught me a ton about deadlines,
+                  bug-hunting at weird hours, and how to bring big ideas to life.
+                </p>
 
-              <p>
-                I also got to work behind the scenes at events—running AV systems, syncing lights for live performances,
-                and helping design booths for inter-school exhibitions. That’s when I realized how much the small
-                details—like where a light goes or how people move through a space—actually matter in creating an
-                experience.
-              </p>
+                <p>
+                  I also got to work behind the scenes at events—running AV systems, syncing lights for live
+                  performances, and helping design booths for inter-school exhibitions. That’s when I realized how much
+                  the small details—like where a light goes or how people move through a space—actually matter in
+                  creating an experience.
+                </p>
 
-              <p>
-                Back in high school, I was the Head of the Techformers Club, which honestly was less about the
-                “position” and more about vibing with other curious folks. We tried out random tools, hosted workshops,
-                built things that sometimes broke (and sometimes didn’t), and mostly just geeked out together.
-              </p>
+                <p>
+                  Back in high school, I was the Head of the Techformers Club, which honestly was less about the
+                  “position” and more about vibing with other curious folks. We tried out random tools, hosted
+                  workshops, built things that sometimes broke (and sometimes didn’t), and mostly just geeked out
+                  together.
+                </p>
 
-              <p>
-                Now, I’ve just started my journey at UPES as a first-year BTech CSE student. I recently took part in the
-                Smart India Hackathon, and right now I’m exploring university life while experimenting with a few
-                personal projects on the side. I’m excited about the road ahead—bigger builds, new collaborations, and
-                joining more communities as I grow here.
-              </p>
+                <p>
+                  Now, I’ve just started my journey at UPES as a first-year BTech CSE student. I recently took part in
+                  the Smart India Hackathon, and right now I’m exploring university life while experimenting with a few
+                  personal projects on the side. I’m excited about the road ahead—bigger builds, new collaborations, and
+                  joining more communities as I grow here.
+                </p>
 
-              <p>
-                Outside of tech, I keep up with photography—sharing my latest shots on Instagram—and that creative side
-                still bleeds into how I design and build things. Looking ahead, I’m super excited to explore projects
-                that mix code, creativity, and real-world impact.
-              </p>
-            </div>
-          )}
+                <p>
+                  Outside of tech, I keep up with photography—sharing my latest shots on Instagram—and that creative
+                  side still bleeds into how I design and build things. Looking ahead, I’m super excited to explore
+                  projects that mix code, creativity, and real-world impact.
+                </p>
+              </div>
+            )}
+          </div>
         </section>
 
         {/* Pinned / Quick Links Section */}

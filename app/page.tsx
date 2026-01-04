@@ -19,7 +19,7 @@ const fetchData = async () => {
 
 export const metadata: Metadata = {
   title: "Nitya Naman",
-  description: "code. music. chaos.",
+  description: "Creative developer blending code, design, and chaos through web projects, games, and music.",
   keywords: [
     "nitya",
     "naman",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Nitya Naman",
-    description: "code. music. chaos.",
+    description: "Creative developer blending code, design, and chaos through web projects, games, and music.",
     url: "https://ciderboi.xyz",
     siteName: "Nitya Naman",
     images: [
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: "Nitya Naman",
-    description: "code. music. chaos.",
+    description: "Creative developer blending code, design, and chaos through web projects, games, and music.",
     card: "summary_large_image",
     creator: "@ciderboi123",
     images: [
