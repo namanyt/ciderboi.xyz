@@ -1,228 +1,202 @@
 {
-  "albums": [
+  "current": [
     {
-      "title": "Just a Another Day",
-      "releaseDate": "2023-11-14",
-      "artists": [
-        {
-          "name": "Cider Gamer",
-          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
-        }
-      ],
-      "url": "https://open.spotify.com/album/3P8MnBkyMpgcz4yo3ZI9yt",
-      "thumbnail": "https://i.scdn.co/image/ab67616d0000b27326c4655ac6cd4436911df48a",
-      "thumbnailSize": {
-        "width": 640,
-        "height": 640
+      "artist": {
+        "name": "Nitya Naman",
+        "url": "#"
       },
-      "tracks": [
+      "albums": [],
+      "singles": [
         {
-          "title": "Afternoons",
-          "artists": [
-            {
-              "name": "Cider Gamer",
-              "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
-            }
-          ],
-          "id": "7qKjpcRnjR6PjFRVYeIUwm",
-          "url": "https://open.spotify.com/track/7qKjpcRnjR6PjFRVYeIUwm",
-          "releaseDate": null,
-          "thumbnail": null,
+          "id": 1,
+          "title": "Calm Nights",
+          "releaseDate": "2026-01-26",
+          "thumbnail": "https://cdn.amuse.io/6c7e8bbc-dfed-4a9d-9807-0082a7e50119.400x400.jpg",
           "thumbnailSize": {
-            "width": null,
-            "height": null
-          }
+            "width": 400,
+            "height": 400
+          },
+          "preSaveUrl": ""
         },
         {
-          "title": "Animals",
-          "artists": [
-            {
-              "name": "Cider Gamer",
-              "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
-            }
-          ],
-          "id": "6DdtQFz0jMDY7ZjhsHVCHB",
-          "url": "https://open.spotify.com/track/6DdtQFz0jMDY7ZjhsHVCHB",
-          "releaseDate": null,
-          "thumbnail": null,
+          "id": 2,
+          "title": "Heart",
+          "releaseDate": "2026-02-14",
+          "thumbnail": "https://cdn.amuse.io/d18fa40d-53fb-425d-9efb-22e2181808f7.400x400.jpg",
           "thumbnailSize": {
-            "width": null,
-            "height": null
-          }
+            "width": 400,
+            "height": 400
+          },
+          "preSaveUrl": ""
         },
         {
-          "title": "Tick Tock",
-          "artists": [
-            {
-              "name": "Cider Gamer",
-              "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
-            }
-          ],
-          "id": "4vRLb3an1hbL8mUkFi53BZ",
-          "url": "https://open.spotify.com/track/4vRLb3an1hbL8mUkFi53BZ",
-          "releaseDate": null,
-          "thumbnail": null,
+          "id": 3,
+          "title": "Wall-I",
+          "releaseDate": "2026-03-11",
+          "thumbnail": "https://cdn.amuse.io/7169d642-a01c-4c3d-8a6c-2c6fb7af30b7.400x400.jpg",
           "thumbnailSize": {
-            "width": null,
-            "height": null
-          }
-        },
-        {
-          "title": "Vibes",
-          "artists": [
-            {
-              "name": "Cider Gamer",
-              "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
-            }
-          ],
-          "id": "2KbuO4JCUZVc5gJjjyXTgO",
-          "url": "https://open.spotify.com/track/2KbuO4JCUZVc5gJjjyXTgO",
-          "releaseDate": null,
-          "thumbnail": null,
-          "thumbnailSize": {
-            "width": null,
-            "height": null
-          }
-        },
-        {
-          "title": "Music",
-          "artists": [
-            {
-              "name": "Cider Gamer",
-              "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
-            }
-          ],
-          "id": "7nfvEJAnmoaO470aLs0aXV",
-          "url": "https://open.spotify.com/track/7nfvEJAnmoaO470aLs0aXV",
-          "releaseDate": null,
-          "thumbnail": null,
-          "thumbnailSize": {
-            "width": null,
-            "height": null
-          }
+            "width": 400,
+            "height": 400
+          },
+          "preSaveUrl": ""
         }
       ]
     }
   ],
-  "singles": [
+  "archived": [
     {
-      "title": "Im Alone",
-      "artists": [
+      "artist": {
+        "name": "Cider Gamer",
+        "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+      },
+      "albums": [
         {
-          "name": "Cider Gamer",
-          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+          "title": "Just a Another Day",
+          "releaseDate": "2023-11-14",
+          "url": "https://open.spotify.com/album/3P8MnBkyMpgcz4yo3ZI9yt",
+          "thumbnail": "https://i.scdn.co/image/ab67616d0000b27326c4655ac6cd4436911df48a",
+          "thumbnailSize": {
+            "width": 640,
+            "height": 640
+          },
+          "tracks": [
+            {
+              "title": "Afternoons",
+              "id": "7qKjpcRnjR6PjFRVYeIUwm",
+              "url": "https://open.spotify.com/track/7qKjpcRnjR6PjFRVYeIUwm",
+              "releaseDate": null,
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Animals",
+              "id": "6DdtQFz0jMDY7ZjhsHVCHB",
+              "url": "https://open.spotify.com/track/6DdtQFz0jMDY7ZjhsHVCHB",
+              "releaseDate": null,
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Tick Tock",
+              "id": "4vRLb3an1hbL8mUkFi53BZ",
+              "url": "https://open.spotify.com/track/4vRLb3an1hbL8mUkFi53BZ",
+              "releaseDate": null,
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Vibes",
+              "id": "2KbuO4JCUZVc5gJjjyXTgO",
+              "url": "https://open.spotify.com/track/2KbuO4JCUZVc5gJjjyXTgO",
+              "releaseDate": null,
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Music",
+              "id": "7nfvEJAnmoaO470aLs0aXV",
+              "url": "https://open.spotify.com/track/7nfvEJAnmoaO470aLs0aXV",
+              "releaseDate": null,
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            }
+          ]
         }
       ],
-      "id": "5mqcVXAmbGWoe6OLETVrzt",
-      "url": "https://open.spotify.com/track/5mqcVXAmbGWoe6OLETVrzt",
-      "releaseDate": "2023-07-02",
-      "thumbnail": "https://i.scdn.co/image/ab67616d0000b2735aecebafeecdc00a951202ad",
-      "thumbnailSize": {
-        "width": 640,
-        "height": 640
-      }
-    },
-    {
-      "title": "Tired of Love",
-      "artists": [
+      "singles": [
         {
-          "name": "Cider Gamer",
-          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
-        }
-      ],
-      "id": "6U2GTxLEQ1OQV0Uvmdt2ZG",
-      "url": "https://open.spotify.com/track/6U2GTxLEQ1OQV0Uvmdt2ZG",
-      "releaseDate": "2023-05-15",
-      "thumbnail": "https://i.scdn.co/image/ab67616d0000b273bdb6f7b9f0db67cf064757ba",
-      "thumbnailSize": {
-        "width": 640,
-        "height": 640
-      }
-    },
-    {
-      "title": "Leave This Behind",
-      "artists": [
+          "title": "Im Alone",
+          "id": "5mqcVXAmbGWoe6OLETVrzt",
+          "url": "https://open.spotify.com/track/5mqcVXAmbGWoe6OLETVrzt",
+          "releaseDate": "2023-07-02",
+          "thumbnail": "https://i.scdn.co/image/ab67616d0000b2735aecebafeecdc00a951202ad",
+          "thumbnailSize": {
+            "width": 640,
+            "height": 640
+          }
+        },
         {
-          "name": "Cider Gamer",
-          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
-        }
-      ],
-      "id": "71v3R534iJBa4ueX5wNQos",
-      "url": "https://open.spotify.com/track/71v3R534iJBa4ueX5wNQos",
-      "releaseDate": "2022-12-28",
-      "thumbnail": "https://i.scdn.co/image/ab67616d0000b273355994088f0cff5fe2ff7883",
-      "thumbnailSize": {
-        "width": 640,
-        "height": 640
-      }
-    },
-    {
-      "title": "Days",
-      "artists": [
+          "title": "Tired of Love",
+          "id": "6U2GTxLEQ1OQV0Uvmdt2ZG",
+          "url": "https://open.spotify.com/track/6U2GTxLEQ1OQV0Uvmdt2ZG",
+          "releaseDate": "2023-05-15",
+          "thumbnail": "https://i.scdn.co/image/ab67616d0000b273bdb6f7b9f0db67cf064757ba",
+          "thumbnailSize": {
+            "width": 640,
+            "height": 640
+          }
+        },
         {
-          "name": "Cider Gamer",
-          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
-        }
-      ],
-      "id": "4vJQkoEERVm9mdd1JOks4n",
-      "url": "https://open.spotify.com/track/4vJQkoEERVm9mdd1JOks4n",
-      "releaseDate": "2022-12-19",
-      "thumbnail": "https://i.scdn.co/image/ab67616d0000b2738c4950b3e48d53d4ef4aebb2",
-      "thumbnailSize": {
-        "width": 640,
-        "height": 640
-      }
-    },
-    {
-      "title": "Titan",
-      "artists": [
+          "title": "Leave This Behind",
+          "id": "71v3R534iJBa4ueX5wNQos",
+          "url": "https://open.spotify.com/track/71v3R534iJBa4ueX5wNQos",
+          "releaseDate": "2022-12-28",
+          "thumbnail": "https://i.scdn.co/image/ab67616d0000b273355994088f0cff5fe2ff7883",
+          "thumbnailSize": {
+            "width": 640,
+            "height": 640
+          }
+        },
         {
-          "name": "Cider Gamer",
-          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
-        }
-      ],
-      "id": "1wxLehxgqunhJ1FSTqP0Kq",
-      "url": "https://open.spotify.com/track/1wxLehxgqunhJ1FSTqP0Kq",
-      "releaseDate": "2022-11-08",
-      "thumbnail": "https://i.scdn.co/image/ab67616d0000b2736228e8d312d8dbccf335cbd0",
-      "thumbnailSize": {
-        "width": 640,
-        "height": 640
-      }
-    },
-    {
-      "title": "Origin",
-      "artists": [
+          "title": "Days",
+          "id": "4vJQkoEERVm9mdd1JOks4n",
+          "url": "https://open.spotify.com/track/4vJQkoEERVm9mdd1JOks4n",
+          "releaseDate": "2022-12-19",
+          "thumbnail": "https://i.scdn.co/image/ab67616d0000b2738c4950b3e48d53d4ef4aebb2",
+          "thumbnailSize": {
+            "width": 640,
+            "height": 640
+          }
+        },
         {
-          "name": "Cider Gamer",
-          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
-        }
-      ],
-      "id": "0zgtfQijIBkbSxVasftDzp",
-      "url": "https://open.spotify.com/track/0zgtfQijIBkbSxVasftDzp",
-      "releaseDate": "2022-09-05",
-      "thumbnail": "https://i.scdn.co/image/ab67616d0000b27347ac21bea1a3f1f7b7f6bae2",
-      "thumbnailSize": {
-        "width": 640,
-        "height": 640
-      }
-    },
-    {
-      "title": "Odyssey",
-      "artists": [
+          "title": "Titan",
+          "id": "1wxLehxgqunhJ1FSTqP0Kq",
+          "url": "https://open.spotify.com/track/1wxLehxgqunhJ1FSTqP0Kq",
+          "releaseDate": "2022-11-08",
+          "thumbnail": "https://i.scdn.co/image/ab67616d0000b2736228e8d312d8dbccf335cbd0",
+          "thumbnailSize": {
+            "width": 640,
+            "height": 640
+          }
+        },
         {
-          "name": "Cider Gamer",
-          "url": "https://open.spotify.com/artist/7k7GhHBikx0qz9wiZtTWL2"
+          "title": "Origin",
+          "id": "0zgtfQijIBkbSxVasftDzp",
+          "url": "https://open.spotify.com/track/0zgtfQijIBkbSxVasftDzp",
+          "releaseDate": "2022-09-05",
+          "thumbnail": "https://i.scdn.co/image/ab67616d0000b27347ac21bea1a3f1f7b7f6bae2",
+          "thumbnailSize": {
+            "width": 640,
+            "height": 640
+          }
+        },
+        {
+          "title": "Odyssey",
+          "id": "5Wuoe8VwPAxPYMpuxxfHEW",
+          "url": "https://open.spotify.com/track/5Wuoe8VwPAxPYMpuxxfHEW",
+          "releaseDate": "2022-06-30",
+          "thumbnail": "https://i.scdn.co/image/ab67616d0000b273de4155511806cb16bb77f37a",
+          "thumbnailSize": {
+            "width": 640,
+            "height": 640
+          }
         }
-      ],
-      "id": "5Wuoe8VwPAxPYMpuxxfHEW",
-      "url": "https://open.spotify.com/track/5Wuoe8VwPAxPYMpuxxfHEW",
-      "releaseDate": "2022-06-30",
-      "thumbnail": "https://i.scdn.co/image/ab67616d0000b273de4155511806cb16bb77f37a",
-      "thumbnailSize": {
-        "width": 640,
-        "height": 640
-      }
+      ]
     }
   ]
 }

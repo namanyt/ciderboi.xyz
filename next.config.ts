@@ -36,8 +36,8 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "www.dpsjhakri.com",
-        pathname: "/images/dps_logo1.png",
+        hostname: "cdn.amuse.io",
+        pathname: "/**",
       },
     ],
   },

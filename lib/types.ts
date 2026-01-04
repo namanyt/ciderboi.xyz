@@ -13,30 +13,43 @@ export type Artist = {
   url: string;
 };
 
+export type ImageSize = {
+  width?: number | null;
+  height?: number | null;
+};
+
 export type Track = {
   title: string;
-  artists: Artist[];
+  artists?: Artist[];
   id: string;
   url: string;
-  releaseDate: string;
-  thumbnail?: string;
-  thumbnailSize: { width?: number; height?: number };
+  releaseDate: string | null;
+  thumbnail?: string | null;
+  thumbnailSize: ImageSize;
+  preSaveUrl?: string | null;
 };
 
 export type Album = {
   title: string;
-  artists: Artist[];
+  artists?: Artist[];
   id: string;
   url: string;
   releaseDate: string;
-  thumbnail?: string;
-  thumbnailSize: { width?: number; height?: number };
+  thumbnail?: string | null;
+  thumbnailSize: ImageSize;
   tracks: Track[];
+  preSaveUrl?: string | null;
+};
+
+export type ArtistCatalog = {
+  artist: Artist;
+  albums: Album[];
+  singles: Track[];
 };
 
 export type SongData = {
-  albums: Album[];
-  singles: Track[];
+  current: ArtistCatalog[];
+  archived: ArtistCatalog[];
 };
 
 export type PhotoMetadata = {
