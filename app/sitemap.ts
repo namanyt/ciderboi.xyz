@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const socialData = fs.readFileSync(path.join(process.cwd(), "public", "data", "social.json"), "utf-8");
   const socials: Record<string, string> = JSON.parse(socialData);
   const socialRoutes = Object.keys(socials).map((key) => ({
-    path: `/social/${key}`,
+    path: `/${key}`,
     priority: 0.5,
     changefreq: "yearly",
   }));
