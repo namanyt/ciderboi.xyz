@@ -38,30 +38,30 @@ export default function Music({ data }: Props) {
     const dateLabel = formatDateShort(releaseMs);
 
     return (
-      <div className="relative w-full rounded-2xl backdrop-blur-md bg-white/5 border border-white/10 shadow-lg overflow-hidden p-4 min-h-[112px] sm:min-h-[128px] flex items-center">
+      <div className="relative w-full rounded-2xl backdrop-blur-md bg-white/5 border border-white/10 shadow-lg overflow-hidden p-4 flex flex-col gap-3">
         <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 pointer-events-none" />
-        <div className="relative z-10 flex w-full items-center justify-between gap-4">
-          <p className="text-white font-semibold text-base sm:text-lg flex-1 min-w-0">
+        <div className="relative z-10">
+          <p className="text-white font-semibold text-base sm:text-lg">
             {showTitle && title ? title : "Upcoming release"}
           </p>
+        </div>
 
-          <div className="flex items-center flex-wrap justify-end gap-2 sm:gap-3 flex-none">
-            <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
-              <div className="text-white font-semibold text-lg leading-none">{parts.days}</div>
-              <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Days</div>
-            </div>
-            <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
-              <div className="text-white font-semibold text-lg leading-none">{parts.hours}</div>
-              <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Hours</div>
-            </div>
-            <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
-              <div className="text-white font-semibold text-lg leading-none">{parts.minutes}</div>
-              <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Min</div>
-            </div>
-            <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
-              <div className="text-white font-semibold text-lg leading-none">{parts.seconds}</div>
-              <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Sec</div>
-            </div>
+        <div className="flex items-center flex-wrap justify-center gap-2 sm:gap-3 relative z-10">
+          <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
+            <div className="text-white font-semibold text-lg leading-none">{parts.days}</div>
+            <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Days</div>
+          </div>
+          <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
+            <div className="text-white font-semibold text-lg leading-none">{parts.hours}</div>
+            <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Hours</div>
+          </div>
+          <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
+            <div className="text-white font-semibold text-lg leading-none">{parts.minutes}</div>
+            <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Min</div>
+          </div>
+          <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
+            <div className="text-white font-semibold text-lg leading-none">{parts.seconds}</div>
+            <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Sec</div>
           </div>
         </div>
       </div>
@@ -258,7 +258,7 @@ export default function Music({ data }: Props) {
               </div>
             </details>
 
-            <details open className="rounded-2xl bg-white/5 border border-white/10">
+            <details className="rounded-2xl bg-white/5 border border-white/10">
               <summary className="cursor-pointer select-none px-4 sm:px-6 py-4 text-lg sm:text-xl font-semibold">
                 Cider Gamer (Archive)
               </summary>
