@@ -3,7 +3,7 @@
     {
       "artist": {
         "name": "Nitya Naman",
-        "url": "#"
+        "url": "https://open.spotify.com/artist/4asiCObHQTLPhbmjiqF1oi"
       },
       "albums": [],
       "singles": [
@@ -16,7 +16,8 @@
             "width": 400,
             "height": 400
           },
-          "preSaveUrl": "https://share.amuse.io/track/nitya-naman-calm-nights"
+          "preSaveUrl": "https://share.amuse.io/track/nitya-naman-calm-nights",
+          "url": "https://open.spotify.com/track/6Ssy1KTKbm8RdRx38ZqhFB"
         },
         {
           "id": 2,
