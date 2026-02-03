@@ -2,17 +2,18 @@ import { notFound, redirect } from "next/navigation";
 import fs from "fs/promises";
 import path from "path";
 
-const fetchData = async () => {
-  const file = await fs.readFile(path.join(process.cwd(), "public", "data", "social.json"), "utf-8");
-  const data = JSON.parse(file) as SocialsProps;
-
-  return {
-    data,
-  };
-};
-
 type SocialsProps = {
   [key: string]: string;
+};
+
+const fetchData = async () => {
+  const file = await fs.readFile(
+    path.join(process.cwd(), "public", "data", "social.json"),
+    "utf-8"
+  );
+  const data = JSON.parse(file) as SocialsProps;
+
+  return { data };
 };
 
 const socialMap: Record<string, string> = {
@@ -21,16 +22,24 @@ const socialMap: Record<string, string> = {
   instagram: "Instagram",
   youtube: "YouTube",
   spotify: "Spotify",
+  apple: "Apple Music",
+  amazon: "Amazon Music",
   soundcloud: "SoundCloud",
   discord: "Discord",
   linkedin: "LinkedIn",
 };
 
-export async function generateMetadata({ params }: { params: Promise<{ social: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ social: string }>;
+}) {
   const social = (await params).social?.toLowerCase();
 
   const socialName = socialMap[social] ?? "Let's connect!";
-  const safeName = Object.keys(socialMap).includes(social) ? social : "default";
+  const safeName = Object.keys(socialMap).includes(social)
+    ? social
+    : "default";
 
   return {
     title: `${socialName} | Nitya Naman`,
@@ -43,6 +52,12 @@ export async function generateMetadata({ params }: { params: Promise<{ social: s
       canonical: `https://ciderboi.xyz/${social}`,
     },
     openGraph: {
+      title: `${socialName} | Nitya Naman`,
+      description: `Connect with me on ${socialName}`,
+      url: `https://ciderboi.xyz/${social}`,
+      siteName: "Nitya Naman",
+      type: "website",
+      locale: "en-US",
       images: [
         {
           url: `https://ciderboi.xyz/pictures/og_embed/${safeName}-og.png`,
@@ -51,15 +66,12 @@ export async function generateMetadata({ params }: { params: Promise<{ social: s
           alt: `${socialName} - Connect with Nitya Naman`,
         },
       ],
-      title: `${socialName} | Nitya Naman`,
-      description: `Connect with me on ${socialName}`,
-      url: `https://ciderboi.xyz/${social}`,
-      siteName: "Nitya Naman",
-      type: "website",
-      locale: "en-US",
     },
     twitter: {
       card: "summary_large_image",
+      title: `${socialName} | Nitya Naman`,
+      description: `Connect with me on ${socialName}`,
+      creator: "@ciderboi123",
       images: [
         {
           url: `https://ciderboi.xyz/pictures/twitter_embed/${safeName}-twitter.png`,
@@ -68,17 +80,20 @@ export async function generateMetadata({ params }: { params: Promise<{ social: s
           alt: `${socialName} - Connect with Nitya Naman`,
         },
       ],
-      title: `${socialName} | Nitya Naman`,
-      description: `Connect with me on ${socialName}`,
-      creator: "@ciderboi123",
     },
   };
 }
 
-export default async function Socials({ params }: { params: Promise<{ social: string }> }) {
+export default async function Socials({
+  params,
+}: {
+  params: Promise<{ social: string }>;
+}) {
   const links = (await fetchData()).data;
   const { social } = await params;
 
-  if (links[social.toLowerCase()]) redirect(links[social.toLowerCase()]);
+  const key = social.toLowerCase();
+
+  if (links[key]) redirect(links[key]);
   else notFound();
 }
