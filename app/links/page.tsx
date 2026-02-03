@@ -64,8 +64,8 @@ const colorMap = {
     "hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-orange-400 hover:text-white",
   youtube: "hover:bg-red-600 hover:text-white",
   spotify: "hover:bg-green-600 hover:text-white",
-  apple: "hover:bg-black hover:text-white",
-  amazon: "hover:bg-yellow-500 hover:text-black",
+  apple: "hover:bg-[#FA233B] hover:text-white",
+  amazon: "hover:bg-[#00A8E1] hover:text-white",
   soundcloud: "hover:bg-orange-500 hover:text-white",
   discord: "hover:bg-indigo-600 hover:text-white",
 };
@@ -83,6 +83,19 @@ const platformOrder = [
   "soundcloud",
   "discord",
 ];
+
+const labelMap: Record<string, string> = {
+  github: "GitHub",
+  linkedin: "LinkedIn",
+  twitter: "Twitter",
+  instagram: "Instagram",
+  youtube: "YouTube",
+  spotify: "Spotify",
+  apple: "Apple Music",
+  amazon: "Amazon Music",
+  soundcloud: "SoundCloud",
+  discord: "Discord",
+};
 
 export const metadata = {
   title: "Connect With Me | Nitya Naman",
@@ -143,7 +156,7 @@ export default async function Links() {
                       <Icon className="text-2xl mr-3 duration-300" />
                     )}
                     <span className="capitalize font-medium duration-300">
-                      {platform}
+                      {labelMap[platform] ?? platform}
                     </span>
                   </a>
                 );
