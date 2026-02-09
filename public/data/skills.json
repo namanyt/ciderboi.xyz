@@ -1,72 +1,51 @@
 {
   "skillGroups": [
     {
-      "title": "Music",
-      "skills": [
-        "Acoustic Guitar",
-        "Electric Guitar",
-        "Bass Guitar",
-        "Piano",
-        "FL Studio",
-        "Ableton Live",
-        "Music Production",
-        "Music Theory",
-        "Production Music",
-        "Music Creation"
-      ]
-    },
-    {
-      "title": "Programming",
+      "title": "Software Engineering",
       "skills": [
         "JavaScript",
         "TypeScript",
+        "Python",
+        "Java",
+        "C#",
+        "SQL",
         "HTML",
         "CSS",
         "Node.js",
-        "Full-Stack Development",
-        "Python",
-        "Java",
-        "Front-End Development",
+        "Front-End Engineering",
         "Back-End Web Development",
-        "Game Development",
-        "C#",
-        "SQL",
-        "Programming",
-        "Computer Literacy"
+        "Full-Stack Development"
       ]
     },
     {
-      "title": "Video & Photography",
+      "title": "Music Production & Audio Engineering",
       "skills": [
-        "Adobe Premiere Pro",
-        "After Effects",
-        "Editing",
+        "Music Production",
+        "Production Music",
+        "Music Creation",
+        "Music Theory",
+        "FL Studio",
+        "Ableton Live",
+        "Acoustic Guitar",
+        "Electric Guitar",
+        "Bass Guitar",
+        "Piano"
+      ]
+    },
+    {
+      "title": "Video Production & Visual Media",
+      "skills": [
+        "Video Production",
+        "Video Editing",
         "Film Editing",
         "Video Post-Production",
+        "Adobe Premiere Pro",
+        "After Effects",
         "Photography",
         "Event Photography",
-        "Adobe Lightroom",
-        "Travel Photography",
         "Studio Photography",
-        "Video Production",
-        "Video Editing"
-      ]
-    },
-    {
-      "title": "Game Development",
-      "skills": [
-        "Unity",
-        "Game Design",
-        "Game Programming"
-      ]
-    },
-    {
-      "title": "Leadership",
-      "skills": [
-        "Teamwork",
-        "Leadership",
-        "Project Management",
-        "Team Management"
+        "Travel Photography",
+        "Adobe Lightroom"
       ]
     }
   ]

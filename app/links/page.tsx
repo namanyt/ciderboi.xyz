@@ -21,10 +21,7 @@ const fetchLinks: {
   (): Promise<{ props: { links: Record<string, string>; error?: string } }>;
 } = async () => {
   try {
-    const file = await fs.readFile(
-      path.join(process.cwd(), "public", "data", "social.json"),
-      "utf8"
-    );
+    const file = await fs.readFile(path.join(process.cwd(), "public", "data", "social.json"), "utf8");
     const data = JSON.parse(file);
 
     return {
@@ -60,8 +57,7 @@ const colorMap = {
   github: "hover:bg-gray-800 hover:text-white",
   linkedin: "hover:bg-blue-700 hover:text-white",
   twitter: "hover:bg-blue-400 hover:text-white",
-  instagram:
-    "hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-orange-400 hover:text-white",
+  instagram: "hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-orange-400 hover:text-white",
   youtube: "hover:bg-red-600 hover:text-white",
   spotify: "hover:bg-green-600 hover:text-white",
   apple: "hover:bg-[#FA233B] hover:text-white",
@@ -118,29 +114,20 @@ export default async function Links() {
     );
   }
 
-  const sortedLinks = Object.entries(links).sort(
-    ([a], [b]) => platformOrder.indexOf(a) - platformOrder.indexOf(b)
-  );
+  const sortedLinks = Object.entries(links).sort(([a], [b]) => platformOrder.indexOf(a) - platformOrder.indexOf(b));
 
   return (
     <Suspense fallback={<LoadingScreen />}>
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="relative z-10 max-w-4xl w-full mx-auto">
           <div className="backdrop-blur-lg bg-white/10 rounded-3xl p-8 shadow-xl border border-white/40">
-            <h1 className="text-4xl font-bold text-center mb-2 text-gray-100">
-              Connect With Me
-            </h1>
-            <p className="text-center text-gray-300 text-lg mb-8">
-              Find me across the web
-            </p>
+            <h1 className="text-4xl font-bold text-center mb-2 text-gray-100">Connect With Me</h1>
+            <p className="text-center text-gray-300 text-lg mb-8">Find me across the web</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {sortedLinks.map(([platform]) => {
-                const Icon =
-                  iconMap[platform as keyof typeof iconMap] || null;
-                const hoverColor =
-                  colorMap[platform as keyof typeof colorMap] ||
-                  "hover:bg-blue-500 hover:text-white";
+                const Icon = iconMap[platform as keyof typeof iconMap] || null;
+                const hoverColor = colorMap[platform as keyof typeof colorMap] || "hover:bg-blue-500 hover:text-white";
 
                 return (
                   <a
@@ -152,12 +139,8 @@ export default async function Links() {
                     transition-all duration-300 ease-in-out transform hover:scale-105
                     hover:shadow-lg border border-white/40 ${hoverColor}`}
                   >
-                    {Icon && (
-                      <Icon className="text-2xl mr-3 duration-300" />
-                    )}
-                    <span className="capitalize font-medium duration-300">
-                      {labelMap[platform] ?? platform}
-                    </span>
+                    {Icon && <Icon className="text-2xl mr-3 duration-300" />}
+                    <span className="capitalize font-medium duration-300">{labelMap[platform] ?? platform}</span>
                   </a>
                 );
               })}

@@ -7,10 +7,7 @@ type SocialsProps = {
 };
 
 const fetchData = async () => {
-  const file = await fs.readFile(
-    path.join(process.cwd(), "public", "data", "social.json"),
-    "utf-8"
-  );
+  const file = await fs.readFile(path.join(process.cwd(), "public", "data", "social.json"), "utf-8");
   const data = JSON.parse(file) as SocialsProps;
 
   return { data };
@@ -29,17 +26,11 @@ const socialMap: Record<string, string> = {
   linkedin: "LinkedIn",
 };
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ social: string }>;
-}) {
+export async function generateMetadata({ params }: { params: Promise<{ social: string }> }) {
   const social = (await params).social?.toLowerCase();
 
   const socialName = socialMap[social] ?? "Let's connect!";
-  const safeName = Object.keys(socialMap).includes(social)
-    ? social
-    : "default";
+  const safeName = Object.keys(socialMap).includes(social) ? social : "default";
 
   return {
     title: `${socialName} | Nitya Naman`,
@@ -84,11 +75,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Socials({
-  params,
-}: {
-  params: Promise<{ social: string }>;
-}) {
+export default async function Socials({ params }: { params: Promise<{ social: string }> }) {
   const links = (await fetchData()).data;
   const { social } = await params;
 
