@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Project, Experience, SkillGroup } from "@/lib/types";
@@ -18,6 +18,121 @@ function getFallbackColor(seed: string) {
   return `hsl(${hue}, 70%, 80%)`;
 }
 
+type HomeFocusCardProps = {
+  cardId: string;
+  activeCardId: string | null;
+  setActiveCardId: React.Dispatch<React.SetStateAction<string | null>>;
+  children: React.ReactNode;
+};
+
+function HomeFocusCard({ cardId, activeCardId, setActiveCardId, children }: HomeFocusCardProps) {
+  const shellRef = useRef<HTMLDivElement | null>(null);
+  const frameRef = useRef<number | null>(null);
+  const isActive = activeCardId === cardId;
+
+  useEffect(() => {
+    return () => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
+
+  const resetTilt = () => {
+    const element = shellRef.current?.querySelector<HTMLElement>(".home-focus-surface");
+    if (!element) return;
+
+    element.style.setProperty("--home-rotate-x", "0deg");
+    element.style.setProperty("--home-rotate-y", "0deg");
+    element.style.setProperty("--home-shift-x", "0px");
+    element.style.setProperty("--home-shift-y", "0px");
+    element.style.setProperty("--home-glow-x", "50%");
+    element.style.setProperty("--home-glow-y", "50%");
+  };
+
+  useEffect(() => {
+    if (!isActive) {
+      resetTilt();
+      return;
+    }
+
+    const handleWindowPointerMove = (event: PointerEvent) => {
+      const shell = shellRef.current;
+      if (!shell) return;
+
+      const bounds = shell.getBoundingClientRect();
+      const padding = 28;
+      const insideExpandedBounds =
+        event.clientX >= bounds.left - padding &&
+        event.clientX <= bounds.right + padding &&
+        event.clientY >= bounds.top - padding &&
+        event.clientY <= bounds.bottom + padding;
+
+      if (!insideExpandedBounds) {
+        setActiveCardId((current) => (current === cardId ? null : current));
+        resetTilt();
+      }
+    };
+
+    window.addEventListener("pointermove", handleWindowPointerMove);
+    return () => window.removeEventListener("pointermove", handleWindowPointerMove);
+  }, [cardId, isActive, setActiveCardId]);
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "touch") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const shell = shellRef.current;
+    const element = shellRef.current?.querySelector<HTMLElement>(".home-focus-surface");
+    if (!shell || !element) return;
+
+    const bounds = shell.getBoundingClientRect();
+    const x = Math.min(Math.max((event.clientX - bounds.left) / bounds.width, 0), 1);
+    const y = Math.min(Math.max((event.clientY - bounds.top) / bounds.height, 0), 1);
+
+    if (frameRef.current !== null) {
+      window.cancelAnimationFrame(frameRef.current);
+    }
+
+    frameRef.current = window.requestAnimationFrame(() => {
+      const rotateX = (0.5 - y) * 8;
+      const rotateY = (x - 0.5) * 9;
+      const shiftX = (x - 0.5) * 6;
+      const shiftY = (y - 0.5) * 5;
+
+      element.style.setProperty("--home-rotate-x", `${rotateX.toFixed(2)}deg`);
+      element.style.setProperty("--home-rotate-y", `${rotateY.toFixed(2)}deg`);
+      element.style.setProperty("--home-shift-x", `${shiftX.toFixed(2)}px`);
+      element.style.setProperty("--home-shift-y", `${shiftY.toFixed(2)}px`);
+      element.style.setProperty("--home-glow-x", `${(x * 100).toFixed(2)}%`);
+      element.style.setProperty("--home-glow-y", `${(y * 100).toFixed(2)}%`);
+      frameRef.current = null;
+    });
+  };
+
+  return (
+    <div
+      ref={shellRef}
+      onPointerEnter={() => setActiveCardId(cardId)}
+      onPointerCancel={resetTilt}
+      onPointerMove={handlePointerMove}
+      className={`home-focus-card ${isActive ? "home-focus-card-active" : ""}`}
+      style={
+        {
+          "--home-rotate-x": "0deg",
+          "--home-rotate-y": "0deg",
+          "--home-shift-x": "0px",
+          "--home-shift-y": "0px",
+          "--home-glow-x": "50%",
+          "--home-glow-y": "50%",
+        } as React.CSSProperties
+      }
+    >
+      {children}
+    </div>
+  );
+}
+
 export default function Home({
   projects,
   skills,
@@ -28,6 +143,7 @@ export default function Home({
   skills: SkillGroup[];
 }) {
   const [showFullAbout, setShowFullAbout] = useState(false);
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   return (
     <div className="h-screen w-full bg-cover bg-center overflow-auto">
@@ -49,7 +165,10 @@ export default function Home({
       </TooltipProvider>
 
       {/* Scrollable Card */}
-      <div className="h-[90vh] w-[95vw] max-w-5xl mx-auto my-6 p-8 rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white overflow-y-auto scroll-smooth space-y-12">
+      <div
+        className={`home-focus-shell h-[90vh] w-[95vw] max-w-5xl mx-auto my-6 p-8 rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white overflow-y-auto scroll-smooth space-y-12 ${activeCardId ? "home-focus-shell-active" : ""}`}
+      >
+        <div className="home-focus-overlay" />
         {/* Profile Section */}
         <section className="flex flex-col md:flex-row items-center gap-6">
           <Image
@@ -70,7 +189,7 @@ export default function Home({
         </section>
 
         {/* About Me Section */}
-        <section>
+        <section className="home-focus-exempt">
           <h2 className="text-xl font-semibold mb-4 flex items-center">
             <button
               type="button"
@@ -178,7 +297,12 @@ export default function Home({
                 return parseInt(a.id) - parseInt(b.id);
               })
               .map((experience, index) => (
-                <ExperienceCard key={index} experience={experience} />
+                <ExperienceCard
+                  key={index}
+                  experience={experience}
+                  activeCardId={activeCardId}
+                  setActiveCardId={setActiveCardId}
+                />
               ))}
           </div>
         </section>
@@ -189,7 +313,13 @@ export default function Home({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Example Skills Card */}
             {skills.map((skillGroup, index) => (
-              <SkillsCard key={index} title={skillGroup.title} skills={skillGroup.skills} />
+              <SkillsCard
+                key={index}
+                title={skillGroup.title}
+                skills={skillGroup.skills}
+                activeCardId={activeCardId}
+                setActiveCardId={setActiveCardId}
+              />
             ))}
           </div>
         </section>
@@ -200,7 +330,12 @@ export default function Home({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Example Project Card */}
             {projects.map((project, index) => (
-              <ProjectCard key={index} project={project} />
+              <ProjectCard
+                key={index}
+                project={project}
+                activeCardId={activeCardId}
+                setActiveCardId={setActiveCardId}
+              />
             ))}
           </div>
         </section>
@@ -209,164 +344,190 @@ export default function Home({
   );
 }
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({
+  project,
+  activeCardId,
+  setActiveCardId,
+}: {
+  project: Project;
+  activeCardId: string | null;
+  setActiveCardId: React.Dispatch<React.SetStateAction<string | null>>;
+}) {
   const { id, title, description, category, tags, image, url } = project;
 
   const fallbackLetter = title ? title.charAt(0).toUpperCase() : "P";
   const fallbackBgColor = getFallbackColor(`${id}-${title}`);
 
   return (
-    <div
-      key={`${id}-${category}`}
-      className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20"
-    >
-      <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
-      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
-        {/* Image/Icon Section */}
-        <div className="w-16 h-16">
-          {image ? (
-            <div className="relative w-full h-full">
-              <Image
-                src={image}
-                alt={`${title} - ${category || "project"} by Nitya Naman`}
-                fill
-                sizes="64px"
-                style={{ objectFit: "contain" }}
-                className="rounded-lg drop-shadow-lg shadow"
-                loading={"lazy"}
-              />
-            </div>
-          ) : (
-            <div
-              className="w-full h-full rounded-lg flex items-center shadow justify-center text-white font-bold text-xl drop-shadow-lg"
-              style={{ backgroundColor: fallbackBgColor }}
-            >
-              {fallbackLetter}
-            </div>
-          )}
-        </div>
-
-        {/* Text Content */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between gap-2">
-            <h3 className="text-lg font-semibold text-white text-left">
-              <span
-                className="hover:underline cursor-pointer"
-                onClick={() => {
-                  if (url) window.open(url, "_blank");
-                }}
+    <HomeFocusCard cardId={`project-${id}-${category}`} activeCardId={activeCardId} setActiveCardId={setActiveCardId}>
+      <div className="home-focus-surface relative w-full overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20">
+        <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
+        <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
+          {/* Image/Icon Section */}
+          <div className="w-16 h-16">
+            {image ? (
+              <div className="relative w-full h-full">
+                <Image
+                  src={image}
+                  alt={`${title} - ${category || "project"} by Nitya Naman`}
+                  fill
+                  sizes="64px"
+                  style={{ objectFit: "contain" }}
+                  className="rounded-lg drop-shadow-lg shadow"
+                  loading={"lazy"}
+                />
+              </div>
+            ) : (
+              <div
+                className="w-full h-full rounded-lg flex items-center shadow justify-center text-white font-bold text-xl drop-shadow-lg"
+                style={{ backgroundColor: fallbackBgColor }}
               >
-                {title}
-              </span>
-            </h3>
-            {url && (
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/70 hover:text-white transition-colors"
-              >
-                <ExternalLink size={16} />
-              </a>
+                {fallbackLetter}
+              </div>
             )}
           </div>
 
-          <p className="text-white/80 text-sm">{description}</p>
-
-          <div className="flex flex-wrap justify-center gap-2 mt-2">
-            {tags &&
-              tags.map((tag, index) => (
+          {/* Text Content */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="text-lg font-semibold text-white text-left">
                 <span
-                  key={index}
-                  className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
+                  className="hover:underline cursor-pointer"
+                  onClick={() => {
+                    if (url) window.open(url, "_blank");
+                  }}
                 >
-                  {tag}
+                  {title}
                 </span>
-              ))}
+              </h3>
+              {url && (
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/70 hover:text-white transition-colors"
+                >
+                  <ExternalLink size={16} />
+                </a>
+              )}
+            </div>
+
+            <p className="text-white/80 text-sm">{description}</p>
+
+            <div className="flex flex-wrap justify-center gap-2 mt-2">
+              {tags &&
+                tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
+                  >
+                    {tag}
+                  </span>
+                ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </HomeFocusCard>
   );
 }
 
-function ExperienceCard({ experience }: { experience: Experience }) {
+function ExperienceCard({
+  experience,
+  activeCardId,
+  setActiveCardId,
+}: {
+  experience: Experience;
+  activeCardId: string | null;
+  setActiveCardId: React.Dispatch<React.SetStateAction<string | null>>;
+}) {
   const { id, title, company, location, startDate, endDate, description, tags, logo } = experience;
 
   const fallbackLetter = company ? title.charAt(0).toUpperCase() : "E";
   const fallbackBgColor = getFallbackColor(`${id}-${company ?? title}`);
 
   return (
-    <div
-      key={id}
-      className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20"
-    >
-      <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
-      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
-        {/* Logo or Icon */}
-        <div className="w-16 h-16">
-          {logo ? (
-            <div className="relative w-full h-full rounded-lg overflow-hidden shadow">
-              <Image fill src={logo} alt={company} className="rounded-lg object-contain w-full h-full shadow" />
-            </div>
-          ) : (
-            <div
-              className="w-full h-full rounded-lg flex items-center justify-center text-white font-bold text-xl shadow"
-              style={{ backgroundColor: fallbackBgColor }}
-            >
-              {fallbackLetter}
-            </div>
-          )}
-        </div>
+    <HomeFocusCard cardId={`experience-${id}`} activeCardId={activeCardId} setActiveCardId={setActiveCardId}>
+      <div className="home-focus-surface relative w-full overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20">
+        <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
+        <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
+          {/* Logo or Icon */}
+          <div className="w-16 h-16">
+            {logo ? (
+              <div className="relative w-full h-full rounded-lg overflow-hidden shadow">
+                <Image fill src={logo} alt={company} className="rounded-lg object-contain w-full h-full shadow" />
+              </div>
+            ) : (
+              <div
+                className="w-full h-full rounded-lg flex items-center justify-center text-white font-bold text-xl shadow"
+                style={{ backgroundColor: fallbackBgColor }}
+              >
+                {fallbackLetter}
+              </div>
+            )}
+          </div>
 
-        {/* Experience Info */}
-        <div className="space-y-2">
-          <h3 className="text-lg font-semibold text-white">{title}</h3>
-          <p className="text-white/70 text-sm">
-            {company}
-            {location ? ` • ${location}` : ""}
-          </p>
-          <p className="text-white/60 text-sm italic">
-            {startDate} — {endDate || "Present"}
-          </p>
+          {/* Experience Info */}
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold text-white">{title}</h3>
+            <p className="text-white/70 text-sm">
+              {company}
+              {location ? ` • ${location}` : ""}
+            </p>
+            <p className="text-white/60 text-sm italic">
+              {startDate} — {endDate || "Present"}
+            </p>
 
-          {description && <p className="text-white/80 text-sm mt-1">{description}</p>}
+            {description && <p className="text-white/80 text-sm mt-1">{description}</p>}
 
-          {tags && tags.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-2 mt-2">
-              {tags.map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
+            {tags && tags.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-2 mt-2">
+                {tags.map((tag, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </HomeFocusCard>
   );
 }
 
-function SkillsCard({ title, skills }: { title: string; skills: string[] }) {
+function SkillsCard({
+  title,
+  skills,
+  activeCardId,
+  setActiveCardId,
+}: {
+  title: string;
+  skills: string[];
+  activeCardId: string | null;
+  setActiveCardId: React.Dispatch<React.SetStateAction<string | null>>;
+}) {
   return (
-    <div className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20">
-      <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
-      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
-        <h3 className="text-lg font-semibold text-white">{title}</h3>
-        <div className="flex flex-wrap justify-center gap-2 mt-2">
-          {skills.map((skill, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
-            >
-              {skill}
-            </span>
-          ))}
+    <HomeFocusCard cardId={`skill-${title}`} activeCardId={activeCardId} setActiveCardId={setActiveCardId}>
+      <div className="home-focus-surface relative w-full overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20">
+        <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
+        <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
+          <h3 className="text-lg font-semibold text-white">{title}</h3>
+          <div className="flex flex-wrap justify-center gap-2 mt-2">
+            {skills.map((skill, index) => (
+              <span
+                key={index}
+                className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </HomeFocusCard>
   );
 }

@@ -343,11 +343,11 @@ export function DesktopPhotoModal({
           setIsSettled(true);
           settleTimeoutRef.current = window.setTimeout(() => {
             setIsGhostFading(true);
-          }, 20);
+          }, IMAGE_REVEAL_MS);
 
           settleTimeoutRef.current = window.setTimeout(() => {
             setShowGhost(false);
-          }, IMAGE_REVEAL_MS);
+          }, IMAGE_REVEAL_MS * 2);
           return;
         }
 
@@ -375,11 +375,11 @@ export function DesktopPhotoModal({
           setIsSettled(true);
           window.setTimeout(() => {
             setIsGhostFading(true);
-          }, 20);
+          }, IMAGE_REVEAL_MS);
 
           settleTimeoutRef.current = window.setTimeout(() => {
             setShowGhost(false);
-          }, IMAGE_REVEAL_MS);
+          }, IMAGE_REVEAL_MS * 2);
         };
 
         animationFrameRef.current = window.requestAnimationFrame(tick);
@@ -645,17 +645,23 @@ export function DesktopPhotoModal({
   );
 }
 
+let photoRevealSequence = 0;
+
 function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided?: string | string[] | undefined }) {
   const [enlarged, setEnlarged] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [sourceRect, setSourceRect] = useState<SharedRect | null>(null);
   const [isSourceHidden, setIsSourceHidden] = useState(false);
+  const [isSourceRestoring, setIsSourceRestoring] = useState(false);
+  const [visibilityState, setVisibilityState] = useState<"hidden" | "visible" | "soft-hidden">("hidden");
+  const [revealDelayMs, setRevealDelayMs] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
   const router = useRouter();
   const searchParams = useSearchParams();
   const cardRef = useRef<HTMLDivElement | null>(null);
   const sourceImageRef = useRef<HTMLImageElement | null>(null);
   const revealTimeoutRef = useRef<number | null>(null);
+  const staggerTimeoutRef = useRef<number | null>(null);
   const scaling = 1;
   const open = (Array.isArray(isIdProvided) ? isIdProvided[0] : isIdProvided) === photo.uuid;
 
@@ -664,13 +670,53 @@ function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided
       setIsMobile(window.innerWidth < 768);
     };
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry?.isIntersecting) {
+          const delay = Math.min(photoRevealSequence * 65, 260);
+          photoRevealSequence = (photoRevealSequence + 1) % 6;
+          setRevealDelayMs(delay);
+
+          if (staggerTimeoutRef.current !== null) {
+            window.clearTimeout(staggerTimeoutRef.current);
+          }
+
+          staggerTimeoutRef.current = window.setTimeout(() => {
+            setVisibilityState("visible");
+            staggerTimeoutRef.current = null;
+          }, delay);
+
+          return;
+        }
+
+        if (staggerTimeoutRef.current !== null) {
+          window.clearTimeout(staggerTimeoutRef.current);
+          staggerTimeoutRef.current = null;
+        }
+
+        setVisibilityState((current) => (current === "hidden" ? "hidden" : "soft-hidden"));
+      },
+      {
+        rootMargin: "0px 0px -6% 0px",
+        threshold: 0.16,
+      },
+    );
+
     checkIsMobile();
     window.addEventListener("resize", checkIsMobile);
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
 
     return () => {
       window.removeEventListener("resize", checkIsMobile);
+      observer.disconnect();
       if (revealTimeoutRef.current !== null) {
         window.clearTimeout(revealTimeoutRef.current);
+      }
+      if (staggerTimeoutRef.current !== null) {
+        window.clearTimeout(staggerTimeoutRef.current);
       }
     };
   }, []);
@@ -689,8 +735,10 @@ function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided
       window.clearTimeout(revealTimeoutRef.current);
     }
 
+    setIsSourceRestoring(true);
     revealTimeoutRef.current = window.setTimeout(() => {
       setIsSourceHidden(false);
+      window.requestAnimationFrame(() => setIsSourceRestoring(false));
       revealTimeoutRef.current = null;
     }, 0);
   };
@@ -700,9 +748,18 @@ function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided
       <div
         ref={cardRef}
         onClick={handleClick}
-        className={`photo-gallery-card cursor-pointer break-inside-avoid overflow-hidden rounded-xl border border-white/5 bg-black/30 backdrop-blur-sm shadow-lg transition-all duration-200 hover:border-white/20 hover:shadow-xl hover:scale-[1.02] ${
-          isSourceHidden ? "opacity-0" : "opacity-100"
+        className={`photo-gallery-card cursor-pointer break-inside-avoid overflow-hidden rounded-xl border border-white/5 bg-black/30 backdrop-blur-sm shadow-lg hover:border-white/20 hover:shadow-xl hover:scale-[1.02] ${
+          isSourceHidden
+            ? "opacity-0"
+            : isSourceRestoring
+              ? "photo-card-visible photo-card-restoring"
+              : visibilityState === "visible"
+                ? "photo-card-visible"
+                : visibilityState === "soft-hidden"
+                  ? "photo-card-soft-hidden"
+                  : "photo-card-hidden"
         }`}
+        style={{ transitionDelay: isSourceRestoring ? "0ms" : `${revealDelayMs}ms` }}
       >
         <Image
           ref={sourceImageRef}
