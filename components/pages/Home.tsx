@@ -1,14 +1,22 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { useNetwork } from "@/components/context/Network";
+import Link from "next/link";
 import { Project, Experience, SkillGroup } from "@/lib/types";
 import { ChevronDown, ExternalLink, Info } from "lucide-react";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import NavigationButton from "@/components/NavigationButton";
-import { redirect } from "next/navigation";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+
+function getFallbackColor(seed: string) {
+  let hue = 0;
+
+  for (const char of seed) {
+    hue = (hue * 31 + char.charCodeAt(0)) % 360;
+  }
+
+  return `hsl(${hue}, 70%, 80%)`;
+}
 
 export default function Home({
   projects,
@@ -26,16 +34,13 @@ export default function Home({
       {/* About the Image Icon */}
       <TooltipProvider>
         <Tooltip delayDuration={500}>
-          <TooltipTrigger
-            asChild
-            onClick={(e) => {
-              e.preventDefault();
-              redirect("/photos?id=81cb0ed1");
-            }}
-          >
-            <div className="fixed bottom-4 right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-250 z-60">
+          <TooltipTrigger asChild>
+            <Link
+              href="/photos?id=81cb0ed1"
+              className="fixed bottom-4 right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-250 z-60"
+            >
               <Info />
-            </div>
+            </Link>
           </TooltipTrigger>
           <TooltipContent side={"left"}>
             <p>About the Background</p>
@@ -208,16 +213,7 @@ function ProjectCard({ project }: { project: Project }) {
   const { id, title, description, category, tags, image, url } = project;
 
   const fallbackLetter = title ? title.charAt(0).toUpperCase() : "P";
-  const [fallbackBgColor, setFallbackBgColor] = useState<string>("");
-
-  useEffect(() => {
-    const generatePastelColor = () => {
-      const hue = Math.floor(Math.random() * 360);
-      return `hsl(${hue}, 70%, 80%)`;
-    };
-
-    setFallbackBgColor(generatePastelColor());
-  }, []);
+  const fallbackBgColor = getFallbackColor(`${id}-${title}`);
 
   return (
     <div
@@ -298,15 +294,7 @@ function ExperienceCard({ experience }: { experience: Experience }) {
   const { id, title, company, location, startDate, endDate, description, tags, logo } = experience;
 
   const fallbackLetter = company ? title.charAt(0).toUpperCase() : "E";
-  const [fallbackBgColor, setFallbackBgColor] = useState<string>("");
-
-  useEffect(() => {
-    const generatePastelColor = () => {
-      const hue = Math.floor(Math.random() * 360);
-      return `hsl(${hue}, 70%, 80%)`;
-    };
-    setFallbackBgColor(generatePastelColor());
-  }, []);
+  const fallbackBgColor = getFallbackColor(`${id}-${company ?? title}`);
 
   return (
     <div

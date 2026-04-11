@@ -1,12 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useCallback, ReactNode, RefObject, useState, useEffect } from "react";
+import React, { createContext, type ReactNode, useCallback, useContext, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
 interface NetworkContextType {
   setPage: (routePath: string) => void;
   setRef: (ref: HTMLDivElement) => void;
-  ref: RefObject<HTMLDivElement | null>;
+  ref: React.RefObject<HTMLDivElement | null>;
   isLoading: boolean;
   pendingPath: string | null;
 }
@@ -25,28 +25,21 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const currentPath = usePathname();
   const ref = React.useRef<HTMLDivElement | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [pendingPath, setPendingPath] = useState<string | null>(null);
+  const [requestedPath, setRequestedPath] = useState<string | null>(null);
+  const pendingPath = requestedPath && requestedPath !== currentPath ? requestedPath : null;
+  const isLoading = pendingPath !== null;
 
   const setRef = (_ref: HTMLDivElement) => {
     ref.current = _ref;
   };
 
-  // Reset loading state when the path actually changes
-  useEffect(() => {
-    if (pendingPath && currentPath === pendingPath) {
-      // We've arrived at the destination, but data might still be loading
-      // The Suspense boundary will handle showing the loading state
-      setPendingPath(null);
-    }
-  }, [currentPath, pendingPath]);
-
   const setPage = useCallback(
     (routePath: string) => {
-      // Show loading state immediately
-      setIsLoading(true);
-      // Store the path we're navigating to
-      setPendingPath(routePath);
+      if (routePath === currentPath) {
+        return;
+      }
+
+      setRequestedPath(routePath);
 
       // Small timeout to ensure the loading UI renders before navigation
       // This makes navigation feel more immediate to the user
@@ -55,7 +48,7 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
         router.push(routePath, { scroll: false });
       }, 10);
     },
-    [router],
+    [currentPath, router],
   );
 
   return (

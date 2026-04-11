@@ -223,3 +223,233 @@
   background: rgba(200, 168, 240, 0.3); /* Change this to your desired highlight background color for Firefox */
   color: #ffffff; /* Change this to your desired highlight text color for Firefox */
 }
+
+.photo-gallery-panel {
+  backdrop-filter: blur(12px) saturate(135%);
+  -webkit-backdrop-filter: blur(12px) saturate(135%);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+.photo-gallery-card {
+  will-change: transform, opacity;
+}
+
+.photo-modal-backdrop {
+  background:
+    radial-gradient(circle at top, rgba(126, 118, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 82% 18%, rgba(70, 191, 255, 0.05), transparent 22%), rgba(2, 4, 12, 0.88);
+}
+
+.photo-modal-shell {
+  background: rgba(3, 5, 12, 0.62);
+  backdrop-filter: blur(88px) saturate(170%);
+  -webkit-backdrop-filter: blur(88px) saturate(170%);
+  box-shadow:
+    0 52px 150px rgba(2, 5, 18, 0.72),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.photo-modal-overlay {
+  will-change: opacity;
+}
+
+.photo-modal-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.03), transparent 20%),
+    radial-gradient(circle at 78% 82%, rgba(112, 158, 255, 0.03), transparent 24%);
+}
+
+.photo-modal-header,
+.photo-modal-sidebar,
+.photo-modal-stage {
+  position: relative;
+  z-index: 1;
+}
+
+.photo-modal-header {
+  background: linear-gradient(180deg, rgba(1, 2, 8, 0.92), rgba(1, 2, 8, 0.8));
+  backdrop-filter: blur(96px) saturate(165%);
+  -webkit-backdrop-filter: blur(96px) saturate(165%);
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.photo-modal-stage {
+  background: linear-gradient(180deg, rgba(4, 6, 12, 0.8), rgba(4, 6, 12, 0.68));
+  backdrop-filter: blur(98px) saturate(165%);
+  -webkit-backdrop-filter: blur(98px) saturate(165%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 180px rgba(0, 0, 0, 0.42);
+}
+
+.photo-modal-sidebar {
+  background: linear-gradient(180deg, rgba(8, 10, 24, 0.28), rgba(8, 10, 24, 0.18));
+  backdrop-filter: blur(40px) saturate(145%);
+  -webkit-backdrop-filter: blur(40px) saturate(145%);
+}
+
+.photo-info-card {
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.025);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.photo-instagram-button {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.photo-stage-tilt {
+  perspective: 1800px;
+  transform-style: preserve-3d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-stage-card {
+  position: relative;
+  display: inline-flex;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 1.55rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(22px) saturate(132%);
+  -webkit-backdrop-filter: blur(22px) saturate(132%);
+  box-shadow:
+    0 18px 46px rgba(2, 6, 18, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transform-style: preserve-3d;
+  transform: rotateX(var(--photo-rotate-x, 0deg)) rotateY(var(--photo-rotate-y, 0deg))
+    translate3d(var(--photo-shift-x, 0px), var(--photo-shift-y, 0px), 0) scale(var(--photo-scale, 1));
+  transform-origin: center center;
+  transition:
+    transform 180ms ease-out,
+    opacity 200ms ease-out;
+  will-change: transform;
+}
+
+.photo-stage-card::before {
+  content: "";
+  position: absolute;
+  inset: -0.8rem;
+  border-radius: 2rem;
+  background: radial-gradient(
+    circle at var(--photo-glow-x, 50%) var(--photo-glow-y, 50%),
+    rgba(132, 178, 255, 0.08),
+    transparent 42%
+  );
+  filter: blur(18px);
+  transform: translateZ(-12px);
+  pointer-events: none;
+}
+
+.photo-stage-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 24%),
+    radial-gradient(
+      circle at var(--photo-glow-x, 50%) var(--photo-glow-y, 50%),
+      rgba(255, 255, 255, 0.04),
+      transparent 26%
+    );
+}
+
+.photo-stage-image {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 52vw);
+  max-height: 74vh;
+  border-radius: inherit;
+  object-fit: contain;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+}
+
+.photo-zoom-slider {
+  background: linear-gradient(180deg, rgba(6, 8, 18, 0.72), rgba(6, 8, 18, 0.48));
+  backdrop-filter: blur(24px) saturate(155%);
+  -webkit-backdrop-filter: blur(24px) saturate(155%);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.photo-zoom-range {
+  width: 7rem;
+  appearance: none;
+  background: transparent;
+}
+
+.photo-zoom-range:focus {
+  outline: none;
+}
+
+.photo-zoom-range::-webkit-slider-runnable-track {
+  height: 0.28rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(170, 198, 255, 0.52));
+}
+
+.photo-zoom-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 0.95rem;
+  height: 0.95rem;
+  margin-top: -0.34rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.95), rgba(182, 205, 255, 0.88));
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.28),
+    0 0 0 0.18rem rgba(158, 188, 255, 0.12);
+}
+
+.photo-zoom-range::-moz-range-track {
+  height: 0.28rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(170, 198, 255, 0.52));
+}
+
+.photo-zoom-range::-moz-range-thumb {
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.95), rgba(182, 205, 255, 0.88));
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.28),
+    0 0 0 0.18rem rgba(158, 188, 255, 0.12);
+}
+
+.photo-shared-ghost {
+  position: fixed;
+  z-index: 80;
+  overflow: hidden;
+  pointer-events: none;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.26);
+  will-change: left, top, width, height, border-radius;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-stage-card {
+    transition: none;
+    transform: none;
+  }
+}

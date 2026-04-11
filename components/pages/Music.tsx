@@ -10,14 +10,6 @@ import { parseReleaseMs, toCountdownParts } from "@/lib/release-time";
 export default function Music({ data }: Props) {
   const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
-  const formatDateShort = (ms: number) => {
-    try {
-      return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(ms));
-    } catch {
-      return new Date(ms).toDateString();
-    }
-  };
-
   function ReleaseCountdownCard({
     releaseMs,
     title,
@@ -35,7 +27,6 @@ export default function Music({ data }: Props) {
     }, []);
 
     const parts = useMemo(() => toCountdownParts(releaseMs, nowMs), [releaseMs, nowMs]);
-    const dateLabel = formatDateShort(releaseMs);
 
     return (
       <div className="relative w-full rounded-2xl backdrop-blur-md bg-white/5 border border-white/10 shadow-lg overflow-hidden p-4 flex flex-col gap-3">
@@ -87,14 +78,6 @@ export default function Music({ data }: Props) {
     return albums.length > 0 || singles.length > 0;
   };
 
-  const hasVisibleItems = (catalog: Props["data"]["current"][number]) => {
-    const albums = catalog.albums ?? [];
-    const singles = catalog.singles ?? [];
-    return (
-      albums.some((a) => !shouldHideUpcoming(a.releaseDate)) || singles.some((t) => !shouldHideUpcoming(t.releaseDate))
-    );
-  };
-
   const getNextUpcoming = (catalog: Props["data"]["current"][number]) => {
     const albums = catalog.albums ?? [];
     const singles = catalog.singles ?? [];
@@ -104,11 +87,16 @@ export default function Music({ data }: Props) {
 
     for (const a of albums) {
       const ms = parseReleaseMs(a.releaseDate);
-      if (ms && ms > now) candidates.push({ title: a.title, releaseDate: a.releaseDate!, ms });
+      if (ms && ms > now && a.releaseDate) {
+        candidates.push({ title: a.title, releaseDate: a.releaseDate, ms });
+      }
     }
+
     for (const t of singles) {
       const ms = parseReleaseMs(t.releaseDate);
-      if (ms && ms > now) candidates.push({ title: t.title, releaseDate: t.releaseDate!, ms });
+      if (ms && ms > now && t.releaseDate) {
+        candidates.push({ title: t.title, releaseDate: t.releaseDate, ms });
+      }
     }
 
     candidates.sort((x, y) => x.ms - y.ms);
@@ -141,7 +129,6 @@ export default function Music({ data }: Props) {
     });
 
     const hasAny = visibleAlbums.length > 0 || visibleSingles.length > 0;
-    const hasUpcomingInFile = nextUpcoming !== null;
     const shouldShowCountdown = nextUpcoming ? shouldHideUpcoming(nextUpcoming.releaseDate) : false;
 
     if (!hasAnyInFile) {
@@ -224,9 +211,6 @@ export default function Music({ data }: Props) {
 
   const currentHasAnyInFile = currentCatalogs.some((c) => hasAnyItemsInFile(c));
   const archivedHasAnyInFile = archivedCatalogs.some((c) => hasAnyItemsInFile(c));
-
-  const hasCurrent = currentCatalogs.some((c) => hasVisibleItems(c));
-  const hasArchived = archivedCatalogs.some((c) => hasVisibleItems(c));
 
   return (
     <>
