@@ -520,7 +520,7 @@ export function DesktopPhotoModal({
         >
           <button
             onClick={closeWithAnimation}
-            className="absolute top-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-white/18 bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white/18 cursor-pointer"
+            className="absolute top-3.5 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-white/18 bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white/18 cursor-pointer"
             aria-label="Close dialog"
           >
             <X className="w-6 h-6" />
