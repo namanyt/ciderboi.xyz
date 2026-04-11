@@ -9,7 +9,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/next-env.d.ts",
       "source_location": "L1",
       "id": "next_env_d",
-      "community": 10
+      "community": 9
     },
     {
       "label": "next.config.ts",
@@ -17,7 +17,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/next.config.ts",
       "source_location": "L1",
       "id": "next_config",
-      "community": 11
+      "community": 10
     },
     {
       "label": "layout.tsx",
@@ -25,7 +25,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/layout.tsx",
       "source_location": "L1",
       "id": "layout",
-      "community": 7
+      "community": 3
     },
     {
       "label": "RootLayout()",
@@ -33,7 +33,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/layout.tsx",
       "source_location": "L62",
       "id": "layout_rootlayout",
-      "community": 7
+      "community": 3
     },
     {
       "label": "not-found.tsx",
@@ -41,7 +41,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/not-found.tsx",
       "source_location": "L1",
       "id": "not_found",
-      "community": 7
+      "community": 0
     },
     {
       "label": "NotFound()",
@@ -49,7 +49,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/not-found.tsx",
       "source_location": "L15",
       "id": "not_found_notfound",
-      "community": 7
+      "community": 0
     },
     {
       "label": "page.tsx",
@@ -57,7 +57,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/photos/[photoId]/page.tsx",
       "source_location": "L1",
       "id": "page",
-      "community": 1
+      "community": 4
     },
     {
       "label": "fetchData()",
@@ -65,7 +65,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/music/page.tsx",
       "source_location": "L13",
       "id": "page_fetchdata",
-      "community": 1
+      "community": 4
     },
     {
       "label": "sitemap.ts",
@@ -73,7 +73,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/sitemap.ts",
       "source_location": "L1",
       "id": "sitemap",
-      "community": 9
+      "community": 8
     },
     {
       "label": "sitemap()",
@@ -81,7 +81,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/sitemap.ts",
       "source_location": "L7",
       "id": "sitemap_sitemap",
-      "community": 9
+      "community": 8
     },
     {
       "label": "generateMetadata()",
@@ -89,7 +89,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/photos/[photoId]/page.tsx",
       "source_location": "L8",
       "id": "page_generatemetadata",
-      "community": 1
+      "community": 4
     },
     {
       "label": "Socials()",
@@ -97,7 +97,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/[social]/page.tsx",
       "source_location": "L78",
       "id": "page_socials",
-      "community": 1
+      "community": 4
     },
     {
       "label": "fetchLinks()",
@@ -105,7 +105,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/links/page.tsx",
       "source_location": "L20",
       "id": "page_fetchlinks",
-      "community": 1
+      "community": 4
     },
     {
       "label": "Links()",
@@ -113,7 +113,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/links/page.tsx",
       "source_location": "L106",
       "id": "page_links",
-      "community": 1
+      "community": 4
     },
     {
       "label": "MusicPage()",
@@ -121,7 +121,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/music/page.tsx",
       "source_location": "L81",
       "id": "page_musicpage",
-      "community": 1
+      "community": 4
     },
     {
       "label": "fetchPhotos()",
@@ -129,7 +129,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/photos/page.tsx",
       "source_location": "L66",
       "id": "page_fetchphotos",
-      "community": 1
+      "community": 4
     },
     {
       "label": "PhotoIdRedirectPage()",
@@ -137,7 +137,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/app/photos/[photoId]/page.tsx",
       "source_location": "L22",
       "id": "page_photoidredirectpage",
-      "community": 1
+      "community": 4
     },
     {
       "label": "BackgroundPicture.tsx",
@@ -145,7 +145,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/BackgroundPicture.tsx",
       "source_location": "L1",
       "id": "backgroundpicture",
-      "community": 7
+      "community": 0
     },
     {
       "label": "BackgroundPicture()",
@@ -153,7 +153,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/BackgroundPicture.tsx",
       "source_location": "L4",
       "id": "backgroundpicture_backgroundpicture",
-      "community": 7
+      "community": 0
     },
     {
       "label": "Navigation.tsx",
@@ -161,7 +161,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/Navigation.tsx",
       "source_location": "L1",
       "id": "navigation",
-      "community": 5
+      "community": 3
     },
     {
       "label": "Navigation()",
@@ -169,7 +169,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/Navigation.tsx",
       "source_location": "L7",
       "id": "navigation_navigation",
-      "community": 5
+      "community": 3
     },
     {
       "label": "NavigationButton.tsx",
@@ -193,7 +193,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/loading.tsx",
       "source_location": "L1",
       "id": "loading",
-      "community": 5
+      "community": 3
     },
     {
       "label": "LoadingScreen()",
@@ -201,7 +201,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/loading.tsx",
       "source_location": "L7",
       "id": "loading_loadingscreen",
-      "community": 5
+      "community": 3
     },
     {
       "label": "Network.tsx",
@@ -209,7 +209,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/context/Network.tsx",
       "source_location": "L1",
       "id": "network",
-      "community": 5
+      "community": 3
     },
     {
       "label": "useNetwork()",
@@ -217,7 +217,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/context/Network.tsx",
       "source_location": "L16",
       "id": "network_usenetwork",
-      "community": 5
+      "community": 3
     },
     {
       "label": "ImmediateLoadingOverlay()",
@@ -225,7 +225,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/context/Network.tsx",
       "source_location": "L63",
       "id": "network_immediateloadingoverlay",
-      "community": 5
+      "community": 3
     },
     {
       "label": "Home.tsx",
@@ -233,7 +233,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Home.tsx",
       "source_location": "L1",
       "id": "home",
-      "community": 3
+      "community": 5
     },
     {
       "label": "getFallbackColor()",
@@ -241,7 +241,15 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Home.tsx",
       "source_location": "L11",
       "id": "home_getfallbackcolor",
-      "community": 3
+      "community": 5
+    },
+    {
+      "label": "HomeFocusCard()",
+      "file_type": "code",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Home.tsx",
+      "source_location": "L28",
+      "id": "home_homefocuscard",
+      "community": 5
     },
     {
       "label": "Music.tsx",
@@ -249,71 +257,63 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
       "source_location": "L1",
       "id": "music",
-      "community": 2
+      "community": 1
     },
     {
-      "label": "formatDateShort()",
+      "label": "RevealOnView()",
       "file_type": "code",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
       "source_location": "L13",
-      "id": "music_formatdateshort",
-      "community": 2
+      "id": "music_revealonview",
+      "community": 1
     },
     {
       "label": "ReleaseCountdownCard()",
       "file_type": "code",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L21",
+      "source_location": "L87",
       "id": "music_releasecountdowncard",
-      "community": 2
+      "community": 1
     },
     {
       "label": "shouldHideUpcoming()",
       "file_type": "code",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L71",
+      "source_location": "L136",
       "id": "music_shouldhideupcoming",
-      "community": 2
+      "community": 1
     },
     {
       "label": "isUpcoming()",
       "file_type": "code",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L78",
+      "source_location": "L143",
       "id": "music_isupcoming",
-      "community": 2
+      "community": 1
     },
     {
       "label": "hasAnyItemsInFile()",
       "file_type": "code",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L84",
+      "source_location": "L149",
       "id": "music_hasanyitemsinfile",
-      "community": 2
-    },
-    {
-      "label": "hasVisibleItems()",
-      "file_type": "code",
-      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L90",
-      "id": "music_hasvisibleitems",
-      "community": 2
+      "community": 1
     },
     {
       "label": "getNextUpcoming()",
       "file_type": "code",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L98",
+      "source_location": "L155",
       "id": "music_getnextupcoming",
-      "community": 2
+      "community": 1
     },
     {
       "label": "isActiveUpcomingMs()",
       "file_type": "code",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L126",
+      "source_location": "L188",
       "id": "music_isactiveupcomingms",
-      "community": 2
+      "community": 1
     },
     {
       "label": "Photo.tsx",
@@ -321,31 +321,103 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
       "source_location": "L1",
       "id": "photo",
-      "community": 6
+      "community": 2
+    },
+    {
+      "label": "clamp()",
+      "file_type": "code",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L34",
+      "id": "photo_clamp",
+      "community": 2
+    },
+    {
+      "label": "easeInOutCubic()",
+      "file_type": "code",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L38",
+      "id": "photo_easeinoutcubic",
+      "community": 2
+    },
+    {
+      "label": "lerp()",
+      "file_type": "code",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L42",
+      "id": "photo_lerp",
+      "community": 2
+    },
+    {
+      "label": "measureRect()",
+      "file_type": "code",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L46",
+      "id": "photo_measurerect",
+      "community": 2
+    },
+    {
+      "label": "usePrefersReducedMotion()",
+      "file_type": "code",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L62",
+      "id": "photo_useprefersreducedmotion",
+      "community": 2
+    },
+    {
+      "label": "useScrambledText()",
+      "file_type": "code",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L77",
+      "id": "photo_usescrambledtext",
+      "community": 2
+    },
+    {
+      "label": "ScrambledMetadataValue()",
+      "file_type": "code",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L136",
+      "id": "photo_scrambledmetadatavalue",
+      "community": 2
+    },
+    {
+      "label": "getMetadataFields()",
+      "file_type": "code",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L141",
+      "id": "photo_getmetadatafields",
+      "community": 2
     },
     {
       "label": "handleClose()",
       "file_type": "code",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
-      "source_location": "L62",
+      "source_location": "L199",
       "id": "photo_handleclose",
-      "community": 6
+      "community": 2
     },
     {
       "label": "checkIsMobile()",
       "file_type": "code",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
-      "source_location": "L311",
+      "source_location": "L669",
       "id": "photo_checkismobile",
-      "community": 6
+      "community": 2
     },
     {
       "label": "handleClick()",
       "file_type": "code",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
-      "source_location": "L325",
+      "source_location": "L724",
       "id": "photo_handleclick",
-      "community": 6
+      "community": 2
+    },
+    {
+      "label": "handleSourceReveal()",
+      "file_type": "code",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L733",
+      "id": "photo_handlesourcereveal",
+      "community": 2
     },
     {
       "label": "alert.tsx",
@@ -385,7 +457,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/ui/aspect-ratio.tsx",
       "source_location": "L1",
       "id": "aspect_ratio",
-      "community": 12
+      "community": 11
     },
     {
       "label": "dialog.tsx",
@@ -465,7 +537,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/ui/tooltip.tsx",
       "source_location": "L1",
       "id": "tooltip",
-      "community": 3
+      "community": 5
     },
     {
       "label": "Tooltip()",
@@ -473,7 +545,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/ui/tooltip.tsx",
       "source_location": "L12",
       "id": "tooltip_tooltip",
-      "community": 3
+      "community": 5
     },
     {
       "label": "TooltipContent()",
@@ -481,7 +553,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/ui/tooltip.tsx",
       "source_location": "L24",
       "id": "tooltip_tooltipcontent",
-      "community": 3
+      "community": 5
     },
     {
       "label": "song-card.tsx",
@@ -489,7 +561,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/ui/song-card.tsx",
       "source_location": "L1",
       "id": "song_card",
-      "community": 4
+      "community": 1
     },
     {
       "label": "useReleaseCountdown()",
@@ -497,7 +569,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/ui/song-card.tsx",
       "source_location": "L7",
       "id": "song_card_usereleasecountdown",
-      "community": 4
+      "community": 1
     },
     {
       "label": "extractColor()",
@@ -505,7 +577,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/ui/song-card.tsx",
       "source_location": "L26",
       "id": "song_card_extractcolor",
-      "community": 4
+      "community": 1
     },
     {
       "label": "formatDate()",
@@ -513,7 +585,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/ui/song-card.tsx",
       "source_location": "L81",
       "id": "song_card_formatdate",
-      "community": 4
+      "community": 1
     },
     {
       "label": "math.ts",
@@ -521,7 +593,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/lib/math.ts",
       "source_location": "L1",
       "id": "math",
-      "community": 8
+      "community": 7
     },
     {
       "label": "cubicBezier()",
@@ -529,7 +601,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/lib/math.ts",
       "source_location": "L1",
       "id": "math_cubicbezier",
-      "community": 8
+      "community": 7
     },
     {
       "label": "parse()",
@@ -537,7 +609,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/lib/math.ts",
       "source_location": "L31",
       "id": "math_parse",
-      "community": 8
+      "community": 7
     },
     {
       "label": "release-time.ts",
@@ -545,7 +617,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/lib/release-time.ts",
       "source_location": "L1",
       "id": "release_time",
-      "community": 4
+      "community": 1
     },
     {
       "label": "parseReleaseMs()",
@@ -553,7 +625,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/lib/release-time.ts",
       "source_location": "L1",
       "id": "release_time_parsereleasems",
-      "community": 4
+      "community": 1
     },
     {
       "label": "formatCountdown()",
@@ -561,7 +633,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/lib/release-time.ts",
       "source_location": "L18",
       "id": "release_time_formatcountdown",
-      "community": 4
+      "community": 1
     },
     {
       "label": "toCountdownParts()",
@@ -569,7 +641,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/lib/release-time.ts",
       "source_location": "L31",
       "id": "release_time_tocountdownparts",
-      "community": 4
+      "community": 1
     },
     {
       "label": "types.ts",
@@ -577,7 +649,7 @@
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/lib/types.ts",
       "source_location": "L1",
       "id": "types",
-      "community": 3
+      "community": 5
     },
     {
       "label": "utils.ts",
@@ -1029,7 +1101,7 @@
       "relation": "imports_from",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
-      "source_location": "L10",
+      "source_location": "L9",
       "weight": 1.0,
       "_src": "photo",
       "_tgt": "navigationbutton",
@@ -1122,6 +1194,18 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Home.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_src": "home",
+      "_tgt": "home_homefocuscard",
+      "source": "home",
+      "target": "home_homefocuscard",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
@@ -1164,16 +1248,16 @@
       "source_location": "L13",
       "weight": 1.0,
       "_src": "music",
-      "_tgt": "music_formatdateshort",
+      "_tgt": "music_revealonview",
       "source": "music",
-      "target": "music_formatdateshort",
+      "target": "music_revealonview",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L21",
+      "source_location": "L87",
       "weight": 1.0,
       "_src": "music",
       "_tgt": "music_releasecountdowncard",
@@ -1185,7 +1269,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L71",
+      "source_location": "L136",
       "weight": 1.0,
       "_src": "music",
       "_tgt": "music_shouldhideupcoming",
@@ -1197,7 +1281,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L78",
+      "source_location": "L143",
       "weight": 1.0,
       "_src": "music",
       "_tgt": "music_isupcoming",
@@ -1209,7 +1293,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L84",
+      "source_location": "L149",
       "weight": 1.0,
       "_src": "music",
       "_tgt": "music_hasanyitemsinfile",
@@ -1221,19 +1305,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L90",
-      "weight": 1.0,
-      "_src": "music",
-      "_tgt": "music_hasvisibleitems",
-      "source": "music",
-      "target": "music_hasvisibleitems",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L98",
+      "source_location": "L155",
       "weight": 1.0,
       "_src": "music",
       "_tgt": "music_getnextupcoming",
@@ -1245,24 +1317,12 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L126",
+      "source_location": "L188",
       "weight": 1.0,
       "_src": "music",
       "_tgt": "music_isactiveupcomingms",
       "source": "music",
       "target": "music_isactiveupcomingms",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Music.tsx",
-      "source_location": "L38",
-      "weight": 1.0,
-      "_src": "music_releasecountdowncard",
-      "_tgt": "music_formatdateshort",
-      "source": "music_formatdateshort",
-      "target": "music_releasecountdowncard",
       "confidence_score": 1.0
     },
     {
@@ -1281,19 +1341,7 @@
       "relation": "imports_from",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_src": "photo",
-      "_tgt": "dialog",
-      "source": "photo",
-      "target": "dialog",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "confidence": "EXTRACTED",
-      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
-      "source_location": "L9",
+      "source_location": "L8",
       "weight": 1.0,
       "_src": "photo",
       "_tgt": "scroll_area",
@@ -1305,7 +1353,103 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_src": "photo",
+      "_tgt": "photo_clamp",
+      "source": "photo",
+      "target": "photo_clamp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_src": "photo",
+      "_tgt": "photo_easeinoutcubic",
+      "source": "photo",
+      "target": "photo_easeinoutcubic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L42",
+      "weight": 1.0,
+      "_src": "photo",
+      "_tgt": "photo_lerp",
+      "source": "photo",
+      "target": "photo_lerp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L46",
+      "weight": 1.0,
+      "_src": "photo",
+      "_tgt": "photo_measurerect",
+      "source": "photo",
+      "target": "photo_measurerect",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
       "source_location": "L62",
+      "weight": 1.0,
+      "_src": "photo",
+      "_tgt": "photo_useprefersreducedmotion",
+      "source": "photo",
+      "target": "photo_useprefersreducedmotion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L77",
+      "weight": 1.0,
+      "_src": "photo",
+      "_tgt": "photo_usescrambledtext",
+      "source": "photo",
+      "target": "photo_usescrambledtext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L136",
+      "weight": 1.0,
+      "_src": "photo",
+      "_tgt": "photo_scrambledmetadatavalue",
+      "source": "photo",
+      "target": "photo_scrambledmetadatavalue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L141",
+      "weight": 1.0,
+      "_src": "photo",
+      "_tgt": "photo_getmetadatafields",
+      "source": "photo",
+      "target": "photo_getmetadatafields",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L199",
       "weight": 1.0,
       "_src": "photo",
       "_tgt": "photo_handleclose",
@@ -1317,7 +1461,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
-      "source_location": "L311",
+      "source_location": "L669",
       "weight": 1.0,
       "_src": "photo",
       "_tgt": "photo_checkismobile",
@@ -1329,12 +1473,48 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
-      "source_location": "L325",
+      "source_location": "L724",
       "weight": 1.0,
       "_src": "photo",
       "_tgt": "photo_handleclick",
       "source": "photo",
       "target": "photo_handleclick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L733",
+      "weight": 1.0,
+      "_src": "photo",
+      "_tgt": "photo_handlesourcereveal",
+      "source": "photo",
+      "target": "photo_handlesourcereveal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L727",
+      "weight": 1.0,
+      "_src": "photo_handleclick",
+      "_tgt": "photo_measurerect",
+      "source": "photo_measurerect",
+      "target": "photo_handleclick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/Aaditya/project-naman/ciderboi.xyz/components/pages/Photo.tsx",
+      "source_location": "L137",
+      "weight": 1.0,
+      "_src": "photo_scrambledmetadatavalue",
+      "_tgt": "photo_usescrambledtext",
+      "source": "photo_usescrambledtext",
+      "target": "photo_scrambledmetadatavalue",
       "confidence_score": 1.0
     },
     {
