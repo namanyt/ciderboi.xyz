@@ -248,6 +248,13 @@ dist
 .yarn/cache
 .yarn/unplugged
 .yarn/build-state.yml
+
+# Local AI/tooling scaffolding
+AGENTS.md
+.opencode/
+docs/opencode/
+graphify-out/
+opencode.json
 .yarn/install-state.gz
 .pnp.*
 
