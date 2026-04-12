@@ -114,19 +114,19 @@ export default function Music({ data }: Props) {
         <div className="flex items-center flex-wrap justify-center gap-2 sm:gap-3 relative z-10">
           <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
             <div className="text-white font-semibold text-lg leading-none">{parts.days}</div>
-            <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Days</div>
+            <div className="text-white/80 text-[10px] tracking-wide uppercase mt-1">Days</div>
           </div>
           <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
             <div className="text-white font-semibold text-lg leading-none">{parts.hours}</div>
-            <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Hours</div>
+            <div className="text-white/80 text-[10px] tracking-wide uppercase mt-1">Hours</div>
           </div>
           <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
             <div className="text-white font-semibold text-lg leading-none">{parts.minutes}</div>
-            <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Min</div>
+            <div className="text-white/80 text-[10px] tracking-wide uppercase mt-1">Min</div>
           </div>
           <div className="rounded-xl bg-black/20 border border-white/10 ring-1 ring-white/10 shadow-inner shadow-black/80 backdrop-blur-sm px-3 py-2 text-center min-w-[4.25rem] flex flex-col items-center justify-center">
             <div className="text-white font-semibold text-lg leading-none">{parts.seconds}</div>
-            <div className="text-white/70 text-[10px] tracking-wide uppercase mt-1">Sec</div>
+            <div className="text-white/80 text-[10px] tracking-wide uppercase mt-1">Sec</div>
           </div>
         </div>
       </div>
@@ -212,13 +212,11 @@ export default function Music({ data }: Props) {
     return (
       <div key={`artist-${catalog.artist.name}`} className="space-y-4">
         {showArtistHeader ? (
-          <h3
-            className="text-lg sm:text-xl font-semibold"
-            title={catalog.artist.name}
-            onClick={() => window.open(catalog.artist.url, "_blank")}
-          >
-            <span className="cursor-pointer hover:underline">{catalog.artist.name}</span>
-          </h3>
+          <h2 className="text-lg sm:text-xl font-semibold" title={catalog.artist.name}>
+            <a href={catalog.artist.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+              {catalog.artist.name}
+            </a>
+          </h2>
         ) : null}
 
         {hasAny ? (
@@ -297,6 +295,8 @@ export default function Music({ data }: Props) {
 
   const currentHasAnyInFile = currentCatalogs.some((c) => hasAnyItemsInFile(c));
   const archivedHasAnyInFile = archivedCatalogs.some((c) => hasAnyItemsInFile(c));
+  const showCurrentArtistHeaders = currentCatalogs.length > 1;
+  const showArchivedArtistHeaders = archivedCatalogs.length > 1;
 
   return (
     <>
@@ -312,41 +312,55 @@ export default function Music({ data }: Props) {
         <ScrollArea className="w-full max-h-none sm:h-full sm:max-h-[calc(76.5vh)] overflow-auto">
           <div className="w-full max-w-7xl space-y-6 pl-1 pr-3 sm:px-0">
             <RevealOnView>
-              <details open className="rounded-2xl bg-white/5 border border-white/10">
-                <summary className="cursor-pointer select-none px-4 sm:px-6 py-4 text-lg sm:text-xl font-semibold">
-                  Nitya Naman
-                </summary>
-                <div className="px-4 sm:px-6 pb-6 pt-2 space-y-10">
-                  {currentHasAnyInFile ? (
-                    currentCatalogs.map((c) =>
-                      renderCatalog(c, {
-                        showArtistHeader: currentCatalogs.length > 1,
-                      }),
-                    )
-                  ) : (
-                    <p className="text-white/70 text-sm sm:text-base">No releases yet.</p>
-                  )}
-                </div>
-              </details>
+              <section aria-labelledby="music-current-heading">
+                {!showCurrentArtistHeaders ? (
+                  <h2 id="music-current-heading" className="sr-only">
+                    Nitya Naman releases
+                  </h2>
+                ) : null}
+                <details open className="rounded-2xl bg-white/5 border border-white/10">
+                  <summary className="cursor-pointer select-none px-4 sm:px-6 py-4 text-lg sm:text-xl font-semibold">
+                    Nitya Naman
+                  </summary>
+                  <div className="px-4 sm:px-6 pb-6 pt-2 space-y-10">
+                    {currentHasAnyInFile ? (
+                      currentCatalogs.map((c) =>
+                        renderCatalog(c, {
+                          showArtistHeader: showCurrentArtistHeaders,
+                        }),
+                      )
+                    ) : (
+                      <p className="text-white/80 text-sm sm:text-base">No releases yet.</p>
+                    )}
+                  </div>
+                </details>
+              </section>
             </RevealOnView>
 
             <RevealOnView>
-              <details className="rounded-2xl bg-white/5 border border-white/10">
-                <summary className="cursor-pointer select-none px-4 sm:px-6 py-4 text-lg sm:text-xl font-semibold">
-                  Cider Gamer (Archive)
-                </summary>
-                <div className="px-4 sm:px-6 pb-6 pt-2 space-y-10">
-                  {archivedHasAnyInFile ? (
-                    archivedCatalogs.map((c) =>
-                      renderCatalog(c, {
-                        showArtistHeader: archivedCatalogs.length > 1,
-                      }),
-                    )
-                  ) : (
-                    <p className="text-white/70 text-sm sm:text-base">No archived releases.</p>
-                  )}
-                </div>
-              </details>
+              <section aria-labelledby="music-archive-heading">
+                {!showArchivedArtistHeaders ? (
+                  <h2 id="music-archive-heading" className="sr-only">
+                    Cider Gamer archive releases
+                  </h2>
+                ) : null}
+                <details className="rounded-2xl bg-white/5 border border-white/10">
+                  <summary className="cursor-pointer select-none px-4 sm:px-6 py-4 text-lg sm:text-xl font-semibold">
+                    Cider Gamer (Archive)
+                  </summary>
+                  <div className="px-4 sm:px-6 pb-6 pt-2 space-y-10">
+                    {archivedHasAnyInFile ? (
+                      archivedCatalogs.map((c) =>
+                        renderCatalog(c, {
+                          showArtistHeader: showArchivedArtistHeaders,
+                        }),
+                      )
+                    ) : (
+                      <p className="text-white/80 text-sm sm:text-base">No archived releases.</p>
+                    )}
+                  </div>
+                </details>
+              </section>
             </RevealOnView>
           </div>
         </ScrollArea>
