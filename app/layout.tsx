@@ -15,11 +15,33 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nitya Naman",
+  title: {
+    default: "Nitya Naman",
+    template: "%s | Nitya Naman",
+  },
   description: "Creative developer blending code, design, and chaos through web projects, games, and music.",
   metadataBase: new URL("https://ciderboi.xyz"),
+  applicationName: "Nitya Naman",
+  category: "portfolio",
+  authors: [{ name: "Nitya Naman", url: "https://ciderboi.xyz" }],
+  creator: "Nitya Naman",
+  publisher: "Nitya Naman",
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: "/favicon.ico",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   openGraph: {
     title: "Nitya Naman",
@@ -41,6 +63,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Nitya Naman",
     description: "Creative developer blending code, design, and chaos through web projects, games, and music.",
+    creator: "@ciderboi123",
     images: [
       {
         url: "https://ciderboi.xyz/pictures/embed/home.png",

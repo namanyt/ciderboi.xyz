@@ -1,12 +1,13 @@
 import Photo from "@/components/pages/Photo";
 import { PhotoMetadata } from "@/lib/types";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import LoadingScreen from "@/components/loading";
 import { Suspense } from "react";
 import fs from "fs/promises";
 import path from "path";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Photography | Nitya Naman",
   description: "Frames from the real world - explore my photography portfolio and visual storytelling.",
   keywords: [
@@ -24,7 +25,7 @@ export const metadata = {
   ],
   metadataBase: new URL("https://ciderboi.xyz"),
   alternates: {
-    canonical: "https://ciderboi.xyz/photos",
+    canonical: "/photos",
   },
   robots: {
     index: true,
@@ -34,7 +35,7 @@ export const metadata = {
   openGraph: {
     title: "Photography | Nitya Naman",
     description: "Frames from the real world - explore my photography portfolio and visual storytelling.",
-    url: "https://ciderboi.xyz/photos",
+    url: "/photos",
     siteName: "Nitya Naman",
     images: [
       {

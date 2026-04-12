@@ -1,4 +1,5 @@
 import Music from "@/components/pages/Music";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SongData } from "@/lib/types";
 import LoadingScreen from "@/components/loading";
@@ -21,7 +22,7 @@ const fetchData = async () => {
   };
 };
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Music | Nitya Naman",
   description: "The soundtrack of my life - explore my favorite albums, singles, and musical influences.",
   keywords: [
@@ -39,7 +40,7 @@ export const metadata = {
   ],
   metadataBase: new URL("https://ciderboi.xyz"),
   alternates: {
-    canonical: "https://ciderboi.xyz/music",
+    canonical: "/music",
   },
   robots: {
     index: true,
@@ -49,7 +50,7 @@ export const metadata = {
   openGraph: {
     title: "Music | Nitya Naman",
     description: "The soundtrack of my life - explore my favorite albums, singles, and musical influences.",
-    url: "https://ciderboi.xyz/music",
+    url: "/music",
     siteName: "Nitya Naman",
     images: [
       {

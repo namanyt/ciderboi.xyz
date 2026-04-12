@@ -40,13 +40,7 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
       }
 
       setRequestedPath(routePath);
-
-      // Small timeout to ensure the loading UI renders before navigation
-      // This makes navigation feel more immediate to the user
-      setTimeout(() => {
-        // Navigate to the new route with scroll: false to prevent auto-scrolling
-        router.push(routePath, { scroll: false });
-      }, 10);
+      router.push(routePath, { scroll: false });
     },
     [currentPath, router],
   );

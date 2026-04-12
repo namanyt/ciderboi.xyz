@@ -7,9 +7,12 @@ import path from "path";
 import { Metadata } from "next";
 
 const fetchData = async () => {
-  const projects = await fs.readFile(path.join(process.cwd(), "public", "data", "projects.json"), "utf8");
-  const experiences = await fs.readFile(path.join(process.cwd(), "public", "data", "experiences.json"), "utf8");
-  const skills = await fs.readFile(path.join(process.cwd(), "public", "data", "skills.json"), "utf8");
+  const [projects, experiences, skills] = await Promise.all([
+    fs.readFile(path.join(process.cwd(), "public", "data", "projects.json"), "utf8"),
+    fs.readFile(path.join(process.cwd(), "public", "data", "experiences.json"), "utf8"),
+    fs.readFile(path.join(process.cwd(), "public", "data", "skills.json"), "utf8"),
+  ]);
+
   return {
     projects: JSON.parse(projects).projects as Project[],
     experiences: JSON.parse(experiences).experiences as Experience[],
@@ -49,7 +52,7 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL("https://ciderboi.xyz"),
   alternates: {
-    canonical: "https://ciderboi.xyz",
+    canonical: "/",
   },
   robots: {
     index: true,

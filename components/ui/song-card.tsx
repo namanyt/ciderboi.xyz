@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Album, Track } from "@/lib/types";
 import { formatCountdown, parseReleaseMs } from "@/lib/release-time";
 
+const dominantColorCache = new Map<string, string>();
+
 function useReleaseCountdown(releaseDate: string | null | undefined) {
   const targetMs = parseReleaseMs(releaseDate);
   const [nowMs, setNowMs] = useState(() => Date.now());
@@ -24,6 +26,11 @@ function useReleaseCountdown(releaseDate: string | null | undefined) {
 
 // Function to extract dominant color from an image
 function extractColor(imgSrc: string): Promise<string> {
+  const cachedColor = dominantColorCache.get(imgSrc);
+  if (cachedColor) {
+    return Promise.resolve(cachedColor);
+  }
+
   return new Promise((resolve) => {
     const img = new window.Image();
     img.crossOrigin = "Anonymous";
@@ -67,11 +74,15 @@ function extractColor(imgSrc: string): Promise<string> {
       b = Math.floor(b / count);
 
       // Return RGBA with 30% opacity
-      resolve(`rgba(${r}, ${g}, ${b}, 0.3)`);
+      const color = `rgba(${r}, ${g}, ${b}, 0.3)`;
+      dominantColorCache.set(imgSrc, color);
+      resolve(color);
     };
 
     img.onerror = () => {
-      resolve("rgba(103, 58, 183, 0.3)"); // Default color
+      const fallbackColor = "rgba(103, 58, 183, 0.3)";
+      dominantColorCache.set(imgSrc, fallbackColor);
+      resolve(fallbackColor); // Default color
     };
 
     img.src = imgSrc;
@@ -124,7 +135,7 @@ export function SongPlayerTrack({ title, artists, id, url, releaseDate, thumbnai
               width={thumbnailSize?.width || 96}
               height={thumbnailSize?.height || 96}
               className="object-cover w-full h-full" // Ensure image fills container
-              priority // Load high-priority images faster
+              loading="lazy"
               onLoadingComplete={(img) => {
                 if (hasFetchedColor.current) return;
                 hasFetchedColor.current = true;
@@ -279,7 +290,7 @@ export function SongPlayerAlbum({
               width={thumbnailSize?.width || 128}
               height={thumbnailSize?.height || 128}
               className="object-cover"
-              priority
+              loading="lazy"
               onLoadingComplete={(img) => {
                 if (hasFetchedColor.current) return;
                 hasFetchedColor.current = true;

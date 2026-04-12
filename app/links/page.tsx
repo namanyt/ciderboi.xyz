@@ -16,6 +16,7 @@ import NavigationButton from "@/components/NavigationButton";
 import LoadingScreen from "@/components/loading";
 import fs from "fs/promises";
 import path from "path";
+import type { Metadata } from "next";
 
 const fetchLinks: {
   (): Promise<{ props: { links: Record<string, string>; error?: string } }>;
@@ -93,13 +94,37 @@ const labelMap: Record<string, string> = {
   discord: "Discord",
 };
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Connect With Me | Nitya Naman",
   description:
     "Find me across social platforms - GitHub, Twitter, Instagram, LinkedIn, Spotify, Apple Music, Amazon Music, YouTube, SoundCloud, and Discord.",
   metadataBase: new URL("https://ciderboi.xyz"),
   alternates: {
-    canonical: "https://ciderboi.xyz/links",
+    canonical: "/links",
+  },
+  openGraph: {
+    title: "Connect With Me | Nitya Naman",
+    description:
+      "Find me across social platforms - GitHub, Twitter, Instagram, LinkedIn, Spotify, Apple Music, Amazon Music, YouTube, SoundCloud, and Discord.",
+    url: "/links",
+    siteName: "Nitya Naman",
+    type: "website",
+    locale: "en-US",
+    images: [
+      {
+        url: "https://ciderboi.xyz/pictures/embed/home.png",
+        width: 1200,
+        height: 630,
+        alt: "Connect With Nitya Naman",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Connect With Me | Nitya Naman",
+    description: "Find me across the web.",
+    creator: "@ciderboi123",
+    images: ["https://ciderboi.xyz/pictures/embed/home.png"],
   },
 };
 
