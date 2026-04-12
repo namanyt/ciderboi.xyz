@@ -569,7 +569,7 @@ export function DesktopPhotoModal({
                     width={photo.size.width * DESKTOP_SCALING}
                     height={photo.size.height * DESKTOP_SCALING}
                     className="photo-stage-image"
-                    priority
+                    sizes="(max-width: 768px) 92vw, 52vw"
                   />
                 </div>
               </div>
@@ -636,8 +636,7 @@ export function DesktopPhotoModal({
             alt={`Photography by Nitya Naman - ${photo.uuid}`}
             fill
             className="object-cover"
-            sizes="100vw"
-            priority
+            sizes="(max-width: 768px) 92vw, 52vw"
           />
         </div>
       ) : null}

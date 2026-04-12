@@ -455,7 +455,13 @@ function ExperienceCard({
           <div className="w-16 h-16">
             {logo ? (
               <div className="relative w-full h-full rounded-lg overflow-hidden shadow">
-                <Image fill src={logo} alt={company} className="rounded-lg object-contain w-full h-full shadow" />
+                <Image
+                  fill
+                  src={logo}
+                  alt={company}
+                  sizes="64px"
+                  className="rounded-lg object-contain w-full h-full shadow"
+                />
               </div>
             ) : (
               <div
