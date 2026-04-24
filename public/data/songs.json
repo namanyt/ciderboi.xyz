@@ -5,7 +5,6 @@
         "name": "Nitya Naman",
         "url": "https://open.spotify.com/artist/4asiCObHQTLPhbmjiqF1oi"
       },
-      "albums": [],
       "singles": [
         {
           "id": 1,
@@ -54,6 +53,66 @@
           },
           "preSaveUrl": "https://share.amuse.io/track/nitya-naman-memories",
           "url": "https://open.spotify.com/album/3ZOm6GxtfAmTLkrgsgq1YV"
+        }
+      ],
+      "albums": [
+        {
+          "id": 5,
+          "title": "Peak?",
+          "releaseDate": "2026-05-15",
+          "thumbnail": "https://cdn.amuse.io/7cf37ad7-04a8-4050-bc12-eec5cd070973.400x400.jpg",
+          "thumbnailSize": {
+            "width": 400,
+            "height": 400
+          },
+          "preSaveUrl": "https://share.amuse.io/album/nitya-naman-peak",
+          "url": "https://open.spotify.com/album/0YXFTSxch82TradJQdLoNS",
+          "tracks": [
+            {
+              "title": "Tired of Love",
+              "id": null,
+              "url": null,
+              "releaseDate": "2026-05-15",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Leave This Behind",
+              "id": null,
+              "url": null,
+              "releaseDate": "2026-05-15",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Deep Sleep",
+              "id": null,
+              "url": null,
+              "releaseDate": "2026-05-15",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Odyssey",
+              "id": null,
+              "url": null,
+              "releaseDate": "2026-05-15",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            }
+          ]
         }
       ]
     }
