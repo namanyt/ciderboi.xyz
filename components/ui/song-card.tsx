@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Album, Track } from "@/lib/types";
 import { formatCountdown, parseReleaseMs } from "@/lib/release-time";
 
+const dominantColorCache = new Map<string, string>();
+
 function useReleaseCountdown(releaseDate: string | null | undefined) {
   const targetMs = parseReleaseMs(releaseDate);
   const [nowMs, setNowMs] = useState(() => Date.now());
@@ -24,6 +26,11 @@ function useReleaseCountdown(releaseDate: string | null | undefined) {
 
 // Function to extract dominant color from an image
 function extractColor(imgSrc: string): Promise<string> {
+  const cachedColor = dominantColorCache.get(imgSrc);
+  if (cachedColor) {
+    return Promise.resolve(cachedColor);
+  }
+
   return new Promise((resolve) => {
     const img = new window.Image();
     img.crossOrigin = "Anonymous";
@@ -67,11 +74,15 @@ function extractColor(imgSrc: string): Promise<string> {
       b = Math.floor(b / count);
 
       // Return RGBA with 30% opacity
-      resolve(`rgba(${r}, ${g}, ${b}, 0.3)`);
+      const color = `rgba(${r}, ${g}, ${b}, 0.3)`;
+      dominantColorCache.set(imgSrc, color);
+      resolve(color);
     };
 
     img.onerror = () => {
-      resolve("rgba(103, 58, 183, 0.3)"); // Default color
+      const fallbackColor = "rgba(103, 58, 183, 0.3)";
+      dominantColorCache.set(imgSrc, fallbackColor);
+      resolve(fallbackColor); // Default color
     };
 
     img.src = imgSrc;
@@ -104,6 +115,8 @@ export function SongPlayerTrack({ title, artists, id, url, releaseDate, thumbnai
   const { isUpcoming, countdownLabel } = useReleaseCountdown(releaseDate);
   const secondaryLabel = formattedReleaseDate;
   const isPreSaveAvailable = isUpcoming && !!preSaveUrl;
+  const trackActionUrl = isUpcoming ? preSaveUrl : null;
+  const trackActionLabel = "Pre-save";
 
   return (
     <div
@@ -124,10 +137,11 @@ export function SongPlayerTrack({ title, artists, id, url, releaseDate, thumbnai
               width={thumbnailSize?.width || 96}
               height={thumbnailSize?.height || 96}
               className="object-cover w-full h-full" // Ensure image fills container
-              priority // Load high-priority images faster
-              onLoadingComplete={(img) => {
+              loading="lazy"
+              onLoad={(event) => {
                 if (hasFetchedColor.current) return;
                 hasFetchedColor.current = true;
+                const img = event.currentTarget;
                 const src = img.currentSrc || img.src;
                 extractColor(src).then((color) => setBgColor(color));
               }}
@@ -141,99 +155,66 @@ export function SongPlayerTrack({ title, artists, id, url, releaseDate, thumbnai
         <div className="flex-1 min-w-0">
           {" "}
           <h3 className="text-white font-bold font-mono text-base sm:text-lg truncate">
-            <span
-              className="hover:underline cursor-pointer"
-              onClick={() => window.open(url, "_blank")}
-              title={songName}
-            >
+            <a href={url} target="_blank" rel="noopener noreferrer" className="hover:underline" title={songName}>
               {songName}
-            </span>
+            </a>
           </h3>
           {artistDisplayList ? (
             artistDisplayList.map((artist) => (
-              <p key={artist.name} className="text-white/80 text-sm truncate">
-                <span
-                  className="hover:underline cursor-pointer"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(artist.url, "_blank");
-                  }}
+              <p key={artist.name} className="text-white/90 text-sm truncate">
+                <a
+                  href={artist.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
                   title={artist.name}
                 >
                   {artist.name}
-                </span>
+                </a>
                 {secondaryLabel ? ` • ${secondaryLabel}` : ""}
               </p>
             ))
           ) : (
-            <p className="text-white/80 text-sm">Unknown Artist</p> // Fallback
+            <p className="text-white/90 text-sm">Unknown Artist</p> // Fallback
           )}
           <div className="flex items-center space-x-3 mt-3">
             {isUpcoming ? (
-              <span className="inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/80 text-sm font-medium">
+              <span className="inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 text-sm font-medium">
                 {countdownLabel || "Coming soon"}
               </span>
             ) : (
-              <>
-                <button
-                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white/30 border border-white/30 flex items-center justify-center text-white transition-all flex-shrink-0 cursor-pointer" // Adjusted size, added flex-shrink-0
-                  onClick={() => window.open(url, "_blank")}
-                  aria-label={`Play ${songName}`}
-                >
-                  <Play size={16} fill="currentColor" />
-                </button>
-                <a
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-green-500 hover:bg-green-600 text-white text-sm font-medium transition-colors"
-                >
-                  <span className="hidden sm:inline">View on Spotify</span>
-                  <span className="sm:hidden">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      width={20}
-                      height={20}
-                      strokeWidth={1}
-                    >
-                      <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
-                      <path d="M8 11.973c2.5 -1.473 5.5 -.973 7.5 .527"></path>
-                      <path d="M9 15c1.5 -1 4 -1 5 .5"></path>
-                      <path d="M7 9c2 -1 6 -2 10 .5"></path>
-                    </svg>
-                  </span>
-                </a>
-              </>
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-full bg-green-500 hover:bg-green-600 text-white text-sm font-medium transition-colors"
+                aria-label={`Play ${songName} on Spotify`}
+              >
+                <Play size={16} fill="currentColor" />
+                <span>Play on Spotify</span>
+              </a>
             )}
             {/* Like / Pre-save button */}
-            <button
-              onClick={() => {
-                if (isUpcoming) {
-                  if (preSaveUrl) window.open(preSaveUrl, "_blank");
-                  return;
-                }
-                window.open(url, "_blank");
-              }}
-              disabled={isUpcoming && !preSaveUrl}
-              className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white/30 border border-white/30 flex items-center justify-center text-white transition-all flex-shrink-0 ${
-                isUpcoming && !preSaveUrl ? "opacity-50 cursor-not-allowed hover:bg-white/20" : "cursor-pointer"
-              }`}
-              aria-label={
-                isUpcoming
-                  ? isPreSaveAvailable
-                    ? `Pre-save ${songName}`
-                    : `Pre-save not available yet`
-                  : `Like ${songName}`
-              }
-              title={isUpcoming ? (isPreSaveAvailable ? "Pre-save" : "Pre-save not available yet") : "Like"}
-            >
-              <Heart size={16} fill="currentColor" />
-            </button>
+            {isUpcoming ? (
+              <a
+                href={trackActionUrl ?? undefined}
+                target={trackActionUrl ? "_blank" : undefined}
+                rel={trackActionUrl ? "noopener noreferrer" : undefined}
+                aria-disabled={!preSaveUrl}
+                className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white/30 border border-white/30 flex items-center justify-center text-white transition-all flex-shrink-0 ${
+                  !preSaveUrl ? "opacity-50 cursor-not-allowed hover:bg-white/20" : "cursor-pointer"
+                }`}
+                aria-label={isPreSaveAvailable ? `Pre-save ${songName}` : `Pre-save not available yet`}
+                title={isPreSaveAvailable ? trackActionLabel : "Pre-save not available yet"}
+                onClick={(event) => {
+                  if (!trackActionUrl) {
+                    event.preventDefault();
+                  }
+                }}
+              >
+                <Heart size={16} fill="currentColor" />
+              </a>
+            ) : null}
           </div>
         </div>
       </div>
@@ -279,10 +260,11 @@ export function SongPlayerAlbum({
               width={thumbnailSize?.width || 128}
               height={thumbnailSize?.height || 128}
               className="object-cover"
-              priority
-              onLoadingComplete={(img) => {
+              loading="lazy"
+              onLoad={(event) => {
                 if (hasFetchedColor.current) return;
                 hasFetchedColor.current = true;
+                const img = event.currentTarget;
                 const src = img.currentSrc || img.src;
                 extractColor(src).then((color) => setBgColor(color));
               }}
@@ -295,30 +277,29 @@ export function SongPlayerAlbum({
         {/* Album info */}
         <div className="flex-1 min-w-0">
           <h3 className="text-white font-bold font-mono text-xl">
-            <span className="hover:underline cursor-pointer" onClick={() => window.open(url, "_blank")}>
+            <a href={url} target="_blank" rel="noopener noreferrer" className="hover:underline">
               {title}
-            </span>
+            </a>
           </h3>
           {artistDisplayList ? (
             artistDisplayList.map((artist) => (
-              <p key={artist.name} className="text-white/80 text-sm truncate">
-                <span
-                  className="hover:underline cursor-pointer"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(artist.url, "_blank");
-                  }}
+              <p key={artist.name} className="text-white/90 text-sm truncate">
+                <a
+                  href={artist.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
                   title={artist.name}
                 >
                   {artist.name}
-                </span>
+                </a>
                 {secondaryLabel ? ` • ${secondaryLabel}` : ""}
               </p>
             ))
           ) : (
-            <p className="text-white/80 text-sm">Unknown Artist</p> // Fallback
+            <p className="text-white/90 text-sm">Unknown Artist</p> // Fallback
           )}
-          <p className="text-white/80 text-sm mb-2">
+          <p className="text-white/90 text-sm mb-2">
             {tracks.length} tracks{secondaryLabel ? ` • ${secondaryLabel}` : ""}
           </p>
 
@@ -333,7 +314,7 @@ export function SongPlayerAlbum({
                 Pre-save
               </a>
             ) : (
-              <div className="inline-block mt-3 px-4 py-2 bg-white/10 border border-white/20 rounded-full text-white/80 text-sm font-medium">
+              <div className="inline-block mt-3 px-4 py-2 bg-white/10 border border-white/20 rounded-full text-white/90 text-sm font-medium">
                 {countdownLabel || "Coming soon"}
               </div>
             )
@@ -356,24 +337,26 @@ export function SongPlayerAlbum({
         <div className="space-y-3">
           {tracks.map((track, index) => (
             <div key={track.id} className="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all">
-              <div className="w-6 text-white/60 mr-3 text-center">{index + 1}</div>
+              <div className="w-6 text-white/80 mr-3 text-center">{index + 1}</div>
 
               <div className="flex-1">
-                <p
-                  className="cursor-pointer hover:underline text-white font-medium font-mono"
-                  onClick={() => window.open(track.url)}
+                <a
+                  href={track.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline text-white font-medium font-mono"
                 >
                   {track.title}
-                </p>
-                <p className="text-white/60 text-xs">{formatDate(track.releaseDate) || ""}</p>
+                </a>
+                <p className="text-white/80 text-xs">{formatDate(track.releaseDate) || ""}</p>
               </div>
 
-              <button
-                className="w-8 h-8 cursor-pointer rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center text-white"
-                onClick={() => window.open(track.url, "_blank")}
+              <span
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/12 text-white/70"
+                aria-hidden="true"
               >
                 <Play size={14} fill="white" />
-              </button>
+              </span>
             </div>
           ))}
         </div>
