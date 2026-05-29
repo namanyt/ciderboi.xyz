@@ -6,7 +6,8 @@ export function BackgroundPicture({ brightness, scaling = 1 }: { brightness: num
     <div className="fixed z-[-10] inset-0 overflow-hidden">
       <Image
         src="/pictures/background.webp"
-        alt="Background"
+        alt=""
+        aria-hidden="true"
         fill
         placeholder="blur"
         blurDataURL={backgroundImageBlurDataURL()}
@@ -20,10 +21,6 @@ export function BackgroundPicture({ brightness, scaling = 1 }: { brightness: num
         }}
         priority
       />
-
-      <div className="sr-only" aria-hidden="true" role="img" aria-label="A beautiful background image">
-        A landscape scene of Derahdun, Haridwar, India. Picture taken by Nitya Naman using a Samsung Galaxy A54 phone.
-      </div>
     </div>
   );
 }

@@ -25,15 +25,15 @@ export default function Photo({
     <>
       <NavigationButton
         href={"/"}
-        className="z-60 fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md overflow-visible"
+        className="z-[60] fixed top-3 left-3 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-4 sm:px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md overflow-visible"
       >
         Back Home
       </NavigationButton>
-      <div className="w-[95vw] mx-auto my-6 p-8 rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white overflow-y-auto scroll-smooth space-y-12">
-        <h1 className="text-3xl sm:text-4xl mb-6 text-center font-semibold">Gallery</h1>
+      <div className="h-dvh w-[calc(100vw-1rem)] sm:w-[95vw] mx-auto mt-16 mb-20 md:my-6 p-3 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto scroll-smooth space-y-8 sm:space-y-12">
+        <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-6 text-center font-semibold">Gallery</h1>
 
-        <ScrollArea className="max-h-[calc(80vh)] overflow-y-auto">
-          <div className="w-full max-w-[1800px] columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-6 space-y-6 px-6">
+        <ScrollArea className="max-h-none md:max-h-[calc(80dvh)] overflow-visible md:overflow-y-auto">
+          <div className="w-full max-w-[1800px] columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 sm:gap-6 space-y-4 sm:space-y-6 px-0 sm:px-2 md:px-6">
             {photos.map((photo) => (
               <PhotoCard key={photo.uuid} photo={photo} isIdProvided={photoId} />
             ))}
@@ -99,7 +99,7 @@ export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }
           ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
       >
         {/* Header with close button */}
-        <div className="flex items-center justify-between p-4 border-b border-white/10">
+        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-white/10">
           <h2 className="text-lg font-medium text-white">Photo Details</h2>
           <button
             onClick={handleClose}
@@ -113,14 +113,14 @@ export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }
         {/* Scrollable content container */}
         <div className="flex flex-col flex-1 overflow-y-auto">
           {/* Image section - takes about 60% of height */}
-          <div className="relative w-full flex justify-center items-center p-4 min-h-[50vh]">
+          <div className="relative w-full flex justify-center items-center p-3 sm:p-4 min-h-[42vh] sm:min-h-[50vh]">
             <div className="relative touch-manipulation cursor-zoom-in" onClick={() => setEnlarged(!enlarged)}>
               <Image
                 src={`/gallery/${photo.webpPath}`}
                 alt={`Photography by Nitya Naman - ${photo.uuid}`}
                 width={enlarged ? photo.size.width * MOBILE_ENLARGED_SCALE : photo.size.width * MOBILE_SCALING}
                 height={enlarged ? photo.size.height * MOBILE_ENLARGED_SCALE : photo.size.height * MOBILE_SCALING}
-                className={`max-h-[50vh] w-auto object-contain rounded-lg shadow-xl transition-all duration-300 ${enlarged ? "scale-110" : "scale-100"}`}
+                className={`max-h-[48vh] max-w-full w-auto object-contain rounded-lg shadow-xl transition-all duration-300 ${enlarged ? "scale-110" : "scale-100"}`}
                 priority
               />
 
@@ -138,10 +138,10 @@ export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }
           </div>
 
           {/* Info panel - stacked below image */}
-          <div className="w-full p-5 bg-black/60 border-t border-white/10 text-white shrink-0">
+          <div className="w-full p-4 sm:p-5 bg-black/60 border-t border-white/10 text-white shrink-0">
             <h3 className="text-lg font-medium mb-4">Photo Info</h3>
 
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-1 min-[420px]:grid-cols-2 gap-3 mb-6">
               {photo.metadata.camera && (
                 <div className="bg-black/30 p-3 rounded-lg">
                   <span className="font-medium text-white/80 block mb-1">Camera</span>

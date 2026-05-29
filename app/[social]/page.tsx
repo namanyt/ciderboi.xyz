@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import fs from "fs/promises";
 import path from "path";
+import type { Metadata } from "next";
 
 type SocialsProps = {
   [key: string]: string;
@@ -26,7 +27,7 @@ const socialMap: Record<string, string> = {
   linkedin: "LinkedIn",
 };
 
-export async function generateMetadata({ params }: { params: Promise<{ social: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ social: string }> }): Promise<Metadata> {
   const social = (await params).social?.toLowerCase();
 
   const socialName = socialMap[social] ?? "Let's connect!";
@@ -40,12 +41,12 @@ export async function generateMetadata({ params }: { params: Promise<{ social: s
       follow: true,
     },
     alternates: {
-      canonical: `https://ciderboi.xyz/${social}`,
+      canonical: `/${social}`,
     },
     openGraph: {
       title: `${socialName} | Nitya Naman`,
       description: `Connect with me on ${socialName}`,
-      url: `https://ciderboi.xyz/${social}`,
+      url: `/${social}`,
       siteName: "Nitya Naman",
       type: "website",
       locale: "en-US",

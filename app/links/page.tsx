@@ -16,6 +16,7 @@ import NavigationButton from "@/components/NavigationButton";
 import LoadingScreen from "@/components/loading";
 import fs from "fs/promises";
 import path from "path";
+import type { Metadata } from "next";
 
 const fetchLinks: {
   (): Promise<{ props: { links: Record<string, string>; error?: string } }>;
@@ -93,13 +94,37 @@ const labelMap: Record<string, string> = {
   discord: "Discord",
 };
 
-export const metadata = {
-  title: "Connect With Me | Nitya Naman",
+export const metadata: Metadata = {
+  title: "Connect With Me",
   description:
     "Find me across social platforms - GitHub, Twitter, Instagram, LinkedIn, Spotify, Apple Music, Amazon Music, YouTube, SoundCloud, and Discord.",
   metadataBase: new URL("https://ciderboi.xyz"),
   alternates: {
-    canonical: "https://ciderboi.xyz/links",
+    canonical: "/links",
+  },
+  openGraph: {
+    title: "Connect With Me | Nitya Naman",
+    description:
+      "Find me across social platforms - GitHub, Twitter, Instagram, LinkedIn, Spotify, Apple Music, Amazon Music, YouTube, SoundCloud, and Discord.",
+    url: "/links",
+    siteName: "Nitya Naman",
+    type: "website",
+    locale: "en-US",
+    images: [
+      {
+        url: "https://ciderboi.xyz/pictures/embed/home.png",
+        width: 1200,
+        height: 630,
+        alt: "Connect With Nitya Naman",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Connect With Me | Nitya Naman",
+    description: "Find me across the web.",
+    creator: "@ciderboi123",
+    images: ["https://ciderboi.xyz/pictures/embed/home.png"],
   },
 };
 
@@ -118,11 +143,11 @@ export default async function Links() {
 
   return (
     <Suspense fallback={<LoadingScreen />}>
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="h-dvh flex items-center justify-center px-3 py-6 sm:p-4">
         <div className="relative z-10 max-w-4xl w-full mx-auto">
-          <div className="backdrop-blur-lg bg-white/10 rounded-3xl p-8 shadow-xl border border-white/40">
-            <h1 className="text-4xl font-bold text-center mb-2 text-gray-100">Connect With Me</h1>
-            <p className="text-center text-gray-300 text-lg mb-8">Find me across the web</p>
+          <div className="backdrop-blur-lg bg-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl border border-white/40 max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto">
+            <h1 className="text-2xl sm:text-4xl font-bold text-center mb-2 text-gray-100">Connect With Me</h1>
+            <p className="text-center text-gray-300 text-base sm:text-lg mb-6 sm:mb-8">Find me across the web</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {sortedLinks.map(([platform]) => {
@@ -135,12 +160,14 @@ export default async function Links() {
                     href={`/${platform}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`backdrop-blur-3xl rounded-xl p-4 flex items-center
+                    className={`backdrop-blur-3xl rounded-xl p-4 flex items-center min-w-0
                     transition-all duration-300 ease-in-out transform hover:scale-105
                     hover:shadow-lg border border-white/40 ${hoverColor}`}
                   >
                     {Icon && <Icon className="text-2xl mr-3 duration-300" />}
-                    <span className="capitalize font-medium duration-300">{labelMap[platform] ?? platform}</span>
+                    <span className="capitalize font-medium duration-300 truncate">
+                      {labelMap[platform] ?? platform}
+                    </span>
                   </a>
                 );
               })}
@@ -150,7 +177,7 @@ export default async function Links() {
 
         <NavigationButton
           href={"/"}
-          className="z-60 fixed top-4 left-4 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
+          className="z-[60] fixed top-3 left-3 md:top-auto md:right-[1em] md:left-auto md:bottom-[1em] cursor-pointer w-auto px-4 sm:px-6 py-2 rounded-full bg-white/30 hover:bg-white/40 transition border border-white/30 text-sm text-center shadow-md"
         >
           Back Home
         </NavigationButton>

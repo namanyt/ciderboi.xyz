@@ -5,6 +5,7 @@ import LoadingScreen from "@/components/loading";
 import { Suspense } from "react";
 import fs from "fs/promises";
 import path from "path";
+import type { Metadata } from "next";
 
 export type Props = {
   data: SongData;
@@ -21,8 +22,8 @@ const fetchData = async () => {
   };
 };
 
-export const metadata = {
-  title: "Music | Nitya Naman",
+export const metadata: Metadata = {
+  title: "Music",
   description: "The soundtrack of my life - explore my favorite albums, singles, and musical influences.",
   keywords: [
     "music",
@@ -39,7 +40,7 @@ export const metadata = {
   ],
   metadataBase: new URL("https://ciderboi.xyz"),
   alternates: {
-    canonical: "https://ciderboi.xyz/music",
+    canonical: "/music",
   },
   robots: {
     index: true,
@@ -49,7 +50,7 @@ export const metadata = {
   openGraph: {
     title: "Music | Nitya Naman",
     description: "The soundtrack of my life - explore my favorite albums, singles, and musical influences.",
-    url: "https://ciderboi.xyz/music",
+    url: "/music",
     siteName: "Nitya Naman",
     images: [
       {

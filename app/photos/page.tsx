@@ -5,9 +5,10 @@ import LoadingScreen from "@/components/loading";
 import { Suspense } from "react";
 import fs from "fs/promises";
 import path from "path";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Photography | Nitya Naman",
+export const metadata: Metadata = {
+  title: "Photography",
   description: "Frames from the real world - explore my photography portfolio and visual storytelling.",
   keywords: [
     "photography",
@@ -24,7 +25,7 @@ export const metadata = {
   ],
   metadataBase: new URL("https://ciderboi.xyz"),
   alternates: {
-    canonical: "https://ciderboi.xyz/photos",
+    canonical: "/photos",
   },
   robots: {
     index: true,
@@ -34,7 +35,7 @@ export const metadata = {
   openGraph: {
     title: "Photography | Nitya Naman",
     description: "Frames from the real world - explore my photography portfolio and visual storytelling.",
-    url: "https://ciderboi.xyz/photos",
+    url: "/photos",
     siteName: "Nitya Naman",
     images: [
       {

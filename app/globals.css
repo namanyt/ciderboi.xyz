@@ -171,8 +171,14 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply overflow-x-hidden;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply h-dvh overflow-hidden bg-background text-foreground;
+  }
+  main {
+    @apply h-dvh;
   }
 }
 
@@ -203,6 +209,31 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.4);
+}
+
+.music-reveal-item {
+  will-change: transform, opacity;
+  transition:
+    opacity 310ms ease,
+    transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.music-reveal-hidden {
+  opacity: 0;
+  transform: translateY(22px) scale(0.988);
+}
+
+.music-reveal-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-reveal-item {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {

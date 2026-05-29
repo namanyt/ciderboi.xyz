@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
@@ -16,18 +16,35 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nitya Naman",
+  title: {
+    default: "Nitya Naman",
+    template: "%s | Nitya Naman",
+  },
   description: "Creative developer blending code, design, and chaos through web projects, games, and music.",
   metadataBase: new URL("https://ciderboi.xyz"),
+  applicationName: "Nitya Naman",
+  category: "portfolio",
+  authors: [{ name: "Nitya Naman", url: "https://ciderboi.xyz" }],
+  creator: "Nitya Naman",
+  publisher: "Nitya Naman",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/favicon.ico",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
-  themeColor: "#000000",
   openGraph: {
     title: "Nitya Naman",
     description: "Creative developer blending code, design, and chaos through web projects, games, and music.",
@@ -48,6 +65,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Nitya Naman",
     description: "Creative developer blending code, design, and chaos through web projects, games, and music.",
+    creator: "@ciderboi123",
     images: [
       {
         url: "https://ciderboi.xyz/pictures/embed/home.png",
@@ -57,6 +75,13 @@ export const metadata: Metadata = {
       },
     ],
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
@@ -127,7 +152,7 @@ document.documentElement.style.colorScheme='dark';`,
           </NetworkProvider>
           <BackgroundPicture brightness={0.8} />
 
-          <div className="absolute bottom-0 w-full text-center py-4 text-gray-400 opacity-50 text-sm z-50">
+          <div className="fixed bottom-0 w-full px-4 py-3 text-center text-xs sm:text-sm text-gray-400 opacity-50 z-50 pointer-events-none">
             &copy; {new Date().getFullYear()} Nitya Naman. All rights reserved.
           </div>
         </ThemeProvider>

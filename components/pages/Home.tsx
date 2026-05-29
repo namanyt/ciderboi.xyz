@@ -22,7 +22,7 @@ export default function Home({
   const [showFullAbout, setShowFullAbout] = useState(false);
 
   return (
-    <div className="h-screen w-full bg-cover bg-center overflow-auto">
+    <div className="h-dvh w-full overflow-hidden flex flex-col items-center justify-center bg-cover bg-center px-2 py-8 sm:px-4 sm:py-6 pb-20 sm:pb-6">
       {/* About the Image Icon */}
       <TooltipProvider>
         <Tooltip delayDuration={500}>
@@ -33,7 +33,7 @@ export default function Home({
               redirect("/photos?id=81cb0ed1");
             }}
           >
-            <div className="fixed bottom-4 right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-250 z-60">
+            <div className="fixed bottom-14 right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-250 z-[60] sm:bottom-4">
               <Info />
             </div>
           </TooltipTrigger>
@@ -44,9 +44,9 @@ export default function Home({
       </TooltipProvider>
 
       {/* Scrollable Card */}
-      <div className="h-[90vh] w-[95vw] max-w-5xl mx-auto my-6 p-8 rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white overflow-y-auto scroll-smooth space-y-12">
+      <div className="w-full max-w-5xl mx-auto p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto scroll-smooth space-y-8 sm:space-y-10 md:space-y-12">
         {/* Profile Section */}
-        <section className="flex flex-col md:flex-row items-center gap-6">
+        <section className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
           <Image
             src="/pictures/pfp-4.webp"
             alt="Nitya Naman - Creative Developer and Software Engineer at UPES"
@@ -56,10 +56,10 @@ export default function Home({
             draggable={false}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
             style={{ objectFit: "contain" }}
-            className="w-32 h-32 rounded-full object-cover border-2 border-white/30 shadow-md"
+            className="h-28 w-28 sm:h-32 sm:w-32 rounded-full object-cover border-2 border-white/30 shadow-md shrink-0"
           />
-          <div>
-            <h1 className="text-3xl font-bold">Nitya Naman</h1>
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-3xl font-bold">Nitya Naman</h1>
             <p className="text-white/70 text-sm">"Engineering imagination, one pixel at a time."</p>
           </div>
         </section>
@@ -85,7 +85,7 @@ export default function Home({
           <div id="about-me-content">
             {/* Brief version always shown */}
             <p
-              className={`text-white/80 leading-relaxed text-sm mb-3 ${showFullAbout ? "" : "cursor-pointer"}`}
+              className={`text-white/80 leading-relaxed text-sm mb-3 break-words ${showFullAbout ? "" : "cursor-pointer"}`}
               onClick={() => setShowFullAbout(true)}
             >
               Hey! I’m a first-year BTech CSE student at UPES who loves making stuff that lives at the edge of code,
@@ -97,7 +97,7 @@ export default function Home({
 
             {/* Full version shown conditionally */}
             {showFullAbout && (
-              <div className="space-y-4 text-white/80 leading-relaxed text-sm mt-4 animate-fadeIn">
+              <div className="space-y-4 text-white/80 leading-relaxed text-sm mt-4 animate-fadeIn break-words">
                 <p>
                   Back in school, I went on a bunch of wild side quests—like building a spooky chemistry escape game in
                   just seven days with one teammate (science meets scary, literally), putting together a full coding
@@ -147,16 +147,16 @@ export default function Home({
               Quick Links
             </NavigationButton>
           </h3>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="grid grid-cols-1 min-[380px]:grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:justify-center sm:gap-4">
             <NavigationButton
               href="/music"
-              className="w-32 px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition border border-white/10 text-sm text-center cursor-pointer"
+              className="w-full sm:w-32 px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition border border-white/10 text-sm text-center cursor-pointer"
             >
               🎧 Music
             </NavigationButton>
             <NavigationButton
               href="/photos"
-              className="w-32 px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition border border-white/10 text-sm text-center cursor-pointer"
+              className="w-full sm:w-32 px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition border border-white/10 text-sm text-center cursor-pointer"
             >
               📸 Photos
             </NavigationButton>
@@ -225,7 +225,7 @@ function ProjectCard({ project }: { project: Project }) {
       className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20"
     >
       <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
-      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
+      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3 min-w-0">
         {/* Image/Icon Section */}
         <div className="w-16 h-16">
           {image ? (
@@ -251,9 +251,9 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
 
         {/* Text Content */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between gap-2">
-            <h3 className="text-lg font-semibold text-white text-left">
+        <div className="space-y-2 min-w-0 w-full">
+          <div className="flex items-start justify-center gap-2">
+            <h3 className="min-w-0 text-lg font-semibold text-white text-center break-words">
               <span
                 className="hover:underline cursor-pointer"
                 onClick={() => {
@@ -275,14 +275,14 @@ function ProjectCard({ project }: { project: Project }) {
             )}
           </div>
 
-          <p className="text-white/80 text-sm">{description}</p>
+          <p className="text-white/80 text-sm break-words">{description}</p>
 
           <div className="flex flex-wrap justify-center gap-2 mt-2">
             {tags &&
               tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
+                  className="max-w-full px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white break-words"
                 >
                   {tag}
                 </span>
@@ -314,7 +314,7 @@ function ExperienceCard({ experience }: { experience: Experience }) {
       className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20"
     >
       <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
-      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
+      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3 min-w-0">
         {/* Logo or Icon */}
         <div className="w-16 h-16">
           {logo ? (
@@ -332,8 +332,8 @@ function ExperienceCard({ experience }: { experience: Experience }) {
         </div>
 
         {/* Experience Info */}
-        <div className="space-y-2">
-          <h3 className="text-lg font-semibold text-white">{title}</h3>
+        <div className="space-y-2 min-w-0 w-full">
+          <h3 className="text-lg font-semibold text-white break-words">{title}</h3>
           <p className="text-white/70 text-sm">
             {company}
             {location ? ` • ${location}` : ""}
@@ -342,14 +342,14 @@ function ExperienceCard({ experience }: { experience: Experience }) {
             {startDate} — {endDate || "Present"}
           </p>
 
-          {description && <p className="text-white/80 text-sm mt-1">{description}</p>}
+          {description && <p className="text-white/80 text-sm mt-1 break-words">{description}</p>}
 
           {tags && tags.length > 0 && (
             <div className="flex flex-wrap justify-center gap-2 mt-2">
               {tags.map((tag, idx) => (
                 <span
                   key={idx}
-                  className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
+                  className="max-w-full px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white break-words"
                 >
                   {tag}
                 </span>
@@ -366,13 +366,13 @@ function SkillsCard({ title, skills }: { title: string; skills: string[] }) {
   return (
     <div className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20">
       <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
-      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3">
-        <h3 className="text-lg font-semibold text-white">{title}</h3>
+      <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3 min-w-0">
+        <h3 className="text-lg font-semibold text-white break-words">{title}</h3>
         <div className="flex flex-wrap justify-center gap-2 mt-2">
           {skills.map((skill, index) => (
             <span
               key={index}
-              className="px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white"
+              className="max-w-full px-3 py-1 text-xs rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white break-words"
             >
               {skill}
             </span>
