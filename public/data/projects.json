@@ -1,6 +1,23 @@
 {
   "projects": [
     {
+      "id": "spm-portal",
+      "title": "Student Project Management Portal (SPM)",
+      "description": "A full-stack web platform for managing university projects, evaluations, and academic administration.",
+      "category": "FullStack Web Development",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "PostgreSQL",
+        "Prisma",
+        "Academic",
+        "Dashboard",
+        "Full Stack"
+      ],
+      "image": "https://raw.githubusercontent.com/namanyt/spm-portal/refs/heads/student-eval/public/logo.svg",
+      "url": "https://github.com/namanyt/spm-portal"
+    },
+    {
       "id": "aifsm2025",
       "title": "All India Forest Sports Meet 2025",
       "description": "A comprehensive web application for managing the All India Forest Sports Meet 2025 for Government of Uttarakhand",

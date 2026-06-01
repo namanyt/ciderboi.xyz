@@ -53,6 +53,18 @@
           },
           "preSaveUrl": "https://share.amuse.io/track/nitya-naman-memories",
           "url": "https://open.spotify.com/album/3ZOm6GxtfAmTLkrgsgq1YV"
+        },
+        {
+          "id": 7,
+          "title": "Drifitng Apart",
+          "releaseDate": "2026-06-26",
+          "thumbnail": "https://cdn.amuse.io/93e3ac87-0941-485e-a1dd-3f5f2a335277.400x400.jpg",
+          "thumbnailSize": {
+            "width": 400,
+            "height": 400
+          },
+          "preSaveUrl": "https://share.amuse.io/track/nitya-naman-drifting-apart",
+          "url": "http://open.spotify.com/album/1l0MEgteDIbRREVVWLqR8S"
         }
       ],
       "albums": [
