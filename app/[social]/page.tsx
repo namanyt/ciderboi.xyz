@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import fs from "fs/promises";
 import path from "path";
 import type { Metadata } from "next";
@@ -31,47 +31,13 @@ export async function generateMetadata({ params }: { params: Promise<{ social: s
   const social = (await params).social?.toLowerCase();
 
   const socialName = socialMap[social] ?? "Let's connect!";
-  const safeName = Object.keys(socialMap).includes(social) ? social : "default";
 
   return {
-    title: `${socialName} | Nitya Naman`,
+    title: `Redirecting to ${socialName} | Nitya Naman`,
     description: `Connect with me on ${socialName}`,
     robots: {
       index: false,
-      follow: true,
-    },
-    alternates: {
-      canonical: `https://ciderboi.xyz/${social}`,
-    },
-    openGraph: {
-      title: `${socialName} | Nitya Naman`,
-      description: `Connect with me on ${socialName}`,
-      url: `/${social}`,
-      siteName: "Nitya Naman",
-      type: "website",
-      locale: "en-US",
-      images: [
-        {
-          url: `https://ciderboi.xyz/pictures/og_embed/${safeName}-og.png`,
-          width: 1200,
-          height: 630,
-          alt: `${socialName} - Connect with Nitya Naman`,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${socialName} | Nitya Naman`,
-      description: `Connect with me on ${socialName}`,
-      creator: "@ciderboi123",
-      images: [
-        {
-          url: `https://ciderboi.xyz/pictures/twitter_embed/${safeName}-twitter.png`,
-          width: 1200,
-          height: 630,
-          alt: `${socialName} - Connect with Nitya Naman`,
-        },
-      ],
+      follow: false,
     },
   };
 }
@@ -82,6 +48,6 @@ export default async function Socials({ params }: { params: Promise<{ social: st
 
   const key = social.toLowerCase();
 
-  if (links[key]) redirect(links[key]);
+  if (links[key]) permanentRedirect(links[key]);
   else notFound();
 }

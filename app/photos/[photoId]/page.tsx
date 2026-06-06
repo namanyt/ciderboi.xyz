@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 type Params = {
   photoId: string;
 };
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
-  const { photoId } = await params;
+  await params;
   return {
     title: "Redirecting...",
     robots: {
       index: false,
       follow: false,
-    },
-    alternates: {
-      canonical: `https://ciderboi.xyz/photos/${photoId}`,
     },
   };
 }
@@ -22,5 +19,5 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 export default async function PhotoIdRedirectPage({ params }: { params: Promise<Params> }) {
   const { photoId } = await params;
 
-  redirect(`/photos?id=${photoId}`);
+  permanentRedirect(`/photos?id=${photoId}`);
 }

@@ -1,29 +1,18 @@
 import { MetadataRoute } from "next";
-import path from "path";
-import fs from "fs";
 
 const BASE_URL = "https://ciderboi.xyz";
 const LAST_UPDATED = new Date("2026-06-06T00:00:00.000Z");
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = [
+  // Keep sitemap focused on canonical, indexable pages only.
+  const canonicalRoutes = [
     { path: "", priority: 1.0, changefreq: "weekly" },
     { path: "/links", priority: 0.8, changefreq: "monthly" },
     { path: "/music", priority: 0.7, changefreq: "monthly" },
     { path: "/photos", priority: 0.9, changefreq: "weekly" },
   ];
 
-  const socialData = fs.readFileSync(path.join(process.cwd(), "public", "data", "social.json"), "utf-8");
-  const socials: Record<string, string> = JSON.parse(socialData);
-  const socialRoutes = Object.keys(socials).map((key) => ({
-    path: `/${key}`,
-    priority: 0.5,
-    changefreq: "yearly",
-  }));
-
-  const allRoutes = [...staticRoutes, ...socialRoutes];
-
-  return allRoutes.map((route) => ({
+  return canonicalRoutes.map((route) => ({
     url: `${BASE_URL}${route.path}`,
     lastModified: LAST_UPDATED,
     changeFrequency: route.changefreq as "yearly" | "monthly" | "weekly" | "daily" | "hourly" | "never",
