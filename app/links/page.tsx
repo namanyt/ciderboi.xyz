@@ -100,7 +100,7 @@ export const metadata: Metadata = {
     "Find me across social platforms - GitHub, Twitter, Instagram, LinkedIn, Spotify, Apple Music, Amazon Music, YouTube, SoundCloud, and Discord.",
   metadataBase: new URL("https://ciderboi.xyz"),
   alternates: {
-    canonical: "/links",
+    canonical: "https://ciderboi.xyz/links",
   },
   openGraph: {
     title: "Connect With Me | Nitya Naman",

@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ social: s
       follow: true,
     },
     alternates: {
-      canonical: `/${social}`,
+      canonical: `https://ciderboi.xyz/${social}`,
     },
     openGraph: {
       title: `${socialName} | Nitya Naman`,

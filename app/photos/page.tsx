@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL("https://ciderboi.xyz"),
   alternates: {
-    canonical: "/photos",
+    canonical: "https://ciderboi.xyz/photos",
   },
   robots: {
     index: true,

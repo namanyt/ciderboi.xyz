@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL("https://ciderboi.xyz"),
   alternates: {
-    canonical: "/music",
+    canonical: "https://ciderboi.xyz/music",
   },
   robots: {
     index: true,

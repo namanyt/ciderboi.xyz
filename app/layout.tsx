@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   creator: "Nitya Naman",
   publisher: "Nitya Naman",
   alternates: {
-    canonical: "/",
+    canonical: "https://ciderboi.xyz",
   },
   robots: {
     index: true,
