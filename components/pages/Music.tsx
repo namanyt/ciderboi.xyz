@@ -1,69 +1,10 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Props } from "@/app/music/page";
 import { SongPlayerAlbum, SongPlayerTrack } from "@/components/ui/song-card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import NavigationButton from "@/components/NavigationButton";
 import { parseReleaseMs, toCountdownParts } from "@/lib/release-time";
-
-let musicSectionRevealSequence = 0;
-let musicCardRevealSequence = 0;
-
-function RevealOnView({ children, kind = "section" }: { children: React.ReactNode; kind?: "section" | "card" }) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const delayMsRef = useRef(0);
-
-  if (delayMsRef.current === 0) {
-    const sequence = kind === "card" ? musicCardRevealSequence++ : musicSectionRevealSequence++;
-    delayMsRef.current = Math.min(sequence * (kind === "card" ? 55 : 90), kind === "card" ? 330 : 270);
-  }
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) {
-      setIsVisible(true);
-      return;
-    }
-
-    const reveal = () => window.setTimeout(() => setIsVisible(true), delayMsRef.current);
-
-    if (document.visibilityState === "hidden") {
-      setIsVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        reveal();
-        observer.disconnect();
-      },
-      {
-        root: null,
-        rootMargin: "0px 0px -8% 0px",
-        threshold: 0.12,
-      },
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={`music-reveal-item music-reveal-${kind} ${isVisible ? "music-reveal-visible" : "music-reveal-hidden"}`}
-    >
-      {children}
-    </div>
-  );
-}
 
 export default function Music({ data }: Props) {
   const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
@@ -202,53 +143,47 @@ export default function Music({ data }: Props) {
           <>
             <div className="columns-1 sm:columns-1 md:columns-1 lg:columns-2 gap-6">
               {nextUpcoming && shouldShowCountdown ? (
-                <RevealOnView key={`countdown-${catalog.artist.name}-${nextUpcoming.title}`} kind="card">
-                  <div className="break-inside-avoid mb-6">
-                    <ReleaseCountdownCard releaseMs={nextUpcoming.ms} title={nextUpcoming.title} showTitle={false} />
-                  </div>
-                </RevealOnView>
+                <div key={`countdown-${catalog.artist.name}-${nextUpcoming.title}`} className="break-inside-avoid mb-6">
+                  <ReleaseCountdownCard releaseMs={nextUpcoming.ms} title={nextUpcoming.title} showTitle={false} />
+                </div>
               ) : null}
 
               {visibleAlbums.map((album, i) => (
-                <RevealOnView key={`album-${catalog.artist.name}-${album.id}_${i}`} kind="card">
-                  <div className="break-inside-avoid mb-6">
-                    <SongPlayerAlbum
-                      title={album.title}
-                      artists={album.artists?.length ? album.artists : [catalog.artist]}
-                      id={album.id}
-                      url={album.url}
-                      releaseDate={album.releaseDate}
-                      thumbnail={album.thumbnail}
-                      thumbnailSize={album.thumbnailSize}
-                      preSaveUrl={album.preSaveUrl}
-                      tracks={album.tracks.map((t) => ({
-                        ...t,
-                        artists: t.artists?.length
-                          ? t.artists
-                          : album.artists?.length
-                            ? album.artists
-                            : [catalog.artist],
-                      }))}
-                    />
-                  </div>
-                </RevealOnView>
+                <div key={`album-${catalog.artist.name}-${album.id}_${i}`} className="break-inside-avoid mb-6">
+                  <SongPlayerAlbum
+                    title={album.title}
+                    artists={album.artists?.length ? album.artists : [catalog.artist]}
+                    id={album.id}
+                    url={album.url}
+                    releaseDate={album.releaseDate}
+                    thumbnail={album.thumbnail}
+                    thumbnailSize={album.thumbnailSize}
+                    preSaveUrl={album.preSaveUrl}
+                    tracks={album.tracks.map((t) => ({
+                      ...t,
+                      artists: t.artists?.length
+                        ? t.artists
+                        : album.artists?.length
+                          ? album.artists
+                          : [catalog.artist],
+                    }))}
+                  />
+                </div>
               ))}
 
               {visibleSingles.map((track, i) => (
-                <RevealOnView key={`single-${catalog.artist.name}-${track.id}_${i}`} kind="card">
-                  <div className="break-inside-avoid mb-6">
-                    <SongPlayerTrack
-                      title={track.title}
-                      artists={track.artists?.length ? track.artists : [catalog.artist]}
-                      id={track.id}
-                      url={track.url}
-                      releaseDate={track.releaseDate}
-                      thumbnail={track.thumbnail}
-                      thumbnailSize={track.thumbnailSize}
-                      preSaveUrl={track.preSaveUrl}
-                    />
-                  </div>
-                </RevealOnView>
+                <div key={`single-${catalog.artist.name}-${track.id}_${i}`} className="break-inside-avoid mb-6">
+                  <SongPlayerTrack
+                    title={track.title}
+                    artists={track.artists?.length ? track.artists : [catalog.artist]}
+                    id={track.id}
+                    url={track.url}
+                    releaseDate={track.releaseDate}
+                    thumbnail={track.thumbnail}
+                    thumbnailSize={track.thumbnailSize}
+                    preSaveUrl={track.preSaveUrl}
+                  />
+                </div>
               ))}
             </div>
           </>
@@ -256,11 +191,9 @@ export default function Music({ data }: Props) {
           <>
             {nextUpcoming && shouldShowCountdown ? (
               <div className="columns-1 sm:columns-1 md:columns-1 lg:columns-2 gap-6">
-                <RevealOnView key={`countdown-only-${catalog.artist.name}-${nextUpcoming.title}`} kind="card">
-                  <div className="break-inside-avoid mb-6">
-                    <ReleaseCountdownCard releaseMs={nextUpcoming.ms} title={nextUpcoming.title} showTitle={false} />
-                  </div>
-                </RevealOnView>
+                <div key={`countdown-only-${catalog.artist.name}-${nextUpcoming.title}`} className="break-inside-avoid mb-6">
+                  <ReleaseCountdownCard releaseMs={nextUpcoming.ms} title={nextUpcoming.title} showTitle={false} />
+                </div>
               </div>
             ) : null}
           </>
@@ -285,62 +218,58 @@ export default function Music({ data }: Props) {
       >
         Back Home
       </NavigationButton>
-      <div className="h-dvh w-[calc(100vw-1rem)] sm:w-[95vw] max-w-7xl mx-auto mt-16 mb-20 md:my-6 p-3 sm:p-4 lg:p-8 rounded-2xl sm:rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto scroll-smooth space-y-8 sm:space-y-12">
-        <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-6 text-center font-semibold">Music</h1>
+      <div className="h-dvh w-full md:w-[95vw] max-w-7xl mx-auto mt-0 mb-0 md:my-6 px-3 pt-16 pb-24 md:p-4 lg:p-8 rounded-none md:rounded-3xl backdrop-blur-none md:backdrop-blur-md bg-transparent md:bg-black/30 border-0 md:border md:border-white/10 shadow-none md:shadow-2xl text-white max-h-none md:max-h-[90dvh] overflow-hidden flex flex-col">
+        <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-6 text-center font-semibold shrink-0 px-0 md:px-0">Music</h1>
 
-        <ScrollArea className="w-full max-h-none md:h-full md:max-h-[calc(76.5dvh)] overflow-visible md:overflow-auto">
-          <div className="w-full max-w-7xl space-y-6 px-0 md:pr-3">
-            <RevealOnView>
-              <section aria-labelledby="music-current-heading">
-                <details open className="rounded-2xl bg-white/5 border border-white/10">
-                  <summary
-                    id="music-current-heading"
-                    className="cursor-pointer select-none px-4 sm:px-6 py-4 text-lg sm:text-xl font-semibold"
-                  >
-                    Nitya Naman
-                  </summary>
-                  <div className="px-4 sm:px-6 pb-6 pt-2 space-y-10">
-                    {!showCurrentArtistHeaders ? <h2 className="sr-only">Nitya Naman releases</h2> : null}
-                    {currentHasAnyInFile ? (
-                      currentCatalogs.map((c) =>
-                        renderCatalog(c, {
-                          showArtistHeader: showCurrentArtistHeaders,
-                        }),
-                      )
-                    ) : (
-                      <p className="text-white/80 text-sm sm:text-base">No releases yet.</p>
-                    )}
-                  </div>
-                </details>
-              </section>
-            </RevealOnView>
+        <div className="w-full flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain scroll-smooth pr-0 md:pr-3">
+          <div className="w-full max-w-7xl min-w-0 space-y-6 px-0 md:px-0">
+            <section aria-labelledby="music-current-heading">
+              <details open className="rounded-2xl bg-white/5 border border-white/10">
+                <summary
+                  id="music-current-heading"
+                  className="cursor-pointer select-none px-4 sm:px-6 py-4 text-lg sm:text-xl font-semibold"
+                >
+                  Nitya Naman
+                </summary>
+                <div className="px-4 sm:px-6 pb-6 pt-2 space-y-10">
+                  {!showCurrentArtistHeaders ? <h2 className="sr-only">Nitya Naman releases</h2> : null}
+                  {currentHasAnyInFile ? (
+                    currentCatalogs.map((c) =>
+                      renderCatalog(c, {
+                        showArtistHeader: showCurrentArtistHeaders,
+                      }),
+                    )
+                  ) : (
+                    <p className="text-white/80 text-sm sm:text-base">No releases yet.</p>
+                  )}
+                </div>
+              </details>
+            </section>
 
-            <RevealOnView>
-              <section aria-labelledby="music-archive-heading">
-                <details className="rounded-2xl bg-white/5 border border-white/10">
-                  <summary
-                    id="music-archive-heading"
-                    className="cursor-pointer select-none px-4 sm:px-6 py-4 text-lg sm:text-xl font-semibold"
-                  >
-                    Cider Gamer (Archive)
-                  </summary>
-                  <div className="px-4 sm:px-6 pb-6 pt-2 space-y-10">
-                    {!showArchivedArtistHeaders ? <h2 className="sr-only">Cider Gamer archived releases</h2> : null}
-                    {archivedHasAnyInFile ? (
-                      archivedCatalogs.map((c) =>
-                        renderCatalog(c, {
-                          showArtistHeader: showArchivedArtistHeaders,
-                        }),
-                      )
-                    ) : (
-                      <p className="text-white/80 text-sm sm:text-base">No archived releases.</p>
-                    )}
-                  </div>
-                </details>
-              </section>
-            </RevealOnView>
+            <section aria-labelledby="music-archive-heading">
+              <details className="rounded-2xl bg-white/5 border border-white/10">
+                <summary
+                  id="music-archive-heading"
+                  className="cursor-pointer select-none px-4 sm:px-6 py-4 text-lg sm:text-xl font-semibold"
+                >
+                  Cider Gamer (Archive)
+                </summary>
+                <div className="px-4 sm:px-6 pb-6 pt-2 space-y-10">
+                  {!showArchivedArtistHeaders ? <h2 className="sr-only">Cider Gamer archived releases</h2> : null}
+                  {archivedHasAnyInFile ? (
+                    archivedCatalogs.map((c) =>
+                      renderCatalog(c, {
+                        showArtistHeader: showArchivedArtistHeaders,
+                      }),
+                    )
+                  ) : (
+                    <p className="text-white/80 text-sm sm:text-base">No archived releases.</p>
+                  )}
+                </div>
+              </details>
+            </section>
           </div>
-        </ScrollArea>
+        </div>
       </div>
     </>
   );

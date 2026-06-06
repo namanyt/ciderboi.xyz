@@ -32,23 +32,6 @@
       "url": "https://aifsm2025.in"
     },
     {
-      "id": "SIH",
-      "title": "Smart India Hackathon",
-      "description": "Integrates NAMASTE and ICD-11 codes using FHIR for unified healthcare interoperability.",
-      "category": "Healthcare Informatics",
-      "tags": [
-        "FHIR",
-        "ICD-11",
-        "NAMASTE",
-        "Healthcare",
-        "Interoperability",
-        "Docker",
-        "SIH2025"
-      ],
-      "image": "/pictures/sih.jpg",
-      "url": ""
-    },
-    {
       "id": "lab-of-shadows",
       "title": "Lab of Shadows",
       "description": "A horror-themed science game with interactive learning.",
@@ -78,43 +61,69 @@
       "url": "https://capitall.ciderboi.xyz"
     },
     {
-      "id": "flappy-bird",
-      "title": "Flappy Bird",
-      "description": "A C++ clone of the classic Flappy Bird game.",
-      "category": "Games",
+      "id": "fython",
+      "title": "Fython",
+      "description": "A personal finance management platform featuring transaction tracking, automated categorization, anomaly detection, and analytical reporting tools.",
+      "category": "FullStack Web Development",
       "tags": [
-        "C++",
-        "2D",
-        "Game"
-      ],
-      "image": "https://upload.wikimedia.org/wikipedia/en/0/0a/Flappy_Bird_icon.png",
-      "url": "https://github.com/Ciderboi123/Flappy-Bird"
-    },
-    {
-      "id": "dbt",
-      "title": "Discord Bot Template (DBT)",
-      "description": "A simple template for custom Discord bots.",
-      "category": "Bot",
-      "tags": [
-        "Discord",
-        "Bot",
-        "Template"
+        "Python",
+        "Finance",
+        "Analytics",
+        "Data Processing",
+        "Desktop",
+        "Personal Finance"
       ],
       "image": "",
-      "url": "https://github.com/Ciderboi123/DBT"
+      "url": "https://github.com/namanyt/Fython"
     },
     {
-      "id": "chatto",
-      "title": "Chatto",
-      "description": "API wrapper for Twitch and YouTube chat bots.",
-      "category": "Bot",
+      "id": "tictactoe-c",
+      "title": "tictactoe.c",
+      "description": "A modular Tic-Tac-Toe implementation in C featuring minimax AI with alpha-beta pruning, persistent statistics, and multiple gameplay modes.",
+      "category": "Systems Programming",
       "tags": [
-        "Twitch",
-        "YouTube",
-        "API"
+        "C",
+        "Algorithms",
+        "Minimax",
+        "Alpha-Beta Pruning",
+        "CLI",
+        "Game Development"
       ],
       "image": "",
-      "url": "https://github.com/parafoxia/chatto"
+      "url": "https://github.com/namanyt/tictactoe.c"
+    },
+    {
+      "id": "todo-rs",
+      "title": "todo.rs",
+      "description": "A native desktop task management application built entirely in Rust using Dioxus, featuring local persistence and file-based storage workflows.",
+      "category": "Desktop Applications",
+      "tags": [
+        "Rust",
+        "Dioxus",
+        "Desktop",
+        "GUI",
+        "File Storage",
+        "Learning Project"
+      ],
+      "image": "",
+      "url": "https://github.com/namanyt/todo.rs"
+    },
+    {
+      "id": "spinesync",
+      "title": "SpineSync",
+      "description": "A wearable posture-monitoring prototype combining embedded hardware and a Flutter mobile application to encourage healthier posture habits through real-time feedback.",
+      "category": "Embedded Systems",
+      "tags": [
+        "Arduino",
+        "Flutter",
+        "Embedded",
+        "Mobile App",
+        "Hardware",
+        "IoT",
+        "Competition"
+      ],
+      "image": "",
+      "url": "/brain/events/kanpur/spinesync"
     }
   ]
 }

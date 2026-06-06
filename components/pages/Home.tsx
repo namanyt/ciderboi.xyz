@@ -22,7 +22,7 @@ export default function Home({
   const [showFullAbout, setShowFullAbout] = useState(false);
 
   return (
-    <div className="h-dvh w-full overflow-hidden flex flex-col items-center justify-center bg-cover bg-center px-2 py-8 sm:px-4 sm:py-6 pb-20 sm:pb-6">
+    <div className="h-dvh w-full flex flex-col items-center justify-start md:justify-center bg-cover bg-center px-3 py-8 sm:px-4 sm:py-6 pb-20 sm:pb-6 overflow-y-auto md:overflow-hidden">
       {/* About the Image Icon */}
       <TooltipProvider>
         <Tooltip delayDuration={500}>
@@ -33,7 +33,7 @@ export default function Home({
               redirect("/photos?id=81cb0ed1");
             }}
           >
-            <div className="fixed bottom-14 right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-250 z-[60] sm:bottom-4">
+            <div className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 opacity-25 cursor-pointer hover:opacity-75 transition-opacity duration-250 z-[60]">
               <Info />
             </div>
           </TooltipTrigger>
@@ -44,20 +44,21 @@ export default function Home({
       </TooltipProvider>
 
       {/* Scrollable Card */}
-      <div className="w-full max-w-5xl mx-auto p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto scroll-smooth space-y-8 sm:space-y-10 md:space-y-12">
+      <div className="w-full max-w-5xl mx-auto px-2 py-0 sm:px-0 sm:py-0 md:p-6 lg:p-8 rounded-xl md:rounded-3xl backdrop-blur-none md:backdrop-blur-md bg-transparent md:bg-black/30 border-0 md:border md:border-white/10 shadow-none md:shadow-2xl text-white max-h-none md:max-h-[90dvh] overflow-visible md:overflow-y-auto scroll-smooth space-y-8 sm:space-y-10 md:space-y-12">
         {/* Profile Section */}
         <section className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
-          <Image
-            src="/pictures/pfp-4.webp"
-            alt="Nitya Naman - Creative Developer and Software Engineer at UPES"
-            width={1288}
-            height={1288}
-            loading="lazy"
-            draggable={false}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-            style={{ objectFit: "contain" }}
-            className="h-28 w-28 sm:h-32 sm:w-32 rounded-full object-cover border-2 border-white/30 shadow-md shrink-0"
-          />
+          <div className="h-28 w-28 sm:h-32 sm:w-32 rounded-full border-2 border-white/30 shadow-md shrink-0 overflow-hidden">
+            <Image
+              src="/pictures/pfp.jpg"
+              alt="Nitya Naman - Creative Developer and Software Engineer at UPES"
+              width={1079}
+              height={1100}
+              loading="lazy"
+              draggable={false}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+              className="h-full w-full object-cover scale-[1.5]"
+            />
+          </div>
           <div className="min-w-0">
             <h1 className="text-2xl sm:text-3xl font-bold">Nitya Naman</h1>
             <p className="text-white/70 text-sm">"Engineering imagination, one pixel at a time."</p>
@@ -88,10 +89,9 @@ export default function Home({
               className={`text-white/80 leading-relaxed text-sm mb-3 break-words ${showFullAbout ? "" : "cursor-pointer"}`}
               onClick={() => setShowFullAbout(true)}
             >
-              Hey! I’m a first-year BTech CSE student at UPES who loves making stuff that lives at the edge of code,
-              design, and storytelling. Whether it’s a quirky little project, a functional web app, or something that
-              mixes hardware and creativity, I’m all about turning random ideas into working things—especially when
-              there’s chaos, problem-solving, and fun involved.{" "}
+              I'm a Computer Science student at UPES who spends most of his time building software, infrastructure, games, and the occasional hardware project.
+              I enjoy turning ideas into working systems, learning whatever tools a problem demands, and exploring the space where technology, creativity,
+              and engineering overlap. Most of my projects start with curiosity and end with me diving far deeper into a topic than originally intended.{" "}
               {!showFullAbout && <span className="ml-1 text-xs text-white/70 underline">Read more...</span>}
             </p>
 
@@ -99,38 +99,45 @@ export default function Home({
             {showFullAbout && (
               <div className="space-y-4 text-white/80 leading-relaxed text-sm mt-4 animate-fadeIn break-words">
                 <p>
-                  Back in school, I went on a bunch of wild side quests—like building a spooky chemistry escape game in
-                  just seven days with one teammate (science meets scary, literally), putting together a full coding
-                  library site overnight just for fun, and even making a posture-correcting device with an actual
-                  working app. None of them were perfect, but they were real—and they taught me a ton about deadlines,
-                  bug-hunting at weird hours, and how to bring big ideas to life.
+                  What started as curiosity gradually turned into years of projects spread across software development, infrastructure,
+                  game development, hardware, media production, and a growing collection of side quests. I've never been particularly good at
+                  staying inside a single discipline. If something interests me, I'll usually end up learning whatever is needed to
+                  build it—whether that's writing backend services, deploying Linux servers, designing databases, building game systems,
+                  wiring sensors to microcontrollers, or experimenting with entirely new technologies.
                 </p>
 
                 <p>
-                  I also got to work behind the scenes at events—running AV systems, syncing lights for live
-                  performances, and helping design booths for inter-school exhibitions. That’s when I realized how much
-                  the small details—like where a light goes or how people move through a space—actually matter in
-                  creating an experience.
+                  Over the years I've built educational software, technical resource platforms, production web applications, self-hosted infrastructure,
+                  embedded hardware prototypes, internal tools, automation systems, games, and plenty of experimental projects that existed
+                  simply because I wanted to see if they could be built. Some became real deployments, some were competition projects,
+                  and some never left my own machine.
                 </p>
 
                 <p>
-                  Back in high school, I was the Head of the Techformers Club, which honestly was less about the
-                  “position” and more about vibing with other curious folks. We tried out random tools, hosted
-                  workshops, built things that sometimes broke (and sometimes didn’t), and mostly just geeked out
-                  together.
+                  One of the areas I enjoy most is systems design. I like understanding how complex pieces fit together—whether that's a database architecture,
+                  a deployment pipeline, a game engine subsystem, or an operational workflow. That interest naturally led me into running my own infrastructure,
+                  maintaining Linux servers, self-hosting services, and learning the operational side of software alongside development.
                 </p>
 
                 <p>
-                  Now, I’ve just started my journey at UPES as a first-year BTech CSE student. I recently took part in
-                  the Smart India Hackathon, and right now I’m exploring university life while experimenting with a few
-                  personal projects on the side. I’m excited about the road ahead—bigger builds, new collaborations, and
-                  joining more communities as I grow here.
+                  Before university, I served as Head of the Techformers Club at Delhi Public School, where I helped organize technical initiatives,
+                  competitions, workshops, livestreaming infrastructure, media production, and inter-school events. I also participated in various
+                  national-level competitions, building projects ranging from educational games and programming platforms to embedded hardware
+                  systems and mobile applications. Those experiences taught me a lot about working under pressure, adapting to constraints,
+                  and solving problems when things inevitably go wrong.
                 </p>
 
                 <p>
-                  Outside of tech, I keep up with photography—sharing my latest shots on Instagram—and that creative
-                  side still bleeds into how I design and build things. Looking ahead, I’m super excited to explore
-                  projects that mix code, creativity, and real-world impact.
+                  My interests today sit somewhere between software engineering, infrastructure, systems architecture, graphics, and game development.
+                  Recently I've worked on production-scale web platforms, academic management systems, self-hosted services, and experimental engine development projects.
+                  I enjoy the entire process of building—from the initial concept and architecture to deployment, maintenance, optimization,
+                  and the inevitable debugging sessions at unreasonable hours.
+                </p>
+
+                <p>
+                  Outside of technology, I spend time making music, photographing things that catch my eye, experimenting with filmmaking,
+                  and collecting hobbies faster than I can finish them. Those creative interests often find their way back into my technical work,
+                  influencing how I design experiences, approach problem-solving, and think about the things I build.
                 </p>
               </div>
             )}
@@ -222,10 +229,21 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <div
       key={`${id}-${category}`}
-      className="relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20"
+      className="group relative overflow-hidden rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20"
     >
       <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/10 z-0"></div>
       <div className="relative z-10 flex flex-col items-center text-center p-4 space-y-3 min-w-0">
+        {url && (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${title} in a new tab`}
+            className="pointer-events-none absolute right-3 top-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100 text-white/70 hover:text-white"
+          >
+            <ExternalLink size={16} />
+          </a>
+        )}
         {/* Image/Icon Section */}
         <div className="w-16 h-16">
           {image ? (
@@ -252,10 +270,10 @@ function ProjectCard({ project }: { project: Project }) {
 
         {/* Text Content */}
         <div className="space-y-2 min-w-0 w-full">
-          <div className="flex items-start justify-center gap-2">
+          <div>
             <h3 className="min-w-0 text-lg font-semibold text-white text-center break-words">
               <span
-                className="hover:underline cursor-pointer"
+                className={url ? "hover:underline cursor-pointer" : ""}
                 onClick={() => {
                   if (url) window.open(url, "_blank");
                 }}
@@ -263,16 +281,6 @@ function ProjectCard({ project }: { project: Project }) {
                 {title}
               </span>
             </h3>
-            {url && (
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/70 hover:text-white transition-colors"
-              >
-                <ExternalLink size={16} />
-              </a>
-            )}
           </div>
 
           <p className="text-white/80 text-sm break-words">{description}</p>

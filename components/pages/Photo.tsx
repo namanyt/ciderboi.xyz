@@ -6,7 +6,6 @@ import { PhotoMetadata } from "@/lib/types";
 import Image from "next/image";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { X, ZoomIn, ZoomOut, Instagram } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import NavigationButton from "@/components/NavigationButton";
 
 const MOBILE_ENLARGED_SCALE = 1.2;
@@ -29,16 +28,16 @@ export default function Photo({
       >
         Back Home
       </NavigationButton>
-      <div className="h-dvh w-[calc(100vw-1rem)] sm:w-[95vw] mx-auto mt-16 mb-20 md:my-6 p-3 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl backdrop-blur-md bg-black/30 border border-white/10 shadow-2xl text-white max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto scroll-smooth space-y-8 sm:space-y-12">
-        <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-6 text-center font-semibold">Gallery</h1>
+      <div className="h-dvh w-full md:w-[95vw] mx-auto mt-16 mb-20 md:my-6 px-3 py-3 md:p-6 lg:p-8 rounded-none md:rounded-3xl backdrop-blur-none md:backdrop-blur-md bg-transparent md:bg-black/30 border-0 md:border md:border-white/10 shadow-none md:shadow-2xl text-white max-h-none md:max-h-[90dvh] overflow-y-auto overflow-x-hidden md:overflow-hidden scroll-smooth space-y-8 sm:space-y-12">
+        <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-6 text-center font-semibold px-0 md:px-0">Gallery</h1>
 
-        <ScrollArea className="max-h-none md:max-h-[calc(80dvh)] overflow-visible md:overflow-y-auto">
-          <div className="w-full max-w-[1800px] columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 sm:gap-6 space-y-4 sm:space-y-6 px-0 sm:px-2 md:px-6">
+        <div className="max-h-none md:max-h-[calc(80dvh)] overflow-visible md:overflow-y-auto overflow-x-hidden pr-0 md:pr-2">
+          <div className="w-full max-w-[1800px] min-w-0 columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 sm:gap-6 space-y-4 sm:space-y-6 px-0 md:px-4">
             {photos.map((photo) => (
               <PhotoCard key={photo.uuid} photo={photo} isIdProvided={photoId} />
             ))}
           </div>
-        </ScrollArea>
+        </div>
       </div>
     </>
   );
