@@ -17,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getAllCategories(),
     getAllTags(),
   ]);
+  const documentUrls = new Set(documents.map((document) => document.url));
 
   // Keep sitemap focused on canonical, indexable pages only.
   const canonicalRoutes: SitemapEntry[] = [
@@ -27,11 +28,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/brain", priority: 0.9, changefreq: "weekly" },
   ];
 
-  const categoryRoutes: SitemapEntry[] = categories.map((category) => ({
-    path: `/brain/${category.slug}`,
-    priority: 0.8,
-    changefreq: "weekly",
-  }));
+  const categoryRoutes: SitemapEntry[] = categories
+    .map((category) => `/brain/${category.slug}`)
+    .filter((path) => documentUrls.has(path))
+    .map((path) => ({
+      path,
+      priority: 0.8,
+      changefreq: "weekly" as const,
+    }));
 
   const tagRoutes: SitemapEntry[] = tags.map((tag) => ({
     path: `/brain/tag/${tag.slug}`,
@@ -46,7 +50,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: document.updated ? new Date(document.updated) : new Date(document.created),
   }));
 
-  return [...canonicalRoutes, ...categoryRoutes, ...tagRoutes, ...brainDocuments].map((route) => ({
+  const uniqueRoutes = Array.from(
+    new Map([...canonicalRoutes, ...categoryRoutes, ...tagRoutes, ...brainDocuments].map((route) => [route.path, route])).values(),
+  );
+
+  return uniqueRoutes.map((route) => ({
     url: `${BASE_URL}${route.path}`,
     lastModified: route.lastModified ?? LAST_UPDATED,
     changeFrequency: route.changefreq,
