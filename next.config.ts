@@ -14,6 +14,16 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   turbopack: {},
   pageExtensions: ["ts", "tsx", "md", "mdx"],
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.ciderboi.xyz" }],
+        destination: "https://ciderboi.xyz/:path*",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     qualities: [60, 75],
     remotePatterns: [
