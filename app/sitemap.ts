@@ -1,21 +1,55 @@
 import { MetadataRoute } from "next";
+import { getAllCategories, getAllTags, getPublicDocuments } from "@/lib/content";
 
 const BASE_URL = "https://ciderboi.xyz";
 const LAST_UPDATED = new Date("2026-06-06T00:00:00.000Z");
 
-export default function sitemap(): MetadataRoute.Sitemap {
+type SitemapEntry = {
+  path: string;
+  priority: number;
+  changefreq: "yearly" | "monthly" | "weekly" | "daily" | "hourly" | "never";
+  lastModified?: Date;
+};
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [documents, categories, tags] = await Promise.all([
+    getPublicDocuments(),
+    getAllCategories(),
+    getAllTags(),
+  ]);
+
   // Keep sitemap focused on canonical, indexable pages only.
-  const canonicalRoutes = [
+  const canonicalRoutes: SitemapEntry[] = [
     { path: "", priority: 1.0, changefreq: "weekly" },
     { path: "/links", priority: 0.8, changefreq: "monthly" },
     { path: "/music", priority: 0.7, changefreq: "monthly" },
     { path: "/photos", priority: 0.9, changefreq: "weekly" },
+    { path: "/brain", priority: 0.9, changefreq: "weekly" },
   ];
 
-  return canonicalRoutes.map((route) => ({
+  const categoryRoutes: SitemapEntry[] = categories.map((category) => ({
+    path: `/brain/${category.slug}`,
+    priority: 0.8,
+    changefreq: "weekly",
+  }));
+
+  const tagRoutes: SitemapEntry[] = tags.map((tag) => ({
+    path: `/brain/tag/${tag.slug}`,
+    priority: 0.7,
+    changefreq: "weekly",
+  }));
+
+  const brainDocuments: SitemapEntry[] = documents.map((document) => ({
+    path: document.url,
+    priority: document.featured ? 0.85 : 0.7,
+    changefreq: "monthly",
+    lastModified: document.updated ? new Date(document.updated) : new Date(document.created),
+  }));
+
+  return [...canonicalRoutes, ...categoryRoutes, ...tagRoutes, ...brainDocuments].map((route) => ({
     url: `${BASE_URL}${route.path}`,
-    lastModified: LAST_UPDATED,
-    changeFrequency: route.changefreq as "yearly" | "monthly" | "weekly" | "daily" | "hourly" | "never",
+    lastModified: route.lastModified ?? LAST_UPDATED,
+    changeFrequency: route.changefreq,
     priority: route.priority,
   }));
 }

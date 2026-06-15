@@ -9,6 +9,7 @@ import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/comp
 import NavigationButton from "@/components/NavigationButton";
 import { redirect } from "next/navigation";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+import Link from "next/link";
 
 export default function Home({
   projects,
@@ -139,9 +140,31 @@ export default function Home({
                   and collecting hobbies faster than I can finish them. Those creative interests often find their way back into my technical work,
                   influencing how I design experiences, approach problem-solving, and think about the things I build.
                 </p>
+
+                {
+                  showFullAbout && (
+                    <p>
+                      <Link href="/brain" className="inline-flex items-center transition hover:text-white font-mono">
+                        [ see my brain ]
+                      </Link>
+                    </p>
+                  )
+                }
               </div>
             )}
           </div>
+
+          {
+            !showFullAbout && (
+              <div className="text-white/80 leading-relaxed text-sm mt-4 animate-fadeIn break-words font-mono">
+                <p>
+                  <Link href="/brain" className="inline-flex items-center gap-1 text-sm text-cyan-100 transition hover:text-white mt-3">
+                    [ see my brain ]
+                  </Link>
+                </p>
+              </div>
+            )
+          }
         </section>
 
         {/* Pinned / Quick Links Section */}

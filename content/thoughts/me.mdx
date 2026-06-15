@@ -1,0 +1,220 @@
+---
+id: about
+title: About Me
+description: The root node. Who I am, how I think, what I build, why I build it, and how everything connects.
+category: ME
+created: 2007-03-11
+updated: 2026-06-15
+status: active
+visibility: public
+index: true
+featured: true
+tags:
+  - identity
+  - overview
+  - software
+  - music
+  - photography
+  - creative-technology
+related:
+  - programming
+  - music
+  - photography
+  - projects
+  - infrastructure
+  - creative-technology
+---
+
+I'm Naman. I study Computer Science at UPES, and I spend most of my time building software, making music, taking photographs, and going down rabbit holes I didn't plan to enter.
+
+This page is the front door to my Brain Archive — a growing collection of notes, project logs, experiments, and half-finished ideas. If you're looking for the polished version of me, the [portfolio](https://ciderboi.xyz) is probably the right place. This is the version where I think out loud.
+
+## Current Life
+
+Right now I'm a CS student in Haridwar, which is both the most ordinary and most specific sentence I could write. Academically, I'm somewhere in the middle of the degree. Outside of class, I'm doing what I've always done — building things, learning tools the problem demands, and occasionally releasing music that nobody asked me to make.
+
+The most significant external project I've shipped recently was the [AIFSM 2025 website](https://aifsm2025.in) — the official digital platform for the 28th All India Forest Sports Meet, built for the Government of Uttarakhand. That one ran from October through the event in November 2025, and it was the first time I'd built something at that scale and stakes. More on that in [Software Engineering](#software-engineering) below.
+
+I'm also deep into systems programming right now. C was the language I kept returning to for a long time, and I've been pulling at Rust more seriously — partly for the language design, partly because once you've spent time in C you start noticing what Rust does differently in ways you actually care about.
+
+The musical side is ongoing. I self-release across [Spotify](https://open.spotify.com) and YouTube Music, handle the whole production pipeline myself, and treat it as a completely separate creative space from the technical work. Guitar was actually the first thing — long before the DAWs.
+
+## Software Engineering
+
+The honest version of how this started: before I wrote a single line of code, I was taking computers apart. Before I even knew what code was, I had apparently become something of a household menace — any machine left unattended was fair game. I'd find it, dismantle it, and see what was inside. At some point the breaking became fixing, and the fixing became something else entirely.
+
+By 2014, I was writing actual code. But the interest started much earlier than that, in the physical act of understanding machines.
+
+I heard a quote somewhere on the internet once that I've never found a better way to say than this:
+
+> Every software engineer got interested in this field not because of the pay, but because somewhere in their journey through life they discovered they could control a machine and make it do exactly what they wanted. That feeling of creating something from nothing, of turning ideas into reality through code, is what made them fall in love with software engineering.
+
+That's it exactly. The moment you realize the machine will do precisely what you tell it — that's the thing. And later I found out that same feeling expands. It's not limited to code. It shows up in music, in photography, in building a physical object that responds to the world. The machines are different but the feeling is the same. That thread is probably why I think of myself as a Builder more than a programmer or a musician or a photographer specifically.
+
+The "further than necessary" part is something I keep noticing in my own work. I set out to build a tic-tac-toe game and ended up implementing minimax with alpha-beta pruning, three difficulty levels, persistent player statistics, and an AI transparency mode so the player could see why the computer made the move it did. That last feature wasn't in any spec. It just felt wrong to have an AI making moves without explaining itself. See [tictactoe.c](/brain/projects/tictactoe) for the full write-up.
+
+That instinct — to make things feel like experiences rather than just tools — is probably the most consistent thing across my technical work.
+
+### What I Enjoy Building
+
+Systems that have a user on the other end of them. I care about what the finished thing feels like to interact with, even when "finished" means a terminal game or a personal finance dashboard. The work that interests me most sits at the intersection of technical depth and deliberate design — not one or the other.
+
+I also enjoy low-level work for its own sake. There is something about writing C — the directness of it, the lack of abstraction between you and the machine — that forces a kind of clarity I find genuinely satisfying. The move toward Rust is an extension of that, not a departure from it.
+
+On the web side, I've done production full-stack work — Next.js, TypeScript, PostgreSQL, Prisma — and I'm comfortable in that space. The AIFSM government platform was built that way and had to handle real traffic around a live multi-day national event. Different kind of pressure.
+
+### Technologies
+
+I think of tools less as a stack and more as a vocabulary. The right language depends on what the problem is asking. Some things I've worked with and continue to reach for:
+
+- **Systems:** C, Rust, C++
+- **Web:** TypeScript, Next.js, React, Node.js, Prisma, PostgreSQL
+- **Scripting and data:** Python
+- **Graphics and games:** OpenGL, WebGL, Three.js, Raylib, Unity
+- **Creative tech:** TouchDesigner, GLSL shaders
+- **Design:** Figma, UI/UX process
+
+<NoteBox title="On tool agnosticism">
+I have opinions about languages. I also know those opinions are situational. I used Dioxus (a Rust declarative UI framework) to build a todo app not because it was the efficient choice but because I wanted to understand what that model felt like from the inside. That kind of deliberate over-engineering is how I actually learn things.
+</NoteBox>
+
+### Philosophy Toward Software
+
+The line I keep coming back to is: make it feel like an experience, not just a tool. That applies to a CLI game, a government platform, and a personal finance tracker equally. The technical correctness is necessary. The experience is what I actually care about.
+
+I also believe in writing things at low levels when you have a choice, not because abstractions are bad but because understanding what the abstraction is hiding from you is the only way to use it well.
+
+### Notable Projects
+
+These deserve their own pages, and they have them (or will):
+
+- [**AIFSM 2025**](/brain/projects/aifsm-2025) — Official website for the 28th All India Forest Sports Meet. Built for the Government of Uttarakhand, end-to-end frontend and backend, live during the event in November 2025.
+- [**tictactoe.c**](/brain/projects/tictactoe) — Minimax with alpha-beta pruning, three difficulty levels, player statistics, AI move transparency. Pure C.
+- [**Fython**](/brain/projects/fython) — Personal finance analytics desktop application. Python. Built because I wanted one.
+- [**todo.rs**](/brain/projects/todo-rs) — Todo app in Rust using Dioxus. Existed mainly as a reason to learn the framework.
+- [**Lab of Shadows**](/brain/projects/lab-of-shadows) — Horror-educational game. The experience design instinct applied to interactive media.
+- [**kodingbooks**](/brain/projects/kodingbooks) — Educational TypeScript library built for the Inter-DPS Capital Competition.
+- [**SPM**](/brain/projects/spm) — Dashboard project. More notes in the dedicated entry.
+- [**Lost Control - TouchDesigner Viz**](/brain/projects/touchdesigner-first) — My first real output in TouchDesigner. [Video documentation on YouTube.](https://www.youtube.com/watch?v=W8HCfgbGMkc) A full write-up is coming.
+
+See also: [/brain/programming](/brain/programming), [/brain/infrastructure](/brain/infrastructure)
+
+## Music
+
+It started with guitar. Around the same time I was writing my first lines of code, I was also going through guitar lessons — the standard kind, learning chords, following the exercises. Somewhere in the middle of that, without a clear moment I can point to, I got interested in writing my own music instead of playing other people's. I don't know exactly when or how that happened. It just did.
+
+I didn't act on it seriously until COVID. Stuck at home with time and no particular reason not to, I found GarageBand and started actually making things. Then FL Studio 20. Then, more recently, Ableton Live 12, which is what I use now.
+
+The process is entirely self-directed. I compose, produce, record, mix, master, and distribute everything myself. No collaborators, no label, no one telling me what the song needs to be.
+
+**Instruments:** Acoustic guitar, electric guitar, bass guitar, piano. **DAWs:** Ableton Live 12 (current primary), FL Studio (still use it), GarageBand (where it started).
+
+The releases don't follow a genre cleanly. They tend toward the atmospheric. They sound like what happens when someone who thinks a lot about systems and experiences tries to make something that isn't either of those things.
+
+You can find the music on [Spotify](https://open.spotify.com) and [YouTube Music](https://music.youtube.com), and the channel at [@ciderboi](https://youtube.com/@ciderboi) on YouTube.
+
+<ExpandableSection title="On the relationship between music and code">
+There's a version of this where I say music and programming are actually the same thing — both involve structure, iteration, problem-solving — and that version isn't wrong. But it misses something. When I'm making music, I am specifically not optimizing. I'm not thinking about correctness or edge cases. The creative constraint is emotional, not logical, and that difference matters more than any surface-level similarity. Music is useful to me precisely because it doesn't work like the rest of the work.
+</ExpandableSection>
+
+See: [/brain/music](/brain/music), [/brain/music/odyssey](/brain/music/odyssey), [/brain/music/origin](/brain/music/origin)
+
+## Photography
+
+[@nnthegamer](https://instagram.com/nnthegamer) on Instagram is where the photography lives — both portfolio and visual diary, depending on the day.
+
+Photography is not something I planned to get into. It's the kind of thing where you start noticing that you're noticing things — a moment at an event, a piece of nature doing something specific, a setup in a studio that feels right — and at some point you start carrying a camera more intentionally because you don't want to miss them.
+
+The work covers a few different modes. Event coverage — being present and catching what's happening as it unfolds. Studio work — controlled, compositional, thought out in advance. Travel and nature — organic, unplanned, what's actually there rather than what you arranged. I shoot all three and find each one asks for a different set of instincts.
+
+The editing happens in Lightroom. The approach is deliberate rather than heavy. I'm interested in the image that was actually there, treated with enough care to show what I saw in it, not in manufacturing something that wasn't.
+
+The visual sensibility in my photography is probably the same one that shows up in my software design and music — some leaning toward atmosphere, toward things that have a mood rather than just a subject. I'm not sure if that's cause or effect at this point.
+
+See: [/brain/photography](/brain/photography), [/brain/photography/gear](/brain/photography/gear), [/brain/photography/workflow](/brain/photography/workflow)
+
+## Visual Storytelling
+
+Video has come in bursts. The work I'm most attached to so far: a short film for **CL Jaipuria**, a farewell video for **2023–24**, and **The Lens** — a competition piece from 2024 that placed 2nd. Each of those was about editing and pace and what a sequence of images says when you arrange them with intention, not just documentation of something that happened.
+
+Premiere and After Effects are the tools. I don't have a formalized practice here yet — it's more that the right project shows up and I make the thing it needs to be.
+
+The more recent interest is **TouchDesigner**. I'm new to it and very much still learning, but the pull is obvious once you understand what it does — it's a real-time node-based environment for generative and audio-reactive visuals, which puts it directly at the intersection of music and image in a way nothing else quite does. I made my first real output recently. [There's a video of it on YouTube.](https://www.youtube.com/watch?v=W8HCfgbGMkc) A full write-up will come later when I have more to say.
+
+See: [/brain/filmmaking](/brain/filmmaking), [/brain/creative-technology/touchdesigner](/brain/creative-technology/touchdesigner)
+
+## Hardware & Infrastructure
+
+Hardware is the area I've explored the most inconsistently and documented the least. The projects are fewer, but they've always been memorable because they exist outside the screen.
+
+The most significant is **SpineSync** — a wearable posture-monitoring device built for the All India Inter-DPS Science and Commerce Festival, where it placed 3rd nationally. The device mounts behind the user's neck, monitors posture through flex sensors, and sends a vibration notification whenever the wearer begins to slouch. The goal wasn't medical correction. It was habit formation — a simple, persistent nudge that builds awareness through repetition. I built both the hardware (Arduino Nano) and a companion Flutter Android app for monitoring data.
+
+See: [/brain/projects/spinesync](/brain/projects/spinesync)
+
+Before that, there was a vehicle built from LEGO and controlled through a PS5 controller via Arduino. Made for Miraki — a history and science exhibition at school. I have photos of it running and of us building it, not much more. Looking back, it mattered less as a robotics project and more as the first moment where software escaped the monitor and started doing something in the room. That feeling stuck.
+
+See: [/brain/projects/lego-car](/brain/projects/lego-car)
+
+Outside of dedicated projects, hardware mostly shows up as infrastructure. Under a staircase at home, two machines run a small homelab — an old HP laptop acting as the general-purpose node, and a Lenovo IdeaPad Gaming 3 (GTX 1650 Ti) that handles the heavier workloads: Jellyfin, Sonarr, Radarr, and a four-camera 4K NVR stack running continuously. The whole thing is stitched together over Tailscale, remotely accessible, and designed to be largely self-maintaining. 30+ containerized services, 400+ days of uptime. Running your own infrastructure teaches you a different relationship with technology than development alone does. Software becomes much more real when you're the one keeping it alive.
+
+See: [/brain/homelab](/brain/homelab)
+
+## Projects Worth Exploring
+
+A brief index. Each of these has or will have a dedicated entry with full context.
+
+| Project | What it is |
+| --- | --- |
+| [AIFSM 2025](/brain/projects/aifsm-2025) | Government platform for a national sports event. Real stakes, real traffic, real deadline. |
+| [tictactoe.c](/brain/projects/tictactoe) | Adversarial search in pure C, further than it needed to go. |
+| [Fython](/brain/projects/fython) | Personal finance analytics. Built for myself, because I wanted it. |
+| [Lab of Shadows](/brain/projects/lab-of-shadows) | Horror-educational game. Experience design applied to interactive media. |
+| [kodingbooks](/brain/projects/kodingbooks) | Educational TypeScript library from a competition |
+| [todo.rs](/brain/projects/todo-rs) | A todo app that was really about learning Dioxus and Rust UI. |
+| [SpineSync](/brain/projects/spinesync) | Wearable posture monitor. Hardware + Flutter + Arduino. 3rd nationally. |
+| [Lost Control - TouchDesigner Viz](/brain/projects/touchdesigner-first) | First real output in TD. Video documented on YouTube. Write-up coming. |
+| [ciderboi.xyz](/brain/projects/portfolio) | The portfolio itself. Counts as a project. |
+
+## How My Interests Connect
+
+The question I get implicitly asked, by the shape of my work, is: why do you do all of this? And the implicit follow-up: how do these things go together?
+
+They go together because they're the same thing at a level of abstraction that's easy to miss.
+
+It goes back to that feeling — the one from the quote about software engineers discovering they could control a machine. That feeling didn't stay contained to code. It expanded into music (I can shape sound into something that didn't exist before), into photography (I can choose what a moment looks like, permanently), into hardware (the software is now doing something physical, in the room). The machines are different. The feeling is the same. That expansion is what makes me think of myself as a Builder in the broadest sense, not just a programmer.
+
+More specifically, the disciplines cross-pollinate in concrete ways:
+
+- **Music** teaches about structure, tension, and release. Those patterns appear in software architecture and in how a photograph builds toward something. The emotional logic of a track is not that different from the pacing of an interface.
+- **Photography** is about what you notice and what you choose to show. That's the same skill as designing an interface — deciding what the user sees and in what order.
+- **Filmmaking** is sequencing and pacing. So is writing code that someone else has to read. The Lens competition piece and a well-structured pull request are more similar than they look.
+- **Hardware work** grounds everything else. When you're responsible for physical components that fail in physical ways, abstraction stops being comfortable. It makes the software work more honest.
+- **Creative technology** is where all of this becomes explicit. TouchDesigner connects music and image in real-time. GLSL shaders are math and art simultaneously. There's no way to separate the engineering from the aesthetics, and I'm not sure why you'd want to.
+
+The phrase I keep using for this — "somewhere between clean code and controlled chaos" — is less about sloppiness and more about this: I don't think the clean and the chaotic are opposites. The best work I've done has been technically rigorous and creatively strange at the same time. The strange part is usually the part that makes it worth doing.
+
+## Brain Archive
+
+This is the Brain Archive.
+
+It exists because ideas disappear. Projects end and the context around them evaporates. I'll understand something clearly in the middle of working through it, and two months later I can reconstruct the conclusion but not the path that got there. The archive is the path.
+
+It's a collection of:
+
+- **Project logs** — What I built, how, and what I learned
+- **Research notes** — Things I read or figured out that seemed worth keeping
+- **Experiments** — Things that didn't work out, or worked out strangely, or are still in progress
+- **Technical documentation** — Infrastructure notes, setup records, reference material for myself
+- **Observations** — The less structured kind of thinking, the things that don't fit a category yet
+
+The documents in here are at different stages. Some are finished. Some are skeletons. Some contradict each other because I thought differently a year ago than I do now, and I'd rather leave the contradiction visible than pretend to a consistency I don't have.
+
+If you're here and reading this, the front door is now open. Everything branches from this page. The rest is in the archive.
+
+<Callout>
+If you're exploring the archive and find a link that goes nowhere, that's a planned page that doesn't exist yet. The links are intentional — they're the shape of what's coming.
+</Callout>
+
+---
+
+<ProjectStatus status="active" updated="2026-06-15" />

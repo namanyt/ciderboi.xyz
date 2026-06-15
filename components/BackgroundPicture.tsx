@@ -14,6 +14,7 @@ export function BackgroundPicture({ brightness, scaling = 1 }: { brightness: num
         quality={60}
         sizes="100vw"
         style={{
+          zIndex: -100,
           filter: `blur(8px) brightness(${brightness})`,
           transform: `scale(${scaling})`,
           objectFit: "cover",
