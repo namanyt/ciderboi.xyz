@@ -3,6 +3,7 @@ import { isValidElement } from "react";
 import Link from "next/link";
 import { codeToHtml } from "shiki";
 import { CopyCodeButton } from "@/components/mdx/CopyCodeButton";
+import { ZoomImage } from "@/components/mdx/ZoomImage";
 import { cn } from "@/lib/utils";
 
 type BoxTone = "info" | "warning" | "success" | "note";
@@ -131,10 +132,20 @@ export async function CodeBlock({
 }
 
 export function ImageGallery({ images = [] }: { images: Array<{ src: string; alt?: string }> }) {
+  const isSingleImage = images.length === 1;
+  const columnsClass = isSingleImage ? "sm:grid-cols-1" : "sm:grid-cols-2";
+  const imageClassName = "aspect-[4/3] w-full object-cover";
+
   return (
-    <div className="my-6 grid gap-3 sm:grid-cols-2">
+    <div className={cn("my-8 grid gap-4", columnsClass)}>
       {images.map((image, index) => (
-        <img key={`${image.src}-${index}`} src={image.src} alt={image.alt ?? "Gallery image"} className="w-full rounded-lg border border-white/10 object-cover" />
+        <div key={`${image.src}-${index}`} className={cn("h-full", isSingleImage && "mx-auto w-full max-w-4xl")}>
+          <ZoomImage
+            src={image.src}
+            alt={image.alt ?? "Gallery image"}
+            className={imageClassName}
+          />
+        </div>
       ))}
     </div>
   );
@@ -142,9 +153,15 @@ export function ImageGallery({ images = [] }: { images: Array<{ src: string; alt
 
 export function PhotoGrid({ images = [] }: { images: Array<{ src: string; alt?: string }> }) {
   return (
-    <div className="my-6 grid grid-cols-2 gap-2 md:grid-cols-3">
+    <div className="my-8 grid grid-cols-2 gap-3 md:grid-cols-3">
       {images.map((image, index) => (
-        <img key={`${image.src}-${index}`} src={image.src} alt={image.alt ?? "Photo"} className="aspect-square w-full rounded-md border border-white/10 object-cover" />
+        <div key={`${image.src}-${index}`} className="h-full">
+          <ZoomImage
+            src={image.src}
+            alt={image.alt ?? "Photo"}
+            className="aspect-square w-full object-cover"
+          />
+        </div>
       ))}
     </div>
   );
@@ -271,6 +288,7 @@ function CustomAnchor(props: ComponentPropsWithoutRef<"a">) {
 export function getMDXComponents() {
   return {
     a: CustomAnchor,
+    img: ZoomImage,
     figure: CodeFigure,
     Callout,
     CodeBlock,

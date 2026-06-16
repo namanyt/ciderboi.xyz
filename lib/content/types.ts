@@ -5,6 +5,15 @@ export interface DocumentMetadata {
   title: string;
   description: string;
   category: string;
+  documentType?: string;
+  purpose?: string;
+  version?: string;
+  downloadPath?: string;
+  downloadLabel?: string;
+  archiveLinks?: Array<{
+    title: string;
+    href: string;
+  }>;
   created: string;
   updated?: string;
   status?: string;

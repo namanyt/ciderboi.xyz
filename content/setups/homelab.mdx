@@ -1,0 +1,169 @@
+---
+id: homelab
+title: Homelab
+description: A history of accidental infrastructure. Two recovered laptops under a staircase, and everything that happened before they got there.
+category: setups
+created: 2026-06-16
+status: active
+visibility: public
+index: true
+featured: false
+tags:
+  - homelab
+  - infrastructure
+  - linux
+  - self-hosting
+  - hardware
+  - projects
+related:
+  - infrastructure-public
+  - infrastructure-vps
+featuredImage: /brain/pictures/hardware/homelab/IMG_4028.JPG
+---
+
+# Homelab
+
+I made a rule at home early on: if I fixed a piece of tech, it became mine.
+
+This rule was never written down. It was never formally agreed to. It was more of a policy I declared and people around me eventually stopped contesting. But it shaped almost everything about the infrastructure I run today — what hardware I have, why it's old, why none of it was purchased with the intention of running servers, and why the whole thing exists at all.
+
+The homelab did not start with a plan. It started with a broken laptop.
+
+## The Rule That Started Everything
+
+My brother got a new laptop and stopped caring about the old one. By the time it came to me, the keyboard was broken and the shell had been drawn on. Under normal circumstances, it would have been set aside somewhere and eventually forgotten.
+
+Instead, I fixed it.
+
+That machine became `homelab` — the HP 15s, an 11th Gen i5-1135G7, 16 GB of RAM, still running today. Still under the stairs.
+
+The second machine came the same way. My own laptop's battery started dying. Rather than replace it, I removed the battery entirely and kept it plugged in. Technically still a laptop. Practically a small desktop with a screen attached to it. That became `powerbox` — a Lenovo IdeaPad Gaming 3, Ryzen 7 4800H, 16 GB of RAM.
+
+Neither of these machines was bought for a homelab. They arrived broken or degraded, got fixed, and then gradually got pressed into service running things. The hardware choices were not choices in any meaningful sense. They were consequences.
+
+<ImageGallery
+  images={[
+    { src: "/brain/pictures/hardware/homelab/IMG_4028.JPG", alt: "The two machines standing upright — ethernet cables, power bricks, and a healthy amount of dust" },
+  ]}
+/>
+
+## The Cupboard Above the Washing Machine
+
+The first real server setup wasn't under a staircase. It was in Jaipur, and it lived in a cupboard above the washing machine in the service room.
+
+My father was not particularly enthusiastic about what was beginning to look, from the outside, like a collection of old laptops, blinking LEDs, dangling Ethernet cables, and fans running at full speed in the middle of the night. The compromise we landed on was simple: if the servers were going to exist, they weren't going to exist somewhere visible.
+
+The cupboard became the datacenter.
+
+Looking back, it was probably the worst possible place for a machine that spent most of its life under load. Heat accumulated. Airflow was terrible. Maintenance usually involved moving household appliances out of the way just to reach the hardware. But it worked. At that stage, working was the only requirement.
+
+{/* No photos survive from the Jaipur era. The cupboard above the washing machine went undocumented. */}
+
+## What Was Actually Running Then
+
+<Timeline
+  items={[
+    { title: "Minecraft Era", description: "First reason to keep a machine on permanently. First experience of uptime, crashes at 2 AM, and why servers need monitoring." },
+    { title: "Pterodactyl + Docker", description: "Game server panel that pulled Docker along with it. First real Linux learning happened here — not from tutorials, from things breaking." },
+    { title: "Proxmox Experiment", description: "Tried to do things properly with VMs and clean service separation. Lasted about two months. Maintenance felt like a second job." },
+    { title: "Back to Ubuntu LTS", description: "Dropped Proxmox. Went back to bare metal Ubuntu. Things got quieter. Stability returned. Complexity was the problem, not the solution." },
+    { title: "Current Setup", description: "Two machines under the stairs in Haridwar. Inverter-backed power. Tailscale. Services that have run without drama for nearly a year." },
+  ]}
+/>
+
+The migration off Proxmox back to Ubuntu was not a graceful transition. It involved a full reinstall, a USB drive, and a lot of time staring at the Ubuntu Server installer scrolling through partition configuration while wondering if this was the right call.
+
+<ImageGallery
+  images={[
+    { src: "/brain/pictures/hardware/homelab/IMG_FE2E0423-24B5-484F-ACD0-ECA23B10CDC9_preview.jpeg", alt: "Ubuntu Server installer mid-run on powerbox — the moment of moving off Proxmox" },
+  ]}
+/>
+
+## Under the Stairs
+
+When we moved back to Haridwar from Jaipur, the infrastructure moved with us.
+
+The new location ended up being under a staircase. This wasn't chosen for aesthetics. It happened to be the place where several practical constraints aligned at once: nearby power from the inverter, Ethernet cabling already in the right place, reasonable airflow, and built-in shelving that my grandfather had constructed years earlier.
+
+There are no server racks. No patch panels. No enterprise hardware. Just two repurposed laptops standing upright on a shelf with enough room around them for the cooling systems to breathe.
+
+The setup looks less like a datacenter and more like a sweatshop for retired computers. Which, in fairness, is exactly what it is.
+
+<ImageGallery
+  images={[
+    { src: "/brain/pictures/hardware/homelab/IMG_4029.JPG", alt: "The shelf under the stairs — switch, router, cables, and the sloped ceiling that defines the datacenter" },
+    { src: "/brain/pictures/hardware/homelab/IMG_4028.JPG", alt: "The two machines standing upright — powerbox towards the wall, homelab next to it" },
+  ]}
+/>
+
+## How the Two Machines Split the Work
+
+The division that emerged was practical rather than planned.
+
+`homelab` — the HP 15s — runs the services that need to be consistently available: Immich for photo management, Portainer for container oversight, the things I'd notice immediately if they went down. It has been up for nearly a year without a reboot. That uptime is not a goal; it's just what happens when a machine is stable and has nothing forcing it to restart.
+
+`powerbox` — the IdeaPad Gaming 3 — runs the heavier workloads: Jellyfin for media, Sonarr for keeping the library organised, SMTP infrastructure for sending mail from internal services. The GTX 1650 sits mostly idle but is there when transcoding needs it.
+
+Both machines are on Tailscale, which means I can reach them from anywhere without thinking about it. SMB shares make the storage accessible to other devices on the network. The whole thing is quieter and more stable than it has ever been, which I attribute less to good planning and more to years of removing things that caused problems.
+
+## What Runs Here
+
+<ProjectStatus status="active" updated="2026-06-16" />
+
+The services currently running in the house, across both machines. This is what the dashboard looks like — not every service is listed here, some things like SMTP and SMB live elsewhere and don't need a tile.
+
+<ImageGallery
+  images={[
+    { src: "/brain/pictures/hardware/homelab/dashboard.png", alt: "Homeleaf dashboard — the current service map" },
+  ]}
+/>
+
+Over the years the homelab stopped being a place to learn deployment and gradually became a collection of tools I actually use. Most experiments eventually disappeared. The services below are the ones that survived.
+
+**Media:**
+- **Jellyfin** — media server, runs on `powerbox` where the GTX 1650 handles transcoding when needed
+- **Sonarr** — automated series tracking and library organisation
+- **Radarr** — same thing for films
+- **Jackett** — indexer proxy, feeds Sonarr and Radarr
+- **qBittorrent** — download client wired into the *arr stack
+- **Prowlarr** — indexer management sitting above Jackett
+
+**Storage & Photos:**
+- **Immich** — self-hosted photo library, the Google Photos replacement that actually works the way I want it to
+- **Minio** — S3-compatible object storage for services that need it
+- **pgAdmin** — PostgreSQL management, because some things need a database and I'd rather manage it properly
+
+**Monitoring & Management:**
+- **Portainer** — container management, runs on `homelab` so it stays reachable even if `powerbox` is down
+- **Grafana** — metrics and monitoring dashboards
+- **Webmin** — system administration for when I need to manage the machines without SSH
+- **Homeleaf** — the dashboard itself, the thing that holds all of this together visually
+
+**Automation & Tools:**
+- **N8n** — workflow automation, self-hosted
+- **Home Assistant** — home automation, connected to devices around the house
+- **Searxng** — self-hosted search engine, primarily for privacy
+- **Code server** — VS Code in the browser, useful when I need to do something on the homelab from another machine
+- **Omni Tools** — miscellaneous utility toolkit
+
+**Network:**
+- **Tailscale** — the layer that makes everything accessible regardless of where I am, probably the single piece of software that changed how I use this setup most dramatically
+- **SMB shares** — network file access for other devices on the local network
+- **SMTP** — internal mail relay, lives in Thunderbird and the file system rather than a dashboard tile; getting it working correctly was genuinely painful
+
+## What I Learned
+
+Most of what I know about Linux came from things breaking and needing to be fixed.
+
+The biggest lesson came from the Proxmox phase. On paper it seemed like the perfect solution. In practice, the hardware wasn't really suited for what I was asking it to do. Storage issues, overheating, and constant maintenance eventually taught me that complexity is not the same as capability.
+
+The homelab also taught me to respect hardware limits. Most of the machines here weren't bought for a specific purpose — they were recovered, repaired, and repurposed. Understanding what the hardware could realistically do turned out to be more important than whatever software I wanted to run on it.
+
+More than anything, the homelab taught me that infrastructure is never really finished. Services come and go, experiments fail, and priorities change. The current setup isn't the result of a grand design — it's the result of years of curiosity and slowly figuring out what was actually worth keeping.
+
+<NoteBox title="The lesson that took longest to learn">
+The simpler the setup, the longer it stays up. Every service I removed because it was unreliable made the remaining services more reliable. The current state of the homelab is less about what it runs and more about what I decided to stop running.
+</NoteBox>
+
+
+---

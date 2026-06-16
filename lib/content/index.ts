@@ -26,7 +26,7 @@ const CATEGORY_DESCRIPTIONS: Record<string, string> = {
   photography: "Photography workflows, field notes, and visual essays.",
   experiments: "Small technical experiments and prototype outcomes.",
   events: "Event summaries, talks, and participation notes.",
-  documents: "General documentation, references, and evergreen notes.",
+  documents: "Downloadable artifacts like resumes, CVs, and media or press kits.",
   software: "Software engineering notes and framework-specific guides.",
   hardware: "Hardware builds, benchmarks, and troubleshooting notes.",
   people: "Profiles, collaboration logs, and notable contributors.",
@@ -84,6 +84,62 @@ function normalizeTag(tag: string): string {
 
 function normalizeCategory(category: string): string {
   return category.trim().toLowerCase().replace(/\s+/g, "-");
+}
+
+function toOptionalString(value: unknown): string | undefined {
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed.length > 0 ? trimmed : undefined;
+  }
+
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+
+  return undefined;
+}
+
+function sanitizeDownloadPath(value: unknown): string | undefined {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed.startsWith("/")) {
+    return undefined;
+  }
+
+  return trimmed;
+}
+
+function parseArchiveLinks(value: unknown): Array<{ title: string; href: string }> {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((entry) => {
+      if (!entry || typeof entry !== "object") {
+        return null;
+      }
+
+      const maybeTitle = "title" in entry ? (entry.title as unknown) : undefined;
+      const maybeHref = "href" in entry ? (entry.href as unknown) : undefined;
+
+      if (typeof maybeTitle !== "string" || typeof maybeHref !== "string") {
+        return null;
+      }
+
+      const title = maybeTitle.trim();
+      const href = maybeHref.trim();
+
+      if (!title || !href) {
+        return null;
+      }
+
+      return { title, href };
+    })
+    .filter((entry): entry is { title: string; href: string } => Boolean(entry));
 }
 
 function cleanPlainText(content: string): string {
@@ -162,34 +218,60 @@ async function buildContentCache(): Promise<CachedContent> {
     const category = normalizeCategory(frontmatter.category ?? slug[0] ?? "misc");
 
     const tags = Array.isArray(frontmatter.tags)
-      ? Array.from(new Set(frontmatter.tags.map((tag) => normalizeTag(tag)).filter(Boolean)))
+      ? Array.from(
+        new Set(
+          frontmatter.tags
+            .map((tag) => toOptionalString(tag))
+            .filter((tag): tag is string => Boolean(tag))
+            .map((tag) => normalizeTag(tag)),
+        ),
+      )
       : [];
 
     const related = Array.isArray(frontmatter.related)
-      ? Array.from(new Set(frontmatter.related.map((id) => id.trim()).filter(Boolean)))
+      ? Array.from(
+        new Set(
+          frontmatter.related
+            .map((id) => toOptionalString(id))
+            .filter((id): id is string => Boolean(id)),
+        ),
+      )
       : [];
 
     const visibility = (frontmatter.visibility ?? "public") as Visibility;
+    const archiveLinks = parseArchiveLinks(frontmatter.archiveLinks);
 
     const document: Document = {
       id: (frontmatter.id ?? slug[slug.length - 1] ?? withoutExtension).trim(),
-      title: frontmatter.title?.trim() || slugToTitle(slug[slug.length - 1] ?? "Untitled"),
-      description: frontmatter.description?.trim() || plainText.slice(0, 180),
+      title: toOptionalString(frontmatter.title) ?? slugToTitle(slug[slug.length - 1] ?? "Untitled"),
+      description: toOptionalString(frontmatter.description) ?? plainText.slice(0, 180),
       category,
+      documentType: toOptionalString(frontmatter.documentType),
+      purpose: toOptionalString(frontmatter.purpose),
+      version: toOptionalString(frontmatter.version),
+      downloadPath: sanitizeDownloadPath(frontmatter.downloadPath),
+      downloadLabel: toOptionalString(frontmatter.downloadLabel),
+      archiveLinks: archiveLinks.length > 0 ? archiveLinks : undefined,
       created: toDateString(frontmatter.created, fallbackCreated),
       updated: frontmatter.updated ? toDateString(frontmatter.updated, fallbackCreated) : undefined,
-      status: frontmatter.status?.trim(),
+      status: toOptionalString(frontmatter.status),
       visibility,
       index: frontmatter.index ?? true,
       featured: frontmatter.featured ?? false,
       tags,
       related,
-      seoTitle: frontmatter.seoTitle?.trim(),
-      seoDescription: frontmatter.seoDescription?.trim(),
+      seoTitle: toOptionalString(frontmatter.seoTitle),
+      seoDescription: toOptionalString(frontmatter.seoDescription),
       seoKeywords: Array.isArray(frontmatter.seoKeywords)
-        ? Array.from(new Set(frontmatter.seoKeywords.map((keyword) => keyword.trim()).filter(Boolean)))
+        ? Array.from(
+          new Set(
+            frontmatter.seoKeywords
+              .map((keyword) => toOptionalString(keyword))
+              .filter((keyword): keyword is string => Boolean(keyword)),
+          ),
+        )
         : undefined,
-      featuredImage: frontmatter.featuredImage?.trim(),
+      featuredImage: toOptionalString(frontmatter.featuredImage),
       slug,
       slugPath: slug.join("/"),
       url: `${BRAIN_BASE_PATH}/${slug.join("/")}`,

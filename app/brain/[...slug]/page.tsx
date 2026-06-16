@@ -155,6 +155,14 @@ function formatDisplayDate(value: string): string {
   }).format(parsed);
 }
 
+function toTypeLabel(value: string): string {
+  return value
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (match) => match.toUpperCase());
+}
+
 export { generateStaticParams };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string[] }> }): Promise<Metadata> {
@@ -220,6 +228,7 @@ export default async function BrainDocumentPage({ params }: { params: Promise<{ 
     getAdjacentDocuments(document),
   ]);
   const tableOfContents = createTableOfContents(document.body);
+  const isArtifact = Boolean(document.downloadPath) || document.category === "documents";
 
   const breadcrumbItems = breadcrumbItemsForDocument(document);
 
@@ -305,6 +314,51 @@ export default async function BrainDocumentPage({ params }: { params: Promise<{ 
                     </Link>
                   ))}
                 </div>
+              ) : null}
+
+              {isArtifact ? (
+                <section className="mt-8 rounded-3xl border border-cyan-200/20 bg-cyan-300/5 p-5 shadow-xl backdrop-blur-sm sm:p-6">
+                  <p className="text-xs uppercase tracking-[0.22em] text-cyan-100/90">Document Snapshot</p>
+                  <h2 className="mt-2 text-xl font-semibold tracking-tight text-white">
+                    {document.documentType ? toTypeLabel(document.documentType) : "Archive Artifact"}
+                  </h2>
+
+                  {document.purpose ? <p className="mt-3 max-w-3xl text-sm leading-7 text-gray-200">{document.purpose}</p> : null}
+
+                  <div className="mt-4 flex flex-wrap gap-2 text-xs tracking-[0.16em] text-gray-200">
+                    {document.version ? <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5">Version {document.version}</span> : null}
+                    <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5">
+                      Updated {formatDisplayDate(document.updated ?? document.created)}
+                    </span>
+                  </div>
+
+                  {document.downloadPath ? (
+                    <a
+                      href={document.downloadPath}
+                      download
+                      className="mt-5 inline-flex items-center gap-2 rounded-xl border border-cyan-100/40 bg-cyan-200/15 px-5 py-3 text-sm font-medium text-cyan-50 transition hover:bg-cyan-200/25"
+                    >
+                      {document.downloadLabel ?? "Download PDF"}
+                    </a>
+                  ) : null}
+
+                  {(document.archiveLinks ?? []).length > 0 ? (
+                    <div className="mt-5 border-t border-white/10 pt-4">
+                      <p className="text-xs uppercase tracking-[0.2em] text-gray-300">Trace Back Into The Archive</p>
+                      <div className="mt-3 flex flex-wrap gap-2.5">
+                        {document.archiveLinks?.map((entry) => (
+                          <Link
+                            key={`${entry.href}-${entry.title}`}
+                            href={entry.href}
+                            className="rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-sm text-gray-200 transition hover:bg-white/20 hover:text-white"
+                          >
+                            {entry.title}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                </section>
               ) : null}
             </header>
 
