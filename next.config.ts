@@ -13,6 +13,7 @@ const withMDX = createMDX({
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   turbopack: {},
+  serverExternalPackages: ["rehype-mermaid", "playwright", "mermaid-isomorphic"],
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   async redirects() {
     return [

@@ -1,0 +1,22 @@
+.brain-prose .katex {
+  color: rgb(229, 229, 229);
+  font-size: 1.05em;
+}
+
+.brain-prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem 0;
+  color: white;
+}
+
+.brain-prose .katex-display > .katex {
+  text-align: center;
+}
+
+.brain-prose .katex-display > .katex > .katex-html {
+  display: inline-block;
+  text-align: initial;
+}

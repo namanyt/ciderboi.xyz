@@ -11,7 +11,10 @@ Scope:
 - Brain documents rendered through the MDX pipeline
 - Typography and spacing from `app/globals.css`
 - MDX custom components from `components/mdx/index.tsx`
-- The visual language used inside article bodies, callouts, code blocks, embeds, and interactive content
+- LaTeX math rendered with KaTeX through `remark-math` and `rehype-katex`
+- GFM extensions such as tables, strikethrough, task lists, autolinks, and footnotes
+- The centralized markdown pipeline in `lib/markdown/processor.tsx` and `lib/markdown/plugins.ts`
+- The visual language used inside article bodies, callouts, code blocks, equations, embeds, and interactive content
 
 ## 1. What This System Is
 
@@ -21,9 +24,24 @@ That means a page is usually:
 
 - metadata in frontmatter
 - a normal markdown article
+- LaTeX equations written directly in markdown
 - optional custom components for special content
 
-The document should read like a note or article first. Components are there to support the writing, not replace it.
+The document should read like a note or article first. Components are there to support the writing, not replace it. Equations are content too — write them in LaTeX, not as images or screenshots.
+
+Rendering pipeline:
+
+```text
+content/*.mdx
+  → remark-gfm
+  → remark-math
+  → remark-mdx
+  → rehype-slug
+  → rehype-katex
+  → rehype-pretty-code
+  → rehype-autolink-headings
+  → React (server-rendered)
+```
 
 ## 2. Content Model
 
@@ -45,6 +63,41 @@ The important frontmatter fields are:
 - `related`: array of linked document ids
 - `seoTitle`, `seoDescription`, `seoKeywords`: optional metadata overrides
 - `featuredImage`: optional social/OG image
+
+Artifact and downloadable-document fields:
+
+- `documentType`: artifact label such as `resume` or `press-kit`
+- `purpose`: short explanation shown in the artifact snapshot panel
+- `version`: artifact version string
+- `downloadPath`: absolute site path to a downloadable file such as `/downloads/resume.pdf`
+- `downloadLabel`: button label for the download action
+- `archiveLinks`: array of `{ title, href }` links back into the Brain Archive
+
+### File placement and URLs
+
+Brain content lives in the repository under `content/` as `.mdx` files.
+
+Examples:
+
+```text
+content/setups/homelab.mdx        → /brain/setups/homelab
+content/thoughts/me.mdx           → /brain/thoughts/me
+content/experiments/math-rendering.mdx → /brain/experiments/math-rendering
+```
+
+Rules:
+
+- the file path becomes the slug
+- the first path segment becomes the default `category` when `category` is omitted
+- `id` is the stable graph identifier; it does not have to match the slug, but keeping them aligned is simpler
+- categories and tags are normalized to lowercase kebab-case
+
+### Visibility and indexing
+
+- `visibility: public` is required for a page to be reachable on the site
+- `visibility: private` keeps a file in the repo but returns not found publicly
+- `index: false` excludes the page from listings, search indexing, and static generation
+- `featured: true` promotes the page on the Brain home page
 
 Example:
 
@@ -286,7 +339,90 @@ Appearance:
 - same neutral text treatment as body copy
 - useful for procedures and workflows
 
-## 9. Blockquotes
+### Task lists
+
+GFM task lists are supported.
+
+Example:
+
+```mdx
+- [x] Parse markdown with remark-gfm
+- [ ] Add theorem blocks
+- [ ] Add equation cross-references
+```
+
+Appearance:
+
+- standard list styling with checkbox inputs
+- checked items render with the browser's native task-list appearance
+
+### Nested lists
+
+Nested lists work with normal markdown indentation:
+
+```mdx
+- Outer item
+  - Inner item
+  - Another inner item
+- Back to outer level
+```
+
+## 9. GFM Extensions
+
+Brain enables GitHub Flavored Markdown through `remark-gfm`.
+
+Supported beyond standard markdown:
+
+- tables
+- strikethrough
+- task lists
+- autolink literals
+- footnotes
+
+### Strikethrough
+
+Example:
+
+```mdx
+This approach is ~~deprecated~~ replaced by the new pipeline.
+```
+
+Appearance:
+
+- struck-through text
+- same neutral body color
+
+### Autolink literals
+
+Bare URLs in prose become links automatically.
+
+Example:
+
+```mdx
+See https://matrix.org for the protocol reference.
+```
+
+Appearance:
+
+- same link styling as explicit markdown links
+- external URLs open in a new tab
+
+### Footnotes
+
+Example:
+
+```mdx
+KaTeX renders server-side.[^katex]
+
+[^katex]: See the math section of this guide for syntax and supported features.
+```
+
+Appearance:
+
+- footnote reference marker in prose
+- footnote definitions collected at the bottom of the article
+
+## 10. Blockquotes
 
 Example:
 
@@ -307,7 +443,7 @@ Use blockquotes for:
 - quoted statements
 - callout-style emphasis without needing a custom component
 
-## 10. Inline Code
+## 11. Inline Code
 
 Example:
 
@@ -330,7 +466,214 @@ Use inline code for:
 - function names
 - short literal values
 
-## 11. Code Blocks
+## 12. Mathematical Equations
+
+Brain treats equations as first-class content. Write LaTeX directly in markdown — the source file stays readable, and KaTeX renders academic-quality typography at build time.
+
+No images, no SVG exports, no external equation editor, no client-side math engine.
+
+### How it works
+
+The markdown pipeline parses math automatically:
+
+```text
+Markdown
+  → remark-gfm
+  → remark-math
+  → remark-mdx
+  → rehype-katex
+  → server-rendered HTML
+```
+
+Math works everywhere Brain MDX is rendered. No page-specific setup.
+
+Live reference: [Math Rendering Demo](/brain/experiments/math-rendering)
+
+### Inline math
+
+Wrap short expressions in single dollar signs.
+
+Example:
+
+```mdx
+Einstein showed that $E = mc^2$. The quadratic formula is $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
+```
+
+Appearance:
+
+- flows inside a paragraph like a word or phrase
+- bright neutral text tuned for the dark theme
+- slightly larger than body text for legibility
+
+Use inline math for:
+
+- variables and constants inside prose
+- short formulas that should not break the reading line
+- probability notation such as $P(A \mid B)$
+- units and symbols such as $\omega$, $\sigma$, or $O(n \log n)$
+
+### Display math
+
+Wrap block equations in double dollar signs on their own lines.
+
+Example:
+
+```mdx
+The Fourier transform is defined as:
+
+$$
+F(\omega) = \int_{-\infty}^{\infty} f(t)\,e^{-i\omega t}\,dt
+$$
+
+and can be applied to signal analysis.
+```
+
+Appearance:
+
+- centered display block
+- generous vertical spacing above and below
+- bright white text
+- horizontal scrolling on narrow screens when an equation is wide
+
+Display math is the right choice for:
+
+- important standalone formulas
+- multi-line derivations
+- matrices and aligned equation blocks
+- anything that should read like a textbook equation
+
+### Common LaTeX patterns
+
+Fractions:
+
+```mdx
+$\frac{a}{b}$
+```
+
+Summations and products:
+
+```mdx
+$$
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+$$
+```
+
+Integrals:
+
+```mdx
+$$
+\int_a^b f(x)\,dx
+$$
+```
+
+Matrices:
+
+```mdx
+$$
+\begin{bmatrix}
+1 & 2 \\
+3 & 4
+\end{bmatrix}
+$$
+```
+
+Piecewise functions:
+
+```mdx
+$$
+f(x) =
+\begin{cases}
+x^2 & \text{if } x \geq 0 \\
+-x & \text{if } x < 0
+\end{cases}
+$$
+```
+
+Aligned derivations:
+
+```mdx
+$$
+\begin{aligned}
+ax^2 + bx + c &= 0 \\
+x &= \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\end{aligned}
+$$
+```
+
+Numbered equations:
+
+```mdx
+$$
+e^{i\theta} = \cos\theta + i\sin\theta \tag{1}
+$$
+```
+
+### Mixing math with other markdown
+
+Equations work alongside the rest of Brain typography:
+
+- headings
+- paragraphs
+- lists
+- tables
+- code blocks
+- callouts
+
+Example:
+
+```mdx
+The loss function is:
+
+$$
+L(\theta) = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+$$
+
+| Symbol | Meaning |
+| --- | --- |
+| $\theta$ | Model parameters |
+| $\hat{y}_i$ | Predicted value |
+```
+
+### Mobile behavior
+
+Wide equations are never shrunk or scaled down. On phones, display math scrolls horizontally instead. That keeps academic typography intact.
+
+### Authoring rules
+
+Do:
+
+- keep the markdown source as the canonical equation source
+- use inline math for short in-sentence expressions
+- use display math for important block formulas
+- preview wide equations on mobile
+
+Do not:
+
+- embed equations as screenshots or generated images
+- hand-write equation HTML
+- rely on a separate math editor or client-side rendering
+
+### Supported scope
+
+KaTeX covers the LaTeX most technical writing needs:
+
+- fractions, roots, and exponents
+- Greek letters and operators
+- sums, products, integrals, and limits
+- matrices, vectors, and linear algebra
+- probability and statistics notation
+- piecewise and aligned environments
+- `\tag{}` for numbered display equations
+
+Not yet supported in Brain:
+
+- `\label{}` and `\ref{}` cross-references
+- theorem or proof blocks
+- MathJax-only extensions outside KaTeX
+
+For a full visual catalog of what renders today, see [Math Rendering Demo](/brain/experiments/math-rendering).
+
+## 13. Code Blocks
 
 Code blocks are one of the most polished parts of the Brain renderer.
 
@@ -389,7 +732,181 @@ Appearance details:
 - highlighted characters get a subtle glow-like block
 - line numbers and code body remain readable against the glass panel
 
-## 12. Callout Boxes and Notes
+### Code fence metadata
+
+Fenced code blocks support `rehype-pretty-code` metadata after the language identifier.
+
+Title:
+
+````mdx
+```ts title="mapping.ts"
+export function mapEnergy(v: number) {
+  return Math.pow(v, 1.6);
+}
+```
+````
+
+Line highlighting:
+
+````mdx
+```ts {2,4-5}
+const clamped = Math.max(0, Math.min(1, v));
+return Math.pow(clamped, 1.6);
+```
+````
+
+Character highlighting:
+
+````mdx
+```ts /Math.pow/
+return Math.pow(clamped, 1.6);
+```
+````
+
+Appearance:
+
+- titles render in the code block header strip
+- highlighted lines and characters use the soft white emphasis styles defined in `app/globals.css`
+- every pretty-code figure also gets a copy button in the top-right corner
+
+## 14. Standard Markdown Images
+
+Use normal markdown image syntax for single images in prose.
+
+Example:
+
+```mdx
+![Homelab rack under the stairs](/pictures/homelab/rack.jpg)
+```
+
+Appearance:
+
+- rounded glass frame
+- soft border and shadow
+- lazy-loaded image
+- click opens a zoom modal with in/out controls and reset
+- default aspect ratio is `4/3` with `object-cover` when no custom classes are provided
+
+This is the default image path for article illustrations. Use `ImageGallery` or `PhotoGrid` when you need multiple images in a composed layout.
+
+## 15. MDX Authoring Notes
+
+Brain content is MDX, not plain markdown. That means normal markdown and JSX components can coexist in the same file.
+
+### JSX components
+
+All custom Brain components are available directly in MDX without imports:
+
+- `Callout`, `InfoBox`, `WarningBox`, `SuccessBox`, `NoteBox`
+- `CodeBlock`
+- `ImageGallery`, `PhotoGrid`
+- `Timeline`, `ExpandableSection`
+- `YouTubeEmbed`, `SpotifyEmbed`, `VideoEmbed`
+- `ProjectStatus`, `FileDownload`, `LinkCard`
+
+### MDX comments
+
+Use JSX comments for notes that should not render:
+
+```mdx
+{/* <FileDownload href="/downloads/resume.pdf" label="Download Resume PDF" /> */}
+```
+
+### Native collapsible sections
+
+You can use either the `ExpandableSection` component or native HTML:
+
+```mdx
+<details>
+  <summary>Hidden implementation detail</summary>
+
+  Extra detail that should not interrupt the main reading flow.
+</details>
+```
+
+Appearance:
+
+- native `details` blocks use the same prose spacing rules as the rest of the article
+- `ExpandableSection` adds the Brain glass panel styling
+
+## 16. Document Linking and Table of Contents
+
+Brain builds navigation and relationships from your writing automatically.
+
+### Internal links in markdown
+
+Link to other Brain pages with absolute site paths:
+
+```mdx
+See [Homelab](/brain/setups/homelab) for the infrastructure history.
+```
+
+These links do two things:
+
+- render as normal internal links in the article
+- create backlinks and knowledge-graph `references` edges to the target page
+
+### `related` frontmatter
+
+Use `related` when a page should be connected by document id even if the body does not link to it directly:
+
+```yaml
+related:
+  - homelab
+  - about
+```
+
+This powers the Related Pages section and graph `relatedTo` edges.
+
+### Table of contents
+
+The page sidebar and mobile TOC are generated from headings in the markdown source:
+
+- included: `##`, `###`, `####`
+- excluded: `#` and headings deeper than H4
+- heading ids are slugified for anchor links
+- H2-H4 also receive appended anchor links in the article body
+
+Write headings as plain text when possible. Link syntax inside a heading is stripped for TOC labels.
+
+## 17. Artifact Document Pages
+
+When a page is a downloadable artifact, frontmatter can drive a dedicated snapshot panel above the article body.
+
+Trigger conditions:
+
+- `downloadPath` is set
+- or `category: documents`
+
+Example:
+
+```mdx
+---
+id: resume
+title: Resume
+category: documents
+documentType: resume
+purpose: Condensed artifact for recruiters and collaborators.
+version: 2026.06
+downloadPath: /downloads/resume.pdf
+downloadLabel: Download Resume PDF
+archiveLinks:
+  - title: About Me
+    href: /brain/thoughts/me
+---
+```
+
+Appearance:
+
+- cyan-tinted snapshot card in the page header
+- document type and purpose rendered as summary metadata
+- optional version and updated date chips
+- primary download button when `downloadPath` is present
+- optional archive trace-back links from `archiveLinks`
+
+You can still use `FileDownload` or `LinkCard` inside the article body when you want inline actions or related-page cards.
+
+## 18. Callout Boxes and Notes
 
 Brain includes custom boxes for semantic emphasis.
 
@@ -468,7 +985,7 @@ Appearance:
 - soft note block
 - best for side observations and implementation reminders
 
-## 13. Status Pills
+## 19. Status Pills
 
 Example:
 
@@ -490,15 +1007,15 @@ Use this for:
 - active/inactive states
 - lightweight metadata inside a document
 
-## 14. Timeline
+## 20. Timeline
 
 Example:
 
 ```mdx
 <Timeline
   items={[
-    { title: "Transport Layer", description: "Matrix room + bridge strategy" },
-    { title: "Inference Layer", description: "llama.cpp runtime with model fallback" },
+    { title: "Transport Layer", date: "2026-03", description: "Matrix room + bridge strategy" },
+    { title: "Inference Layer", date: "2026-04", description: "llama.cpp runtime with model fallback" },
     { title: "Memory Layer", description: "hybrid retrieval + compact long-term graph" },
   ]}
 />
@@ -518,7 +1035,7 @@ Best use:
 - release history
 - setup steps with progression
 
-## 15. Expandable Sections
+## 21. Expandable Sections
 
 Example:
 
@@ -541,7 +1058,7 @@ Use expandable sections for:
 - secondary material
 - anything the reader may want to skip initially
 
-## 16. Media Embeds
+## 22. Media Embeds
 
 ### YouTube
 
@@ -564,7 +1081,11 @@ Example:
 
 ```mdx
 <SpotifyEmbed id="track/12345" />
+<SpotifyEmbed id="album/abcdef" />
+<SpotifyEmbed id="playlist/zyxwvu" />
 ```
+
+The `id` is the Spotify embed path after `/embed/`, such as `track/...`, `album/...`, or `playlist/...`.
 
 Appearance:
 
@@ -586,7 +1107,7 @@ Appearance:
 - 16:9 responsive ratio
 - suitable for demos and walkthroughs
 
-## 17. Image Grids
+## 23. Image Grids
 
 ### ImageGallery
 
@@ -604,8 +1125,10 @@ Example:
 Appearance:
 
 - 2-column grid on larger screens
+- single-image galleries collapse to one centered column with a wider max width
 - soft rounded corners
 - light border on each image
+- each image uses the same click-to-zoom behavior as standard markdown images
 - spacing is modest so the gallery feels part of the article
 
 ### PhotoGrid
@@ -626,9 +1149,10 @@ Appearance:
 
 - denser grid than `ImageGallery`
 - square crops
+- each image uses the same click-to-zoom behavior as standard markdown images
 - best for photographic contact sheets or compact visual references
 
-## 18. Download and Link Cards
+## 24. Download and Link Cards
 
 ### FileDownload
 
@@ -650,15 +1174,21 @@ Example:
 
 ```mdx
 <LinkCard href="https://matrix.org" title="Matrix" description="Protocol reference" />
+<LinkCard href="/brain/thoughts/me" title="About Me" description="The root node of the archive." />
 ```
 
 Appearance:
 
 - large linked card
 - subtle hover state
-- good for related resources and external references
+- good for related resources and prominent in-article navigation cards
 
-## 19. Tables
+Note:
+
+- `LinkCard` always opens in a new tab, including internal `/brain/...` links
+- for normal in-article navigation, prefer markdown links instead
+
+## 25. Tables
 
 Markdown tables render as framed panels with a subtle tinted background.
 
@@ -679,7 +1209,7 @@ Appearance:
 - muted header row
 - readable, but not meant to dominate the page
 
-## 20. Horizontal Rules
+## 26. Horizontal Rules
 
 Example:
 
@@ -693,7 +1223,7 @@ Appearance:
 - soft white line
 - used to split long sections without introducing a new component
 
-## 21. Typography Tone Rules
+## 27. Typography Tone Rules
 
 When writing Brain MDX, keep the tone of the page aligned with the visuals:
 
@@ -718,7 +1248,7 @@ Avoid:
 - decorative component overload
 - color language that assumes the old blue/navy theme
 
-## 22. URL and Data Rules
+## 28. URL and Data Rules
 
 This repository keeps Brain URLs and data structures predictable.
 
@@ -729,29 +1259,60 @@ Use:
 - clean route names for categories
 - explicit tag paths when linking tags
 
+Common route patterns:
+
+```mdx
+/brain/setups/homelab
+/brain/tag/homelab
+/brain/experiments
+```
+
+Linking rules:
+
+- use `/brain/...` paths for internal article links
+- use `related` in frontmatter for graph relationships by document `id`
+- markdown links to Brain pages create backlinks automatically
+- tag links use `/brain/tag/<tag>`
+- category index pages use `/brain/<category>`
+
+Search and previews:
+
+- `description` is used in cards, metadata, and previews
+- if `description` is omitted, the system falls back to the first plain-text excerpt of the body
+- code blocks, inline code, math, and markup are stripped from that plain-text excerpt
+
 Do not encode personality into URL paths or schema names.
 Personality belongs in copy, titles, and the writing itself.
 
-## 23. Practical Authoring Checklist
+## 29. Practical Authoring Checklist
 
 Before publishing a Brain document:
 
+- confirm the file lives under `content/` with a `.mdx` extension
 - confirm the frontmatter is complete
 - choose one clear H1
-- break content with H2s and H3s
+- break content with H2s and H3s so the table of contents stays useful
 - use code blocks only for actual code or structured output
+- use `$...$` for inline math and `$$...$$` for display math instead of equation images
+- use standard markdown images or `ImageGallery` / `PhotoGrid` instead of raw HTML `<img>`
 - use callouts for important notes, not every note
-- link related Brain pages instead of repeating them
-- preview the page on mobile and desktop
+- link related Brain pages with `/brain/...` markdown links instead of repeating them
+- add `related` ids when a page should be connected but not explicitly linked in prose
+- set `downloadPath` and artifact fields when the page is a downloadable document
+- preview the page on mobile and desktop, including wide equations and code blocks
 
-## 24. Visual Summary
+## 30. Visual Summary
 
 A finished Brain MDX page should look like this:
 
 - a strong title and concise description at the top
 - soft neutral glass panels for notes and code
 - readable prose with comfortable spacing
+- LaTeX equations rendered inline and as centered display blocks
+- zoomable images and glass-framed media embeds
+- optional artifact snapshot panel for downloadable documents
 - muted anchors and inline links
+- a table of contents generated from H2-H4 headings
 - enough hierarchy to scan quickly, but not so much contrast that it feels like a separate product
 
 If the page feels more like a glossy docs site than a page inside ciderboi.xyz, it is probably too cold or too blue.

@@ -144,6 +144,9 @@ function parseArchiveLinks(value: unknown): Array<{ title: string; href: string 
 
 function cleanPlainText(content: string): string {
   return content
+    .replace(/\$\$[\s\S]*?\$\$/g, " ")
+    .replace(/\$[^$\n]+\$/g, " ")
+    .replace(/```mermaid[\s\S]*?```/g, " ")
     .replace(/```[\s\S]*?```/g, " ")
     .replace(/`[^`]*`/g, " ")
     .replace(/<[^>]+>/g, " ")

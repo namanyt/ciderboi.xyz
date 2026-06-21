@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "katex/dist/katex.min.css";
+@import "../components/markdown/MathStyles.css";
+@import "../components/markdown/MermaidStyles.css";
 
 @custom-variant dark (&:is(.dark *));
 

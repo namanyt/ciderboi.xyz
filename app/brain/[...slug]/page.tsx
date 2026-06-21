@@ -1,17 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { evaluate } from "@mdx-js/mdx";
-import type { ReactNode } from "react";
-import * as jsxDevRuntime from "react/jsx-dev-runtime";
-import * as jsxRuntime from "react/jsx-runtime";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypePrettyCode from "rehype-pretty-code";
-import rehypeSlug from "rehype-slug";
-import remarkGfm from "remark-gfm";
-import remarkMdx from "remark-mdx";
 import { BrainBreadcrumbs, JsonLd, TableOfContents, type TocItem } from "@/app/brain/_components";
-import { getMDXComponents } from "@/components/mdx";
+import { renderMarkdownBody } from "@/lib/markdown/processor";
 import {
   generateStaticParams,
   getAdjacentDocuments,
@@ -23,22 +14,6 @@ import {
 import type { Document } from "@/lib/content/types";
 
 export const dynamicParams = false;
-
-type MDXContentComponent = (props: {
-  components?: ReturnType<typeof getMDXComponents>;
-}) => ReactNode;
-
-const mdxRuntime = process.env.NODE_ENV === "production" ? jsxRuntime : { ...jsxRuntime, ...jsxDevRuntime };
-
-const prettyCodeOptions = {
-  theme: "github-dark-default",
-  keepBackground: false,
-  onVisitLine(node: { children: unknown[] }) {
-    if (node.children.length === 0) {
-      node.children = [{ type: "text", value: " " }];
-    }
-  },
-};
 
 function normalizeHeadingText(value: string): string {
   return value
@@ -81,22 +56,6 @@ function createTableOfContents(source: string): TocItem[] {
   }
 
   return items;
-}
-
-async function renderDocumentBody(source: string): Promise<ReactNode> {
-  const evaluatedModule = (await evaluate(source, {
-    ...mdxRuntime,
-    development: process.env.NODE_ENV !== "production",
-    remarkPlugins: [remarkGfm, remarkMdx],
-    rehypePlugins: [
-      rehypeSlug,
-      [rehypePrettyCode, prettyCodeOptions],
-      [rehypeAutolinkHeadings, { behavior: "append", properties: { className: ["brain-heading-anchor"], "aria-label": "Jump to heading", title: "Jump to heading" } }],
-    ],
-  })) as { default: MDXContentComponent };
-
-  const Content = evaluatedModule.default;
-  return <Content components={getMDXComponents()} />;
 }
 
 function schemaTypeForCategory(category: string): "Article" | "TechArticle" | "Person" | "CreativeWork" | "SoftwareSourceCode" {
@@ -222,7 +181,7 @@ export default async function BrainDocumentPage({ params }: { params: Promise<{ 
   }
 
   const [content, relatedDocuments, backlinks, adjacent] = await Promise.all([
-    renderDocumentBody(document.body),
+    renderMarkdownBody(document.body),
     getRelatedDocuments(document, 10),
     getBacklinks(document),
     getAdjacentDocuments(document),
