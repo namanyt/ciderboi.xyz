@@ -41,6 +41,9 @@ importers:
       lucide-react:
         specifier: ^0.483.0
         version: 0.483.0(react@19.0.0)
+      mermaid:
+        specifier: ^11.15.0
+        version: 11.15.0
       next:
         specifier: 16.0.10
         version: 16.0.10(@babel/core@7.28.5)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -138,9 +141,6 @@ importers:
       eslint-plugin-react-hooks:
         specifier: 5.2.0
         version: 5.2.0(eslint@9.23.0(jiti@2.4.2))
-      playwright:
-        specifier: ^1.61.0
-        version: 1.61.0
       prettier:
         specifier: 3.5.3
         version: 3.5.3
@@ -7453,13 +7453,15 @@ snapshots:
 
   picomatch@4.0.3: {}
 
-  playwright-core@1.61.0: {}
+  playwright-core@1.61.0:
+    optional: true
 
   playwright@1.61.0:
     dependencies:
       playwright-core: 1.61.0
     optionalDependencies:
       fsevents: 2.3.2
+    optional: true
 
   points-on-curve@0.2.0: {}
 

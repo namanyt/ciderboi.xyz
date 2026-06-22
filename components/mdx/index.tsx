@@ -3,6 +3,7 @@ import { isValidElement } from "react";
 import Link from "next/link";
 import { codeToHtml } from "shiki";
 import { CopyCodeButton } from "@/components/mdx/CopyCodeButton";
+import { Math } from "@/components/mdx/Math";
 import { ZoomImage } from "@/components/mdx/ZoomImage";
 import { cn } from "@/lib/utils";
 
@@ -292,6 +293,7 @@ export function getMDXComponents() {
     figure: CodeFigure,
     Callout,
     CodeBlock,
+    Math,
     ImageGallery,
     PhotoGrid,
     Timeline,

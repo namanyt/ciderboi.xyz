@@ -3,7 +3,7 @@ export const brainMermaidConfig = {
   flowchart: {
     useMaxWidth: true,
     htmlLabels: false,
-    curve: "basis",
+    curve: "basis" as const,
     padding: 14,
     nodeSpacing: 34,
     rankSpacing: 44,
@@ -34,7 +34,6 @@ export const brainMermaidConfig = {
 };
 
 export const rehypeMermaidOptions = {
-  strategy: "inline-svg" as const,
-  colorScheme: "dark",
+  strategy: "pre-mermaid" as const,
   mermaidConfig: brainMermaidConfig,
 };
