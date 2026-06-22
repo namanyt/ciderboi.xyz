@@ -1,6 +1,23 @@
 import type { Element, Root } from "hast";
 import { visit } from "unist-util-visit";
 
+function toDiagramText(node: Element): string {
+  const chunks: string[] = [];
+
+  const walk = (current: Element) => {
+    for (const child of current.children) {
+      if (child.type === "text") {
+        chunks.push(child.value);
+      } else if (child.type === "element") {
+        walk(child);
+      }
+    }
+  };
+
+  walk(node);
+  return chunks.join("");
+}
+
 function hasClassName(className: unknown, token: string): boolean {
   if (typeof className === "string") {
     return className.split(/\s+/).includes(token);
@@ -13,18 +30,22 @@ function hasClassName(className: unknown, token: string): boolean {
   return false;
 }
 
-function isMermaidSvg(id: unknown): boolean {
-  return typeof id === "string" && id.startsWith("mermaid");
+function isMermaidPreBlock(node: Element): boolean {
+  return node.tagName === "pre" && hasClassName(node.properties?.className, "mermaid");
 }
 
-function wrapMermaid(node: Element): Element {
+function isMermaidCodeBlock(node: Element): boolean {
+  return node.tagName === "code" && hasClassName(node.properties?.className, "language-mermaid");
+}
+
+function toMermaidChart(diagram: string): Element {
   return {
     type: "element",
-    tagName: "div",
+    tagName: "MermaidChart",
     properties: {
-      className: ["brain-mermaid", "not-prose"],
+      chart: diagram,
     },
-    children: [node],
+    children: [],
   };
 }
 
@@ -35,13 +56,22 @@ export function rehypeMermaidWrapper() {
         return;
       }
 
-      if (node.tagName === "pre" && hasClassName(node.properties?.className, "mermaid")) {
-        parent.children[index] = wrapMermaid(node);
+      if (isMermaidPreBlock(node)) {
+        parent.children[index] = toMermaidChart(toDiagramText(node));
         return;
       }
 
-      if (node.tagName === "svg" && isMermaidSvg(node.properties?.id)) {
-        parent.children[index] = wrapMermaid(node);
+      if (node.tagName !== "pre") {
+        return;
+      }
+
+      const mermaidCode = node.children.find(
+        (child): child is Element =>
+          child.type === "element" && child.tagName === "code" && isMermaidCodeBlock(child),
+      );
+
+      if (mermaidCode) {
+        parent.children[index] = toMermaidChart(toDiagramText(node));
       }
     });
   };

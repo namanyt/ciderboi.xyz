@@ -33,7 +33,3 @@ export const brainMermaidConfig = {
   },
 };
 
-export const rehypeMermaidOptions = {
-  strategy: "pre-mermaid" as const,
-  mermaidConfig: brainMermaidConfig,
-};

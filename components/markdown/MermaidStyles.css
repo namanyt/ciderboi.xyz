@@ -14,12 +14,6 @@
   overflow-y: hidden;
 }
 
-.brain-prose .brain-mermaid pre.mermaid:not([data-processed]) {
-  color: transparent;
-  user-select: none;
-  min-height: 12rem;
-}
-
 .brain-prose .brain-media {
   display: block;
   width: 100%;

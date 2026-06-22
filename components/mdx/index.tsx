@@ -5,6 +5,7 @@ import { codeToHtml } from "shiki";
 import { CopyCodeButton } from "@/components/mdx/CopyCodeButton";
 import { Math } from "@/components/mdx/Math";
 import { ZoomImage } from "@/components/mdx/ZoomImage";
+import { MermaidChart } from "@/components/markdown/MermaidChart";
 import { cn } from "@/lib/utils";
 
 type BoxTone = "info" | "warning" | "success" | "note";
@@ -294,6 +295,7 @@ export function getMDXComponents() {
     Callout,
     CodeBlock,
     Math,
+    MermaidChart,
     ImageGallery,
     PhotoGrid,
     Timeline,
