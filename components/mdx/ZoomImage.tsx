@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentPropsWithoutRef } from "react";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
@@ -17,19 +17,13 @@ function clamp(value: number, min: number, max: number) {
 
 export function ZoomImage({ alt, src, className, style, ...props }: ZoomImageProps) {
   const [zoom, setZoom] = useState(1);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [baseFitSize, setBaseFitSize] = useState<{ width: number; height: number } | null>(null);
   const modalImageRef = useRef<HTMLImageElement | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   const normalizedClassName = className?.trim() ?? "";
-  const classTokens = normalizedClassName.length > 0 ? normalizedClassName.split(/\s+/) : [];
-  const isDefaultMarkdownImageClass =
-    classTokens.length === 3
-    && classTokens.includes("w-full")
-    && classTokens.includes("max-h-[24rem]")
-    && classTokens.includes("object-contain");
-
-  const effectiveClassName = isDefaultMarkdownImageClass ? "" : normalizedClassName;
-  const hasCustomSizing = effectiveClassName.length > 0;
+  const hasCustomSizing = normalizedClassName.length > 0;
 
   const imageAlt = alt?.trim() || "Image";
   const canZoomOut = zoom > MIN_ZOOM;
@@ -53,22 +47,51 @@ export function ZoomImage({ alt, src, className, style, ...props }: ZoomImagePro
     setBaseFitSize({ width: rect.width, height: rect.height });
   };
 
-  const previewClassName = hasCustomSizing
-    ? effectiveClassName
-    : "aspect-[4/3] w-full object-cover";
-  const usesFullWidthLayout = Boolean(previewClassName.match(/(^|\s)(w-full|aspect-|h-full)(\s|$)/));
-  const triggerClassName = usesFullWidthLayout
-    ? "group my-8 block w-full overflow-hidden rounded-2xl border border-white/15 bg-black/20 text-left shadow-[0_20px_60px_-35px_rgba(0,0,0,0.7)] backdrop-blur-sm transition hover:border-white/30 hover:shadow-[0_30px_80px_-40px_rgba(0,0,0,0.85)]"
-    : "group my-8 mx-auto inline-flex w-fit max-w-full overflow-hidden rounded-2xl border border-white/15 bg-black/20 p-2 text-left shadow-[0_20px_60px_-35px_rgba(0,0,0,0.7)] backdrop-blur-sm transition hover:border-white/30 hover:shadow-[0_30px_80px_-40px_rgba(0,0,0,0.85)]";
+  const centerScroll = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const { scrollWidth, scrollHeight, clientWidth, clientHeight } = container;
+        container.scrollLeft = Math.max(0, (scrollWidth - clientWidth) / 2);
+        container.scrollTop = Math.max(0, (scrollHeight - clientHeight) / 2);
+      });
+    });
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!isDialogOpen || !baseFitSize) {
+      return;
+    }
+
+    centerScroll();
+  }, [isDialogOpen, baseFitSize, centerScroll]);
+
+  const previewClassName = hasCustomSizing ? normalizedClassName : "";
+  const usesFullWidthLayout = hasCustomSizing
+    && Boolean(previewClassName.match(/(^|\s)(w-full|aspect-|h-full)(\s|$)/));
+  const triggerClassName = hasCustomSizing
+    ? usesFullWidthLayout
+      ? "group my-8 block w-full overflow-hidden rounded-2xl border border-white/15 bg-black/20 text-left shadow-[0_20px_60px_-35px_rgba(0,0,0,0.7)] backdrop-blur-sm transition hover:border-white/30 hover:shadow-[0_30px_80px_-40px_rgba(0,0,0,0.85)]"
+      : "group my-8 mx-auto inline-flex w-fit max-w-full overflow-hidden rounded-2xl border border-white/15 bg-black/20 p-2 text-left shadow-[0_20px_60px_-35px_rgba(0,0,0,0.7)] backdrop-blur-sm transition hover:border-white/30 hover:shadow-[0_30px_80px_-40px_rgba(0,0,0,0.85)]"
+    : "brain-media not-prose group w-full";
 
   return (
     <Dialog
       onOpenChange={(isOpen) => {
+        setIsDialogOpen(isOpen);
+
         if (isOpen) {
           setZoom(1);
           setBaseFitSize(null);
           requestAnimationFrame(() => {
-            captureBaseFitSize();
+            if (modalImageRef.current?.complete) {
+              captureBaseFitSize();
+            }
+            centerScroll();
           });
           return;
         }
@@ -87,7 +110,7 @@ export function ZoomImage({ alt, src, className, style, ...props }: ZoomImagePro
             src={src}
             alt={imageAlt}
             className={cn(
-              "block transition duration-300 group-hover:scale-[1.01]",
+              hasCustomSizing && "block transition duration-300 group-hover:scale-[1.01]",
               previewClassName,
             )}
             style={{
@@ -131,7 +154,13 @@ export function ZoomImage({ alt, src, className, style, ...props }: ZoomImagePro
             </button>
             <button
               type="button"
-              onClick={() => setZoom(1)}
+              onClick={() => {
+                setZoom(1);
+                requestAnimationFrame(() => {
+                  captureBaseFitSize();
+                  centerScroll();
+                });
+              }}
               className="rounded-md border border-white/20 px-3 py-1.5 text-xs uppercase tracking-wide text-white/85 transition hover:border-white/40 hover:bg-white/10"
             >
               Reset
@@ -139,17 +168,19 @@ export function ZoomImage({ alt, src, className, style, ...props }: ZoomImagePro
           </div>
         </div>
 
-        <div className="grid h-[calc(96dvh-4.5rem)] place-items-center overflow-auto p-3 sm:p-8">
+        <div
+          ref={scrollContainerRef}
+          className="grid h-[calc(96dvh-4.5rem)] place-items-center overflow-auto p-3 sm:p-8"
+        >
           <img
             ref={modalImageRef}
             src={src}
             alt={imageAlt}
             onLoad={() => {
-              if (!baseFitSize) {
-                requestAnimationFrame(() => {
-                  captureBaseFitSize();
-                });
-              }
+              requestAnimationFrame(() => {
+                captureBaseFitSize();
+                centerScroll();
+              });
             }}
             className="object-contain"
             style={{

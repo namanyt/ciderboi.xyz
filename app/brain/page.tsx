@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/app/brain/_components";
 import {
   getAllCategories,
-  getAllTags,
   getCanonicalUrl,
+  getPopularTags,
   getFeaturedDocuments,
   getKnowledgeStats,
   getRecentDocuments,
@@ -30,11 +30,11 @@ export const metadata: Metadata = {
 };
 
 export default async function BrainHomePage() {
-  const [featured, recent, categories, tags, stats] = await Promise.all([
+  const [featured, recent, categories, popularTags, stats] = await Promise.all([
     getFeaturedDocuments(6),
     getRecentDocuments(10),
     getAllCategories(),
-    getAllTags(),
+    getPopularTags(),
     getKnowledgeStats(),
   ]);
 
@@ -51,7 +51,6 @@ export default async function BrainHomePage() {
   };
 
   const featuredDocument = featured[0] ?? recent[0] ?? null;
-  const popularTags = [...tags].sort((left, right) => right.count - left.count).slice(0, 24);
 
   return (
     <div className="relative mx-auto w-full max-w-6xl px-4 py-8 pb-28 sm:px-6 sm:py-12">
@@ -140,7 +139,12 @@ export default async function BrainHomePage() {
           <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white">Popular Tags</h2>
           <div className="mt-6 flex flex-wrap gap-2.5">
             {popularTags.map((tag) => (
-              <Link key={tag.slug} href={`/brain/tag/${tag.slug}`} className="rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-sm text-gray-200 transition hover:bg-white/20 hover:text-white">
+              <Link
+                key={tag.slug}
+                href={`/brain/tag/${tag.slug}`}
+                title={`${tag.count} ${tag.count === 1 ? "document" : "documents"}`}
+                className="rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-sm text-gray-200 transition hover:bg-white/20 hover:text-white"
+              >
                 #{tag.name}
               </Link>
             ))}

@@ -50,6 +50,7 @@ export interface Tag {
   name: string;
   slug: string;
   count: number;
+  latestDocumentAt: string;
   relatedTags: string[];
 }
 

@@ -201,6 +201,10 @@ function isPublicIndexable(document: Document): boolean {
   return (document.visibility ?? "public") === "public" && document.index !== false;
 }
 
+function getDocumentActivityTime(document: Document): number {
+  return new Date(document.updated ?? document.created).getTime();
+}
+
 async function buildContentCache(): Promise<CachedContent> {
   const mdxFiles = await scanMdxFiles(CONTENT_ROOT);
   const documents: Document[] = [];
@@ -492,10 +496,16 @@ export async function getAllTags(): Promise<Tag[]> {
         }
       }
 
+      const latestDocumentAt = visibleDocuments.reduce((latest, document) => {
+        const activity = getDocumentActivityTime(document);
+        return activity > latest ? activity : latest;
+      }, 0);
+
       return {
         name,
         slug: name,
         count: visibleDocuments.length,
+        latestDocumentAt: new Date(latestDocumentAt).toISOString().slice(0, 10),
         relatedTags: Array.from(relatedTagCounts.entries())
           .sort((a, b) => b[1] - a[1])
           .slice(0, 8)
@@ -506,6 +516,24 @@ export async function getAllTags(): Promise<Tag[]> {
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return tags;
+}
+
+function compareTagsByPopularity(left: Tag, right: Tag): number {
+  if (right.count !== left.count) {
+    return right.count - left.count;
+  }
+
+  const latestDelta = new Date(right.latestDocumentAt).getTime() - new Date(left.latestDocumentAt).getTime();
+  if (latestDelta !== 0) {
+    return latestDelta;
+  }
+
+  return left.name.localeCompare(right.name);
+}
+
+export async function getPopularTags(limit = 24): Promise<Tag[]> {
+  const tags = await getAllTags();
+  return [...tags].sort(compareTagsByPopularity).slice(0, limit);
 }
 
 export async function getRelatedDocuments(document: Document, limit = 10): Promise<Document[]> {

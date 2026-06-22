@@ -175,7 +175,7 @@ export function Timeline({ items = [] }: { items: Array<{ title: string; date?: 
           {index < items.length - 1 ? <span aria-hidden className="absolute -bottom-[1.9375rem] left-2 top-[0.6875rem] w-px bg-white/15" /> : null}
           <span className="absolute left-[0.24412555rem] ml-[0.0007rem] top-1.5 h-2.5 w-2.5 rounded-full bg-white/70" />
           <p className="text-base font-semibold text-white">{item.title}</p>
-          {item.date ? <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gray-500">{item.date}</p> : null}
+          {item.date ? <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gray-300">{item.date}</p> : null}
           {item.description ? <p className="mt-2 text-sm leading-7 text-gray-200">{item.description}</p> : null}
         </li>
       ))}

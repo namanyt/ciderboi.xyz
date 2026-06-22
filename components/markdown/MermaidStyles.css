@@ -1,13 +1,44 @@
-.brain-prose .brain-mermaid {
+.brain-prose .brain-mermaid,
+.brain-prose .brain-media {
   margin-top: 2rem;
   margin-bottom: 2rem;
-  overflow-x: auto;
-  overflow-y: hidden;
   padding: 1.25rem 1.5rem;
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: #12141a;
   isolation: isolate;
+}
+
+.brain-prose .brain-mermaid {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.brain-prose .brain-media {
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 150ms ease;
+}
+
+.brain-prose .brain-media:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.brain-prose .brain-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 300ms ease;
+}
+
+.brain-prose .brain-media:hover img {
+  transform: scale(1.01);
 }
 
 .brain-prose .brain-mermaid svg {
