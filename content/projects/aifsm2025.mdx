@@ -175,7 +175,7 @@ The results workflow, as I understand it: when an event finished, the result got
 
 One thing I want to be clear about: **the live medal tally is not a backend engineering feat.** The tally is computed client-side, off a points formula I worked out by hand. Individual event results are worth 5/3/2/1 points for gold through fourth; team events are 10/6/4/2. The "live" part is just that the data behind it updates as results are published. The points math is straightforward and runs in the browser. I'm mentioning this because the feature looks more sophisticated than it is, and I'd rather represent it accurately.
 
-<Math latex="\\text{Total Points} = \\sum_{\\text{individual}} \\begin{cases} 5 & \\text{gold} \\\\ 3 & \\text{silver} \\\\ 2 & \\text{bronze} \\\\ 1 & \\text{4th} \\end{cases} + \\sum_{\\text{team}} \\begin{cases} 10 & \\text{gold} \\\\ 6 & \\text{silver} \\\\ 4 & \\text{bronze} \\\\ 2 & \\text{4th} \\end{cases}" />
+<Math latex={String.raw`\text{Total Points} = \sum_{\text{individual}} \begin{cases} 5 & \text{gold} \\ 3 & \text{silver} \\ 2 & \text{bronze} \\ 1 & \text{4th} \end{cases} + \sum_{\text{team}} \begin{cases} 10 & \text{gold} \\ 6 & \text{silver} \\ 4 & \text{bronze} \\ 2 & \text{4th} \end{cases}`} />
 
 {/* IMAGES — found both of these in the photo set, and they're a near-literal match
     for this section: one shows the actual "Control Room" signage, the other the
