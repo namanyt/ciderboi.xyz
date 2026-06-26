@@ -144,7 +144,7 @@ export default function Home({
                 {
                   showFullAbout && (
                     <p>
-                      <Link href="/brain" className="inline-flex items-center transition hover:text-white font-mono">
+                      <Link href="/brain" className="inline-flex items-center text-cyan-100 transition hover:text-white font-mono">
                         [ see my brain ]
                       </Link>
                     </p>

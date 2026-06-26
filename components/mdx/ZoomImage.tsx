@@ -81,6 +81,7 @@ export function ZoomImage({ alt, src, className, style, ...props }: ZoomImagePro
 
   return (
     <Dialog
+      open={isDialogOpen}
       onOpenChange={(isOpen) => {
         setIsDialogOpen(isOpen);
 
@@ -164,6 +165,14 @@ export function ZoomImage({ alt, src, className, style, ...props }: ZoomImagePro
               className="rounded-md border border-white/20 px-3 py-1.5 text-xs uppercase tracking-wide text-white/85 transition hover:border-white/40 hover:bg-white/10"
             >
               Reset
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsDialogOpen(false)}
+              className="rounded-md border border-white/20 px-3 py-1.5 text-xs uppercase tracking-wide text-white/85 transition hover:border-white/40 hover:bg-white/10"
+              aria-label="Close zoom view"
+            >
+              ×
             </button>
           </div>
         </div>
