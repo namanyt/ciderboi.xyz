@@ -1,6 +1,23 @@
 {
   "projects": [
     {
+      "id": "engine",
+      "title": "Engine",
+      "description": "A reusable C++ game engine with modular OpenGL rendering, ECS architecture, and HDR post-processing.",
+      "category": "Game Development",
+      "tags": [
+        "C++",
+        "OpenGL",
+        "ECS",
+        "Game Engine",
+        "Graphics",
+        "Rendering",
+        "Systems Programming"
+      ],
+      "image": "",
+      "url": "https://github.com/namanyt/engine"
+    },
+    {
       "id": "spm-portal",
       "title": "Student Project Management Portal (SPM)",
       "description": "A full-stack web platform for managing university projects, evaluations, and academic administration.",
@@ -63,7 +80,7 @@
     {
       "id": "fython",
       "title": "Fython",
-      "description": "A personal finance management platform featuring transaction tracking, automated categorization, anomaly detection, and analytical reporting tools.",
+      "description": "A personal finance management platform with transaction tracking, anomaly detection, and analytical reporting.",
       "category": "FullStack Web Development",
       "tags": [
         "Python",
