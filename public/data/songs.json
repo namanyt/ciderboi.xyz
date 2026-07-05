@@ -65,6 +65,18 @@
           },
           "preSaveUrl": "https://share.amuse.io/track/nitya-naman-drifting-apart",
           "url": "http://open.spotify.com/album/1l0MEgteDIbRREVVWLqR8S"
+        },
+        {
+          "id": 8,
+          "title": "Soopersows",
+          "releaseDate": "2026-07-19",
+          "thumbnail": "https://cdn.amuse.io/eec6658d-7bae-4f47-b6b0-83739b8e4ede.400x400.jpg",
+          "thumbnailSize": {
+            "width": 400,
+            "height": 400
+          },
+          "preSaveUrl": "https://share.amuse.io/track/nitya-naman-soopersows",
+          "url": "https://open.spotify.com/album/2blSc8dBIpC1nUSqU3Lq5s"
         }
       ],
       "albums": [
