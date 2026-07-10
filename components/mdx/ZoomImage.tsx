@@ -128,27 +128,27 @@ export function ZoomImage({ alt, src, className, style, ...props }: ZoomImagePro
         </button>
       </DialogTrigger>
 
-      <DialogContent className="max-h-[96dvh] max-w-[96vw] overflow-hidden border-white/15 bg-black/95 p-0 text-white shadow-2xl sm:max-w-[92vw]">
+      <DialogContent className="flex h-dvh max-w-full flex-col overflow-hidden border-white/15 bg-black/95 p-0 text-white shadow-2xl">
         <DialogTitle className="sr-only">{imageAlt}</DialogTitle>
 
-        <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3 text-sm">
-          <p className="truncate text-white/85">{imageAlt}</p>
-          <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center justify-between gap-2 border-b border-white/10 px-3 py-2 sm:gap-3 sm:px-4 sm:py-3 sm:text-sm">
+          <p className="truncate text-sm text-white/85 sm:text-base">{imageAlt}</p>
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
             <button
               type="button"
               disabled={!canZoomOut}
               onClick={() => setZoom((current) => clamp(current - ZOOM_STEP, MIN_ZOOM, MAX_ZOOM))}
-              className="rounded-md border border-white/20 px-3 py-1.5 text-xs uppercase tracking-wide text-white/85 transition hover:border-white/40 hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-md border border-white/20 px-2.5 py-1 text-xs uppercase tracking-wide text-white/85 transition hover:border-white/40 hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50 sm:px-3 sm:py-1.5"
               aria-label="Zoom out"
             >
-              -
+              −
             </button>
-            <span className="min-w-16 text-center text-xs text-white/70">{zoomPercent}%</span>
+            <span className="min-w-[3.5rem] text-center text-xs text-white/70 sm:min-w-16">{zoomPercent}%</span>
             <button
               type="button"
               disabled={!canZoomIn}
               onClick={() => setZoom((current) => clamp(current + ZOOM_STEP, MIN_ZOOM, MAX_ZOOM))}
-              className="rounded-md border border-white/20 px-3 py-1.5 text-xs uppercase tracking-wide text-white/85 transition hover:border-white/40 hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-md border border-white/20 px-2.5 py-1 text-xs uppercase tracking-wide text-white/85 transition hover:border-white/40 hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50 sm:px-3 sm:py-1.5"
               aria-label="Zoom in"
             >
               +
@@ -162,14 +162,15 @@ export function ZoomImage({ alt, src, className, style, ...props }: ZoomImagePro
                   centerScroll();
                 });
               }}
-              className="rounded-md border border-white/20 px-3 py-1.5 text-xs uppercase tracking-wide text-white/85 transition hover:border-white/40 hover:bg-white/10"
+              className="rounded-md border border-white/20 px-2.5 py-1 text-xs uppercase tracking-wide text-white/85 transition hover:border-white/40 hover:bg-white/10 sm:px-3 sm:py-1.5"
             >
-              Reset
+              <span className="sm:hidden">Rst</span>
+              <span className="hidden sm:inline">Reset</span>
             </button>
             <button
               type="button"
               onClick={() => setIsDialogOpen(false)}
-              className="rounded-md border border-white/20 px-3 py-1.5 text-xs uppercase tracking-wide text-white/85 transition hover:border-white/40 hover:bg-white/10"
+              className="rounded-md border border-white/20 px-2.5 py-1 text-xs uppercase tracking-wide text-white/85 transition hover:border-white/40 hover:bg-white/10 sm:px-3 sm:py-1.5"
               aria-label="Close zoom view"
             >
               ×
@@ -179,7 +180,7 @@ export function ZoomImage({ alt, src, className, style, ...props }: ZoomImagePro
 
         <div
           ref={scrollContainerRef}
-          className="grid h-[calc(96dvh-4.5rem)] place-items-center overflow-auto p-3 sm:p-8"
+          className="grid flex-1 place-items-center overflow-auto p-2 sm:p-3 md:p-8"
         >
           <img
             ref={modalImageRef}
@@ -191,12 +192,10 @@ export function ZoomImage({ alt, src, className, style, ...props }: ZoomImagePro
                 centerScroll();
               });
             }}
-            className="object-contain"
+            className="max-h-full max-w-full object-contain"
             style={{
-              width: renderedWidth ?? "100%",
-              height: renderedHeight ?? "100%",
-              maxWidth: renderedWidth ? "none" : "100%",
-              maxHeight: renderedHeight ? "none" : "100%",
+              width: renderedWidth ?? undefined,
+              height: renderedHeight ?? undefined,
               transition: "width 140ms ease, height 140ms ease",
             }}
           />
