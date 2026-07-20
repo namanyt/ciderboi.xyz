@@ -175,8 +175,9 @@ export function SongPlayerTrack({ title, artists, id, url, releaseDate, thumbnai
                     if (!preSaveUrl) event.preventDefault();
                   }}
                   aria-disabled={!isPreSaveAvailable}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white/30 border border-white/30 flex items-center justify-center text-white transition-all flex-shrink-0 ${!isPreSaveAvailable ? "opacity-50 cursor-not-allowed hover:bg-white/20" : "cursor-pointer"
-                    }`}
+                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white/30 border border-white/30 flex items-center justify-center text-white transition-all flex-shrink-0 ${
+                    !isPreSaveAvailable ? "opacity-50 cursor-not-allowed hover:bg-white/20" : "cursor-pointer"
+                  }`}
                   aria-label={isPreSaveAvailable ? `Pre-save ${title}` : "Pre-save not available yet"}
                   title={isPreSaveAvailable ? "Pre-save" : "Pre-save not available yet"}
                 >

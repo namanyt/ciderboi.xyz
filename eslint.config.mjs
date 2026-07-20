@@ -1,37 +1,11 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: {},
-});
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import prettierRecommended from "eslint-plugin-prettier/recommended";
 
 const eslintConfig = [
-  ...compat.extends(
-    "next/core-web-vitals",
-    "next/typescript",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended", // Enables Prettier and disables conflicting ESLint rules
-  ),
+  ...nextCoreWebVitals,
+  prettierRecommended,
   {
-    rules: {
-      "@typescript-eslint/no-unused-vars": "warn",
-      "react-hooks/exhaustive-deps": "warn",
-    },
-  },
-  {
-    files: ["*.ts", "*.tsx"],
-    languageOptions: {
-      parser: "@typescript-eslint/parser",
-      parserOptions: {
-        project: "./tsconfig.json",
-      },
-    },
+    files: ["**/*.ts", "**/*.tsx"],
     rules: {
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-explicit-any": "warn",
@@ -44,7 +18,7 @@ const eslintConfig = [
     },
   },
   {
-    files: ["*.js", "*.jsx"],
+    files: ["**/*.js", "**/*.jsx"],
     rules: {
       "no-unused-vars": "warn",
       "max-len": ["warn", { code: 120 }],

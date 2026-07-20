@@ -8,6 +8,12 @@ import { parseReleaseMs, toCountdownParts } from "@/lib/release-time";
 
 export default function Music({ data }: Props) {
   const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+  const [nowMs, setNowMs] = useState(() => Date.now());
+
+  useEffect(() => {
+    const id = window.setInterval(() => setNowMs(Date.now()), 1000);
+    return () => window.clearInterval(id);
+  }, []);
 
   function ReleaseCountdownCard({
     releaseMs,
@@ -61,14 +67,14 @@ export default function Music({ data }: Props) {
   const shouldHideUpcoming = (releaseDate: string | null | undefined) => {
     const ms = parseReleaseMs(releaseDate);
     if (!ms) return false;
-    const diff = ms - Date.now();
+    const diff = ms - nowMs;
     return diff > ONE_WEEK_MS;
   };
 
   const isUpcoming = (releaseDate: string | null | undefined) => {
     const ms = parseReleaseMs(releaseDate);
     if (!ms) return false;
-    return ms - Date.now() > 0;
+    return ms - nowMs > 0;
   };
 
   const hasAnyItemsInFile = (catalog: Props["data"]["current"][number]) => {
@@ -80,17 +86,16 @@ export default function Music({ data }: Props) {
   const getNextUpcoming = (catalog: Props["data"]["current"][number]) => {
     const albums = catalog.albums ?? [];
     const singles = catalog.singles ?? [];
-    const now = Date.now();
 
     const candidates: Array<{ title: string; releaseDate: string; ms: number }> = [];
 
     for (const a of albums) {
       const ms = parseReleaseMs(a.releaseDate);
-      if (ms && ms > now && a.releaseDate) candidates.push({ title: a.title, releaseDate: a.releaseDate, ms });
+      if (ms && ms > nowMs && a.releaseDate) candidates.push({ title: a.title, releaseDate: a.releaseDate, ms });
     }
     for (const t of singles) {
       const ms = parseReleaseMs(t.releaseDate);
-      if (ms && ms > now && t.releaseDate) candidates.push({ title: t.title, releaseDate: t.releaseDate, ms });
+      if (ms && ms > nowMs && t.releaseDate) candidates.push({ title: t.title, releaseDate: t.releaseDate, ms });
     }
 
     candidates.sort((x, y) => x.ms - y.ms);
@@ -161,11 +166,7 @@ export default function Music({ data }: Props) {
                     preSaveUrl={album.preSaveUrl}
                     tracks={album.tracks.map((t) => ({
                       ...t,
-                      artists: t.artists?.length
-                        ? t.artists
-                        : album.artists?.length
-                          ? album.artists
-                          : [catalog.artist],
+                      artists: t.artists?.length ? t.artists : album.artists?.length ? album.artists : [catalog.artist],
                     }))}
                   />
                 </div>
@@ -191,7 +192,10 @@ export default function Music({ data }: Props) {
           <>
             {nextUpcoming && shouldShowCountdown ? (
               <div className="columns-1 sm:columns-1 md:columns-1 lg:columns-2 gap-6">
-                <div key={`countdown-only-${catalog.artist.name}-${nextUpcoming.title}`} className="break-inside-avoid mb-6">
+                <div
+                  key={`countdown-only-${catalog.artist.name}-${nextUpcoming.title}`}
+                  className="break-inside-avoid mb-6"
+                >
                   <ReleaseCountdownCard releaseMs={nextUpcoming.ms} title={nextUpcoming.title} showTitle={false} />
                 </div>
               </div>

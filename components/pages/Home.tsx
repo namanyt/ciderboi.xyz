@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useNetwork } from "@/components/context/Network";
 import { Project, Experience, SkillGroup } from "@/lib/types";
@@ -10,6 +10,11 @@ import NavigationButton from "@/components/NavigationButton";
 import { redirect } from "next/navigation";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import Link from "next/link";
+
+function generatePastelColor() {
+  const hue = Math.floor(Math.random() * 360);
+  return `hsl(${hue}, 70%, 80%)`;
+}
 
 export default function Home({
   projects,
@@ -90,55 +95,63 @@ export default function Home({
               className={`text-white/80 leading-relaxed text-sm mb-3 break-words ${showFullAbout ? "" : "cursor-pointer"}`}
               onClick={() => setShowFullAbout(true)}
             >
-              I'm a Computer Science student at UPES who spends most of his time building software, infrastructure, games, and the occasional hardware project.
-              I enjoy turning ideas into working systems, learning whatever tools a problem demands, and exploring the space where technology, creativity,
-              and engineering overlap. Most of my projects start with curiosity and end with me diving far deeper into a topic than originally intended.{" "}
-              {!showFullAbout && <span className="ml-1 text-xs text-white/70 underline">Read more...</span>}
+              I'm a Computer Science student at UPES who spends most of his time building software, infrastructure,
+              games, and the occasional hardware project. I enjoy turning ideas into working systems, learning whatever
+              tools a problem demands, and exploring the space where technology, creativity, and engineering overlap.
+              Most of my projects start with curiosity and end with me diving far deeper into a topic than originally
+              intended. {!showFullAbout && <span className="ml-1 text-xs text-white/70 underline">Read more...</span>}
             </p>
 
             {/* Full version shown conditionally */}
             {showFullAbout && (
               <div className="space-y-4 text-white/80 leading-relaxed text-sm mt-4 animate-fadeIn break-words">
                 <p>
-                  What started as curiosity gradually turned into years of projects spread across software development, infrastructure,
-                  game development, hardware, media production, and a growing collection of side quests. I've never been particularly good at
-                  staying inside a single discipline. If something interests me, I'll usually end up learning whatever is needed to
-                  build it—whether that's writing backend services, deploying Linux servers, designing databases, building game systems,
-                  wiring sensors to microcontrollers, or experimenting with entirely new technologies.
+                  What started as curiosity gradually turned into years of projects spread across software development,
+                  infrastructure, game development, hardware, media production, and a growing collection of side quests.
+                  I've never been particularly good at staying inside a single discipline. If something interests me,
+                  I'll usually end up learning whatever is needed to build it—whether that's writing backend services,
+                  deploying Linux servers, designing databases, building game systems, wiring sensors to
+                  microcontrollers, or experimenting with entirely new technologies.
                 </p>
 
                 <p>
-                  Over the years I've built educational software, technical resource platforms, production web applications, self-hosted infrastructure,
-                  embedded hardware prototypes, internal tools, automation systems, games, and plenty of experimental projects that existed
-                  simply because I wanted to see if they could be built. Some became real deployments, some were competition projects,
-                  and some never left my own machine.
+                  Over the years I've built educational software, technical resource platforms, production web
+                  applications, self-hosted infrastructure, embedded hardware prototypes, internal tools, automation
+                  systems, games, and plenty of experimental projects that existed simply because I wanted to see if
+                  they could be built. Some became real deployments, some were competition projects, and some never left
+                  my own machine.
                 </p>
 
                 <p>
-                  One of the areas I enjoy most is systems design. I like understanding how complex pieces fit together—whether that's a database architecture,
-                  a deployment pipeline, a game engine subsystem, or an operational workflow. That interest naturally led me into running my own infrastructure,
-                  maintaining Linux servers, self-hosting services, and learning the operational side of software alongside development.
+                  One of the areas I enjoy most is systems design. I like understanding how complex pieces fit
+                  together—whether that's a database architecture, a deployment pipeline, a game engine subsystem, or an
+                  operational workflow. That interest naturally led me into running my own infrastructure, maintaining
+                  Linux servers, self-hosting services, and learning the operational side of software alongside
+                  development.
                 </p>
 
                 <p>
-                  Before university, I served as Head of the Techformers Club at Delhi Public School, where I helped organize technical initiatives,
-                  competitions, workshops, livestreaming infrastructure, media production, and inter-school events. I also participated in various
-                  national-level competitions, building projects ranging from educational games and programming platforms to embedded hardware
-                  systems and mobile applications. Those experiences taught me a lot about working under pressure, adapting to constraints,
-                  and solving problems when things inevitably go wrong.
+                  Before university, I served as Head of the Techformers Club at Delhi Public School, where I helped
+                  organize technical initiatives, competitions, workshops, livestreaming infrastructure, media
+                  production, and inter-school events. I also participated in various national-level competitions,
+                  building projects ranging from educational games and programming platforms to embedded hardware
+                  systems and mobile applications. Those experiences taught me a lot about working under pressure,
+                  adapting to constraints, and solving problems when things inevitably go wrong.
                 </p>
 
                 <p>
-                  My interests today sit somewhere between software engineering, infrastructure, systems architecture, graphics, and game development.
-                  Recently I've worked on production-scale web platforms, academic management systems, self-hosted services, and experimental engine development projects.
-                  I enjoy the entire process of building—from the initial concept and architecture to deployment, maintenance, optimization,
-                  and the inevitable debugging sessions at unreasonable hours.
+                  My interests today sit somewhere between software engineering, infrastructure, systems architecture,
+                  graphics, and game development. Recently I've worked on production-scale web platforms, academic
+                  management systems, self-hosted services, and experimental engine development projects. I enjoy the
+                  entire process of building—from the initial concept and architecture to deployment, maintenance,
+                  optimization, and the inevitable debugging sessions at unreasonable hours.
                 </p>
 
                 <p>
-                  Outside of technology, I spend time making music, photographing things that catch my eye, experimenting with filmmaking,
-                  and collecting hobbies faster than I can finish them. Those creative interests often find their way back into my technical work,
-                  influencing how I design experiences, approach problem-solving, and think about the things I build.
+                  Outside of technology, I spend time making music, photographing things that catch my eye,
+                  experimenting with filmmaking, and collecting hobbies faster than I can finish them. Those creative
+                  interests often find their way back into my technical work, influencing how I design experiences,
+                  approach problem-solving, and think about the things I build.
                 </p>
               </div>
             )}
@@ -216,16 +229,7 @@ function ProjectCard({ project }: { project: Project }) {
   const { id, title, description, category, tags, image, url } = project;
 
   const fallbackLetter = title ? title.charAt(0).toUpperCase() : "P";
-  const [fallbackBgColor, setFallbackBgColor] = useState<string>("");
-
-  useEffect(() => {
-    const generatePastelColor = () => {
-      const hue = Math.floor(Math.random() * 360);
-      return `hsl(${hue}, 70%, 80%)`;
-    };
-
-    setFallbackBgColor(generatePastelColor());
-  }, []);
+  const [fallbackBgColor] = useState(generatePastelColor);
 
   return (
     <div
@@ -307,15 +311,7 @@ function ExperienceCard({ experience }: { experience: Experience }) {
   const { id, title, company, location, startDate, endDate, description, tags, logo } = experience;
 
   const fallbackLetter = company ? title.charAt(0).toUpperCase() : "E";
-  const [fallbackBgColor, setFallbackBgColor] = useState<string>("");
-
-  useEffect(() => {
-    const generatePastelColor = () => {
-      const hue = Math.floor(Math.random() * 360);
-      return `hsl(${hue}, 70%, 80%)`;
-    };
-    setFallbackBgColor(generatePastelColor());
-  }, []);
+  const [fallbackBgColor] = useState(generatePastelColor);
 
   return (
     <div

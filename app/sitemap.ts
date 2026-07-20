@@ -19,9 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/photos", priority: 0.9, changefreq: "weekly" },
   ];
 
-  const uniqueRoutes = Array.from(
-    new Map([...canonicalRoutes].map((route) => [route.path, route])).values(),
-  );
+  const uniqueRoutes = Array.from(new Map([...canonicalRoutes].map((route) => [route.path, route])).values());
 
   return uniqueRoutes.map((route) => ({
     url: `${BASE_URL}${route.path}`,

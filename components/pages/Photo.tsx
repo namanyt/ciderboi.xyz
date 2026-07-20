@@ -54,27 +54,18 @@ type MobilePhotoModalProps = {
 // Mobile-optimized Photo Modal Component with transitions
 export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }: MobilePhotoModalProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const router = useRouter();
 
   // Handle transition effects
   useEffect(() => {
-    if (open) {
-      // Small delay to allow the DOM element to be created before animating in
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 10);
-      return () => clearTimeout(timer);
-    } else {
-      setIsVisible(false);
-    }
-  }, [open]);
+    const timer = window.setTimeout(
+      () => {
+        setIsVisible(open);
+      },
+      open ? 10 : 0,
+    );
 
-  // Handle transition complete - only relevant for closing
-  const handleTransitionEnd = () => {
-    if (!isVisible) {
-      setOpen(false);
-    }
-  };
+    return () => window.clearTimeout(timer);
+  }, [open]);
 
   // If closed and animation completed, don't render
   if (!open && !isVisible) {
@@ -83,14 +74,13 @@ export function MobilePhotoModal({ photo, open, setOpen, enlarged, setEnlarged }
 
   const handleClose = () => {
     setIsVisible(false);
-    router.push("/photos?id=");
+    setOpen(false);
   };
 
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md transition-all duration-300 ease-in-out
         ${isVisible ? "bg-black/80 opacity-100" : "bg-black/0 opacity-0"}`}
-      onTransitionEnd={handleTransitionEnd}
     >
       <div
         className={`relative w-full h-full max-w-[95vw] max-h-[95vh] bg-black/90 rounded-lg border border-white/10
@@ -208,27 +198,18 @@ type DesktopPhotoModalProps = {
 // Desktop-optimized Photo Modal Component with transitions
 export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged }: DesktopPhotoModalProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const router = useRouter();
 
   // Handle transition effects
   useEffect(() => {
-    if (open) {
-      // Small delay to allow the DOM element to be created before animating in
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 10);
-      return () => clearTimeout(timer);
-    } else {
-      setIsVisible(false);
-    }
-  }, [open]);
+    const timer = window.setTimeout(
+      () => {
+        setIsVisible(open);
+      },
+      open ? 10 : 0,
+    );
 
-  // Handle transition complete - only relevant for closing
-  const handleTransitionEnd = () => {
-    if (!isVisible) {
-      setOpen(false);
-    }
-  };
+    return () => window.clearTimeout(timer);
+  }, [open]);
 
   // If closed and animation completed, don't render
   if (!open && !isVisible) {
@@ -237,14 +218,13 @@ export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged 
 
   const handleClose = () => {
     setIsVisible(false);
-    router.push("/photos?id=");
+    setOpen(false);
   };
 
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out
         ${isVisible ? "bg-black/70 backdrop-blur-md opacity-100" : "bg-black/0 backdrop-blur-none opacity-0"}`}
-      onTransitionEnd={handleTransitionEnd}
     >
       <div
         className={`relative w-[92vw] h-[92vh] bg-black/80 rounded-lg border border-white/10 overflow-hidden
@@ -364,12 +344,21 @@ export function DesktopPhotoModal({ photo, open, setOpen, enlarged, setEnlarged 
 
 // PhotoCard component with responsive modal selection
 function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided?: string | string[] | undefined }) {
+  const selectedPhotoId = Array.isArray(isIdProvided) ? isIdProvided[0] : isIdProvided;
   const [open, setOpen] = useState(false);
   const [enlarged, setEnlarged] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const scaling = 1;
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setOpen(selectedPhotoId === photo.uuid);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [photo.uuid, selectedPhotoId]);
 
   // Check if screen is mobile size on mount and when window resizes
   useEffect(() => {
@@ -383,24 +372,41 @@ function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided
     // Add event listener for window resize
     window.addEventListener("resize", checkIsMobile);
 
-    // check if id is same as photo id, if yes, open the modal
-    if ((Array.isArray(isIdProvided) ? isIdProvided[0] : isIdProvided) === photo.uuid) {
-      setOpen(true);
-    }
-
     // Cleanup
     return () => window.removeEventListener("resize", checkIsMobile);
-  }, [isIdProvided, photo.uuid]);
+  }, []);
+
+  const updatePhotoQuery = (nextPhotoId?: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (nextPhotoId) {
+      params.set("id", nextPhotoId);
+    } else {
+      params.delete("id");
+    }
+
+    const nextQuery = params.toString();
+    router.push(nextQuery ? `/photos?${nextQuery}` : "/photos");
+  };
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    setOpen(nextOpen);
+    setEnlarged(false);
+
+    if (nextOpen) {
+      updatePhotoQuery(photo.uuid);
+      return;
+    }
+
+    updatePhotoQuery();
+  };
 
   const handleClick = () => {
-    setOpen(true);
-    const params = new URLSearchParams(searchParams);
-    params.set("id", photo.uuid);
-    router.push(`/photos?${params.toString()}`);
+    handleOpenChange(true);
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleClick}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <div className="cursor-pointer break-inside-avoid overflow-hidden rounded-xl shadow-lg bg-black/30 backdrop-blur-sm border border-white/5 hover:border-white/20 hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]">
           <Image
@@ -418,9 +424,21 @@ function PhotoCard({ photo, isIdProvided }: { photo: PhotoMetadata; isIdProvided
 
       {/* Conditionally render the appropriate modal based on screen size */}
       {isMobile ? (
-        <MobilePhotoModal photo={photo} open={open} setOpen={setOpen} enlarged={enlarged} setEnlarged={setEnlarged} />
+        <MobilePhotoModal
+          photo={photo}
+          open={open}
+          setOpen={handleOpenChange}
+          enlarged={enlarged}
+          setEnlarged={setEnlarged}
+        />
       ) : (
-        <DesktopPhotoModal photo={photo} open={open} setOpen={setOpen} enlarged={enlarged} setEnlarged={setEnlarged} />
+        <DesktopPhotoModal
+          photo={photo}
+          open={open}
+          setOpen={handleOpenChange}
+          enlarged={enlarged}
+          setEnlarged={setEnlarged}
+        />
       )}
     </Dialog>
   );
