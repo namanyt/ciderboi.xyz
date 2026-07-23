@@ -77,6 +77,18 @@
           },
           "preSaveUrl": "https://share.amuse.io/track/nitya-naman-soopersows",
           "url": "https://open.spotify.com/album/2blSc8dBIpC1nUSqU3Lq5s"
+        },
+        {
+          "id": 9,
+          "title": "Titan Falls",
+          "releaseDate": "2026-08-02",
+          "thumbnail": "https://cdn.amuse.io/c08b11f9-adc7-453d-95ab-b254931baf1c.400x400.jpg",
+          "thumbnailSize": {
+            "width": 400,
+            "height": 400
+          },
+          "preSaveUrl": "https://share.amuse.io/track/nitya-naman-titan-falls",
+          "url": "https://open.spotify.com/album/2hTjBPXiXFQveCgx2KPHCw"
         }
       ],
       "albums": [
