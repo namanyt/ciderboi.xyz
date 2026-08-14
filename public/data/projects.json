@@ -1,6 +1,23 @@
 {
   "projects": [
     {
+      "id": "gamma-1d5-300b",
+      "title": "Gamma(1/5) — 300 Billion Digits",
+      "description": "Computed and independently verified Gamma(1/5) to 300 billion decimal digits using two independent algorithms on the UPES HPC cluster.",
+      "category": "High Performance Computing",
+      "tags": [
+        "HPC",
+        "y-cruncher",
+        "Numerical Computing",
+        "Scientific Computing",
+        "Arbitrary Precision",
+        "Mathematics",
+        "Verification"
+      ],
+      "image": "https://www.numberworld.org/favicon.ico",
+      "url": "https://github.com/namanyt/gamma-1d5-300b"
+    },
+    {
       "id": "engine",
       "title": "Engine",
       "description": "A reusable C++ game engine with modular OpenGL rendering, ECS architecture, and HDR post-processing.",
