@@ -106,9 +106,9 @@
           "tracks": [
             {
               "title": "Tired of Love",
-              "id": null,
-              "url": null,
-              "releaseDate": "2026-05-15",
+              "id": "6U2GTxLEQ1OQV0Uvmdt2ZG",
+              "url": "https://open.spotify.com/track/6U2GTxLEQ1OQV0Uvmdt2ZG",
+              "releaseDate": "2023-05-15",
               "thumbnail": null,
               "thumbnailSize": {
                 "width": null,
@@ -117,9 +117,9 @@
             },
             {
               "title": "Leave This Behind",
-              "id": null,
-              "url": null,
-              "releaseDate": "2026-05-15",
+              "id": "71v3R534iJBa4ueX5wNQos",
+              "url": "https://open.spotify.com/track/71v3R534iJBa4ueX5wNQos",
+              "releaseDate": "2022-12-28",
               "thumbnail": null,
               "thumbnailSize": {
                 "width": null,
@@ -129,7 +129,7 @@
             {
               "title": "Deep Sleep",
               "id": null,
-              "url": null,
+              "url": "https://open.spotify.com/album/0YXFTSxch82TradJQdLoNS",
               "releaseDate": "2026-05-15",
               "thumbnail": null,
               "thumbnailSize": {
@@ -139,9 +139,133 @@
             },
             {
               "title": "Odyssey",
+              "id": "5Wuoe8VwPAxPYMpuxxfHEW",
+              "url": "https://open.spotify.com/track/5Wuoe8VwPAxPYMpuxxfHEW",
+              "releaseDate": "2022-06-30",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "title": "Bedroom Pro",
+          "releaseDate": "2026-09-16",
+          "thumbnail": "https://cdn.amuse.io/f1842b0c-7e93-431f-8ef6-73cf8594bd4a.400x400.jpg",
+          "thumbnailSize": {
+            "width": 400,
+            "height": 400
+          },
+          "preSaveUrl": "https://share.amuse.io/album/nitya-naman-bedroom-pro",
+          "url": "https://open.spotify.com/album/682EVpQlZvOWcBqMVlGtP6",
+          "tracks": [
+            {
+              "title": "Calm Nights",
+              "id": "6Ssy1KTKbm8RdRx38ZqhFB",
+              "url": "https://open.spotify.com/track/6Ssy1KTKbm8RdRx38ZqhFB",
+              "releaseDate": "2026-01-26",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Heart",
+              "id": "69iKHAPR3GtNNGrjTM831U",
+              "url": "https://open.spotify.com/album/69iKHAPR3GtNNGrjTM831U",
+              "releaseDate": "2026-02-14",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Wall-I",
+              "id": "6O2JZqcrC5V6xe9Uo5mPrR",
+              "url": "https://open.spotify.com/track/6O2JZqcrC5V6xe9Uo5mPrR",
+              "releaseDate": "2026-03-11",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Candy",
               "id": null,
-              "url": null,
-              "releaseDate": "2026-05-15",
+              "url": "https://open.spotify.com/album/682EVpQlZvOWcBqMVlGtP6",
+              "releaseDate": "2026-09-16",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "growls?",
+              "id": null,
+              "url": "https://open.spotify.com/album/682EVpQlZvOWcBqMVlGtP6",
+              "releaseDate": "2026-09-16",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Titan Falls",
+              "id": "2hTjBPXiXFQveCgx2KPHCw",
+              "url": "https://open.spotify.com/album/2hTjBPXiXFQveCgx2KPHCw",
+              "releaseDate": "2026-08-02",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Soopersows",
+              "id": "2blSc8dBIpC1nUSqU3Lq5s",
+              "url": "https://open.spotify.com/album/2blSc8dBIpC1nUSqU3Lq5s",
+              "releaseDate": "2026-07-19",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Drifting Apart",
+              "id": "1l0MEgteDIbRREVVWLqR8S",
+              "url": "https://open.spotify.com/album/1l0MEgteDIbRREVVWLqR8S",
+              "releaseDate": "2026-06-26",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Origin",
+              "id": "0zgtfQijIBkbSxVasftDzp",
+              "url": "https://open.spotify.com/track/0zgtfQijIBkbSxVasftDzp",
+              "releaseDate": "2022-09-05",
+              "thumbnail": null,
+              "thumbnailSize": {
+                "width": null,
+                "height": null
+              }
+            },
+            {
+              "title": "Memories",
+              "id": "3ZOm6GxtfAmTLkrgsgq1YV",
+              "url": "https://open.spotify.com/album/3ZOm6GxtfAmTLkrgsgq1YV",
+              "releaseDate": "2026-04-18",
               "thumbnail": null,
               "thumbnailSize": {
                 "width": null,

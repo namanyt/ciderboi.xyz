@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Props } from "@/app/music/page";
 import { SongPlayerAlbum, SongPlayerTrack } from "@/components/ui/song-card";
 import NavigationButton from "@/components/NavigationButton";
-import { parseReleaseMs, toCountdownParts } from "@/lib/release-time";
+import { parseReleaseMs, toCountdownParts, useNowTicker } from "@/lib/release-time";
 
 export default function Music({ data }: Props) {
   const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
@@ -24,14 +24,8 @@ export default function Music({ data }: Props) {
     title?: string;
     showTitle: boolean;
   }) {
-    const [nowMs, setNowMs] = useState(() => Date.now());
-
-    useEffect(() => {
-      const id = window.setInterval(() => setNowMs(Date.now()), 1000);
-      return () => window.clearInterval(id);
-    }, []);
-
-    const parts = useMemo(() => toCountdownParts(releaseMs, nowMs), [releaseMs, nowMs]);
+    const nowMs = useNowTicker();
+    const parts = useMemo(() => toCountdownParts(releaseMs, nowMs === 0 ? releaseMs : nowMs), [releaseMs, nowMs]);
 
     return (
       <div className="relative w-full rounded-2xl backdrop-blur-md bg-white/5 border border-white/10 shadow-lg overflow-hidden p-3 sm:p-4 flex flex-col gap-3">
@@ -127,6 +121,13 @@ export default function Music({ data }: Props) {
       return !shouldHideUpcoming(t.releaseDate);
     });
 
+    const byReleaseDesc = (
+      a: { releaseDate: string | null | undefined },
+      b: { releaseDate: string | null | undefined },
+    ) => (parseReleaseMs(b.releaseDate) ?? 0) - (parseReleaseMs(a.releaseDate) ?? 0);
+    const sortedAlbums = [...visibleAlbums].sort(byReleaseDesc);
+    const sortedSingles = [...visibleSingles].sort(byReleaseDesc);
+
     const hasAny = visibleAlbums.length > 0 || visibleSingles.length > 0;
     const shouldShowCountdown = nextUpcoming ? shouldHideUpcoming(nextUpcoming.releaseDate) : false;
 
@@ -153,7 +154,7 @@ export default function Music({ data }: Props) {
                 </div>
               ) : null}
 
-              {visibleAlbums.map((album, i) => (
+              {sortedAlbums.map((album, i) => (
                 <div key={`album-${catalog.artist.name}-${album.id}_${i}`} className="break-inside-avoid mb-6">
                   <SongPlayerAlbum
                     title={album.title}
@@ -172,7 +173,7 @@ export default function Music({ data }: Props) {
                 </div>
               ))}
 
-              {visibleSingles.map((track, i) => (
+              {sortedSingles.map((track, i) => (
                 <div key={`single-${catalog.artist.name}-${track.id}_${i}`} className="break-inside-avoid mb-6">
                   <SongPlayerTrack
                     title={track.title}

@@ -2,6 +2,9 @@ import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
 
 const eslintConfig = [
+  {
+    ignores: [".remember/**"],
+  },
   ...nextCoreWebVitals,
   prettierRecommended,
   {

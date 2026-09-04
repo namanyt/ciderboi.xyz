@@ -1,3 +1,38 @@
+import { useSyncExternalStore } from "react";
+
+// Shared ticking clock for countdown UIs. Returns 0 until the component mounts —
+// so the server and the client render an identical first paint — then the current
+// time, updated once per second. One interval serves every mounted consumer.
+let clockNowMs = 0;
+const clockListeners = new Set<() => void>();
+let clockTimerId: number | null = null;
+
+function subscribeToClock(onStoreChange: () => void) {
+  clockListeners.add(onStoreChange);
+  if (clockTimerId === null) {
+    clockNowMs = Date.now();
+    clockTimerId = window.setInterval(() => {
+      clockNowMs = Date.now();
+      for (const listener of clockListeners) listener();
+    }, 1000);
+  }
+  return () => {
+    clockListeners.delete(onStoreChange);
+    if (clockListeners.size === 0 && clockTimerId !== null) {
+      window.clearInterval(clockTimerId);
+      clockTimerId = null;
+    }
+  };
+}
+
+export function useNowTicker(): number {
+  return useSyncExternalStore(
+    subscribeToClock,
+    () => clockNowMs,
+    () => 0,
+  );
+}
+
 export function parseReleaseMs(releaseDate: string | null | undefined): number | null {
   if (!releaseDate) return null;
 

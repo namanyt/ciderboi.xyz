@@ -2,26 +2,19 @@ import { Heart, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Album, Track } from "@/lib/types";
-import { formatCountdown, parseReleaseMs } from "@/lib/release-time";
+import { formatCountdown, parseReleaseMs, useNowTicker } from "@/lib/release-time";
 
 const DEFAULT_TINT = "rgba(103, 58, 183, 0.3)";
 const dominantColorCache = new Map<string, string>();
 
 function useReleaseCountdown(releaseDate: string | null | undefined) {
   const targetMs = parseReleaseMs(releaseDate);
-  const [nowMs, setNowMs] = useState(() => Date.now());
-
-  useEffect(() => {
-    if (!targetMs) return;
-    if (targetMs <= Date.now()) return;
-    const interval = window.setInterval(() => setNowMs(Date.now()), 1000);
-    return () => window.clearInterval(interval);
-  }, [targetMs]);
+  // nowMs is 0 until mounted, so the server and client render an identical first paint.
+  const nowMs = useNowTicker();
 
   if (!targetMs) return { isUpcoming: false, countdownLabel: "" };
-  const remaining = targetMs - nowMs;
-  const isUpcoming = remaining > 0;
-  const countdownLabel = isUpcoming ? `Releases in ${formatCountdown(remaining)}` : "";
+  const isUpcoming = nowMs === 0 ? true : targetMs > nowMs;
+  const countdownLabel = isUpcoming && nowMs !== 0 ? `Releases in ${formatCountdown(targetMs - nowMs)}` : "";
   return { isUpcoming, countdownLabel };
 }
 
@@ -302,7 +295,10 @@ export function SongPlayerAlbum({
         <h4 className="text-white font-semibold text-lg mb-4">Tracks</h4>
         <div className="space-y-3">
           {tracks.map((track, index) => (
-            <div key={track.id} className="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all min-w-0">
+            <div
+              key={track.id ?? `track-${index}`}
+              className="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all min-w-0"
+            >
               <div className="w-6 text-white/60 mr-3 text-center">{index + 1}</div>
 
               <div className="flex-1 min-w-0">
