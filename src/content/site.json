@@ -1,0 +1,68 @@
+{
+  "name": "Nitya Naman",
+  "handle": "ciderboi",
+  "tagline": "Engineering imagination, one pixel at a time.",
+  "role": "Software, Systems & Infrastructure",
+  "location": "Haridwar, India",
+  "email": "me@ciderboi.xyz",
+  "description": "Computer science student building software, self-hosted infrastructure, games, and graphics.",
+  "url": "https://ciderboi.xyz",
+  "socials": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/namanyt",
+      "handle": "namanyt"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://linkedin.com/in/nityanaman",
+      "handle": "in/nityanaman"
+    },
+    {
+      "label": "Instagram",
+      "href": "https://instagram.com/nnthegamer",
+      "handle": "@nnthegamer"
+    },
+    {
+      "label": "YouTube",
+      "href": "https://www.youtube.com/@ciderboi",
+      "handle": "@ciderboi"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/artist/4asiCObHQTLPhbmjiqF1oi",
+      "handle": "Nitya Naman"
+    },
+    {
+      "label": "Discord",
+      "href": "https://discord.gg/h9ZVUrfnrx",
+      "handle": "ciderboi"
+    }
+  ],
+  "nav": [
+    {
+      "label": "Work",
+      "href": "/work"
+    },
+    {
+      "label": "About",
+      "href": "/about"
+    },
+    {
+      "label": "R\u00e9sum\u00e9",
+      "href": "/resume"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ],
+  "redirects": {
+    "github": "https://github.com/namanyt",
+    "linkedin": "https://linkedin.com/in/nityanaman",
+    "instagram": "https://instagram.com/nnthegamer",
+    "youtube": "https://www.youtube.com/@ciderboi",
+    "spotify": "https://open.spotify.com/artist/4asiCObHQTLPhbmjiqF1oi",
+    "discord": "https://discord.gg/h9ZVUrfnrx"
+  }
+}

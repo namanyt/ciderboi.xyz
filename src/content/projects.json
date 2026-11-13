@@ -1,0 +1,700 @@
+{
+  "projects": [
+    {
+      "id": "aifsm2025",
+      "title": "AIFSM 2025",
+      "tagline": "Official platform for the 28th All India Forest Sports Meet",
+      "summary": "A live event platform for 3,390 athletes across 42 teams \u2014 registration, accreditation, results, and organizer tooling, built solo in six weeks.",
+      "detail": "The 28th All India Forest Sports Meet brought 3,390 athletes to Dehradun \u2014 forest department staff and officers from 30 states, 6 union territories, and 6 central institutions, competing across 24 sports and 270-plus individual events over five days. I built the website that ran underneath all of it: registration, authentication, event administration, result publication, and the organizer workflow. Six weeks, solo, first year of college. First commit was 27 September 2025. The results system is relational rather than form-based \u2014 every result links to a player record, an event record, and a credential, so nothing can be submitted as free text.",
+      "category": "Full-Stack",
+      "year": 2025,
+      "status": "archived",
+      "featured": true,
+      "order": 1,
+      "stack": [
+        "Next.js",
+        "PocketBase",
+        "Ubuntu",
+        "PM2"
+      ],
+      "links": [],
+      "cover": "/work/aifsm2025/home.avif",
+      "images": [
+        {
+          "src": "/work/aifsm2025/home.avif",
+          "alt": "AIFSM 2025 homepage with countdown",
+          "caption": "Event homepage"
+        },
+        {
+          "src": "/work/aifsm2025/results.avif",
+          "alt": "Medal tally table",
+          "caption": "Live results and medal tally"
+        }
+      ],
+      "metrics": [
+        {
+          "value": "3,390",
+          "label": "athletes"
+        },
+        {
+          "value": "42",
+          "label": "teams"
+        },
+        {
+          "value": "270+",
+          "label": "events"
+        },
+        {
+          "value": "6 wks",
+          "label": "solo build"
+        }
+      ],
+      "log": [
+        {
+          "date": "2025-09",
+          "text": "First commit. Officials believed the Figma file was the deliverable; there was no code."
+        },
+        {
+          "date": "2025-10",
+          "text": "Results model rebuilt as a relational state machine keyed on player IDs."
+        },
+        {
+          "date": "2025-11",
+          "text": "Five days live. Registration, results, and organizer tooling all ran on one VPS."
+        }
+      ]
+    },
+    {
+      "id": "gamma-1d5-300b",
+      "title": "\u0393(1/5) \u2014 300 Billion Digits",
+      "tagline": "300 billion digits, computed and verified twice",
+      "summary": "Computed \u0393(1/5) to 300,000,000,000 decimal digits on the UPES HPC cluster, then verified it with a second independent algorithm.",
+      "detail": "Two runs on the UPES high-performance computing cluster, using two computationally independent algorithms \u2014 Vid\u016bnas\u2013Lamprecht (2024) and an incomplete gamma approximation \u2014 both producing identical decimal and hexadecimal output. The hardware was an HPE Cray XD670 with two Intel Xeon Platinum 8470 sockets (104 logical cores) and 0.98 TiB of usable memory. The first run used 99.9 GiB of working memory; the second used 300 GiB. Compute took 20.1 days, verification 13.3 days. The result is listed by y-cruncher.",
+      "category": "HPC",
+      "year": 2026,
+      "status": "completed",
+      "featured": true,
+      "order": 2,
+      "stack": [
+        "y-cruncher",
+        "Linux",
+        "Numerical Analysis"
+      ],
+      "links": [
+        {
+          "label": "Write-up",
+          "url": "https://github.com/namanyt/gamma-1d5-300b"
+        },
+        {
+          "label": "Record",
+          "url": "https://www.numberworld.org/y-cruncher/"
+        }
+      ],
+      "cover": "/work/gamma-1d5-300b/hpc.avif",
+      "images": [
+        {
+          "src": "/work/gamma-1d5-300b/hpc.avif",
+          "alt": "HPC node system information",
+          "caption": "The cluster node"
+        },
+        {
+          "src": "/work/gamma-1d5-300b/validate.avif",
+          "alt": "Validation script comparing decimal and hexadecimal output",
+          "caption": "Independent verification"
+        }
+      ],
+      "metrics": [
+        {
+          "value": "300B",
+          "label": "decimal digits"
+        },
+        {
+          "value": "20.1 d",
+          "label": "compute"
+        },
+        {
+          "value": "13.3 d",
+          "label": "verify"
+        },
+        {
+          "value": "104",
+          "label": "cores"
+        }
+      ],
+      "log": [
+        {
+          "date": "2026-07",
+          "text": "Both algorithms produced identical decimal and hexadecimal output."
+        },
+        {
+          "date": "2026-07",
+          "text": "Listed by y-cruncher: Gamma(1/5), 300,000,000,000 digits."
+        }
+      ]
+    },
+    {
+      "id": "engine",
+      "title": "Engine",
+      "tagline": "Modular OpenGL renderer with ECS and HDR post-processing",
+      "summary": "A reusable game engine with a modular OpenGL renderer, ECS architecture, HDR post-processing, and volumetric fog.",
+      "detail": "A custom C++ runtime and rendering framework for atmospheric exploration projects. OpenGL 3.3 core renderer with VAOs and shaders, an entity-component system, scene and mode management through a registration API, runtime asset loading with lazy shader compilation, and HDR post-processing with bloom. The architecture separates engine from application through public headers and a registration-based runtime, which is what makes it reusable rather than a one-off demo.",
+      "category": "Graphics",
+      "year": 2026,
+      "status": "ongoing",
+      "featured": true,
+      "order": 3,
+      "stack": [
+        "C++",
+        "OpenGL",
+        "ECS",
+        "GLSL"
+      ],
+      "links": [
+        {
+          "label": "Source",
+          "url": "https://github.com/namanyt/engine"
+        }
+      ],
+      "cover": "/work/engine/cover.avif",
+      "images": [
+        {
+          "src": "/work/engine/cover.avif",
+          "alt": "Engine render of a forested landscape",
+          "caption": "Atmospheric rendering pass"
+        }
+      ],
+      "metrics": [
+        {
+          "value": "3.3",
+          "label": "OpenGL core"
+        },
+        {
+          "value": "ECS",
+          "label": "architecture"
+        },
+        {
+          "value": "HDR",
+          "label": "post FX"
+        }
+      ],
+      "log": [
+        {
+          "date": "2026-06",
+          "text": "Engine/application separation and registration-based runtime."
+        },
+        {
+          "date": "2026-07",
+          "text": "Atmospheric rendering: volumetric fog, HDR post-processing, bloom."
+        }
+      ]
+    },
+    {
+      "id": "color-fps",
+      "title": "ColorFPS",
+      "tagline": "A color-theory multiplayer arena shooter built purely on my custom C++ engine",
+      "summary": "6-player arena FPS where additive (R/G/B) and subtractive (C/M/Y) reagent orbs mix into persistent combat vortices — built from scratch on top of my own Engine library (github.com/namanyt/engine), with no third-party game engine.",
+      "detail": "Color is not the theme — color is the ruleset. Players run additive (R/G/B) or subtractive (C/M/Y) loadouts and fire reagent orbs that paint persistent floor vortices (Fire, Poison, Ice, Shock, Pressure, Gravity), inverting inside your own pools while three primaries create a contested Absolute zone. Built purely from my own public C++17 / OpenGL 3.3 Engine library (namanyt/engine) rather than Unity or Unreal — extending it with a 60 Hz authoritative ENet server with client-side prediction and reconciliation, a 120 Hz character controller, a proven 64-composition to 9-state color table with 6-bit provenance tracking, and 69 procedural audio cues synthesized on a whole-tone pitch scale in Python.",
+      "category": "Game Dev",
+      "year": 2026,
+      "status": "completed",
+      "featured": true,
+      "order": 4,
+      "stack": [
+        "C++17",
+        "Engine (Custom)",
+        "OpenGL 3.3",
+        "ENet",
+        "ECS",
+        "GLSL",
+        "Python"
+      ],
+      "links": [
+        {
+          "label": "Base Engine",
+          "url": "https://github.com/namanyt/engine"
+        }
+      ],
+      "cover": null,
+      "images": [],
+      "metrics": [
+        {
+          "value": "60 Hz",
+          "label": "authoritative server"
+        },
+        {
+          "value": "9",
+          "label": "mixed states (from 64)"
+        },
+        {
+          "value": "69",
+          "label": "synth audio cues"
+        },
+        {
+          "value": "187",
+          "label": "CTest suites"
+        }
+      ],
+      "log": [
+        {
+          "date": "2026-10",
+          "text": "Completed P0–P10 milestones: glTF arena pipeline, ENet server + reconciliation, live admin console, and 187 automated CTest suites."
+        }
+      ]
+    },
+    {
+      "id": "spm-portal",
+      "title": "Student Project Management Portal",
+      "tagline": "Multi-role academic evaluation with rubric snapshots",
+      "summary": "A multi-role evaluation system built on a relational database acting as a deterministic state machine, sized for 3,000+ concurrent students and faculty.",
+      "detail": "A full-stack academic evaluation platform for the UPES School of Computer Science. The PostgreSQL schema acts as a deterministic state machine for multi-role RBAC workflows, with historical rubric snapshots so an evaluation can be reproduced exactly as it was at the time. Includes an immutable audit log subsystem, automated ingestion of fragmented institutional data, and separate dashboards for students, activity coordinators, mentors, and reviewers.",
+      "category": "Full-Stack",
+      "year": 2026,
+      "status": "ongoing",
+      "featured": true,
+      "order": 5,
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "PostgreSQL",
+        "Prisma"
+      ],
+      "links": [],
+      "cover": "/work/spm-portal/ac_dashboard.avif",
+      "images": [
+        {
+          "src": "/work/spm-portal/ac_dashboard.avif",
+          "alt": "Activity coordinator evaluation dashboard",
+          "caption": "Activity coordinator view"
+        },
+        {
+          "src": "/work/spm-portal/student_dashboard.avif",
+          "alt": "Student project dashboard",
+          "caption": "Student view"
+        },
+        {
+          "src": "/work/spm-portal/audit_logs.avif",
+          "alt": "Audit log viewer",
+          "caption": "Immutable audit trail"
+        },
+        {
+          "src": "/work/spm-portal/project_page.avif",
+          "alt": "Project detail page",
+          "caption": "Project record"
+        }
+      ],
+      "metrics": [
+        {
+          "value": "3,000+",
+          "label": "concurrent users"
+        },
+        {
+          "value": "4",
+          "label": "role dashboards"
+        },
+        {
+          "value": "RBAC",
+          "label": "state machine"
+        }
+      ],
+      "log": [
+        {
+          "date": "2026",
+          "text": "Database modelled as a deterministic state machine with rubric snapshots."
+        },
+        {
+          "date": "2026",
+          "text": "Immutable audit logging and automated ingestion of institutional data."
+        }
+      ]
+    },
+    {
+      "id": "collective-brain",
+      "title": "Collective Brain",
+      "tagline": "Shared vector-memory MCP server engineered for a ~340 MB CPU-only footprint",
+      "summary": "Dockerized Model Context Protocol server uniting IDEs and local agents over Qdrant semantic retrieval and cross-encoder reranking with zero GPU VRAM allocation.",
+      "detail": "Built to unify fragmented context across terminal sessions, editors, and web tools without starving co-hosted services. Runs two-stage retrieval — FastEmbed ONNX embeddings (BAAI/bge-small-en-v1.5) into Qdrant followed by cross-encoder reranking (ms-marco-MiniLM-L-6-v2) — constrained strictly to CPU with single-threaded ONNX execution, query timeouts, and markdown-aware chunking. Exposes 18 tools across Streamable HTTP, legacy SSE, and OpenAPI 3.1.0 REST.",
+      "category": "Systems",
+      "year": 2026,
+      "status": "completed",
+      "featured": false,
+      "order": 6,
+      "stack": [
+        "Python",
+        "Qdrant",
+        "ONNX Runtime",
+        "MCP",
+        "Docker"
+      ],
+      "links": [
+        {
+          "label": "Source",
+          "url": "https://github.com/namanyt/collective-brain"
+        }
+      ],
+      "cover": null,
+      "images": [],
+      "metrics": [
+        {
+          "value": "~340 MB",
+          "label": "RAM footprint"
+        },
+        {
+          "value": "0 MB",
+          "label": "GPU VRAM used"
+        },
+        {
+          "value": "18",
+          "label": "MCP tools"
+        },
+        {
+          "value": "3",
+          "label": "protocols"
+        }
+      ],
+      "log": [
+        {
+          "date": "2026-10",
+          "text": "Shipped dual Streamable HTTP / SSE transport alongside OpenAPI 3.1.0 REST."
+        }
+      ]
+    },
+    {
+      "id": "lost-control-viz",
+      "title": "Lost Control — TouchDesigner Viz",
+      "tagline": "Generative audio-reactive TouchDesigner visual study",
+      "summary": "Real-time generative visual experiment built in TouchDesigner and driven by Grabbitz's Lost Control.",
+      "detail": "An interactive generative graphics and visual modulation study built while exploring real-time TouchDesigner networks, audio-reactive parameter driving, and feedback chains, set to Lost Control by Grabbitz.",
+      "category": "Creative",
+      "year": 2026,
+      "status": "completed",
+      "featured": false,
+      "order": 7,
+      "stack": [
+        "TouchDesigner",
+        "Generative Graphics",
+        "Audio-Reactive"
+      ],
+      "links": [
+        {
+          "label": "YouTube",
+          "url": "https://www.youtube.com/watch?v=W8HCfgbGMkc"
+        }
+      ],
+      "cover": null,
+      "video": {
+        "url": "https://www.youtube.com/embed/W8HCfgbGMkc",
+        "caption": "Lost Control — TouchDesigner Viz (Grabbitz)"
+      },
+      "images": [],
+      "metrics": [],
+      "log": [
+        {
+          "date": "2026-06",
+          "text": "Published study from real-time TouchDesigner exploration."
+        }
+      ]
+    },
+    {
+      "id": "homelab",
+      "title": "Homelab",
+      "tagline": "Two recovered laptops under a staircase",
+      "summary": "A multi-node bare-metal cluster running 30+ containerized services, fronted by Nginx, reachable over Tailscale, with 413 days of uptime.",
+      "detail": "Two laptops that were never bought to be servers: an HP 15s with a broken keyboard, and a Lenovo IdeaPad Gaming 3 with a dead battery, both repaired and pressed into service. One runs the services that must always be available; the other handles media and mail. The pair sits on a shelf under a staircase in Haridwar, wired through a switch and an inverter, reachable from anywhere over Tailscale. The rule that started it: if I fixed a piece of tech, it became mine.",
+      "category": "Infrastructure",
+      "year": 2019,
+      "status": "ongoing",
+      "featured": false,
+      "order": 8,
+      "stack": [
+        "Ubuntu",
+        "Docker",
+        "Nginx",
+        "Tailscale"
+      ],
+      "links": [],
+      "cover": "/work/homelab/hardware.avif",
+      "images": [
+        {
+          "src": "/work/homelab/hardware.avif",
+          "alt": "Two laptops on a shelf with switch and cabling",
+          "caption": "The datacenter"
+        },
+        {
+          "src": "/work/homelab/uptime.avif",
+          "alt": "Webmin dashboard showing 413 days uptime",
+          "caption": "413 days, no reboot"
+        }
+      ],
+      "metrics": [
+        {
+          "value": "30+",
+          "label": "services"
+        },
+        {
+          "value": "413 d",
+          "label": "uptime"
+        },
+        {
+          "value": "2",
+          "label": "nodes"
+        }
+      ],
+      "log": [
+        {
+          "date": "2019",
+          "text": "First machine kept permanently on for a Minecraft server."
+        },
+        {
+          "date": "2026",
+          "text": "413 days of continuous uptime across both nodes."
+        }
+      ]
+    },
+    {
+      "id": "fython",
+      "title": "Fython",
+      "tagline": "Keyboard-first personal finance",
+      "summary": "A terminal finance tracker with statement ingestion, automatic categorization, anomaly detection, and an optional desktop GUI.",
+      "detail": "Built because I wanted it. Imports HDFC statement exports from CSV, XLSX, and QIF, normalizes everything into one dataset, categorizes transactions into main and sub-categories, and flags anomalies \u2014 duplicate groups, date coverage gaps, and spend outliers. The primary interface is a full-screen terminal UI; there is an optional desktop GUI for the same data.",
+      "category": "Tools",
+      "year": 2026,
+      "status": "ongoing",
+      "featured": false,
+      "order": 9,
+      "stack": [
+        "Python",
+        "SQLite"
+      ],
+      "links": [
+        {
+          "label": "Source",
+          "url": "https://github.com/namanyt/Fython"
+        }
+      ],
+      "cover": "/work/fython/tui_dashboard.avif",
+      "images": [
+        {
+          "src": "/work/fython/tui_dashboard.avif",
+          "alt": "Fython terminal dashboard",
+          "caption": "Dashboard"
+        },
+        {
+          "src": "/work/fython/tui_transactions.avif",
+          "alt": "Transaction browser",
+          "caption": "Transactions"
+        },
+        {
+          "src": "/work/fython/tui_anomalies.avif",
+          "alt": "Anomaly report",
+          "caption": "Anomaly detection"
+        },
+        {
+          "src": "/work/fython/gui_financial_overview.avif",
+          "alt": "Fython desktop GUI",
+          "caption": "Desktop GUI"
+        }
+      ],
+      "metrics": [
+        {
+          "value": "TUI",
+          "label": "primary UI"
+        },
+        {
+          "value": "3",
+          "label": "import formats"
+        }
+      ],
+      "log": []
+    },
+    {
+      "id": "tictactoe.c",
+      "title": "tictactoe.c",
+      "tagline": "Minimax, taken further than necessary",
+      "summary": "A modular C implementation with alpha-beta pruning, three difficulty levels, persistent statistics, and an AI transparency mode.",
+      "detail": "A tic-tac-toe game in C with a minimax AI, alpha-beta pruning, three difficulty levels, persistent player statistics, leaderboards, and multiple gameplay modes. The part that was not in any spec: an AI transparency mode that shows the candidate moves, the evaluation score, and the search telemetry, so the player can see why the computer moved. It felt wrong to have an AI making decisions without explaining itself.",
+      "category": "Systems",
+      "year": 2025,
+      "status": "completed",
+      "featured": false,
+      "order": 10,
+      "stack": [
+        "C"
+      ],
+      "links": [
+        {
+          "label": "Source",
+          "url": "https://github.com/namanyt/tictactoe.c"
+        }
+      ],
+      "cover": "/work/tictactoe.c/tictactoe_gameplay.avif",
+      "images": [
+        {
+          "src": "/work/tictactoe.c/tictactoe_gameplay.avif",
+          "alt": "Tic-tac-toe gameplay with minimax analysis",
+          "caption": "Minimax analysis in-game"
+        },
+        {
+          "src": "/work/tictactoe.c/tictactoe_minimax_metrics.avif",
+          "alt": "Search telemetry",
+          "caption": "Search telemetry"
+        },
+        {
+          "src": "/work/tictactoe.c/tictactoe_leaderboard.avif",
+          "alt": "Leaderboard",
+          "caption": "Leaderboard"
+        }
+      ],
+      "metrics": [
+        {
+          "value": "3",
+          "label": "difficulties"
+        },
+        {
+          "value": "\u03b1-\u03b2",
+          "label": "pruning"
+        }
+      ],
+      "log": []
+    },
+    {
+      "id": "kodingbooks",
+      "title": "Koding Books",
+      "tagline": "An online library of programming resources",
+      "summary": "A technical resource platform with 1,000+ curated programming and technology entries, built for a national competition.",
+      "detail": "An online library of programming and technology resources, with categorization, indexing, and retrieval across a thousand-plus entries. Built for the Inter-DPS Capital competition, where it placed first nationally.",
+      "category": "Web",
+      "year": 2023,
+      "status": "completed",
+      "featured": false,
+      "order": 11,
+      "stack": [
+        "TypeScript",
+        "Next.js"
+      ],
+      "links": [
+        {
+          "label": "Site",
+          "url": "https://capitall.ciderboi.xyz"
+        }
+      ],
+      "cover": "/work/kodingbooks/inspo-koding-home.avif",
+      "images": [
+        {
+          "src": "/work/kodingbooks/inspo-koding-home.avif",
+          "alt": "Koding Books homepage",
+          "caption": "Library index"
+        }
+      ],
+      "metrics": [
+        {
+          "value": "1,000+",
+          "label": "resources"
+        },
+        {
+          "value": "1st",
+          "label": "GPSC Capitall"
+        }
+      ],
+      "log": [
+        {
+          "date": "2023",
+          "text": "1st place, GPSC Capitall, national level."
+        }
+      ]
+    },
+    {
+      "id": "lab-of-shadows",
+      "title": "Lab of Shadows",
+      "tagline": "Horror-themed educational science game",
+      "summary": "A serious game that maps scientific concepts onto progression mechanics, built in Unity for low-spec hardware.",
+      "detail": "A horror-themed educational science game built in Unity. Scientific concepts are mapped directly onto progression mechanics, so learning is the reward loop rather than a quiz bolted on top. Modular state machines drive player mechanics and dynamic inventory tracking, and the asset pipeline was tuned for stable performance on low-spec hardware.",
+      "category": "Game Dev",
+      "year": 2024,
+      "status": "completed",
+      "featured": false,
+      "order": 12,
+      "stack": [
+        "Unity",
+        "C#"
+      ],
+      "links": [],
+      "cover": null,
+      "images": [],
+      "metrics": [
+        {
+          "value": "3rd",
+          "label": "GPSC Capax Infinitum"
+        }
+      ],
+      "log": [
+        {
+          "date": "2024",
+          "text": "3rd place, GPSC Capax Infinitum, national level."
+        }
+      ]
+    },
+    {
+      "id": "spinesync",
+      "title": "SpineSync",
+      "tagline": "Wearable posture monitoring",
+      "summary": "A wearable prototype that detects unhealthy spinal positioning with flex sensors and nudges the wearer, paired with a Flutter companion app.",
+      "detail": "A wearable posture-monitoring prototype built for the All India Inter-DPS Science and Commerce Festival. An Arduino Nano and flex sensors detect unhealthy spinal positioning behind the neck and trigger a vibration when the wearer slouches. The goal was habit formation rather than medical correction \u2014 a persistent nudge that builds awareness through repetition. I built both the hardware and the Flutter Android app.",
+      "category": "Hardware",
+      "year": 2024,
+      "status": "completed",
+      "featured": false,
+      "order": 13,
+      "stack": [
+        "Arduino",
+        "Flutter",
+        "C++"
+      ],
+      "links": [],
+      "cover": null,
+      "images": [],
+      "metrics": [
+        {
+          "value": "3rd",
+          "label": "Inter-DPS nationals"
+        }
+      ],
+      "log": [
+        {
+          "date": "2024",
+          "text": "3rd place, All India Inter-DPS Science and Commerce Festival."
+        }
+      ]
+    },
+    {
+      "id": "todo.rs",
+      "title": "todo.rs",
+      "tagline": "A reason to learn Rust UI",
+      "summary": "A native desktop task manager built with Dioxus, with local persistence and file-based storage.",
+      "detail": "A native desktop task manager written in Rust using Dioxus, with local persistence and file-based storage. Built mainly to understand what a declarative Rust UI framework feels like from the inside \u2014 deliberate over-engineering as a learning method.",
+      "category": "Tools",
+      "year": 2025,
+      "status": "completed",
+      "featured": false,
+      "order": 14,
+      "stack": [
+        "Rust",
+        "Dioxus"
+      ],
+      "links": [
+        {
+          "label": "Source",
+          "url": "https://github.com/namanyt/todo.rs"
+        }
+      ],
+      "cover": null,
+      "images": [],
+      "metrics": [
+        {
+          "value": "Rust",
+          "label": "learning project"
+        }
+      ],
+      "log": []
+    }
+  ]
+}

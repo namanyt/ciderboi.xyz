@@ -1,0 +1,28 @@
+{
+  "groups": [
+    {
+      "title": "Languages",
+      "items": ["C", "C++", "Rust", "TypeScript", "Python", "Java", "C#", "SQL"]
+    },
+    {
+      "title": "Graphics & Engines",
+      "items": ["OpenGL", "GLSL", "WebGL2", "OGL", "Three.js", "ECS", "ENet", "Unity", "SFML"]
+    },
+    {
+      "title": "Web & Apps",
+      "items": ["Next.js", "React", "Astro", "Node.js", "Express", "Tailwind", "PocketBase", "Prisma", "Dioxus", "Flutter"]
+    },
+    {
+      "title": "Systems, AI & Data",
+      "items": ["Linux", "Ubuntu", "PostgreSQL", "MySQL", "MongoDB", "SQLite", "Qdrant", "ONNX Runtime", "MCP", "TCP/IP", "Arduino", "y-cruncher"]
+    },
+    {
+      "title": "Cloud & Infrastructure",
+      "items": ["Azure", "Docker", "Nginx", "Bare Metal", "Tailscale", "PM2", "Pterodactyl", "SMTP", "BungeeCord", "Velocity", "DDoS Mitigation", "Grafana", "MinIO", "n8n", "Home Assistant"]
+    },
+    {
+      "title": "Creative & Media",
+      "items": ["TouchDesigner", "Generative Graphics", "Audio-Reactive", "Ableton Live", "FL Studio", "Lightroom", "Premiere Pro", "After Effects"]
+    }
+  ]
+}
