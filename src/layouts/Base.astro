@@ -1,0 +1,132 @@
+---
+import "@fontsource-variable/inter";
+import "@fontsource/instrument-serif/400.css";
+import "@fontsource/instrument-serif/400-italic.css";
+import "@fontsource/maple-mono/400.css";
+import "@fontsource/maple-mono/500.css";
+import "../styles/global.css";
+import GyroCursor from "../components/GyroCursor.astro";
+import { site } from "../lib/content";
+import { buildJsonLdGraph } from "../lib/seo";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  path?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, path = "/", jsonLd } = Astro.props;
+
+const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.role}`;
+const pageDescription = description ?? site.description;
+const canonical = new URL(path, site.url).toString();
+const structuredData = buildJsonLdGraph(jsonLd);
+---
+
+<!doctype html>
+<html lang="en" class="bg-ink">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#121619" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM Summary" />
+    <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="LLM Full Context" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <slot name="head" />
+  </head>
+
+  <body class="min-h-dvh antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-ink-2 focus:px-3 focus:py-2 focus:font-mono focus:text-xs"
+    >
+      Skip to content
+    </a>
+
+    <p id="sr-announce" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+
+    <main id="main" tabindex="-1" class="outline-none">
+      <slot />
+    </main>
+
+    <script>
+      import Lenis from "lenis";
+
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let lenis: Lenis | null = null;
+      let rafId = 0;
+
+      const tick = (time: number) => {
+        if (!lenis) {
+          rafId = 0;
+          return;
+        }
+        lenis.raf(time);
+        rafId = requestAnimationFrame(tick);
+      };
+
+      const syncLenis = (enabled: boolean) => {
+        if (reduce) return;
+        if (enabled) {
+          if (!lenis) {
+            lenis = new Lenis({
+              lerp: 0.085,
+              wheelMultiplier: 1,
+              touchMultiplier: 1.5,
+              smoothWheel: true,
+              syncTouch: false,
+              allowNestedScroll: true,
+            });
+            (window as any).__lenis = lenis;
+          } else {
+            lenis.start();
+            lenis.resize();
+          }
+          if (!rafId) {
+            rafId = requestAnimationFrame(tick);
+          }
+        } else if (lenis) {
+          // Destroy Lenis in window/mobile mode so its non-passive touch listeners never intercept native horizontal/vertical touch scrolls.
+          if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = 0;
+          }
+          lenis.destroy();
+          lenis = null;
+          (window as any).__lenis = null;
+        }
+      };
+
+      (window as any).__syncLenis = syncLenis;
+      syncLenis(document.documentElement.dataset.layout !== "window");
+
+      const srEl = document.getElementById("sr-announce");
+      let srTimer = 0;
+      (window as any).__announce = (message: string) => {
+        if (!srEl || !message) return;
+        window.clearTimeout(srTimer);
+        srEl.textContent = "";
+        srTimer = window.setTimeout(() => {
+          srEl.textContent = message;
+        }, 20);
+      };
+    </script>
+    <GyroCursor />
+  </body>
+</html>

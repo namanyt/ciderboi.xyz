@@ -1,0 +1,449 @@
+---
+interface Props {
+  cellSize?: number;
+  ditherSize?: number;
+  radius?: number;
+  ditherRadius?: number;
+  exponent?: number;
+  pulseMs?: number;
+  gridOpacity?: number;
+  fillOpacity?: number;
+  intensity?: number;
+  trailDecayMs?: number;
+}
+
+const {
+  cellSize = 20,
+  ditherSize = 6,
+  radius = 120,
+  ditherRadius = 82,
+  exponent = 2.0,
+  pulseMs = 1000,
+  gridOpacity = 0.045,
+  fillOpacity = 0.075,
+  intensity = 0.23,
+  trailDecayMs = 580,
+} = Astro.props;
+---
+
+<canvas
+  data-cursor-dither-bg
+  data-cell-size={cellSize}
+  data-dither-size={ditherSize}
+  data-radius={radius}
+  data-dither-radius={ditherRadius}
+  data-exponent={exponent}
+  data-pulse-ms={pulseMs}
+  data-grid-opacity={gridOpacity}
+  data-fill-opacity={fillOpacity}
+  data-intensity={intensity}
+  data-trail-decay-ms={trailDecayMs}
+  aria-hidden="true"
+  class="pointer-events-none fixed inset-0 z-0 block h-full w-full print:hidden"
+></canvas>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>("[data-cursor-dither-bg]");
+
+  if (canvas) {
+    const num = (key: string, fallback: number) => {
+      const v = Number(canvas.dataset[key]);
+      return Number.isFinite(v) ? v : fallback;
+    };
+
+    const CELL = num("cellSize", 20);
+    const DITHER = num("ditherSize", 6);
+    const RADIUS = num("radius", 120);
+    const DITHER_RADIUS = num("ditherRadius", 82);
+    const EXPONENT = num("exponent", 2.0);
+    const PULSE_MS = num("pulseMs", 1000);
+    const GRID_ALPHA = num("gridOpacity", 0.045);
+    const FILL_ALPHA = num("fillOpacity", 0.075);
+    const INTENSITY = num("intensity", 0.23);
+    const DECAY_MS = num("trailDecayMs", 580);
+
+    // Normalized 8x8 Bayer ordered dithering thresholds
+    const BAYER_8 = [
+      [0, 32, 8, 40, 2, 34, 10, 42],
+      [48, 16, 56, 24, 50, 18, 58, 26],
+      [12, 44, 4, 36, 14, 46, 6, 38],
+      [60, 28, 52, 20, 62, 30, 54, 22],
+      [3, 35, 11, 43, 1, 33, 9, 41],
+      [51, 19, 59, 27, 49, 17, 57, 25],
+      [15, 47, 7, 39, 13, 45, 5, 37],
+      [63, 31, 55, 23, 61, 29, 53, 21],
+    ].map((row) => row.map((v) => (v + 0.5) / 64));
+
+    const ctx = canvas.getContext("2d");
+    const baseCanvas = document.createElement("canvas");
+    const baseCtx = baseCanvas.getContext("2d");
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let raf = 0;
+
+    type TrailPoint = { x: number; y: number; born: number };
+    const trail: TrailPoint[] = [];
+
+    // Per-dot pulse expiration timestamps keyed by linear grid index: col + row * cols
+    let cols = 0;
+    let rows = 0;
+    const activeDots = new Map<number, number>();
+
+    const buildBaseGrid = () => {
+      if (!baseCtx || !width || !height) return;
+      baseCanvas.width = Math.floor(width * dpr);
+      baseCanvas.height = Math.floor(height * dpr);
+      baseCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      baseCtx.clearRect(0, 0, width, height);
+
+      cols = Math.ceil(width / CELL) + 1;
+      rows = Math.ceil(height / CELL) + 1;
+
+      baseCtx.fillStyle = `rgba(237, 231, 222, ${GRID_ALPHA})`;
+      const offset = CELL * 0.5;
+      for (let r = 0; r < rows; r++) {
+        const y = r * CELL + offset;
+        for (let c = 0; c < cols; c++) {
+          const x = c * CELL + offset;
+          baseCtx.fillRect(x - 0.75, y - 0.75, 1.5, 1.5);
+        }
+      }
+    };
+
+    const drawStaticBase = () => {
+      if (!ctx) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(baseCanvas, 0, 0, width, height);
+    };
+
+    const resize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      buildBaseGrid();
+      drawStaticBase();
+    };
+
+    const stampPointer = (x: number, y: number, now: number) => {
+      trail.push({ x, y, born: now });
+      if (trail.length > 28) trail.shift();
+
+      // Wake CursorGrid dots within radius with zero hold time (immediate pulse decay)
+      const offset = CELL * 0.5;
+      const minC = Math.max(0, Math.floor((x - RADIUS - offset) / CELL));
+      const maxC = Math.min(cols - 1, Math.ceil((x + RADIUS - offset) / CELL));
+      const minR = Math.max(0, Math.floor((y - RADIUS - offset) / CELL));
+      const maxR = Math.min(rows - 1, Math.ceil((y + RADIUS - offset) / CELL));
+      const rSq = RADIUS * RADIUS;
+
+      for (let r = minR; r <= maxR; r++) {
+        const dy = r * CELL + offset - y;
+        for (let c = minC; c <= maxC; c++) {
+          const dx = c * CELL + offset - x;
+          const dSq = dx * dx + dy * dy;
+          if (dSq <= rSq) {
+            const weight = 1 - Math.sqrt(dSq) / RADIUS;
+            const key = r * cols + c;
+            // Store boosted start timestamp so closer dots peak stronger before fading over PULSE_MS
+            const prev = activeDots.get(key) ?? 0;
+            const nextPeak = now - (1 - weight) * (PULSE_MS * 0.45);
+            if (nextPeak > prev) activeDots.set(key, nextPeak);
+          }
+        }
+      }
+    };
+
+    // Ordered Bayer 8x8 dither mask behind active .stage text so scrim edges match cursor pixels
+    const maskCanvas = document.createElement("canvas");
+    const maskCtx = maskCanvas.getContext("2d");
+
+    let activeAttenFloor = 0.14;
+
+    const syncActiveStageMask = (): DOMRect | null => {
+      const stage = document.querySelector<HTMLElement>('.stage[data-active="true"]');
+      if (stage) {
+        activeAttenFloor = 0.14;
+        const rect = stage.getBoundingClientRect();
+        if (rect.width < 10 || rect.height < 10) return null;
+
+        if (maskCtx) {
+          const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+          const padL = Math.round(4.5 * rem);
+          const padR = Math.round(5.5 * rem);
+          const padY = Math.round(4.5 * rem);
+          const mw = Math.round(rect.width + padL + padR);
+          const mh = Math.round(rect.height + padY * 2);
+
+          if (stage.dataset.scrimKey !== `${mw}x${mh}`) {
+            stage.dataset.scrimKey = `${mw}x${mh}`;
+            maskCanvas.width = mw;
+            maskCanvas.height = mh;
+            maskCtx.clearRect(0, 0, mw, mh);
+            maskCtx.fillStyle = "#000";
+
+            const cx = padL + rect.width * 0.48;
+            const cy = padY + rect.height * 0.5;
+            const rx = mw * 0.47;
+            const ry = mh * 0.46;
+            const innerR = 0.54;
+            const colsM = Math.ceil(mw / DITHER);
+            const rowsM = Math.ceil(mh / DITHER);
+            const block = Math.max(2, DITHER - 1);
+
+            for (let gy = 0; gy < rowsM; gy++) {
+              const py = gy * DITHER + DITHER * 0.5;
+              const dy = (py - cy) / ry;
+              const bRow = BAYER_8[gy & 7];
+              for (let gx = 0; gx < colsM; gx++) {
+                const px = gx * DITHER + DITHER * 0.5;
+                const dx = (px - cx) / rx;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist >= 1) continue;
+                if (dist <= innerR) {
+                  maskCtx.fillRect(gx * DITHER, gy * DITHER, DITHER, DITHER);
+                } else {
+                  const u = 1 - (dist - innerR) / (1 - innerR);
+                  const t = u * u * (3 - 2 * u);
+                  if (t > bRow[gx & 7]) {
+                    maskCtx.fillRect(gx * DITHER, gy * DITHER, block, block);
+                  }
+                }
+              }
+            }
+            stage.style.setProperty("--scrim-mask", `url("${maskCanvas.toDataURL()}")`);
+          }
+        }
+
+        return rect;
+      }
+
+      // Subpage mode: light ordered-Bayer frosted backdrop synced behind [data-dither-column]
+      const col = document.querySelector<HTMLElement>("[data-dither-column]");
+      const scrim = document.querySelector<HTMLElement>("[data-dither-scrim]");
+      if (!col || !scrim) return null;
+      activeAttenFloor = 0.28;
+      const rect = col.getBoundingClientRect();
+      if (rect.width < 10) return null;
+
+      const marginAvail = Math.max(0, (window.innerWidth - rect.width) * 0.5);
+      const wing = marginAvail >= 36 ? Math.min(72, Math.round(marginAvail + 24)) : 0;
+      const leftPx = Math.max(0, Math.round(rect.left - wing));
+      const rightPx = Math.min(window.innerWidth, Math.round(rect.right + wing));
+      const mw = Math.max(16, rightPx - leftPx);
+
+      scrim.style.left = `${leftPx}px`;
+      scrim.style.width = `${mw}px`;
+
+      if (maskCtx && scrim.dataset.scrimKey !== `${mw}x${wing}`) {
+        scrim.dataset.scrimKey = `${mw}x${wing}`;
+        const mh = DITHER * 8;
+        maskCanvas.width = mw;
+        maskCanvas.height = mh;
+        maskCtx.clearRect(0, 0, mw, mh);
+        maskCtx.fillStyle = "#000";
+
+        if (wing <= 0) {
+          maskCtx.fillRect(0, 0, mw, mh);
+        } else {
+          const colsM = Math.ceil(mw / DITHER);
+          const block = Math.max(2, DITHER - 1);
+          const fadeW = wing + 16;
+          for (let gy = 0; gy < 8; gy++) {
+            const bRow = BAYER_8[gy];
+            for (let gx = 0; gx < colsM; gx++) {
+              const px = gx * DITHER + DITHER * 0.5;
+              const edgeDist = Math.min(px, mw - px);
+              if (edgeDist >= fadeW) {
+                maskCtx.fillRect(gx * DITHER, gy * DITHER, DITHER, DITHER);
+              } else {
+                const u = Math.max(0, edgeDist / fadeW);
+                const t = u * u * (3 - 2 * u);
+                if (t > bRow[gx & 7]) {
+                  maskCtx.fillRect(gx * DITHER, gy * DITHER, block, block);
+                }
+              }
+            }
+          }
+        }
+        const url = `url("${maskCanvas.toDataURL()}")`;
+        scrim.style.maskImage = url;
+        scrim.style.webkitMaskImage = url;
+        scrim.style.maskRepeat = "repeat-y";
+        scrim.style.webkitMaskRepeat = "repeat-y";
+      }
+
+      return rect;
+    };
+
+    const stageAttenuation = (px: number, py: number, rect: DOMRect | null): number => {
+      if (!rect) return 1;
+      const inL = rect.left - 14;
+      const inR = rect.right + 22;
+      const inT = rect.top - 14;
+      const inB = rect.bottom + 14;
+      const dx = px < inL ? inL - px : px > inR ? px - inR : 0;
+      const dy = py < inT ? inT - py : py > inB ? py - inB : 0;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const feather = 96;
+      if (dist >= feather) return 1;
+      const t = dist / feather;
+      const smooth = t * t * (3 - 2 * t);
+      return activeAttenFloor + (1 - activeAttenFloor) * smooth;
+    };
+
+    const stageObserver = new MutationObserver(() => {
+      syncActiveStageMask();
+    });
+    document.querySelectorAll(".stage").forEach((el) => {
+      stageObserver.observe(el, { attributes: true, attributeFilter: ["data-active"] });
+    });
+    window.addEventListener("resize", () => syncActiveStageMask(), { passive: true });
+    syncActiveStageMask();
+
+    const tick = (now: number) => {
+      if (!ctx) return;
+
+      // Prune expired trail points and dot pulses
+      for (let i = trail.length - 1; i >= 0; i--) {
+        if (now - trail[i].born >= DECAY_MS) trail.splice(i, 1);
+      }
+      for (const [key, start] of activeDots) {
+        if (now - start >= PULSE_MS) activeDots.delete(key);
+      }
+
+      const activeStageRect = syncActiveStageMask();
+      drawStaticBase();
+
+      // 1. Subtle CursorGrid dot pulse layer
+      if (activeDots.size > 0) {
+        const offset = CELL * 0.5;
+        for (const [key, start] of activeDots) {
+          const age = (now - start) / PULSE_MS;
+          const k = Math.max(0, 1 - age);
+          const r = Math.floor(key / cols);
+          const c = key - r * cols;
+          const x = c * CELL + offset;
+          const y = r * CELL + offset;
+          const ease = k * k * stageAttenuation(x, y, activeStageRect);
+          const rad = 1 + ease * 0.7;
+          // Warm matte Mocha-peach tinted grid dot wake
+          ctx.fillStyle = `rgba(227, 155, 116, ${(FILL_ALPHA * ease).toFixed(4)})`;
+          ctx.fillRect(x - rad * 0.5, y - rad * 0.5, rad, rad);
+        }
+      }
+
+      // 2. Crisp Bayer-ordered DitherCursor trail over top (feathered around active text)
+      if (trail.length > 0) {
+        let minX = width;
+        let maxX = 0;
+        let minY = height;
+        let maxY = 0;
+        for (let i = 0; i < trail.length; i++) {
+          const p = trail[i];
+          if (p.x - DITHER_RADIUS < minX) minX = p.x - DITHER_RADIUS;
+          if (p.x + DITHER_RADIUS > maxX) maxX = p.x + DITHER_RADIUS;
+          if (p.y - DITHER_RADIUS < minY) minY = p.y - DITHER_RADIUS;
+          if (p.y + DITHER_RADIUS > maxY) maxY = p.y + DITHER_RADIUS;
+        }
+
+        const startGx = Math.max(0, Math.floor(minX / DITHER));
+        const endGx = Math.min(Math.ceil(width / DITHER), Math.ceil(maxX / DITHER));
+        const startGy = Math.max(0, Math.floor(minY / DITHER));
+        const endGy = Math.min(Math.ceil(height / DITHER), Math.ceil(maxY / DITHER));
+        const block = Math.max(2, DITHER - 1);
+        const rSq = DITHER_RADIUS * DITHER_RADIUS;
+
+        for (let gy = startGy; gy <= endGy; gy++) {
+          const py = gy * DITHER + DITHER * 0.5;
+          const bRow = BAYER_8[gy & 7];
+          for (let gx = startGx; gx <= endGx; gx++) {
+            const px = gx * DITHER + DITHER * 0.5;
+            let field = 0;
+            for (let i = 0; i < trail.length; i++) {
+              const p = trail[i];
+              const dx = px - p.x;
+              const dy = py - p.y;
+              const dSq = dx * dx + dy * dy;
+              if (dSq >= rSq) continue;
+              const age = (now - p.born) / DECAY_MS;
+              const life = 1 - age;
+              const falloff = Math.pow(1 - Math.sqrt(dSq) / DITHER_RADIUS, EXPONENT);
+              const val = falloff * life;
+              if (val > field) field = val;
+            }
+
+            field *= stageAttenuation(px, py, activeStageRect);
+
+            if (field > 0.02 && field > bRow[gx & 7]) {
+              const alpha = Math.min(INTENSITY, INTENSITY * (0.42 + field * 0.72));
+              // Pastel Mocha-Ember: muted peach-terracotta wake (#e39b74) -> dusty honey core (#ecd198)
+              ctx.fillStyle =
+                field > 0.65
+                  ? `rgba(236, 209, 152, ${alpha.toFixed(4)})`
+                  : `rgba(227, 155, 116, ${alpha.toFixed(4)})`;
+              ctx.fillRect(gx * DITHER, gy * DITHER, block, block);
+            }
+          }
+        }
+      }
+
+      if (trail.length > 0 || activeDots.size > 0) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        raf = 0;
+      }
+    };
+
+    const wake = () => {
+      if (!raf && !reduce) {
+        raf = requestAnimationFrame(tick);
+      }
+    };
+
+    let lastPx: number | null = null;
+    let lastPy: number | null = null;
+
+    window.addEventListener(
+      "pointermove",
+      (e) => {
+        if (reduce || e.pointerType === "touch") return;
+        const now = performance.now();
+        const x = e.clientX;
+        const y = e.clientY;
+        if (lastPx !== null && lastPy !== null) {
+          const dx = x - lastPx;
+          const dy = y - lastPy;
+          const dist = Math.hypot(dx, dy);
+          // Subdivide fast pointer sweeps so the dither wake stays unbroken
+          if (dist > 16) {
+            const steps = Math.min(8, Math.floor(dist / 16));
+            for (let s = 1; s < steps; s++) {
+              const k = s / steps;
+              stampPointer(lastPx + dx * k, lastPy + dy * k, now);
+            }
+          }
+        }
+        stampPointer(x, y, now);
+        lastPx = x;
+        lastPy = y;
+        wake();
+      },
+      { passive: true },
+    );
+
+    const clearLast = () => {
+      lastPx = null;
+      lastPy = null;
+    };
+    window.addEventListener("pointerleave", clearLast);
+    window.addEventListener("blur", clearLast);
+    window.addEventListener("resize", resize);
+    resize();
+  }
+</script>

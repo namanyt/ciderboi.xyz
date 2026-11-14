@@ -1,0 +1,205 @@
+---
+import Base from "../../layouts/Base.astro";
+import SubNav from "../../components/SubNav.astro";
+import SubpageBackdrop from "../../components/SubpageBackdrop.astro";
+import Container from "../../components/Container.astro";
+import { getProject, getProjects, site } from "../../lib/content";
+import { projectSchema } from "../../lib/seo";
+
+export function getStaticPaths() {
+  return getProjects().map((p) => ({ params: { slug: p.id } }));
+}
+
+const { slug } = Astro.params;
+const project = getProject(slug)!;
+
+const ordered = getProjects().map((p) => p.id);
+const next = getProject(ordered[(ordered.indexOf(project.id) + 1) % ordered.length])!;
+---
+
+<Base title={project.title} description={project.summary} path={`/work/${project.id}`} jsonLd={projectSchema(project)}>
+  <SubpageBackdrop />
+  <SubNav path={`/work/${project.id}`} />
+
+  <Container data-dither-column class="relative z-10 max-w-6xl pb-16 sm:pb-24">
+    <div class="pt-4 sm:pt-10">
+      <a
+        href="/work"
+        class="label-mono inline-flex min-h-[44px] items-center gap-1 text-[11px] text-paper-dim transition-colors hover:text-ember"
+      >
+        <span aria-hidden="true">←</span> All work
+      </a>
+    </div>
+
+    <header class="mt-3 pb-6 sm:mt-6 sm:pb-10">
+      <div class="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+        <p class="label text-ember">{project.category}</p>
+        <p class="label">{project.year}</p>
+        {project.status === "ongoing" && <p class="label text-ember">ongoing</p>}
+      </div>
+
+      <h1 class="mt-3 font-serif text-4xl leading-[1.03] tracking-[-0.015em] text-paper sm:mt-4 sm:text-5xl lg:text-[3.5rem]">
+        {project.title}
+      </h1>
+      <p class="mt-3 max-w-2xl text-base leading-relaxed text-paper-dim sm:mt-4 sm:text-lg">{project.tagline}</p>
+
+      {
+        project.links.length > 0 && (
+          <ul class="mt-5 flex flex-wrap gap-x-6 gap-y-1 sm:mt-8">
+            {project.links.map((l) => (
+              <li>
+                <a
+                  href={l.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="label link-underline inline-flex min-h-[36px] items-center gap-1"
+                >
+                  {l.label} <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    {
+      project.video && (
+        <figure class="w-full">
+          <div class="aspect-video w-full overflow-hidden border border-paper/10 bg-black">
+            <iframe
+              src={project.video.url}
+              title={project.title}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+              class="h-full w-full"
+            />
+          </div>
+          {project.video.caption && <figcaption class="label mt-2">{project.video.caption}</figcaption>}
+        </figure>
+      )
+    }
+
+    {
+      !project.video && project.cover && (
+        <img
+          src={project.cover}
+          alt={project.images[0]?.alt ?? project.title}
+          class="w-full border border-paper/10 object-cover"
+        />
+      )
+    }
+
+    {
+      project.metrics && project.metrics.length > 0 && (
+        <dl class="mt-6 grid grid-cols-2 gap-4 border-y border-paper/15 py-5 sm:mt-10 sm:grid-cols-4 sm:gap-6 sm:py-6">
+          {project.metrics.map((m) => (
+            <div>
+              <dd class="font-serif text-3xl leading-none tracking-[-0.015em] text-paper tabular-nums sm:text-4xl">{m.value}</dd>
+              <dt class="label mt-1.5">{m.label}</dt>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+
+    <div class="grid gap-8 py-8 sm:gap-10 sm:py-12 lg:grid-cols-12">
+      <div class="max-w-[65ch] lg:col-span-7">
+        <p class="text-lg leading-[1.6] text-paper sm:text-xl">{project.summary}</p>
+
+        {
+          project.detail && (
+            <p class="mt-6 leading-[1.7] text-paper-dim">{project.detail}</p>
+          )
+        }
+
+        {
+          project.log.length > 0 && (
+            <div class="mt-10">
+              <h2 class="label border-b border-paper/15 pb-3 text-paper">Log</h2>
+              <ul class="mt-4 space-y-4">
+                {project.log.map((entry) => (
+                  <li class="flex flex-col gap-1 sm:flex-row sm:gap-6">
+                    <span class="label w-20 shrink-0 pt-1">{entry.date}</span>
+                    <p class="text-sm leading-relaxed text-paper-dim">{entry.text}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </div>
+
+      <aside class="lg:col-span-5 lg:border-l lg:border-paper/10 lg:pl-10">
+        <h2 class="label">Stack</h2>
+        <ul class="mt-3 flex flex-wrap gap-x-3 gap-y-2">
+          {
+            project.stack.map((s) => (
+              <li class="border border-paper/15 px-2.5 py-1 font-mono text-[10.5px] tracking-[0.06em] text-paper-dim uppercase">
+                {s}
+              </li>
+            ))
+          }
+        </ul>
+
+        {next.id !== project.id && (
+          <>
+            <h2 class="label mt-8">Next</h2>
+            <a
+              href={`/work/${next.id}`}
+              class="mt-2 inline-flex min-h-[44px] items-center gap-1.5 font-serif text-2xl leading-[1.15] text-paper transition-colors duration-200 hover:text-ember"
+            >
+              {next.title} <span aria-hidden="true">→</span>
+            </a>
+          </>
+        )}
+      </aside>
+    </div>
+
+    {
+      project.images.filter((i) => i.src !== project.cover).length > 0 && (
+        <div class="grid gap-6 pb-8 sm:grid-cols-2">
+          {project.images
+            .filter((i) => i.src !== project.cover)
+            .map((img) => (
+              <figure>
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full border border-paper/10 object-cover"
+                />
+                {img.caption && <figcaption class="label mt-2">{img.caption}</figcaption>}
+              </figure>
+            ))}
+        </div>
+      )
+    }
+
+    <footer class="rule flex flex-wrap items-center justify-between gap-3 pt-5 sm:pt-8">
+      <div class="flex flex-wrap items-center gap-5">
+        <a
+          href="/work"
+          class="label-mono inline-flex min-h-[44px] items-center gap-1 text-[11px] text-paper-dim transition-colors hover:text-ember"
+        >
+          <span aria-hidden="true">←</span> Back to work
+        </a>
+        <a
+          href="/"
+          class="label-mono inline-flex min-h-[44px] items-center gap-1 text-[11px] text-dim transition-colors hover:text-ember"
+        >
+          <span aria-hidden="true">←</span> Rack
+        </a>
+      </div>
+      <a
+        href={`mailto:${site.email}`}
+        class="label-mono inline-flex min-h-[44px] items-center text-[11px] text-ember hover:underline"
+      >
+        {site.email}
+      </a>
+    </footer>
+  </Container>
+</Base>
