@@ -1,0 +1,238 @@
+---
+import Page from "../layouts/Page.astro";
+import { site, getReleases, formatDate } from "../lib/content";
+import { musicCollectionSchema } from "../lib/seo";
+
+const releases = getReleases();
+const current = releases.filter((r) => r.kind !== "archive").reverse();
+const [leadRelease, ...otherReleases] = current;
+const archive = releases.filter((r) => r.kind === "archive");
+const spotify = site.socials.find((s) => s.label === "Spotify")?.href ?? "#";
+
+const platforms = [
+  { label: "Spotify", href: spotify, primary: true },
+  { label: "YouTube Music", href: "https://music.youtube.com/@ciderboi" },
+  { label: "Apple Music", href: "https://music.apple.com/in/artist/nitya-naman/1864402688" },
+  { label: "Amazon Music", href: "https://music.amazon.in/artists/B0BSFZ4HZ7/nitya-naman" },
+];
+---
+
+<Page
+  title="Music"
+  eyebrow="DAC // Discography"
+  description={`Music by ${site.name} — instrumental and electronic releases, produced independently.`}
+  path="/music"
+  wide
+  jsonLd={musicCollectionSchema(releases)}
+>
+  <div class="flex flex-col justify-between gap-4 py-5 sm:py-6 lg:flex-row lg:items-center">
+    <p class="max-w-xl text-base leading-relaxed text-paper-dim sm:text-lg">
+      Instrumental and electronic releases, composed, produced, mixed, and released independently.
+      A non-analytical outlet driven by mood rather than optimisation.
+    </p>
+
+    <div class="flex flex-wrap gap-2">
+      {
+        platforms.map((p) => (
+          <a
+            href={p.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class:list={[
+              "label-mono inline-flex min-h-[40px] items-center gap-1 border px-3 text-[10.5px] transition-colors duration-150",
+              p.primary
+                ? "border-ember/60 bg-ember/10 text-ember hover:bg-ember/20"
+                : "border-paper/15 text-paper-dim hover:border-ember/55 hover:text-paper",
+            ]}
+          >
+            {p.label} <span aria-hidden="true">↗</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  {
+    leadRelease && (
+      <section class="border-t border-paper/10 py-6 sm:py-8">
+        <div class="flex items-baseline justify-between gap-4">
+          <h2 class="label-mono text-[11px] text-ember">Latest {leadRelease.kind}</h2>
+          <span class="label-mono text-[11px] text-dim">{formatDate(leadRelease.date)}</span>
+        </div>
+
+        <div class="mt-4 grid gap-6 border border-paper/12 bg-white/[0.015] p-5 sm:p-6 lg:grid-cols-[15rem_1fr]">
+          <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-end lg:flex-col lg:items-stretch lg:justify-between">
+            <img
+              src={leadRelease.cover}
+              alt={leadRelease.title}
+              loading="eager"
+              decoding="async"
+              width="320"
+              height="320"
+              class="aspect-square w-40 max-w-full border border-paper/10 object-cover sm:w-48 lg:w-full"
+            />
+            {leadRelease.url && (
+              <a
+                href={leadRelease.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="label-mono inline-flex min-h-[44px] items-center justify-center gap-1 border border-ember/60 bg-ember/10 px-4 text-center text-[11px] text-ember transition-colors hover:bg-ember/20 lg:w-full"
+              >
+                Listen on Spotify <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </div>
+
+          <div class="min-w-0">
+            <h3 class="font-serif text-3xl leading-[1.08] tracking-[-0.01em] text-paper sm:text-4xl">{leadRelease.title}</h3>
+            <p class="label-mono mt-1.5 text-[10.5px] text-dim">
+              {leadRelease.tracks ? `${leadRelease.tracks.length} tracks` : leadRelease.kind}
+            </p>
+
+            {leadRelease.tracks && leadRelease.tracks.length > 0 && (
+              <ol class="mt-5 grid gap-x-8 gap-y-2 border-t border-white/[0.06] pt-4 sm:grid-cols-2">
+                {leadRelease.tracks.map((t) => (
+                  <li class="flex items-baseline gap-2.5 border-b border-white/[0.04] pb-1.5 text-[13.5px] text-paper-dim">
+                    <span class="label-mono w-5 shrink-0 text-[10.5px] text-dim">
+                      {String(t.n).padStart(2, "0")}
+                    </span>
+                    <span class="truncate text-paper/90">{t.title}</span>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="border-t border-paper/10 py-8">
+    <div class="flex items-baseline justify-between gap-4">
+      <h2 class="label-mono text-[11px] text-paper">Earlier releases · Nitya Naman</h2>
+      <span class="label-mono text-[11px] text-dim">
+        {String(otherReleases.length).padStart(2, "0")} items
+      </span>
+    </div>
+
+    <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        otherReleases.map((r) => (
+          <li class="flex flex-col justify-between border border-paper/10 bg-white/[0.015] p-4 transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.03]">
+            <div class="flex items-start gap-3.5">
+              {r.cover ? (
+                <img
+                  src={r.cover}
+                  alt={r.title}
+                  loading="lazy"
+                  decoding="async"
+                  width="64"
+                  height="64"
+                  class="h-16 w-16 shrink-0 border border-paper/10 object-cover"
+                />
+              ) : (
+                <div class="flex h-16 w-16 shrink-0 items-center justify-center border border-paper/10 bg-ink-2 font-serif text-xl text-paper-dim">
+                  {r.title.charAt(0)}
+                </div>
+              )}
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class="label-mono text-[10.5px] text-ember">
+                    {r.kind === "album" ? `Album · ${r.tracks?.length ?? 0}t` : "Single"}
+                  </span>
+                  <span class="label-mono text-[10.5px] text-dim">{formatDate(r.date)}</span>
+                </div>
+                <h3 class="mt-1 truncate font-serif text-xl leading-[1.15] text-paper">{r.title}</h3>
+                <div class="mt-1.5 flex flex-wrap gap-x-4">
+                  {r.url && (
+                    <a
+                      href={r.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[10.5px] text-paper-dim hover:text-ember"
+                    >
+                      Listen <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                  {r.preSave && (
+                    <a
+                      href={r.preSave}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[10.5px] text-ember hover:underline"
+                    >
+                      Pre-save <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {r.tracks && r.tracks.length > 0 && (
+              <details class="group mt-2 border-t border-white/[0.06] pt-1.5">
+                <summary class="label-mono inline-flex min-h-[36px] cursor-pointer list-none items-center text-[10.5px] text-dim hover:text-ember">
+                  Tracklist ({r.tracks.length})
+                  <span aria-hidden="true" class="ml-1 inline-block transition-transform group-open:rotate-90">→</span>
+                </summary>
+                <ol class="mt-2 space-y-1">
+                  {r.tracks.map((t) => (
+                    <li class="text-xs text-paper-dim">
+                      <span class="font-mono text-[10.5px] text-dim tabular-nums">
+                        {String(t.n).padStart(2, "0")}
+                      </span>{" "}
+                      {t.title}
+                    </li>
+                  ))}
+                </ol>
+              </details>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    archive.length > 0 && (
+      <section class="border-t border-paper/10 py-8">
+        <div class="flex items-baseline justify-between gap-4">
+          <h2 class="label-mono text-[11px] text-paper">Cider Gamer (archive)</h2>
+          <span class="label-mono text-[11px] text-dim">
+            {String(archive.length).padStart(2, "0")} items
+          </span>
+        </div>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {archive.map((r) => (
+            <li>
+              {r.url ? (
+                <a
+                  href={r.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group flex min-h-[56px] items-center justify-between gap-3 border border-paper/10 bg-white/[0.015] p-3.5 transition-colors hover:border-ember/45 hover:bg-white/[0.03]"
+                  aria-label={`Listen to ${r.title}`}
+                >
+                  <div class="min-w-0">
+                    <p class="truncate text-sm font-medium text-paper transition-colors group-hover:text-ember">{r.title}</p>
+                    <p class="label-mono mt-0.5 text-[10.5px] text-dim">{formatDate(r.date)}</p>
+                  </div>
+                  <span aria-hidden="true" class="label-mono shrink-0 text-[11px] text-ember">
+                    ↗
+                  </span>
+                </a>
+              ) : (
+                <div class="flex min-h-[56px] items-center justify-between gap-3 border border-paper/10 bg-white/[0.015] p-3.5">
+                  <div class="min-w-0">
+                    <p class="truncate text-sm font-medium text-paper">{r.title}</p>
+                    <p class="label-mono mt-0.5 text-[10.5px] text-dim">{formatDate(r.date)}</p>
+                  </div>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</Page>

@@ -1,0 +1,73 @@
+---
+import { site } from "../lib/content";
+
+export interface Props {
+  path: string;
+  variant?: "home" | "sub";
+}
+
+const { path, variant = "sub" } = Astro.props;
+
+const nav = [
+  { label: "Work", href: "/work" },
+  { label: "About", href: "/about" },
+  { label: "Résumé", href: "/resume" },
+  { label: "Contact", href: "/contact" },
+];
+
+const isActive = (href: string) => path === href || path.startsWith(href + "/");
+const isHome = variant === "home";
+---
+
+<header
+  class:list={[
+    "inset-x-0 top-0 z-30 pt-[env(safe-area-inset-top)]",
+    isHome
+      ? "fixed bg-gradient-to-b from-rack via-rack/92 to-transparent"
+      : "sticky border-b border-paper/10 bg-rack/90 backdrop-blur-md",
+  ]}
+>
+  <div
+    class:list={[
+      "mx-auto flex h-13 w-full items-center justify-between gap-2 px-4 sm:h-14 sm:gap-6 sm:px-6",
+      isHome ? "max-w-[1920px] lg:px-8 xl:px-10" : "max-w-6xl lg:px-10",
+    ]}
+  >
+    <a
+      href="/"
+      aria-label={`${site.handle}.xyz — Home`}
+      class="inline-flex min-h-[44px] shrink-0 items-center gap-2 transition-opacity hover:opacity-85"
+    >
+      <span class="inline-block h-1 w-1 bg-ember"></span>
+      <span class="label-mono text-[10.5px] tracking-[0.08em] whitespace-nowrap text-paper sm:text-[11px] sm:tracking-[0.12em]">
+        {site.handle}.xyz
+      </span>
+    </a>
+
+    <nav aria-label="Primary" class="min-w-0 shrink-0">
+      <ul class="flex items-center gap-x-2.5 whitespace-nowrap sm:gap-x-5">
+        {
+          nav.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  class:list={[
+                    "label-mono relative inline-flex min-h-[44px] items-center text-[10px] tracking-[0.06em] transition-colors duration-200 hover:text-ember sm:text-[11px] sm:tracking-[0.12em]",
+                    active
+                      ? "text-paper after:absolute after:inset-x-0 after:bottom-2.5 after:h-[1.5px] after:bg-ember sm:after:bottom-3"
+                      : "text-paper-dim",
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
