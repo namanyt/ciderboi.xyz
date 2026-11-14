@@ -1,0 +1,65 @@
+---
+{/* Zero-flash solid black boot curtain while the 3D WebGL rack initializes; dissolves via ordered 8x8 Bayer dithering. */}
+---
+
+<div
+  data-boot-curtain
+  aria-hidden="true"
+  class="pointer-events-none fixed inset-0 z-[70] flex items-center justify-center bg-slot select-none print:hidden"
+  style="background-color: #07090b;"
+>
+  <canvas
+    data-boot-canvas
+    class="pointer-events-none fixed inset-0 block h-full w-full"
+  ></canvas>
+
+  <div
+    data-boot-hud
+    class="relative z-10 flex w-[min(82vw,16.5rem)] flex-col gap-2.5 px-4 py-3"
+  >
+    <div class="flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span
+          data-boot-led
+          class="inline-block h-[6px] w-[6px] rounded-[1px] bg-ember animate-pulse"
+          style="box-shadow: 0 0 8px rgba(212, 107, 66, 0.65);"
+        ></span>
+        <span class="label-mono text-[10px] tracking-[0.16em] text-paper">
+          RACK // BOOT
+        </span>
+      </div>
+      <span class="label-mono text-[9.5px] tracking-[0.12em] text-dim/75">7U</span>
+    </div>
+
+    <div class="h-px w-full overflow-hidden bg-paper/12">
+      <div
+        data-boot-bar
+        class="h-full w-full origin-left bg-ember/85 transition-transform duration-150 ease-out"
+        style="transform: scaleX(0.08);"
+      ></div>
+    </div>
+
+    <p
+      data-boot-status
+      class="label-mono text-[9.5px] tracking-[0.12em] text-dim"
+    >
+      INITIALIZING...
+    </p>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var curtain = document.querySelector("[data-boot-curtain]");
+    if (!curtain) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      curtain.style.display = "none";
+      return;
+    }
+    // Failsafe guarantee so the viewport can never stall behind the boot curtain on broken scripts or slow GPUs
+    window.__bootFailsafe = window.setTimeout(function () {
+      var el = document.querySelector("[data-boot-curtain]");
+      if (el) el.remove();
+    }, 4500);
+  })();
+</script>

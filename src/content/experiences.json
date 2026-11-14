@@ -1,0 +1,40 @@
+{
+  "experiences": [
+    {
+      "title": "Infrastructure Engineer (Intern)",
+      "company": "Enterleap (Evid.AI)",
+      "location": "Remote",
+      "start": "2025-08",
+      "end": "2026-11",
+      "summary": "Established dev, staging, and production environments, CI/CD release workflows, and cloud deployment architecture (Azure, AWS/GCP) ahead of Evid.AI's production rollout.",
+      "stack": ["Azure", "CI/CD", "Cloud Architecture", "Linux"]
+    },
+    {
+      "title": "Full-Stack Developer",
+      "company": "Government of Uttarakhand",
+      "location": "Dehradun, India",
+      "start": "2025-10",
+      "end": "2025-11",
+      "summary": "Sole technical owner of the official web platform for the 28th All India Forest Sports Meet — frontend, backend, database, deployment, and production infrastructure.",
+      "stack": ["Next.js", "PocketBase", "Ubuntu", "PM2"]
+    },
+    {
+      "title": "Head of Club, Techformers",
+      "company": "Delhi Public School",
+      "location": "Jaipur, India",
+      "start": "2023-04",
+      "end": "2025-03",
+      "summary": "Led technical operations, media production, and event logistics — photography, videography, livestreaming, and AV systems for school-wide initiatives.",
+      "stack": ["Leadership", "Media", "AV"]
+    },
+    {
+      "title": "Co-Founder & Systems Lead",
+      "company": "Cloudboot.in",
+      "location": "Singapore · Mumbai (Remote)",
+      "start": "2022",
+      "end": "2024",
+      "summary": "Co-built a multi-node bare-metal Minecraft hosting operation across Singapore and Mumbai (3 nodes), managing multi-server BungeeCord and Velocity proxy networks, DDoS mitigation, custom mod development, and a technical support team for creator networks.",
+      "stack": ["Bare Metal", "Linux", "BungeeCord", "Velocity", "DDoS Mitigation"]
+    }
+  ]
+}

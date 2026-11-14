@@ -1,0 +1,200 @@
+---
+import Page from "../../layouts/Page.astro";
+import { getProjects, site } from "../../lib/content";
+import { workCollectionSchema } from "../../lib/seo";
+
+const projects = [...getProjects()].sort((a, b) => b.year - a.year || a.order - b.order);
+
+const bucketOf = (cat: string) => {
+  if (["Graphics", "Creative", "Game Dev"].includes(cat)) return "graphics";
+  if (["Systems", "HPC", "Infrastructure", "Hardware"].includes(cat)) return "systems";
+  return "web";
+};
+
+const buckets = [
+  { id: "all", label: "All", count: projects.length },
+  {
+    id: "graphics",
+    label: "Graphics & Games",
+    count: projects.filter((p) => bucketOf(p.category) === "graphics").length,
+  },
+  {
+    id: "systems",
+    label: "Systems & Infra",
+    count: projects.filter((p) => bucketOf(p.category) === "systems").length,
+  },
+  {
+    id: "web",
+    label: "Web & Tools",
+    count: projects.filter((p) => bucketOf(p.category) === "web").length,
+  },
+];
+
+const ytThumb = (url?: string) => {
+  const id = url?.match(/embed\/([^?&/]+)/)?.[1];
+  return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : null;
+};
+---
+
+<Page
+  title="Work"
+  eyebrow="Index"
+  description={`Projects by ${site.name} — graphics, games, systems, full-stack, hardware, and infrastructure.`}
+  path="/work"
+  wide
+  jsonLd={workCollectionSchema(projects)}
+>
+  <div class="flex flex-wrap items-center justify-between gap-3 border-t border-paper/10 py-4 sm:gap-4 sm:py-6">
+    <div class="flex flex-wrap gap-2" role="group" aria-label="Filter projects">
+      {
+        buckets.map((b, idx) => (
+          <button
+            type="button"
+            data-work-filter={b.id}
+            data-work-label={b.label}
+            aria-pressed={idx === 0 ? "true" : "false"}
+            class="label-mono inline-flex min-h-[40px] items-center border border-paper/15 px-3 text-[10.5px] text-dim transition-colors duration-150 hover:border-paper/35 hover:text-paper aria-pressed:border-ember/70 aria-pressed:bg-ember/10 aria-pressed:text-ember"
+          >
+            {b.label} <span class="ml-1 opacity-60">{b.count}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <p data-work-count role="status" aria-live="polite" class="label">{projects.length} builds · sorted newest first</p>
+  </div>
+
+  <ul
+    data-work-grid
+    class="grid gap-5 pb-12 sm:grid-cols-2 lg:grid-cols-3"
+  >
+    {
+      projects.map((p) => {
+        const thumb = p.cover ?? ytThumb(p.video?.url);
+        const leadMetric = p.metrics?.[0];
+        const secondMetric = p.metrics?.[1];
+        const bucket = bucketOf(p.category);
+
+        return (
+          <li data-bucket={bucket} class="flex">
+            <a
+              href={`/work/${p.id}`}
+              class="group flex w-full flex-col overflow-hidden border border-paper/12 bg-white/[0.015] transition-all duration-200 hover:-translate-y-0.5 hover:border-ember/60 hover:bg-white/[0.035]"
+            >
+              <div class="relative aspect-[16/10] w-full overflow-hidden border-b border-paper/10 bg-[#0d1014]">
+                {thumb ? (
+                  <img
+                    src={thumb}
+                    alt={p.images[0]?.alt ?? p.title}
+                    loading="lazy"
+                    decoding="async"
+                    class="h-full w-full object-cover opacity-85 transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-100"
+                  />
+                ) : (
+                  <div class="flex h-full w-full flex-col justify-between bg-[radial-gradient(circle_at_70%_20%,rgba(232,126,64,0.09),transparent_62%)] p-5">
+                    <div class="flex items-center justify-between">
+                      <span class="font-mono text-[10.5px] tracking-[0.12em] text-dim uppercase">
+                        {p.category}
+                      </span>
+                      <span class="h-1.5 w-1.5 bg-ember/60 transition-colors group-hover:bg-ember" />
+                    </div>
+                    {leadMetric ? (
+                      <div>
+                        <p class="font-serif text-4xl leading-none tracking-[-0.015em] text-paper tabular-nums transition-colors group-hover:text-ember">
+                          {leadMetric.value}
+                        </p>
+                        <p class="label-mono mt-1.5 text-[10.5px] text-dim">
+                          {leadMetric.label}
+                          {secondMetric && ` · ${secondMetric.value} ${secondMetric.label}`}
+                        </p>
+                      </div>
+                    ) : (
+                      <p class="font-serif text-3xl leading-[1.1] text-paper/85">{p.stack[0] ?? p.title}</p>
+                    )}
+                  </div>
+                )}
+
+                {thumb && p.video && (
+                  <span class="label-mono absolute bottom-2.5 left-2.5 border border-paper/20 bg-[#0c0e11]/85 px-2 py-0.5 text-[10.5px] text-paper backdrop-blur-xs">
+                    ▶ Play study
+                  </span>
+                )}
+
+                {thumb && leadMetric && (
+                  <span class="label-mono absolute top-2.5 right-2.5 border border-paper/15 bg-[#0c0e11]/85 px-2 py-0.5 text-[10.5px] text-paper-dim backdrop-blur-xs">
+                    <strong class="font-normal text-paper">{leadMetric.value}</strong>{" "}
+                    {leadMetric.label}
+                  </span>
+                )}
+              </div>
+
+              <div class="flex flex-1 flex-col p-4 sm:p-5">
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class="label text-ember">{p.category}</span>
+                  <span class="label text-dim">{p.year}</span>
+                </div>
+
+                <h2 class="mt-2 flex items-baseline justify-between gap-2 font-serif text-2xl leading-[1.15] text-paper transition-colors group-hover:text-ember">
+                  <span>{p.title}</span>
+                  <span
+                    aria-hidden="true"
+                    class="font-mono text-xs text-ember opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+                  >
+                    ↗
+                  </span>
+                </h2>
+
+                <p class="mt-1.5 line-clamp-2 text-[13.5px] leading-relaxed text-paper-dim">
+                  {p.tagline}
+                </p>
+
+                <ul class="mt-auto flex flex-wrap gap-1.5 pt-4">
+                  {p.stack.slice(0, 4).map((s) => (
+                    <li class="label-mono border border-paper/10 px-1.5 py-0.5 text-[10.5px] text-dim">
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  <section class="border-t border-paper/10 py-8">
+    <p class="text-sm text-paper-dim">
+      Something here needs explaining?{" "}
+      <a href="/contact" class="link-underline inline-flex min-h-[36px] items-center text-ember">Get in touch</a>.
+    </p>
+  </section>
+
+  <script>
+    const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-work-filter]"));
+    const cards = Array.from(document.querySelectorAll<HTMLLIElement>("[data-work-grid] > li"));
+    const countEl = document.querySelector<HTMLElement>("[data-work-count]");
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filter = btn.dataset.workFilter ?? "all";
+        const label = btn.dataset.workLabel ?? "All";
+        let visible = 0;
+        buttons.forEach((b) => {
+          b.setAttribute("aria-pressed", String(b === btn));
+        });
+        cards.forEach((card) => {
+          const show = filter === "all" || card.dataset.bucket === filter;
+          card.classList.toggle("hidden", !show);
+          if (show) visible++;
+        });
+        if (countEl) {
+          countEl.textContent =
+            filter === "all"
+              ? `${visible} builds · sorted newest first`
+              : `${visible} ${label} builds · sorted newest first`;
+        }
+      });
+    });
+  </script>
+</Page>

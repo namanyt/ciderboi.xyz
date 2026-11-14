@@ -1,0 +1,256 @@
+---
+import Page from "../layouts/Page.astro";
+import { site, getExperiences, getSkillGroups, getProjects, formatMonthYear } from "../lib/content";
+import { profilePageSchema } from "../lib/seo";
+
+const experiences = getExperiences().filter((e) => e.title !== "Programmer");
+const skills = getSkillGroups();
+const featured = [...getProjects()]
+  .filter((p) => p.featured || p.id === "collective-brain")
+  .sort((a, b) => b.year - a.year || a.order - b.order)
+  .slice(0, 6);
+const awards = getProjects().filter((p) => /place/i.test(p.log.map((l) => l.text).join(" ")));
+const gh = site.socials.find((s) => s.label === "GitHub");
+const li = site.socials.find((s) => s.label === "LinkedIn");
+---
+
+<Page
+  title="Résumé"
+  eyebrow="RUNTIME // Curriculum vitae"
+  description={`Résumé of ${site.name} — computer science student and developer working across graphics, systems, and low-level software.`}
+  path="/resume"
+  wide
+  jsonLd={profilePageSchema("/resume", `Résumé — ${site.name}`, `Curriculum vitae and experience of ${site.name}.`)}
+>
+  <div class="flex flex-wrap items-center justify-between gap-3 py-5 sm:gap-4 sm:py-6">
+    <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+      <a
+        href="/downloads/resume.pdf"
+        download
+        class="label-mono inline-flex min-h-[44px] items-center border border-ember/60 bg-ember/10 px-3.5 text-[11px] text-ember transition-colors duration-200 hover:bg-ember/20"
+      >
+        Download PDF ↓
+      </a>
+      <button
+        data-copy={site.email}
+        type="button"
+        class="label-mono inline-flex min-h-[44px] items-center border border-paper/20 px-3.5 text-[11px] text-paper transition-colors duration-200 hover:border-ember hover:text-ember"
+      >
+        Copy email
+      </button>
+    </div>
+
+    <a href="/work" class="label-mono inline-flex min-h-[40px] items-center text-[11px] text-paper-dim hover:text-ember">
+      All projects →
+    </a>
+  </div>
+
+  <section class="grid grid-cols-2 gap-2.5 border-t border-paper/10 py-5 sm:gap-3 sm:py-6 lg:grid-cols-4">
+    <div class="min-w-0 border border-paper/10 bg-white/[0.015] p-3.5">
+      <p class="label-mono text-[10.5px] text-dim">Email</p>
+      <a href={`mailto:${site.email}`} class="mt-0.5 inline-flex min-h-[36px] max-w-full items-center truncate text-[13px] text-ember hover:underline sm:text-sm">
+        {site.email}
+      </a>
+    </div>
+    <div class="min-w-0 border border-paper/10 bg-white/[0.015] p-3.5">
+      <p class="label-mono text-[10.5px] text-dim">Location</p>
+      <p class="mt-1 truncate text-[13px] text-paper sm:text-sm">{site.location}</p>
+    </div>
+    {
+      gh && (
+        <a
+          href={gh.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group min-w-0 border border-paper/10 bg-white/[0.015] p-3.5 transition-colors hover:border-ember/55"
+        >
+          <p class="label-mono flex items-center justify-between text-[10.5px] text-dim">
+            <span>GitHub</span>
+            <span class="group-hover:text-ember">↗</span>
+          </p>
+          <p class="mt-1 truncate text-[13px] text-paper-dim transition-colors group-hover:text-paper sm:text-sm">
+            github.com/{gh.handle}
+          </p>
+        </a>
+      )
+    }
+    {
+      li && (
+        <a
+          href={li.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group min-w-0 border border-paper/10 bg-white/[0.015] p-3.5 transition-colors hover:border-ember/55"
+        >
+          <p class="label-mono flex items-center justify-between text-[10.5px] text-dim">
+            <span>LinkedIn</span>
+            <span class="group-hover:text-ember">↗</span>
+          </p>
+          <p class="mt-1 truncate text-[13px] text-paper-dim transition-colors group-hover:text-paper sm:text-sm">
+            {li.handle}
+          </p>
+        </a>
+      )
+    }
+  </section>
+
+  <section class="border-t border-paper/10 py-6 sm:py-8">
+    <h2 class="label-mono text-[11px] text-paper">Education</h2>
+    <div class="mt-4 border border-paper/12 bg-white/[0.015] p-4 sm:p-5">
+      <div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-baseline">
+        <div>
+          <p class="font-serif text-2xl leading-[1.15] text-paper">
+            B.Tech, Computer Science (Graphics &amp; Gaming)
+          </p>
+          <p class="mt-0.5 text-sm text-paper-dim">
+            University of Petroleum and Energy Studies · Dehradun
+          </p>
+        </div>
+        <p class="label-mono shrink-0 text-[11px] text-ember">2025 — 2029 · CGPA 8.49</p>
+      </div>
+      <p class="mt-3 border-t border-white/[0.06] pt-3 text-[13.5px] text-paper-dim">
+        Self-taught programmer since 2014 — systems, web, graphics, and infrastructure.
+      </p>
+    </div>
+  </section>
+
+  <section class="border-t border-paper/10 py-6 sm:py-8">
+    <h2 class="label-mono text-[11px] text-paper">Experience</h2>
+    <ol class="relative mt-5 space-y-6 border-l border-paper/15 pl-5 sm:mt-6 sm:space-y-7 sm:pl-6">
+      {
+        experiences.map((e, idx) => (
+          <li class="relative grid gap-2 sm:grid-cols-[175px_1fr] sm:gap-8">
+            <span
+              aria-hidden="true"
+              class:list={[
+                "absolute top-[7px] -left-[23.5px] h-1.5 w-1.5 sm:-left-[27.5px]",
+                idx === 0 ? "bg-ember shadow-[0_0_8px_rgba(212,107,66,0.75)]" : "bg-paper/35",
+              ]}
+            />
+            <div>
+              <p class="label-mono text-[11px] tracking-[0.06em] text-paper-dim">
+                {formatMonthYear(e.start)} — {e.end ? formatMonthYear(e.end) : "Now"}
+              </p>
+              <p class="mt-1 text-xs text-dim">{e.location}</p>
+            </div>
+            <div class="min-w-0">
+              <p class="font-serif text-2xl leading-[1.15] text-paper">
+                {e.title} <span class="text-paper-dim">· {e.company}</span>
+              </p>
+              <p class="mt-1.5 max-w-2xl text-sm leading-relaxed text-paper-dim">{e.summary}</p>
+              {e.stack?.length > 0 && (
+                <ul class="mt-3 flex flex-wrap gap-1.5">
+                  {e.stack.map((s) => (
+                    <li class="label-mono border border-paper/10 px-2 py-0.5 text-[10.5px] text-dim">
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="border-t border-paper/10 py-8">
+    <div class="flex items-baseline justify-between gap-4">
+      <h2 class="label-mono text-[11px] text-paper">Selected projects</h2>
+      <a href="/work" class="label-mono inline-flex min-h-[36px] items-center text-[11px] text-ember hover:underline">
+        All builds →
+      </a>
+    </div>
+
+    <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        featured.map((p) => {
+          const leadMetric = p.metrics?.[0];
+          return (
+            <li class="flex">
+              <a
+                href={`/work/${p.id}`}
+                class="group flex w-full flex-col justify-between border border-paper/10 bg-white/[0.015] p-4 transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.03]"
+              >
+                <div>
+                  <div class="flex items-baseline justify-between gap-2">
+                    <span class="label-mono text-[10.5px] text-ember">{p.category}</span>
+                    <span class="label-mono text-[10.5px] text-dim">{p.year}</span>
+                  </div>
+                  <p class="mt-1.5 flex items-baseline justify-between gap-2 font-serif text-2xl leading-[1.15] text-paper transition-colors group-hover:text-ember">
+                    <span>{p.title}</span>
+                    <span class="font-mono text-xs opacity-50 transition-opacity group-hover:opacity-100">
+                      →
+                    </span>
+                  </p>
+                  <p class="mt-1.5 line-clamp-3 text-[13px] leading-snug text-paper-dim">
+                    {p.summary}
+                  </p>
+                </div>
+
+                <div class="mt-4 flex items-baseline justify-between gap-2 border-t border-white/[0.06] pt-2.5">
+                  <span class="label-mono truncate text-[10.5px] text-paper-dim">
+                    {leadMetric
+                      ? `${leadMetric.value} ${leadMetric.label}`
+                      : p.stack.slice(0, 2).join(" · ")}
+                  </span>
+                </div>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+
+  <section class="border-t border-paper/10 py-8">
+    <h2 class="label-mono text-[11px] text-paper">Technical stack</h2>
+    <dl class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        skills.map((g, i) => (
+          <div class="border border-paper/10 bg-white/[0.015] p-4">
+            <dt class="flex items-baseline justify-between border-b border-white/[0.06] pb-2">
+              <span class="label-mono text-[10.5px] text-ember">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span class="label-mono text-[10.5px] text-paper">{g.title}</span>
+            </dt>
+            <dd class="mt-3 flex flex-wrap gap-1.5">
+              {g.items.map((item) => (
+                <span class="label-mono border border-paper/10 px-2 py-0.5 text-[10.5px] text-paper-dim">
+                  {item}
+                </span>
+              ))}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  {
+    awards.length > 0 && (
+      <section class="border-t border-paper/10 py-8">
+        <h2 class="label-mono text-[11px] text-paper">Awards &amp; placements</h2>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+          {awards.map((p) => (
+            <li class="border border-paper/10 bg-white/[0.015] p-4">
+              <div class="flex items-baseline justify-between gap-2">
+                <a
+                  href={`/work/${p.id}`}
+                  class="inline-flex min-h-[36px] items-center font-serif text-xl leading-[1.15] text-paper transition-colors hover:text-ember"
+                >
+                  {p.title}
+                </a>
+                <span class="label-mono text-[10.5px] text-ember">{p.year}</span>
+              </div>
+              <p class="mt-1.5 text-[13px] leading-relaxed text-paper-dim">
+                {p.log.map((l) => l.text).join(" ")}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</Page>

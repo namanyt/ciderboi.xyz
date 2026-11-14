@@ -1,0 +1,226 @@
+{
+  "artist": {
+    "name": "Nitya Naman",
+    "url": "https://open.spotify.com/artist/4asiCObHQTLPhbmjiqF1oi"
+  },
+  "releases": [
+    {
+      "title": "Odyssey",
+      "kind": "archive",
+      "date": "2022-06-30",
+      "cover": "https://i.scdn.co/image/ab67616d0000b273de4155511806cb16bb77f37a",
+      "url": "https://open.spotify.com/track/5Wuoe8VwPAxPYMpuxxfHEW",
+      "preSave": ""
+    },
+    {
+      "title": "Origin",
+      "kind": "archive",
+      "date": "2022-09-05",
+      "cover": "https://i.scdn.co/image/ab67616d0000b27347ac21bea1a3f1f7b7f6bae2",
+      "url": "https://open.spotify.com/track/0zgtfQijIBkbSxVasftDzp",
+      "preSave": ""
+    },
+    {
+      "title": "Titan",
+      "kind": "archive",
+      "date": "2022-11-08",
+      "cover": "https://i.scdn.co/image/ab67616d0000b2736228e8d312d8dbccf335cbd0",
+      "url": "https://open.spotify.com/track/1wxLehxgqunhJ1FSTqP0Kq",
+      "preSave": ""
+    },
+    {
+      "title": "Days",
+      "kind": "archive",
+      "date": "2022-12-19",
+      "cover": "https://i.scdn.co/image/ab67616d0000b2738c4950b3e48d53d4ef4aebb2",
+      "url": "https://open.spotify.com/track/4vJQkoEERVm9mdd1JOks4n",
+      "preSave": ""
+    },
+    {
+      "title": "Leave This Behind",
+      "kind": "archive",
+      "date": "2022-12-28",
+      "cover": "https://i.scdn.co/image/ab67616d0000b273355994088f0cff5fe2ff7883",
+      "url": "https://open.spotify.com/track/71v3R534iJBa4ueX5wNQos",
+      "preSave": ""
+    },
+    {
+      "title": "Tired of Love",
+      "kind": "archive",
+      "date": "2023-05-15",
+      "cover": "https://i.scdn.co/image/ab67616d0000b273bdb6f7b9f0db67cf064757ba",
+      "url": "https://open.spotify.com/track/6U2GTxLEQ1OQV0Uvmdt2ZG",
+      "preSave": ""
+    },
+    {
+      "title": "Im Alone",
+      "kind": "archive",
+      "date": "2023-07-02",
+      "cover": "https://i.scdn.co/image/ab67616d0000b2735aecebafeecdc00a951202ad",
+      "url": "https://open.spotify.com/track/5mqcVXAmbGWoe6OLETVrzt",
+      "preSave": ""
+    },
+    {
+      "title": "Just a Another Day",
+      "kind": "archive",
+      "date": "2023-11-14",
+      "cover": "https://i.scdn.co/image/ab67616d0000b27326c4655ac6cd4436911df48a",
+      "url": "https://open.spotify.com/album/3P8MnBkyMpgcz4yo3ZI9yt",
+      "preSave": "",
+      "tracks": [
+        {
+          "n": 1,
+          "title": "Afternoons"
+        },
+        {
+          "n": 2,
+          "title": "Animals"
+        },
+        {
+          "n": 3,
+          "title": "Tick Tock"
+        },
+        {
+          "n": 4,
+          "title": "Vibes"
+        },
+        {
+          "n": 5,
+          "title": "Music"
+        }
+      ]
+    },
+    {
+      "title": "Calm Nights",
+      "kind": "single",
+      "date": "2026-01-26",
+      "cover": "https://cdn.amuse.io/6c7e8bbc-dfed-4a9d-9807-0082a7e50119.400x400.jpg",
+      "url": "https://open.spotify.com/track/6Ssy1KTKbm8RdRx38ZqhFB",
+      "preSave": "https://share.amuse.io/track/nitya-naman-calm-nights"
+    },
+    {
+      "title": "Heart",
+      "kind": "single",
+      "date": "2026-02-14",
+      "cover": "https://cdn.amuse.io/d18fa40d-53fb-425d-9efb-22e2181808f7.400x400.jpg",
+      "url": "https://open.spotify.com/album/69iKHAPR3GtNNGrjTM831U",
+      "preSave": "https://share.amuse.io/track/nitya-naman-heart"
+    },
+    {
+      "title": "Wall-I",
+      "kind": "single",
+      "date": "2026-03-11",
+      "cover": "https://cdn.amuse.io/7169d642-a01c-4c3d-8a6c-2c6fb7af30b7.400x400.jpg",
+      "url": "https://open.spotify.com/track/6O2JZqcrC5V6xe9Uo5mPrR",
+      "preSave": "https://share.amuse.io/track/nitya-naman-wall-i"
+    },
+    {
+      "title": "Memories",
+      "kind": "single",
+      "date": "2026-04-18",
+      "cover": "https://cdn.amuse.io/92efd673-7133-4c5b-8807-02a97189915c.400x400.jpg",
+      "url": "https://open.spotify.com/album/3ZOm6GxtfAmTLkrgsgq1YV",
+      "preSave": "https://share.amuse.io/track/nitya-naman-memories"
+    },
+    {
+      "title": "Peak?",
+      "kind": "album",
+      "date": "2026-05-15",
+      "cover": "https://cdn.amuse.io/7cf37ad7-04a8-4050-bc12-eec5cd070973.400x400.jpg",
+      "url": "https://open.spotify.com/album/0YXFTSxch82TradJQdLoNS",
+      "preSave": "https://share.amuse.io/album/nitya-naman-peak",
+      "tracks": [
+        {
+          "n": 1,
+          "title": "Tired of Love"
+        },
+        {
+          "n": 2,
+          "title": "Leave This Behind"
+        },
+        {
+          "n": 3,
+          "title": "Deep Sleep"
+        },
+        {
+          "n": 4,
+          "title": "Odyssey"
+        }
+      ]
+    },
+    {
+      "title": "Drifting Apart",
+      "kind": "single",
+      "date": "2026-06-26",
+      "cover": "https://cdn.amuse.io/93e3ac87-0941-485e-a1dd-3f5f2a335277.400x400.jpg",
+      "url": "http://open.spotify.com/album/1l0MEgteDIbRREVVWLqR8S",
+      "preSave": "https://share.amuse.io/track/nitya-naman-drifting-apart"
+    },
+    {
+      "title": "Soopersows",
+      "kind": "single",
+      "date": "2026-07-19",
+      "cover": "https://cdn.amuse.io/eec6658d-7bae-4f47-b6b0-83739b8e4ede.400x400.jpg",
+      "url": "https://open.spotify.com/album/2blSc8dBIpC1nUSqU3Lq5s",
+      "preSave": "https://share.amuse.io/track/nitya-naman-soopersows"
+    },
+    {
+      "title": "Titan Falls",
+      "kind": "single",
+      "date": "2026-08-02",
+      "cover": "https://cdn.amuse.io/c08b11f9-adc7-453d-95ab-b254931baf1c.400x400.jpg",
+      "url": "https://open.spotify.com/album/2hTjBPXiXFQveCgx2KPHCw",
+      "preSave": "https://share.amuse.io/track/nitya-naman-titan-falls"
+    },
+    {
+      "title": "Bedroom Pro",
+      "kind": "album",
+      "date": "2026-09-16",
+      "cover": "https://cdn.amuse.io/f1842b0c-7e93-431f-8ef6-73cf8594bd4a.400x400.jpg",
+      "url": "https://open.spotify.com/album/682EVpQlZvOWcBqMVlGtP6",
+      "preSave": "https://share.amuse.io/album/nitya-naman-bedroom-pro",
+      "tracks": [
+        {
+          "n": 1,
+          "title": "Calm Nights"
+        },
+        {
+          "n": 2,
+          "title": "Heart"
+        },
+        {
+          "n": 3,
+          "title": "Wall-I"
+        },
+        {
+          "n": 4,
+          "title": "Candy"
+        },
+        {
+          "n": 5,
+          "title": "growls?"
+        },
+        {
+          "n": 6,
+          "title": "Titan Falls"
+        },
+        {
+          "n": 7,
+          "title": "Soopersows"
+        },
+        {
+          "n": 8,
+          "title": "Drifting Apart"
+        },
+        {
+          "n": 9,
+          "title": "Origin"
+        },
+        {
+          "n": 10,
+          "title": "Memories"
+        }
+      ]
+    }
+  ]
+}

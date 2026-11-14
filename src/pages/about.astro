@@ -1,0 +1,256 @@
+---
+import Page from "../layouts/Page.astro";
+import { site } from "../lib/content";
+import { profilePageSchema } from "../lib/seo";
+
+const focusAreas = [
+  {
+    id: "01",
+    title: "Systems & Infrastructure",
+    detail: "Bare-metal Linux nodes, container orchestration, Azure deployments, networking & uptime.",
+  },
+  {
+    id: "02",
+    title: "Graphics & Game Dev",
+    detail: "Custom C++ / OGL rendering, real-time shaders, game architecture, and simulation loops.",
+  },
+  {
+    id: "03",
+    title: "Full-Stack Product",
+    detail: "End-to-end web platforms built solo from database schema to live production rollout.",
+  },
+];
+---
+
+<Page
+  title="About"
+  eyebrow="ID // 01 · The long version"
+  description={`${site.name} — ${site.description}`}
+  path="/about"
+  wide
+  jsonLd={profilePageSchema("/about", `About — ${site.name}`, `${site.name} — ${site.description}`)}
+>
+  <div class="grid gap-7 py-6 lg:grid-cols-[18.5rem_1fr] lg:items-start lg:gap-12 lg:py-8">
+    <aside class="space-y-4 lg:sticky lg:top-20">
+      <div class="border border-paper/12 bg-white/[0.015] p-4">
+        <div class="flex items-center justify-between pb-3">
+          <span class="label-mono text-[10.5px] text-dim">ID // 01</span>
+          <span class="label-mono inline-flex items-center gap-1.5 text-[10.5px] text-paper-dim">
+            <span
+              aria-hidden="true"
+              class="h-[6px] w-[6px] rounded-[1px] bg-led shadow-[0_0_6px_var(--color-led)]"
+            />
+            ONLINE
+          </span>
+        </div>
+
+        <div class="grid grid-cols-[6rem_1fr] items-center gap-4 sm:grid-cols-[8rem_1fr] lg:block">
+          <div class="relative aspect-square overflow-hidden border border-paper/10 bg-rack">
+            <picture class="block h-full w-full">
+              <source
+                type="image/avif"
+                srcset="/img/pfp-240.avif 240w, /img/pfp-480.avif 480w"
+                sizes="(max-width: 639px) 96px, (max-width: 1023px) 128px, 264px"
+              />
+              <source
+                type="image/webp"
+                srcset="/img/pfp-240.webp 240w, /img/pfp-480.webp 480w"
+                sizes="(max-width: 639px) 96px, (max-width: 1023px) 128px, 264px"
+              />
+              <img
+                src="/img/pfp.jpg"
+                alt={site.name}
+                loading="eager"
+                decoding="sync"
+                fetchpriority="high"
+                width="480"
+                height="489"
+                class="h-full w-full object-cover"
+              />
+            </picture>
+          </div>
+
+          <div class="min-w-0 lg:mt-4">
+            <p class="font-serif text-2xl leading-[1.1] tracking-[-0.01em] text-paper">{site.name}</p>
+            <p class="label-mono mt-0.5 text-[10.5px] text-ember">@{site.handle}</p>
+
+            <dl class="mt-3 space-y-1.5 border-t border-white/[0.06] pt-2.5 text-[12px] lg:mt-4 lg:space-y-2 lg:pt-3">
+              <div class="flex items-baseline justify-between gap-2">
+                <dt class="label-mono text-[10.5px] text-dim">Degree</dt>
+                <dd class="truncate text-paper-dim">B.Tech CSE [GG]</dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-2">
+                <dt class="label-mono text-[10.5px] text-dim">School</dt>
+                <dd class="truncate text-paper-dim tabular-nums">UPES · 2025–2029</dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-2">
+                <dt class="label-mono text-[10.5px] text-dim">Base</dt>
+                <dd class="truncate text-paper-dim">{site.location}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="mt-4 grid grid-cols-3 gap-1.5 border-t border-white/[0.06] pt-3">
+          <a
+            href="/work"
+            class="label-mono flex min-h-[40px] items-center justify-center gap-1 whitespace-nowrap border border-paper/12 px-1 text-center text-[9.5px] text-paper-dim transition-colors hover:border-ember/60 hover:text-ember sm:text-[10px]"
+          >
+            Work <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="/resume"
+            class="label-mono flex min-h-[40px] items-center justify-center gap-1 whitespace-nowrap border border-paper/12 px-1 text-center text-[9.5px] text-paper-dim transition-colors hover:border-ember/60 hover:text-ember sm:text-[10px]"
+          >
+            Résumé <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="/contact"
+            class="label-mono flex min-h-[40px] items-center justify-center gap-1 whitespace-nowrap border border-paper/12 px-1 text-center text-[9.5px] text-paper-dim transition-colors hover:border-ember/60 hover:text-ember sm:text-[10px]"
+          >
+            Contact <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="border border-paper/10 bg-white/[0.015] p-4">
+        <h2 class="label-mono text-[10.5px] text-dim">Focus areas</h2>
+        <ul class="mt-3 space-y-3">
+          {
+            focusAreas.map((f) => (
+              <li class="border-t border-white/[0.06] pt-2.5 first:border-t-0 first:pt-0">
+                <p class="text-[13.5px] font-medium text-paper">
+                  <span class="label-mono mr-2 text-[10.5px] text-ember">{f.id}</span>
+                  {f.title}
+                </p>
+                <p class="mt-1 text-[12.5px] leading-snug text-paper-dim">{f.detail}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </aside>
+
+    <div class="min-w-0 max-w-[65ch] space-y-10">
+      <p class="border border-paper/12 bg-white/[0.015] p-5 text-[17px] leading-[1.6] text-paper sm:p-6 sm:text-xl">
+        I'm a Computer Science student at UPES who spends most of my time building software,
+        infrastructure, games, and the occasional hardware project. I enjoy turning ideas into
+        working systems, learning whatever tools a problem demands, and exploring the space where
+        technology, creativity, and engineering overlap.
+      </p>
+
+      <section class="space-y-4 leading-[1.7] text-paper-dim">
+        <h2 class="label-mono text-[11px] text-ember">01 · Origin &amp; curiosity</h2>
+        <p>
+          Most of my projects start with curiosity and end with me diving far deeper into a topic
+          than originally intended. What started as curiosity gradually turned into years of projects
+          spread across software development, infrastructure, game development, hardware, media
+          production, and a growing collection of side quests. I've never been particularly good at
+          staying inside a single discipline—if something interests me, I'll usually end up learning
+          whatever is needed to build it, whether that's writing backend services, deploying Linux
+          servers, designing databases, building game systems, wiring sensors to microcontrollers,
+          or experimenting with entirely new technologies.
+        </p>
+        <p>
+          Over the years I've built educational software, technical resource platforms, production
+          web applications, self-hosted infrastructure, embedded hardware prototypes, internal
+          tools, automation systems, games, and plenty of experimental projects that existed simply
+          because I wanted to see if they could be built. Some became real deployments, some were
+          competition projects, and some never left my own machine.
+        </p>
+      </section>
+
+      <section class="space-y-4 border-t border-paper/10 pt-8 leading-[1.7] text-paper-dim">
+        <h2 class="label-mono text-[11px] text-ember">02 · Systems, infra &amp; leadership</h2>
+        <p>
+          One of the areas I enjoy most is systems design. I like understanding how complex pieces
+          fit together—whether that's a database architecture, a deployment pipeline, a game engine
+          subsystem, or an operational workflow. That interest naturally led into running my own
+          infrastructure, maintaining Linux servers, self-hosting services, and learning the
+          operational side of software alongside development.
+        </p>
+        <p>
+          Before university, I served as Head of the Techformers Club at Delhi Public School, where
+          I helped organize technical initiatives, competitions, workshops, livestreaming
+          infrastructure, media production, and inter-school events. I also participated in various
+          national-level competitions, building projects ranging from educational games and
+          programming platforms to embedded hardware systems and mobile applications. Those
+          experiences taught me a lot about working under pressure, adapting to constraints, and
+          solving problems when things inevitably go wrong.
+        </p>
+        <p>
+          My interests today sit somewhere between software engineering, infrastructure, systems
+          architecture, graphics, and game development. Recently I've worked on production-scale web
+          platforms, academic management systems, self-hosted services, and experimental engine
+          development projects. I enjoy the entire process of building—from the initial concept and
+          architecture to deployment, maintenance, optimization, and the inevitable debugging
+          sessions at unreasonable hours.
+        </p>
+      </section>
+
+      <section class="space-y-4 border-t border-paper/10 pt-8">
+        <h2 class="label-mono text-[11px] text-ember">03 · Off-screen</h2>
+        <blockquote class="border-l-2 border-ember/60 bg-white/[0.015] py-4 pr-5 pl-5 leading-[1.7] text-paper">
+          Outside of technology, I spend time making music, photographing things that catch my eye,
+          experimenting with filmmaking, and collecting hobbies faster than I can finish them. Those
+          creative interests often find their way back into my technical work, influencing how I
+          design experiences, approach problem-solving, and think about the things I build.
+        </blockquote>
+      </section>
+    </div>
+  </div>
+
+  <section class="border-t border-paper/10 py-10">
+    <div class="flex items-baseline justify-between gap-4">
+      <h2 class="label-mono text-[11px] text-paper">Elsewhere</h2>
+      <a href="/contact" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-ember hover:underline">
+        Direct contact <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        site.socials.map((s, i) => (
+          <li>
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group flex flex-col justify-between border border-paper/10 bg-white/[0.015] p-3.5 transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.03]"
+            >
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="label-mono text-[10.5px] text-dim">
+                    PORT {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    class="h-[6px] w-[6px] rounded-[1px] border border-black/60 bg-[#0a0c0e] transition-colors group-hover:bg-led group-hover:shadow-[0_0_6px_var(--color-led)]"
+                  />
+                </div>
+                <span aria-hidden="true" class="label-mono text-[10.5px] text-dim transition-colors group-hover:text-ember">
+                  ↗
+                </span>
+              </div>
+              <div class="mt-2.5 flex items-baseline justify-between gap-2">
+                <span class="text-[14.5px] font-medium text-paper transition-colors group-hover:text-ember">
+                  {s.label}
+                </span>
+                {s.handle && (
+                  <span class="label-mono truncate text-[10.5px] text-dim">{s.handle}</span>
+                )}
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="border-t border-paper/10 pt-8">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-sm text-paper-dim">The structured version is on the résumé.</p>
+      <a href="/resume" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-ember hover:underline">Résumé <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</Page>

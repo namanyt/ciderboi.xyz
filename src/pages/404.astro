@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+import SubNav from "../components/SubNav.astro";
+import { site } from "../lib/content";
+---
+
+<Base title="Not found" description="Page not found" path="/404">
+  <SubNav path="/404" />
+  <div class="mx-auto flex min-h-[70svh] w-full max-w-3xl flex-col justify-center px-5 sm:px-8">
+    <p class="label text-ember">404</p>
+    <h1 class="mt-4 font-serif text-4xl leading-[1.04] tracking-[-0.015em] text-paper sm:text-6xl">
+      Nothing in this slot.
+    </h1>
+    <p class="mt-4 max-w-md text-paper-dim">
+      The page you're after doesn't exist, or the rack moved and the link wasn't updated.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+      <a href="/" class="label link-underline inline-flex min-h-[44px] items-center text-ember">
+        Back to the rack
+      </a>
+      <a href="/work" class="label link-underline inline-flex min-h-[44px] items-center">Work</a>
+      <a href={`mailto:${site.email}`} class="label link-underline inline-flex min-h-[44px] items-center">
+        {site.email}
+      </a>
+    </div>
+  </div>
+</Base>

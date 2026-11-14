@@ -1,0 +1,112 @@
+---
+import Page from "../layouts/Page.astro";
+import { site } from "../lib/content";
+import { contactPageSchema } from "../lib/seo";
+---
+
+<Page
+  title="Contact"
+  eyebrow="GATEWAY // Uplink"
+  description={`Contact ${site.name} — email, GitHub, LinkedIn, and everywhere else.`}
+  path="/contact"
+  wide
+  jsonLd={contactPageSchema("/contact", `Contact ${site.name} — email, GitHub, LinkedIn, and everywhere else.`)}
+>
+  <p class="max-w-xl py-5 text-base leading-relaxed text-paper-dim sm:py-6 sm:text-lg">
+    Email is the fastest way to reach me — for projects, collaborations, or a quick note. Everything
+    else is patched below.
+  </p>
+
+  <div class="grid gap-4 border-t border-paper/10 py-6 sm:py-8 lg:grid-cols-[1.45fr_1fr]">
+    <div class="flex flex-col justify-between gap-5 border border-paper/12 bg-white/[0.015] p-5 sm:flex-row sm:items-center sm:p-6">
+      <div class="min-w-0">
+        <p class="label-mono text-[10.5px] text-ember">Primary uplink · ~1 day reply</p>
+        <a
+          href={`mailto:${site.email}`}
+          class="mt-1 inline-flex min-h-[40px] max-w-full items-center truncate font-serif text-3xl leading-[1.08] tracking-[-0.01em] text-paper transition-colors hover:text-ember sm:text-4xl"
+        >
+          {site.email}
+        </a>
+      </div>
+      <div class="flex shrink-0 flex-wrap items-center gap-2.5">
+        <button
+          data-copy={site.email}
+          type="button"
+          class="label-mono inline-flex min-h-[44px] items-center border border-paper/20 px-4 text-[11px] text-paper transition-colors duration-200 hover:border-ember hover:text-ember"
+        >
+          Copy email
+        </button>
+        <a
+          href={`mailto:${site.email}`}
+          class="label-mono inline-flex min-h-[44px] items-center gap-1 border border-ember/60 bg-ember/10 px-4 text-[11px] text-ember transition-colors duration-200 hover:bg-ember/20"
+        >
+          Mailto <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="border border-paper/10 bg-white/[0.015] p-5 sm:p-6">
+      <h2 class="label-mono text-[10.5px] text-dim">Routing details</h2>
+      <dl class="mt-3 space-y-2.5">
+        <div class="flex items-baseline justify-between gap-4 border-t border-white/[0.06] pt-2.5">
+          <dt class="label-mono shrink-0 text-[10.5px] text-dim">Based in</dt>
+          <dd class="label-mono text-right text-[11px] text-paper-dim">{site.location}</dd>
+        </div>
+        <div class="flex items-baseline justify-between gap-4 border-t border-white/[0.06] pt-2.5">
+          <dt class="label-mono shrink-0 text-[10.5px] text-dim">Reply time</dt>
+          <dd class="label-mono text-right text-[11px] text-paper-dim">~1 day</dd>
+        </div>
+        <div class="flex items-baseline justify-between gap-4 border-t border-white/[0.06] pt-2.5">
+          <dt class="label-mono shrink-0 text-[10.5px] text-dim">Direct channels</dt>
+          <dd class="label-mono text-right text-[11px] text-paper-dim">Email · GitHub · LinkedIn</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <section class="border-t border-paper/10 py-8">
+    <div class="flex items-baseline justify-between gap-4">
+      <h2 class="label-mono text-[11px] text-paper">Patch panel</h2>
+      <span class="label-mono text-[10.5px] text-dim">
+        {String(site.socials.length).padStart(2, "0")} ports active
+      </span>
+    </div>
+
+    <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        site.socials.map((s, i) => (
+          <a
+            href={s.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group flex flex-col justify-between border border-paper/10 bg-white/[0.015] p-4 transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.03]"
+          >
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="label-mono text-[10.5px] text-dim">
+                  PORT {String(i + 1).padStart(2, "0")}
+                </span>
+                <span
+                  aria-hidden="true"
+                  class="h-[6px] w-[6px] rounded-[1px] border border-black/60 bg-[#0a0c0e] transition-colors group-hover:bg-led group-hover:shadow-[0_0_6px_var(--color-led)]"
+                />
+              </div>
+              <span aria-hidden="true" class="label-mono text-[10.5px] text-dim transition-colors group-hover:text-ember">
+                ↗
+              </span>
+            </div>
+
+            <div class="mt-3">
+              <p class="font-serif text-2xl leading-[1.12] text-paper transition-colors group-hover:text-ember">
+                {s.label}
+              </p>
+              {s.handle && (
+                <p class="label-mono mt-0.5 truncate text-[10.5px] text-dim">{s.handle}</p>
+              )}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Page>

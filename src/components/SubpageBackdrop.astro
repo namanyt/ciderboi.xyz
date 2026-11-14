@@ -1,0 +1,16 @@
+---
+import DitherCursorGrid from "./DitherCursorGrid.astro";
+---
+
+<DitherCursorGrid
+  gridOpacity={0.032}
+  fillOpacity={0.042}
+  intensity={0.105}
+  ditherRadius={68}
+  trailDecayMs={460}
+/>
+<div
+  data-dither-scrim
+  aria-hidden="true"
+  class="page-dither-scrim pointer-events-none fixed inset-y-0 z-[1] print:hidden"
+></div>

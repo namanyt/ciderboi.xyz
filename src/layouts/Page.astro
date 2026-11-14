@@ -1,0 +1,75 @@
+---
+import Base from "./Base.astro";
+import SubNav from "../components/SubNav.astro";
+import SubpageBackdrop from "../components/SubpageBackdrop.astro";
+import { site } from "../lib/content";
+
+export interface Props {
+  title: string;
+  description?: string;
+  path: string;
+  eyebrow?: string;
+  wide?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, path, eyebrow, wide = false, jsonLd } = Astro.props;
+---
+
+<Base title={title} description={description} path={path} jsonLd={jsonLd}>
+  <SubpageBackdrop />
+
+  <SubNav path={path} />
+
+  <div
+    data-dither-column
+    class:list={["shell relative z-10 w-full pt-6 pb-16 sm:pt-12 sm:pb-24", wide ? "max-w-6xl" : "max-w-3xl"]}
+  >
+    <header class="pb-6 sm:pb-10">
+      {eyebrow && <p class="label-mono text-[11px] text-ember">{eyebrow}</p>}
+      <h1 class="mt-2.5 font-serif text-4xl leading-[1.02] tracking-[-0.015em] text-paper sm:mt-3 sm:text-5xl lg:text-[3.5rem]">
+        {title}
+      </h1>
+    </header>
+
+    <div class="rule">
+      <slot />
+    </div>
+
+    <footer class="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-paper/10 pt-4 sm:mt-16 sm:pt-6">
+      <a
+        href="/"
+        class="label-mono inline-flex min-h-[44px] items-center gap-1 text-[11px] text-paper-dim transition-colors hover:text-ember"
+      >
+        <span aria-hidden="true">←</span> Back to the rack
+      </a>
+      <div class="flex items-center gap-5">
+        <a
+          href={`mailto:${site.email}`}
+          class="label-mono inline-flex min-h-[44px] items-center text-[11px] text-ember hover:underline"
+        >
+          {site.email}
+        </a>
+        <span class="label-mono hidden text-[11px] text-dim sm:inline">
+          © {new Date().getFullYear()} {site.name}
+        </span>
+      </div>
+    </footer>
+  </div>
+</Base>
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const text = btn.dataset.copy ?? "";
+      try {
+        await navigator.clipboard.writeText(text);
+        const prev = btn.textContent;
+        btn.textContent = "Copied";
+        (window as any).__announce?.(`Copied ${text} to clipboard`);
+        setTimeout(() => (btn.textContent = prev), 1400);
+      } catch {
+        btn.textContent = text;
+      }
+    });
+  });
+</script>
