@@ -1,0 +1,2151 @@
+---
+import Base from "../layouts/Base.astro";
+import SubNav from "../components/SubNav.astro";
+import ProfileCard from "../components/ProfileCard.astro";
+import DitherCursorGrid from "../components/DitherCursorGrid.astro";
+import BootCurtain from "../components/BootCurtain.astro";
+import { profilePageSchema } from "../lib/seo";
+import {
+  site,
+  getProjects,
+  getExperiences,
+  getReleases,
+  formatMonthYear,
+  formatDate,
+} from "../lib/content";
+
+const projects = getProjects();
+const recentProjects = [...projects].sort((a, b) => b.year - a.year || a.order - b.order).slice(0, 6);
+const experiences = getExperiences();
+const highlights = [
+  {
+    tag: "Game · C++",
+    stat: "60 Hz ENet",
+    title: "ColorFPS",
+    hook: "Arena shooter where color mixing drives every combat rule.",
+    href: "/work/color-fps",
+  },
+  {
+    tag: "HPC",
+    stat: "300B digits",
+    title: "Γ(1/5)",
+    hook: "Computed on 104 Xeon cores and verified independently twice.",
+    href: "/work/gamma-1d5-300b",
+  },
+  {
+    tag: "Prod · Gov",
+    stat: "3,390 athletes",
+    title: "AIFSM 2025",
+    hook: "National meet platform, built solo from scratch in six weeks.",
+    href: "/work/aifsm2025",
+  },
+];
+const spotify = site.socials.find((x) => x.label === "Spotify")?.href ?? "#";
+const current = getReleases().filter((r) => r.kind !== "archive").reverse();
+const [leadRelease, ...otherReleases] = current;
+const recentReleases = otherReleases.slice(0, 4);
+const archive = getReleases().filter((r) => r.kind === "archive");
+const insta = site.socials.find((s) => s.label === "Instagram")?.href ?? "#";
+const photos = [
+  {
+    frame: "01A",
+    title: "Foothills Valley",
+    spec: "Canon 1300D · 24mm",
+    year: "2026",
+    src: "/photos/01-valley.avif",
+  },
+  {
+    frame: "02A",
+    title: "Ridge Lamp",
+    spec: "26mm eq · f/1.8",
+    year: "2025",
+    src: "/photos/02-hillside.avif",
+  },
+  {
+    frame: "03A",
+    title: "Afterglow",
+    spec: "26mm eq · f/1.8",
+    year: "2025",
+    src: "/photos/03-dusk.avif",
+  },
+];
+const chapterCount = 7;
+---
+
+<Base jsonLd={profilePageSchema("/", `${site.name} — ${site.role}`, site.description)}>
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    type="image/avif"
+    imagesrcset="/img/pfp-240.avif 240w, /img/pfp-480.avif 480w"
+    imagesizes="(max-width: 639px) 166px, 480px"
+    fetchpriority="high"
+  />
+  <noscript slot="head">
+    <style>
+      [data-spacer],
+      [data-split-spacer],
+      [data-rack-hint],
+      [data-rack-canvas],
+      [data-mobile-dock],
+      [data-chapter-rail],
+      [data-hud-wrap],
+      [data-boot-curtain] {
+        display: none !important;
+      }
+      [data-stage-clip] {
+        position: static !important;
+        overflow: visible !important;
+        pointer-events: auto !important;
+      }
+      [data-stage-grid] {
+        display: block !important;
+        max-width: 60rem !important;
+        padding: 5.5rem 1.5rem 4rem !important;
+      }
+      .stage {
+        position: static !important;
+        display: flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: none !important;
+        padding: 2.5rem 0 !important;
+        border-top: 1px solid rgba(236, 232, 224, 0.1);
+      }
+      .stage::before {
+        display: none !important;
+      }
+      .stage > * {
+        opacity: 1 !important;
+      }
+    </style>
+  </noscript>
+
+  <BootCurtain />
+
+  {/* subtle 20px cursor dot lattice + ordered Bayer dither trail */}
+  <DitherCursorGrid />
+
+  <SubNav path="/" variant="home" />
+
+  <div
+    data-rack-hint
+    aria-hidden="true"
+    class="pointer-events-none fixed inset-x-0 top-[calc(3.25rem+env(safe-area-inset-top))] z-20 flex justify-center px-4"
+  >
+    <span class="label-mono border border-paper/14 bg-rack/85 px-3 py-1 text-[9.5px] tracking-[0.14em] text-paper-dim backdrop-blur-sm">
+      Tap a bay to open
+    </span>
+  </div>
+
+  <canvas
+    data-rack-canvas
+    aria-hidden="true"
+    class="pointer-events-none fixed inset-0 z-0 block h-full w-full"></canvas>
+
+  {
+    /* the spacer gives the page its scroll length; the stage itself is fixed */
+  }
+  <div data-spacer aria-hidden="true" style={`height:${chapterCount * 240}svh`}></div>
+
+  <div data-stage-clip class="pointer-events-none fixed inset-0 z-10 overflow-hidden">
+    <div
+      data-stage-grid
+      class="mx-auto grid h-full w-full max-w-[1920px] grid-cols-1 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_50%] lg:gap-6 lg:px-8 xl:pl-38 2xl:pl-44"
+    >
+      <div data-os-window>
+        <div
+          data-stage-col
+          class="pointer-events-auto relative h-full"
+          style="perspective: 1100px; perspective-origin: 100% 50%"
+        >
+        <div data-stage-feed class="contents">
+        {/* 01 · ABOUT — identity first */}
+        <section id="bay-about" aria-labelledby="bay-about-heading" class="stage" data-chapter data-active="true" style="--reveal: 1">
+          <div class="grid max-w-4xl grid-cols-[5.75rem_1fr] items-center gap-x-3.5 gap-y-3.5 sm:grid-cols-[14.5rem_1fr] sm:gap-6 lg:gap-7 2xl:grid-cols-[19rem_1fr] 2xl:gap-10">
+            <ProfileCard
+              name={site.name}
+              handle={`@${site.handle}`}
+              status="Online"
+              avatar="/img/pfp.jpg"
+              contactLabel="Contact"
+              tiltStrength={10}
+              glare={0.45}
+              parallax={5}
+              holo={0.7}
+              enableMobileTilt={true}
+              compactMobile={true}
+              class="col-start-1 row-start-1 w-[5.75rem] shrink-0 sm:row-span-2 sm:w-[14.5rem] 2xl:w-[19rem]"
+            />
+
+            <div class="col-start-2 row-start-1 min-w-0 sm:self-end">
+              <p class="label text-ember">{site.tagline}</p>
+
+              <h1 id="bay-about-heading" tabindex="-1" class="outline-none mt-1.5 font-serif text-[2.35rem] leading-[0.98] tracking-[-0.015em] text-paper sm:mt-2.5 sm:text-[3.5rem] xl:text-[3.9rem] 2xl:text-[4.65rem]">
+                {site.name}
+              </h1>
+
+              <p class="mt-2 font-mono text-[10.5px] leading-relaxed tracking-[0.1em] text-paper-dim uppercase sm:mt-3 sm:text-[12px]">
+                {site.role}
+              </p>
+
+              <p class="mt-0.5 font-mono text-[10px] tracking-[0.08em] text-dim uppercase tabular-nums sm:mt-1 sm:text-[10.5px]">
+                B.Tech CSE [GG], UPES · 2025—2029
+              </p>
+            </div>
+
+            <div class="col-span-2 min-w-0 sm:col-span-1 sm:col-start-2 sm:row-start-2 sm:self-start">
+              <p class="max-w-[58ch] text-[14px] leading-[1.6] text-paper-dim sm:text-[14.5px] 2xl:text-[15.5px]">
+                CS student building software, infrastructure, games, and the occasional hardware
+                project. Most of my builds start out of curiosity and turn into deep dives across
+                systems, code, and tooling.
+              </p>
+
+              <div class="mt-2.5 flex flex-wrap gap-x-4 gap-y-0.5 sm:mt-3.5 sm:gap-x-5 sm:gap-y-1">
+                <a href={`mailto:${site.email}`} class="label link-underline inline-flex min-h-[36px] items-center text-ember">{site.email}</a>
+                <a href="/about" class="label link-underline inline-flex min-h-[36px] items-center gap-1">About <span aria-hidden="true">→</span></a>
+                <a href="/github" class="label link-underline inline-flex min-h-[36px] items-center">GitHub</a>
+                <a href="/linkedin" class="label link-underline inline-flex min-h-[36px] items-center">LinkedIn</a>
+                <a href="/resume" class="label link-underline inline-flex min-h-[36px] items-center">Résumé</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 max-w-4xl border-t border-paper/10 pt-3 sm:mt-5 sm:pt-3.5 2xl:mt-8 2xl:pt-5">
+            <div class="mb-2 flex items-center justify-between gap-4 sm:mb-2.5">
+              <p class="label-mono text-[10.5px] text-dim uppercase">
+                Selected · explore the rack
+              </p>
+              <a href="/work" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[10.5px] text-ember hover:underline">
+                All {projects.length} builds <span aria-hidden="true">→</span>
+              </a>
+            </div>
+
+            <div class="grid gap-2.5 sm:grid-cols-3 sm:gap-3.5 2xl:gap-5">
+              {highlights.map((h) => (
+                <a
+                  href={h.href}
+                  class="group block border border-paper/10 bg-white/[0.015] px-3.5 py-3 transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.035]"
+                >
+                  <div class="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
+                    <span class="label-mono text-[10px] text-ember">{h.tag}</span>
+                    <span class="label-mono text-[10px] text-paper-dim">{h.stat}</span>
+                  </div>
+                  <p class="mt-1.5 flex items-baseline justify-between gap-2 font-serif text-[21px] leading-[1.12] text-paper transition-colors group-hover:text-ember">
+                    <span>{h.title}</span>
+                    <span
+                      aria-hidden="true"
+                      class="font-mono text-[11px] opacity-55 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                    >
+                      ↗
+                    </span>
+                  </p>
+                  <p class="mt-1 line-clamp-2 text-[12px] leading-snug text-paper-dim">
+                    {h.hook}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 02 · EXPERIENCE */}
+        <section id="bay-experience" aria-labelledby="bay-experience-heading" class="stage" data-chapter>
+          <p data-bay-tag class="label-mono mb-1.5 hidden text-[10px] text-dim">02 // RUNTIME</p>
+          <div class="flex items-baseline justify-between gap-4">
+            <h2 id="bay-experience-heading" tabindex="-1" class="chapter-title outline-none">Experience</h2>
+            <div class="flex items-center gap-4">
+              <a href="/downloads/resume.pdf" download class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-paper-dim hover:text-ember">
+                PDF <span aria-hidden="true">↓</span>
+              </a>
+              <a href="/resume" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-ember hover:underline">
+                Full résumé <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-col justify-between gap-1 border-y border-paper/15 py-4 sm:flex-row sm:items-baseline">
+            <div>
+              <p class="text-[15px] font-medium text-paper">B.Tech CSE [GG]</p>
+              <p class="mt-0.5 text-[12.5px] text-dim">
+                University of Petroleum and Energy Studies · Dehradun
+              </p>
+            </div>
+            <p class="label-mono shrink-0 text-[11px] text-dim">2025 — 2029 · CGPA 8.49</p>
+          </div>
+
+          <ol class="relative mt-5 space-y-5 border-l border-paper/15 pl-5 sm:mt-7 sm:space-y-6 sm:pl-6">
+            {experiences.map((e, idx) => (
+              <li class="relative grid gap-1.5 sm:grid-cols-[152px_1fr] sm:gap-8">
+                <span
+                  aria-hidden="true"
+                  class:list={[
+                    "absolute top-[7px] -left-[23.5px] h-1.5 w-1.5 sm:-left-[27.5px]",
+                    idx === 0 ? "bg-ember" : "bg-paper/35",
+                  ]}
+                />
+                <div>
+                  <p class="label-mono text-[11px] tracking-[0.06em] text-paper-dim">
+                    {formatMonthYear(e.start)} — {e.end ? formatMonthYear(e.end) : "Now"}
+                  </p>
+                  <p class="mt-1 text-[11.5px] text-dim">{e.location}</p>
+                </div>
+                <div class="min-w-0">
+                  <p class="text-[15px] font-medium text-paper">
+                    {e.title} <span class="font-normal text-paper-dim">· {e.company}</span>
+                  </p>
+                  <p class="mt-1.5 max-w-xl text-[13.5px] leading-relaxed text-paper-dim">{e.summary}</p>
+                  {e.stack?.length > 0 && (
+                    <p class="label-mono mt-2 text-[10.5px] tracking-[0.06em] text-dim">
+                      {e.stack.join(" · ")}
+                    </p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* 03 · PROJECTS */}
+        <section id="bay-projects" aria-labelledby="bay-projects-heading" class="stage" data-chapter>
+          <p data-bay-tag class="label-mono mb-1.5 hidden text-[10px] text-dim">03 // ARTIFACT</p>
+          <div class="flex items-baseline justify-between gap-4">
+            <h2 id="bay-projects-heading" tabindex="-1" class="chapter-title outline-none">Projects</h2>
+            <div class="flex items-center gap-4">
+              <span class="label-mono text-[11px] text-dim">
+                {String(recentProjects.length).padStart(2, "0")} recent / {projects.length}
+              </span>
+              <a href="/work" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-ember hover:underline">
+                All work <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+
+          <ul class="mt-4 grid gap-3 sm:grid-cols-2 2xl:gap-4">
+            {recentProjects.map((p, idx) => {
+              const leadMetric = p.metrics?.[0];
+              const ext = p.links[0];
+              return (
+                <li class="group flex flex-col justify-between border border-paper/10 bg-white/[0.015] p-3.5 transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.03] 2xl:p-4">
+                  <div>
+                    <div class="flex items-baseline justify-between gap-2">
+                      <div class="flex items-baseline gap-2">
+                        <span class="label-mono text-[10px] text-ember">
+                          {String(idx).padStart(2, "0")}
+                        </span>
+                        <span class="label-mono text-[10px] text-paper-dim">{p.category}</span>
+                      </div>
+                      <span class="label-mono text-[10px] text-dim">{p.year}</span>
+                    </div>
+
+                    <a
+                      href={`/work/${p.id}`}
+                      class="mt-1.5 block text-[15px] leading-snug font-medium text-paper transition-colors group-hover:text-ember"
+                    >
+                      {p.title}
+                    </a>
+
+                    <p class="mt-1 line-clamp-2 text-[12.5px] leading-snug text-paper-dim">{p.tagline}</p>
+                  </div>
+
+                  <div class="mt-3 flex items-baseline justify-between gap-2 border-t border-white/[0.06] pt-2">
+                    <span class="label-mono truncate text-[10px] text-paper-dim">
+                      {leadMetric
+                        ? `${leadMetric.value} ${leadMetric.label}`
+                        : p.stack.slice(0, 2).join(" · ")}
+                    </span>
+                    {ext ? (
+                      <a
+                        href={ext.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="label-mono shrink-0 text-[10px] text-ember/95 hover:text-ember hover:underline"
+                      >
+                        {ext.label} <span aria-hidden="true">↗</span>
+                      </a>
+                    ) : (
+                      <a
+                        href={`/work/${p.id}`}
+                        class="label-mono shrink-0 text-[10px] text-dim hover:text-ember"
+                      >
+                        Case study <span aria-hidden="true">→</span>
+                      </a>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div class="mt-4 flex items-center justify-between gap-4 border-t border-paper/10 pt-2">
+            <span class="label-mono text-[10.5px] text-dim">
+              +{projects.length - recentProjects.length} earlier builds in archive
+            </span>
+            <a href="/work" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[10.5px] text-ember hover:underline">
+              Explore all {projects.length} builds <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </section>
+
+        {/* 04 · MUSIC */}
+        <section id="bay-music" aria-labelledby="bay-music-heading" class="stage" data-chapter>
+          <p data-bay-tag class="label-mono mb-1.5 hidden text-[10px] text-dim">04 // DAC</p>
+          <div class="flex items-baseline justify-between gap-4">
+            <h2 id="bay-music-heading" tabindex="-1" class="chapter-title outline-none">Music</h2>
+            <div class="flex items-center gap-4">
+              <a
+                href={spotify}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-paper-dim hover:text-ember"
+              >
+                Spotify <span aria-hidden="true">↗</span>
+              </a>
+              <a href="/music" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-ember hover:underline">
+                All music <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+
+          <p class="mt-3 max-w-xl text-[14px] leading-relaxed text-paper-dim">
+            Instrumental and electronic releases — composed, mixed, and mastered independently.
+          </p>
+
+          {leadRelease && (
+            <a
+              href={leadRelease.url || spotify}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group mt-5 flex items-center gap-4 border border-paper/12 bg-white/[0.015] p-3.5 transition-colors duration-200 hover:border-ember/60 hover:bg-white/[0.03] sm:gap-5 sm:p-4"
+            >
+              <img
+                src={leadRelease.cover}
+                alt={leadRelease.title}
+                loading="lazy"
+                decoding="async"
+                width="80"
+                height="80"
+                class="h-16 w-16 shrink-0 border border-paper/10 object-cover sm:h-20 sm:w-20"
+              />
+              <div class="min-w-0 flex-1">
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class="label-mono text-[10px] text-ember">
+                    Latest {leadRelease.kind}
+                  </span>
+                  <span class="label-mono text-[10px] text-dim">
+                    {formatDate(leadRelease.date)}
+                  </span>
+                </div>
+                <p class="mt-1 flex items-baseline justify-between gap-2 font-serif text-2xl leading-[1.12] text-paper transition-colors group-hover:text-ember">
+                  <span class="truncate">{leadRelease.title}</span>
+                  <span aria-hidden="true" class="font-mono text-xs opacity-65 transition-opacity group-hover:opacity-100">
+                    ↗
+                  </span>
+                </p>
+                {leadRelease.tracks && leadRelease.tracks.length > 0 && (
+                  <p class="mt-1 truncate text-[12.5px] text-dim">
+                    {leadRelease.tracks.length} tracks ·{" "}
+                    {leadRelease.tracks
+                      .slice(0, 4)
+                      .map((t) => t.title)
+                      .join(", ")}
+                  </p>
+                )}
+              </div>
+            </a>
+          )}
+
+          <ul class="mt-3 grid gap-3 sm:grid-cols-2">
+            {recentReleases.map((r) => (
+              <li>
+                <a
+                  href={r.url || spotify}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group flex items-center gap-3.5 border border-paper/10 bg-white/[0.015] p-3 transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.03]"
+                >
+                  <img
+                    src={r.cover}
+                    alt={r.title}
+                    loading="lazy"
+                    decoding="async"
+                    width="52"
+                    height="52"
+                    class="h-12 w-12 shrink-0 border border-paper/10 object-cover"
+                  />
+                  <div class="min-w-0 flex-1">
+                    <div class="flex items-baseline justify-between gap-2">
+                      <span class="label-mono text-[10px] text-dim">
+                        {r.kind === "album" ? `Album · ${r.tracks?.length ?? 0} tracks` : "Single"}
+                      </span>
+                      <span class="label-mono shrink-0 text-[10px] text-dim">
+                        {formatDate(r.date)}
+                      </span>
+                    </div>
+                    <p class="mt-1 flex items-baseline justify-between gap-2 text-[14px] font-medium text-paper transition-colors group-hover:text-ember">
+                      <span class="truncate">{r.title}</span>
+                      <span aria-hidden="true" class="font-mono text-[10px] opacity-55 group-hover:opacity-100">↗</span>
+                    </p>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div class="mt-4 flex items-center justify-between gap-4 border-t border-paper/10 pt-2">
+            <span class="label-mono text-[10.5px] text-dim">
+              +{otherReleases.length - recentReleases.length + archive.length} earlier releases &amp;
+              Cider Gamer archive
+            </span>
+            <a href="/music" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[10.5px] text-ember hover:underline">
+              Full discography <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </section>
+
+        {/* 05 · PHOTOGRAPHY */}
+        <section id="bay-photo" aria-labelledby="bay-photo-heading" class="stage" data-chapter>
+          <p data-bay-tag class="label-mono mb-1.5 hidden text-[10px] text-dim">05 // DAM</p>
+          <div class="flex flex-wrap items-baseline justify-between gap-4">
+            <h2 id="bay-photo-heading" tabindex="-1" class="chapter-title outline-none">Photography</h2>
+            <a
+              href={insta}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-ember hover:underline"
+            >
+              Instagram <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <p class="mt-3 max-w-xl text-[14px] leading-relaxed text-paper-dim">
+            Event, street, and landscape frames — occasional work shot for light and mood rather than volume.
+          </p>
+
+          <ul class="mt-4 grid gap-2.5 sm:mt-5 sm:grid-cols-3 sm:gap-3">
+            {photos.map((ph) => (
+              <li>
+                <button
+                  type="button"
+                  data-photo-open
+                  data-src={ph.src}
+                  data-title={ph.title}
+                  data-meta={`${ph.frame} · ${ph.spec} · ${ph.year}`}
+                  class="group flex w-full items-center overflow-hidden border border-paper/10 bg-white/[0.015] text-left transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.03] sm:block"
+                >
+                  <div class="aspect-[4/3] w-24 shrink-0 overflow-hidden border-r border-paper/10 bg-rack sm:w-full sm:border-r-0 sm:border-b">
+                    <img
+                      src={ph.src}
+                      alt={ph.title}
+                      loading="lazy"
+                      decoding="async"
+                      width="1200"
+                      height="900"
+                      class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <div class="min-w-0 flex-1 p-2.5 sm:p-3">
+                    <div class="flex items-baseline justify-between gap-2">
+                      <span class="label-mono text-[10px] text-ember">{ph.frame}</span>
+                      <span class="label-mono text-[10px] text-dim">{ph.year}</span>
+                    </div>
+                    <p class="mt-0.5 truncate text-[13.5px] font-medium text-paper transition-colors group-hover:text-ember sm:mt-1">
+                      {ph.title}
+                    </p>
+                    <p class="label-mono mt-0.5 truncate text-[10px] text-dim">{ph.spec}</p>
+                  </div>
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-paper/10 pt-2">
+            <span class="label-mono text-[10.5px] text-dim">
+              03 selected frames · Contact sheet
+            </span>
+            <a
+              href={insta}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[10.5px] text-ember hover:underline"
+            >
+              More on @nnthegamer <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
+
+        {/* 06 · PATCH PANEL / CONNECT */}
+        <section id="bay-connect" aria-labelledby="bay-connect-heading" class="stage" data-chapter>
+          <p data-bay-tag class="label-mono mb-1.5 hidden text-[10px] text-dim">06 // GATEWAY</p>
+          <div class="flex flex-wrap items-baseline justify-between gap-4">
+            <h2 id="bay-connect-heading" tabindex="-1" class="chapter-title outline-none">Connect</h2>
+            <a href="/contact" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-ember hover:underline">
+              Contact page <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div class="mt-4 flex flex-col justify-between gap-3 border border-paper/12 bg-white/[0.015] p-3.5 sm:flex-row sm:items-center sm:gap-4 sm:p-4 sm:px-5">
+            <div class="min-w-0">
+              <p class="label-mono text-[10px] text-dim">
+                Primary uplink · {site.role} · ~1 day reply
+              </p>
+              <a
+                href={`mailto:${site.email}`}
+                class="mt-1 inline-flex min-h-[36px] max-w-full items-center break-all font-serif text-[clamp(1.35rem,4.5vw,1.75rem)] leading-[1.1] tracking-[-0.01em] text-paper transition-colors hover:text-ember sm:break-normal"
+              >
+                {site.email}
+              </a>
+            </div>
+            <button
+              type="button"
+              data-copy={site.email}
+              class="label-mono inline-flex min-h-[40px] shrink-0 self-start items-center border border-paper/20 px-4 text-[10.5px] text-paper transition-colors hover:border-ember hover:text-ember sm:self-center"
+            >
+              Copy email
+            </button>
+          </div>
+
+          <div class="mt-3 grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-3">
+            {site.socials.map((s, i) => (
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex flex-col justify-between border border-paper/10 bg-white/[0.015] p-3.5 transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.03]"
+              >
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="label-mono text-[10px] text-dim">
+                      PORT {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      class="h-[6px] w-[6px] rounded-[1px] border border-black/60 bg-[#0a0c0e] transition-colors group-hover:bg-led group-hover:shadow-[0_0_6px_var(--color-led)]"
+                    />
+                  </div>
+                  <span aria-hidden="true" class="label-mono text-[10px] text-dim transition-colors group-hover:text-ember">
+                    ↗
+                  </span>
+                </div>
+
+                <div class="mt-2.5">
+                  <p class="text-[14.5px] font-medium text-paper transition-colors group-hover:text-ember">
+                    {s.label}
+                  </p>
+                  {s.handle && (
+                    <p class="label-mono mt-0.5 truncate text-[10px] text-dim">{s.handle}</p>
+                  )}
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-paper/10 pt-2">
+            <span class="label-mono text-[10.5px] text-dim">
+              {site.location} · Direct channels
+            </span>
+            <a href="/contact" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[10.5px] text-ember hover:underline">
+              Full details <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </section>
+
+        {/* 07 · FOOTER (UPS / PDU) */}
+        <section id="bay-footer" aria-labelledby="bay-footer-heading" class="stage" data-chapter>
+          <p data-bay-tag class="label-mono mb-1.5 hidden text-[10px] text-dim">07 // UPS / PDU</p>
+          <div class="flex flex-wrap items-baseline justify-between gap-4">
+            <h2 id="bay-footer-heading" tabindex="-1" class="chapter-title outline-none">Footer</h2>
+            <span class="label-mono inline-flex items-center gap-2 text-[11px] text-dim">
+              <span
+                aria-hidden="true"
+                class="h-[6px] w-[6px] rounded-[1px] bg-led shadow-[0_0_6px_var(--color-led)]"
+              />
+              <span>UPS / PDU · Online</span>
+            </span>
+          </div>
+
+          <div class="mt-4 border border-paper/12 bg-white/[0.015] p-4 sm:px-5">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <p class="label-mono text-[10px] text-dim">
+                {site.role} · {site.location}
+              </p>
+              <span class="label-mono text-[10px] text-ember">{site.handle}.xyz</span>
+            </div>
+            <p class="mt-1 font-serif text-3xl leading-[1.08] tracking-[-0.01em] text-paper">
+              {site.name}
+            </p>
+            <p class="mt-1.5 max-w-xl text-[13.5px] leading-relaxed text-paper-dim">
+              {site.description}
+            </p>
+          </div>
+
+          <div class="mt-3 grid grid-cols-2 gap-2.5 sm:gap-3">
+            <div class="min-w-0 border border-paper/10 bg-white/[0.015] p-3 sm:p-4">
+              <div class="flex items-baseline justify-between border-b border-white/[0.06] pb-2">
+                <span class="label-mono text-[10px] text-ember">BUS 01</span>
+                <span class="label-mono text-[10px] text-dim">Pages</span>
+              </div>
+              <ul class="mt-2.5 space-y-1.5 text-[13.5px] text-paper-dim">
+                {[...site.nav, { label: "Music", href: "/music" }].map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      class="group flex items-center justify-between transition-colors hover:text-ember"
+                    >
+                      <span>{item.label}</span>
+                      <span aria-hidden="true" class="font-mono text-[10px] opacity-55 transition-opacity group-hover:opacity-100">
+                        →
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="min-w-0 border border-paper/10 bg-white/[0.015] p-3 sm:p-4">
+              <div class="flex items-baseline justify-between border-b border-white/[0.06] pb-2">
+                <span class="label-mono text-[10px] text-ember">BUS 02</span>
+                <span class="label-mono text-[10px] text-dim">Uplinks</span>
+              </div>
+              <ul class="mt-2.5 space-y-1.5 text-[13.5px] text-paper-dim">
+                <li>
+                  <a
+                    href={`mailto:${site.email}`}
+                    class="block truncate text-ember hover:underline"
+                  >
+                    {site.email}
+                  </a>
+                </li>
+                <li>
+                  <a href="/github" class="flex items-center justify-between transition-colors hover:text-ember">
+                    <span>GitHub</span>
+                    <span aria-hidden="true" class="font-mono text-[10px] opacity-55">↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/linkedin" class="flex items-center justify-between transition-colors hover:text-ember">
+                    <span>LinkedIn</span>
+                    <span aria-hidden="true" class="font-mono text-[10px] opacity-55">↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/instagram" class="flex items-center justify-between transition-colors hover:text-ember">
+                    <span>Instagram</span>
+                    <span aria-hidden="true" class="font-mono text-[10px] opacity-55">↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/downloads/resume.pdf"
+                    download
+                    class="flex items-center justify-between transition-colors hover:text-ember"
+                  >
+                    <span>Résumé PDF</span>
+                    <span aria-hidden="true" class="font-mono text-[10px] opacity-55">↓</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-paper/10 pt-2">
+            <p class="label-mono text-[10.5px] text-dim">
+              © {new Date().getFullYear()} {site.name} · {site.location}
+            </p>
+            <button
+              type="button"
+              data-back-top
+              class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[10.5px] text-ember hover:underline"
+            >
+              Back to top <span aria-hidden="true">↑</span>
+            </button>
+          </div>
+        </section>
+        </div>
+        </div>
+      </div>
+
+      <div data-split-spacer aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <div
+    data-mobile-dock
+    data-lenis-prevent
+    class="pointer-events-auto fixed inset-x-0 bottom-0 z-30 border-t border-paper/14 bg-rack/95 backdrop-blur-md"
+  >
+    <div
+      data-dock-window
+      class="mx-auto grid max-w-3xl grid-cols-[1fr_auto_1fr] items-center gap-2 px-3 py-1.5 sm:px-5"
+    >
+      <button
+        type="button"
+        data-win-prev
+        disabled
+        aria-label="Previous section"
+        class="label-mono flex min-h-[44px] items-center justify-center justify-self-start border border-paper/14 bg-white/[0.025] px-3 text-[10px] tracking-[0.06em] text-paper-dim transition-colors hover:border-paper/30 hover:text-paper disabled:pointer-events-none disabled:opacity-30"
+      >
+        <span data-win-prev-label class="whitespace-nowrap">← Prev</span>
+      </button>
+
+      <button
+        type="button"
+        data-win-toggle
+        aria-label="Open interactive 3D server rack"
+        class="label-mono flex min-h-[44px] items-center justify-center gap-2 justify-self-center border border-paper/24 bg-white/[0.05] px-3.5 text-[10px] tracking-[0.08em] text-paper transition-colors hover:border-ember hover:text-ember"
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 14 14"
+          class="h-3.5 w-3.5 shrink-0 text-led"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.3"
+        >
+          <rect x="1.5" y="1.5" width="11" height="3" rx="0.5" />
+          <rect x="1.5" y="5.5" width="11" height="3" rx="0.5" />
+          <rect x="1.5" y="9.5" width="11" height="3" rx="0.5" />
+        </svg>
+        <span data-win-toggle-label class="whitespace-nowrap">3D Rack</span>
+        <span data-win-progress class="text-[10px] text-dim tabular-nums">1/7</span>
+      </button>
+
+      <button
+        type="button"
+        data-win-next
+        aria-label="Next section: Experience"
+        class="label-mono flex min-h-[44px] max-w-full min-w-0 items-center justify-center justify-self-end border border-ember/55 bg-ember/12 px-3 text-[10px] tracking-[0.06em] text-paper transition-colors hover:border-ember hover:bg-ember/20"
+      >
+        <span data-win-next-label class="truncate">Experience →</span>
+      </button>
+    </div>
+
+    <div
+      data-dock-rack
+      class="mx-auto flex max-w-3xl items-center justify-center px-3 py-1.5 sm:px-5"
+    >
+      <button
+        type="button"
+        data-win-resume
+        aria-label="Back to About"
+        class="label-mono flex min-h-[44px] items-center gap-2 border border-paper/22 bg-white/[0.04] px-5 text-[10px] tracking-[0.08em] text-paper transition-colors hover:border-ember hover:text-ember"
+      >
+        <span data-win-resume-label class="whitespace-nowrap">← Back to About</span>
+      </button>
+    </div>
+  </div>
+
+  <nav
+    data-chapter-rail
+    aria-label="Chapters"
+    class="pointer-events-none fixed top-1/2 left-4 z-30 -translate-y-1/2 2xl:left-7"
+  >
+    <ul class="pointer-events-auto relative flex flex-col border-l border-paper/12">
+      {["About", "Experience", "Projects", "Music", "Photo", "Connect", "Footer"].map((label, i) => (
+        <li>
+          <button
+            type="button"
+            data-goto={i}
+            data-active={i === 0 ? "true" : "false"}
+            class="group relative flex items-center gap-1.5 py-1.5 pr-1 pl-2.5 text-left"
+            aria-label={`Go to ${label}`}
+          >
+            <span
+              data-rail-dot
+              aria-hidden="true"
+              class:list={[
+                "absolute top-1/2 -left-[3px] h-[5px] w-[5px] -translate-y-1/2 rounded-[1px] transition-all duration-200 group-hover:bg-ember",
+                i === 0
+                  ? "bg-ember shadow-[0_0_8px_rgba(212,107,66,0.75)]"
+                  : "bg-paper/25",
+              ]}
+            />
+            <span
+              data-rail-num
+              class:list={[
+                "label-mono text-[10px] tabular-nums transition-colors duration-200 group-hover:text-ember",
+                i === 0 ? "text-ember" : "text-dim/75",
+              ]}
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span
+              data-rail-label
+              class:list={[
+                "label-mono hidden text-[10px] whitespace-nowrap transition-colors duration-200 group-hover:text-paper xl:inline",
+                i === 0 ? "text-paper" : "text-dim",
+              ]}
+            >
+              {label}
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  {/* renderer HUD */}
+  <div
+    data-hud-wrap
+    class="pointer-events-none fixed bottom-5 left-4 z-30 flex items-center gap-4 font-mono text-[11px] tracking-[0.1em] text-paper-dim uppercase 2xl:left-7"
+  >
+    <button
+      data-grid-toggle
+      type="button"
+      class="pointer-events-auto border border-paper/20 px-2 py-1 transition-colors duration-200 hover:border-ember hover:text-ember"
+      aria-pressed="false"
+    >
+      Wireframe
+    </button>
+    <span data-hud>initialising</span>
+  </div>
+
+  <div
+    data-hdd-tip
+    aria-hidden="true"
+    class="pointer-events-none fixed top-0 left-0 z-40 hidden border border-ember/45 bg-rack/95 px-2.5 py-1 font-mono text-[10px] tracking-[0.12em] text-paper uppercase shadow-lg backdrop-blur-sm"
+  >
+    EVE &#8599;
+  </div>
+
+  <dialog
+    data-photo-dialog
+    aria-labelledby="photo-dialog-title"
+    class="m-auto max-h-[90dvh] w-[min(92vw,56rem)] border border-paper/15 bg-rack/95 p-0 text-paper shadow-2xl backdrop:bg-rack/85 backdrop:backdrop-blur-md"
+  >
+    <div class="flex items-center justify-between border-b border-paper/10 px-4 py-2.5">
+      <div class="flex items-baseline gap-3">
+        <h2 id="photo-dialog-title" data-photo-title class="text-[13.5px] font-medium text-paper">Photo preview</h2>
+        <span data-photo-meta class="label-mono text-[10.5px] text-dim"></span>
+      </div>
+      <button
+        type="button"
+        data-photo-close
+        class="label-mono inline-flex min-h-[36px] items-center border border-paper/15 px-3 text-[10.5px] text-paper-dim transition-colors hover:border-ember hover:text-ember"
+      >
+        Close · Esc
+      </button>
+    </div>
+    <div class="bg-black/40 p-2 sm:p-3">
+      <img data-photo-img alt="Selected gallery preview" class="mx-auto hidden max-h-[76dvh] w-auto object-contain" />
+    </div>
+  </dialog>
+</Base>
+
+<script is:inline>
+  // Resolve presentation geometry before first paint so neither layout nor chapter 0 flashes.
+  (function () {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const aspect = w / Math.max(1, h);
+    const root = document.documentElement;
+    const layout = w >= 960 && h >= 540 && aspect >= 1.02 ? "split" : "window";
+    root.dataset.layout = layout;
+    root.dataset.windowFrame = w >= 560 && h >= 640 ? "floating" : "compact";
+    root.dataset.windowOpen = "true";
+
+    if (layout === "window") {
+      const sp = document.querySelector("[data-spacer]");
+      if (sp) sp.style.height = "0px";
+    } else if (window.scrollY > 40) {
+      const ch0 = document.querySelector("[data-chapter]");
+      if (ch0) {
+        ch0.setAttribute("data-active", "false");
+        ch0.style.setProperty("--reveal", "0");
+      }
+    }
+  })();
+</script>
+
+<script>
+  import type { Handle } from "../scene/rack";
+  import { createBootCurtain } from "../lib/bootCurtain";
+
+  const bootCurtain = createBootCurtain();
+  bootCurtain.setStage("LOADING FONTS", 0.22);
+
+  const BAY_META = [
+    { code: "IAM", title: "About" },
+    { code: "RUNTIME", title: "Experience" },
+    { code: "ARTIFACT", title: "Projects" },
+    { code: "DAC", title: "Music" },
+    { code: "DAM", title: "Photos" },
+    { code: "GATEWAY", title: "Connect" },
+    { code: "UPS / PDU", title: "Footer" },
+  ];
+
+  const getLayoutState = (w = window.innerWidth, h = window.innerHeight) => {
+    const aspect = w / Math.max(1, h);
+    const mode: "split" | "window" = w >= 960 && h >= 540 && aspect >= 1.02 ? "split" : "window";
+    const windowFrame: "floating" | "compact" = w >= 560 && h >= 640 ? "floating" : "compact";
+    return { mode, windowFrame };
+  };
+
+  const canvas = document.querySelector<HTMLCanvasElement>("[data-rack-canvas]");
+  const spacer = document.querySelector<HTMLElement>("[data-spacer]");
+  const chapters = Array.from(document.querySelectorAll<HTMLElement>("[data-chapter]"));
+  const stageClip = document.querySelector<HTMLElement>("[data-stage-clip]");
+  const stageCol = document.querySelector<HTMLElement>("[data-stage-col]");
+  const osWindow = document.querySelector<HTMLElement>("[data-os-window]");
+  const winPrev = document.querySelector<HTMLButtonElement>("[data-win-prev]");
+  const winNext = document.querySelector<HTMLButtonElement>("[data-win-next]");
+  const winNextLabel = document.querySelector<HTMLElement>("[data-win-next-label]");
+  const winToggle = document.querySelector<HTMLButtonElement>("[data-win-toggle]");
+  const winProgress = document.querySelector<HTMLElement>("[data-win-progress]");
+  const winResume = document.querySelector<HTMLButtonElement>("[data-win-resume]");
+  const winResumeLabel = document.querySelector<HTMLElement>("[data-win-resume-label]");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let layoutState = getLayoutState();
+  let windowOpen = true;
+  document.documentElement.dataset.layout = layoutState.mode;
+  document.documentElement.dataset.windowFrame = layoutState.windowFrame;
+  document.documentElement.dataset.windowOpen = "true";
+  if (osWindow) osWindow.toggleAttribute("data-lenis-prevent", layoutState.mode === "window");
+
+  // Soft ordered 8x8 Bayer feather strip (repeating vertically) along the bay clip edge
+  const DITHER_CELL = 4;
+  const DITHER_TILE_H = DITHER_CELL * 8;
+  const buildDitherEdgeUrl = (): string => {
+    const BAYER_8 = [
+      [0, 32, 8, 40, 2, 34, 10, 42],
+      [48, 16, 56, 24, 50, 18, 58, 26],
+      [12, 44, 4, 36, 14, 46, 6, 38],
+      [60, 28, 52, 20, 62, 30, 54, 22],
+      [3, 35, 11, 43, 1, 33, 9, 41],
+      [51, 19, 59, 27, 49, 17, 57, 25],
+      [15, 47, 7, 39, 13, 45, 5, 37],
+      [63, 31, 55, 23, 61, 29, 53, 21],
+    ].map((row) => row.map((v) => (v + 0.5) / 64));
+
+    const stripW = 136;
+    const c = document.createElement("canvas");
+    c.width = stripW;
+    c.height = DITHER_TILE_H;
+    const g = c.getContext("2d");
+    if (!g) return "";
+
+    const cols = Math.ceil(stripW / DITHER_CELL);
+    for (let gy = 0; gy < 8; gy++) {
+      const bRow = BAYER_8[gy];
+      for (let gx = 0; gx < cols; gx++) {
+        const u = 1 - (gx * DITHER_CELL + DITHER_CELL * 0.5) / stripW;
+        if (u <= 0) continue;
+        const s = u * u * (3 - 2 * u);
+        // Soft-quantized Bayer: preserves ordered grid texture without harsh 1-bit cutouts on text
+        const alpha = Math.max(0, Math.min(1, (s - bRow[gx & 7] * 0.58) / 0.42));
+        if (alpha <= 0.01) continue;
+        g.fillStyle = `rgba(0, 0, 0, ${alpha.toFixed(3)})`;
+        g.fillRect(gx * DITHER_CELL, gy * DITHER_CELL, DITHER_CELL, DITHER_CELL);
+      }
+    }
+    return c.toDataURL();
+  };
+
+  const ditherEdgeUrl = stageClip ? buildDitherEdgeUrl() : "";
+  if (stageClip && ditherEdgeUrl) {
+    const maskExpr = `linear-gradient(#000, #000), url("${ditherEdgeUrl}")`;
+    stageClip.style.maskImage = maskExpr;
+    stageClip.style.webkitMaskImage = maskExpr;
+    stageClip.style.maskRepeat = "no-repeat, repeat-y";
+    stageClip.style.webkitMaskRepeat = "no-repeat, repeat-y";
+  }
+
+  const smoothstep = (e0: number, e1: number, x: number) => {
+    const t = Math.max(0, Math.min(1, (x - e0) / (e1 - e0)));
+    return t * t * (3 - 2 * t);
+  };
+
+  const cubicBezier = (x1: number, y1: number, x2: number, y2: number) => {
+    const cx = 3 * x1;
+    const bx = 3 * (x2 - x1) - cx;
+    const ax = 1 - cx - bx;
+    const cy = 3 * y1;
+    const by = 3 * (y2 - y1) - cy;
+    const ay = 1 - cy - by;
+    const sampleX = (t: number) => ((ax * t + bx) * t + cx) * t;
+    const sampleDX = (t: number) => (3 * ax * t + 2 * bx) * t + cx;
+    const sampleY = (t: number) => ((ay * t + by) * t + cy) * t;
+    return (e0: number, e1: number, x: number) => {
+      const u = Math.max(0, Math.min(1, (x - e0) / (e1 - e0)));
+      if (u <= 0) return 0;
+      if (u >= 1) return 1;
+      let t = u;
+      for (let i = 0; i < 6; i++) {
+        const err = sampleX(t) - u;
+        if (Math.abs(err) < 1e-5) break;
+        const d = sampleDX(t);
+        if (Math.abs(d) < 1e-5) break;
+        t -= err / d;
+      }
+      t = Math.max(0, Math.min(1, t));
+      return sampleY(t);
+    };
+  };
+
+  // Apple fluid motion curves: gentle launch + long exponential deceleration settle
+  const appleOut = cubicBezier(0.22, 1, 0.36, 1);
+  const appleSheet = cubicBezier(0.32, 0.72, 0, 1);
+  const appleGlide = cubicBezier(0.34, 0.06, 0.14, 1);
+
+  /**
+   * Maps continuous scroll scrub [0 .. N-1] into mechanical phases per unit transition:
+   * 0.00..0.24 open dwell -> 0.24..0.35 content goes IN ->
+   * 0.35..0.44 drawer CLOSES -> 0.44..0.56 rack SCROLLS ->
+   * 0.56..0.65 next drawer PULLS OUT -> 0.65..0.76 next content PRESENTS ->
+   * 0.76..1.00 open dwell.
+   */
+  const computePose = (s: number, n: number) => {
+    const clamped = Math.max(0, Math.min(n - 1, s));
+    const i = Math.min(Math.max(0, Math.floor(clamped)), Math.max(0, n - 2));
+    const u = n > 1 ? clamped - i : 0;
+
+    const contentIn = smoothstep(0.24, 0.35, u);
+    const drawerClose = smoothstep(0.35, 0.44, u);
+    const rackT = smoothstep(0.44, 0.56, u);
+    const drawerOpen = smoothstep(0.56, 0.65, u);
+    const contentOut = smoothstep(0.65, 0.76, u);
+
+    const ejects = new Array<number>(n).fill(0);
+    if (n > 1) {
+      ejects[i] = 1 - drawerClose;
+      ejects[i + 1] = drawerOpen;
+    } else if (n === 1) {
+      ejects[0] = 1;
+    }
+
+    const toNext = u >= 0.5 && n > 1;
+    const active = toNext ? i + 1 : i;
+    const reveal = toNext ? contentOut : 1 - contentIn;
+
+    return {
+      fromUnit: i,
+      toUnit: Math.min(n - 1, i + 1),
+      rackT,
+      ejects,
+      active,
+      reveal,
+    };
+  };
+
+  const getTargetScrub = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    return max > 0
+      ? Math.max(0, Math.min(chapters.length - 1, (window.scrollY / max) * (chapters.length - 1)))
+      : 0;
+  };
+
+  let rackHandle: Handle | null = null;
+  let scrub = getTargetScrub();
+  let lastPose = computePose(scrub, chapters.length);
+  let activeIndex = lastPose.active;
+  let currentReveal = reduce ? 1 : lastPose.reveal;
+
+  type JumpState = {
+    from: number;
+    to: number;
+    start: number;
+    closeDur: number;
+    scrollDur: number;
+    openDur: number;
+    dur: number;
+    startReveal: number;
+    startEject: number;
+    startY: number;
+    destY: number;
+    wheelAccum: number;
+  };
+  let jump: JumpState | null = null;
+
+  type FastTravelState = {
+    phase: "closing" | "scrolling" | "opening";
+    from: number;
+    to: number;
+    rackS: number;
+    t: number;
+    startReveal: number;
+    startEject: number;
+    lastTarget: number;
+    stableFrames: number;
+  };
+  let fastTravel: FastTravelState | null = null;
+
+  let openedRackUnit = layoutState.mode === "window" && windowOpen ? 0 : -1;
+  const windowEjects = chapters.map((_, i) => (i === openedRackUnit ? 1 : 0));
+
+  const updateWindowChrome = (idx: number) => {
+    const total = chapters.length;
+    const meta = BAY_META[idx] ?? { code: `U${idx + 1}`, title: `Unit ${idx + 1}` };
+    const nextIdx = (idx + 1) % total;
+    const nextMeta = BAY_META[nextIdx] ?? { code: `U${nextIdx + 1}`, title: `Unit ${nextIdx + 1}` };
+    const prevIdx = idx - 1;
+    const prevMeta = prevIdx >= 0 ? BAY_META[prevIdx] : null;
+
+    if (winProgress) {
+      winProgress.textContent = `${idx + 1}/${total}`;
+    }
+    if (winPrev) {
+      winPrev.disabled = idx <= 0;
+      winPrev.setAttribute(
+        "aria-label",
+        prevMeta ? `Previous section: ${prevMeta.title}` : "Previous section",
+      );
+    }
+    if (winNext && winNextLabel) {
+      winNextLabel.textContent = idx >= total - 1 ? `${nextMeta.title} ↺` : `${nextMeta.title} →`;
+      winNext.setAttribute("aria-label", `Next section: ${nextMeta.title}`);
+    }
+    if (winResume && winResumeLabel) {
+      winResumeLabel.textContent = `← Back to ${meta.title}`;
+      winResume.setAttribute("aria-label", `Back to ${meta.title}`);
+    }
+    if (winToggle) {
+      winToggle.setAttribute("aria-pressed", String(!windowOpen));
+    }
+  };
+
+  const syncRackPaused = () => {
+    rackHandle?.setPaused(layoutState.mode === "window" && windowOpen && layoutState.windowFrame === "compact");
+  };
+
+  const focusActiveHeading = (idx: number) => {
+    const heading = chapters[idx]?.querySelector<HTMLElement>("h1, h2");
+    if (!heading) return;
+    requestAnimationFrame(() => heading.focus({ preventScroll: true }));
+  };
+
+  let chapterAnnounceTimer = 0;
+  const announceChapter = (idx: number, immediate = false) => {
+    const meta = BAY_META[idx] ?? { code: `U${idx + 1}`, title: `Unit ${idx + 1}` };
+    const msg = `Section ${idx + 1} of ${chapters.length}: ${meta.title}`;
+    window.clearTimeout(chapterAnnounceTimer);
+    if (immediate) {
+      (window as any).__announce?.(msg);
+      return;
+    }
+    chapterAnnounceTimer = window.setTimeout(() => {
+      (window as any).__announce?.(msg);
+    }, 320);
+  };
+
+  const syncWindowA11y = () => {
+    if (osWindow) {
+      const closedInWindow = layoutState.mode === "window" && !windowOpen;
+      osWindow.inert = closedInWindow;
+      if (closedInWindow) osWindow.setAttribute("aria-hidden", "true");
+      else osWindow.removeAttribute("aria-hidden");
+    }
+  };
+
+  let winAnimTimer = 0;
+  const setWindowOpen = (open: boolean, animate = true) => {
+    windowOpen = open;
+    const root = document.documentElement;
+    if (!open) ensureRackBooted();
+    if (animate) {
+      window.clearTimeout(winAnimTimer);
+      root.dataset.winAnimating = "true";
+      winAnimTimer = window.setTimeout(() => {
+        delete root.dataset.winAnimating;
+      }, 240);
+    }
+    root.dataset.windowOpen = String(open);
+    if (osWindow) osWindow.toggleAttribute("data-lenis-prevent", layoutState.mode === "window" && open);
+    syncWindowA11y();
+
+    if (layoutState.mode === "window") {
+      if (!open) {
+        openedRackUnit = -1;
+        window.scrollTo(0, 0);
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }
+    updateWindowChrome(activeIndex);
+    syncRackPaused();
+  };
+
+  const showOnly = (next: number) => {
+    chapters.forEach((c, i) => {
+      const active = i === next;
+      c.dataset.active = String(active);
+      c.inert = !active;
+      if (active) c.removeAttribute("aria-hidden");
+      else c.setAttribute("aria-hidden", "true");
+      if (layoutState.mode === "window") {
+        c.style.transform = "";
+      }
+    });
+    updateWindowChrome(next);
+  };
+
+  const syncLayout = () => {
+    const prevMode = layoutState.mode;
+    const prevFrame = layoutState.windowFrame;
+    const nextState = getLayoutState();
+    // Ignore minor viewport height changes (mobile browser chrome show/hide) that keep the same layout mode/frame.
+    if (prevMode === nextState.mode && prevFrame === nextState.windowFrame) return;
+
+    layoutState = nextState;
+    const root = document.documentElement;
+    root.dataset.layout = layoutState.mode;
+    root.dataset.windowFrame = layoutState.windowFrame;
+    if (spacer) {
+      spacer.style.height = layoutState.mode === "window" ? "0px" : `${chapters.length * 240}svh`;
+    }
+    if (osWindow) osWindow.toggleAttribute("data-lenis-prevent", layoutState.mode === "window" && windowOpen);
+    (window as any).__syncLenis?.(layoutState.mode === "split");
+    if (layoutState.mode === "window") {
+      window.scrollTo(0, 0);
+    }
+    rackHandle?.setPresentationMode(layoutState.mode === "split" ? "split" : "front");
+
+    if (prevMode !== layoutState.mode) {
+      if (layoutState.mode === "window") {
+        openedRackUnit = windowOpen ? activeIndex : -1;
+        windowEjects.forEach((_, k) => {
+          windowEjects[k] = k === openedRackUnit ? 1 : 0;
+        });
+        showOnly(activeIndex);
+        updateRail(activeIndex);
+      } else {
+        jump = null;
+        fastTravel = null;
+        showOnly(activeIndex);
+      }
+    }
+    syncWindowA11y();
+    syncRackPaused();
+    if (!(layoutState.mode === "window" && windowOpen && layoutState.windowFrame === "compact")) {
+      ensureRackBooted();
+    }
+  };
+
+  window.addEventListener("resize", syncLayout);
+
+  // Initialize non-active chapters retracted inside their server bay (never flashing "out")
+  chapters.forEach((c, i) => {
+    [...c.children].forEach((el, k) => (el as HTMLElement).style.setProperty("--i", String(k)));
+    c.inert = i !== activeIndex;
+    if (i === activeIndex) c.removeAttribute("aria-hidden");
+    else c.setAttribute("aria-hidden", "true");
+    if (layoutState.mode === "window") {
+      c.dataset.active = String(i === activeIndex);
+      c.style.transform = "";
+    } else if (i !== activeIndex) {
+      c.style.setProperty("--reveal", "0");
+      c.style.transform = "translate3d(760px, 0, 0)";
+    } else {
+      c.style.setProperty("--reveal", currentReveal.toFixed(4));
+      if (currentReveal <= 0.001) {
+        c.style.transform = "translate3d(760px, 0, 0)";
+      }
+    }
+  });
+  updateWindowChrome(activeIndex);
+
+  // chapter rail
+  const railBtns = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-goto]"));
+  const railDots = Array.from(document.querySelectorAll<HTMLElement>("[data-rail-dot]"));
+  const railNums = Array.from(document.querySelectorAll<HTMLElement>("[data-rail-num]"));
+  const railLabels = Array.from(document.querySelectorAll<HTMLElement>("[data-rail-label]"));
+
+  const updateRail = (idx: number) => {
+    railBtns.forEach((b, i) => {
+      const on = i === idx;
+      b.dataset.active = String(on);
+      if (on) b.setAttribute("aria-current", "step");
+      else b.removeAttribute("aria-current");
+      const dot = railDots[i];
+      const num = railNums[i];
+      const lbl = railLabels[i];
+      if (dot) {
+        dot.classList.toggle("bg-ember", on);
+        dot.classList.toggle("shadow-[0_0_8px_rgba(212,107,66,0.75)]", on);
+        dot.classList.toggle("bg-paper/25", !on);
+      }
+      if (num) {
+        num.classList.toggle("text-ember", on);
+        num.classList.toggle("text-dim/75", !on);
+      }
+      if (lbl) {
+        lbl.classList.toggle("text-paper", on);
+        lbl.classList.toggle("text-dim", !on);
+      }
+    });
+  };
+
+  const goToChapter = (i: number) => {
+    const targetIdx = Math.max(0, Math.min(chapters.length - 1, i));
+
+    if (layoutState.mode === "window") {
+      openedRackUnit = targetIdx;
+      activeIndex = targetIdx;
+      setWindowOpen(true);
+      showOnly(targetIdx);
+      updateRail(targetIdx);
+      return;
+    }
+
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const destY = (targetIdx / Math.max(1, chapters.length - 1)) * max;
+
+    const prevElapsed = jump ? performance.now() - jump.start : 0;
+    const fromIdx = jump
+      ? prevElapsed < jump.closeDur
+        ? jump.from
+        : prevElapsed >= jump.closeDur + jump.scrollDur
+          ? jump.to
+          : Math.round(jump.from + (jump.to - jump.from) * lastPose.rackT)
+      : activeIndex;
+    const startEject = lastPose.ejects[fromIdx] ?? 0;
+    const needsClose = fromIdx !== targetIdx && (startEject > 0.01 || currentReveal > 0.01);
+    const closeDur = reduce ? 0 : needsClose ? 450 : 0;
+    const scrollDur = reduce
+      ? 0
+      : fromIdx === targetIdx
+        ? Math.abs(destY - window.scrollY) > 4
+          ? 260
+          : 0
+        : 420 + Math.abs(targetIdx - fromIdx) * 145;
+    const openDur = reduce ? 0 : 450;
+    const dur = closeDur + scrollDur + openDur;
+
+    fastTravel = null;
+    const lenis = (window as any).__lenis;
+    if (lenis) lenis.stop();
+
+    if (dur === 0) {
+      jump = null;
+      scrub = targetIdx;
+      if (lenis) {
+        lenis.start();
+        lenis.scrollTo(destY, { immediate: true });
+      } else {
+        window.scrollTo(0, destY);
+      }
+      return;
+    }
+
+    jump = {
+      from: fromIdx,
+      to: targetIdx,
+      start: performance.now(),
+      closeDur,
+      scrollDur,
+      openDur,
+      dur,
+      startReveal: currentReveal,
+      startEject,
+      startY: window.scrollY,
+      destY,
+      wheelAccum: 0,
+    };
+  };
+
+  let bayOpenTimer = 0;
+  const openSelectedWindow = (idx: number, moveFocus = false) => {
+    window.clearTimeout(bayOpenTimer);
+    openedRackUnit = idx;
+    activeIndex = idx;
+    setWindowOpen(true);
+    showOnly(idx);
+    updateRail(idx);
+    announceChapter(idx, true);
+    if (moveFocus) focusActiveHeading(idx);
+  };
+
+  railBtns.forEach((b, i) => {
+    b.addEventListener("click", () => {
+      goToChapter(i);
+      announceChapter(i, true);
+    });
+    b.addEventListener("keydown", (e) => {
+      let next = -1;
+      if (e.key === "ArrowDown") next = (i + 1) % railBtns.length;
+      else if (e.key === "ArrowUp") next = (i - 1 + railBtns.length) % railBtns.length;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = railBtns.length - 1;
+      if (next >= 0) {
+        e.preventDefault();
+        railBtns[next]?.focus();
+      }
+    });
+  });
+  winPrev?.addEventListener("click", () => {
+    if (activeIndex > 0) {
+      const next = activeIndex - 1;
+      goToChapter(next);
+      announceChapter(next, true);
+    }
+  });
+  winNext?.addEventListener("click", () => {
+    const next = (activeIndex + 1) % chapters.length;
+    goToChapter(next);
+    announceChapter(next, true);
+  });
+  winToggle?.addEventListener("click", () => {
+    window.clearTimeout(bayOpenTimer);
+    setWindowOpen(false);
+    (window as any).__announce?.(
+      "Interactive 3D server rack opened. Activate Back to return to content.",
+    );
+    requestAnimationFrame(() => winResume?.focus());
+  });
+  winResume?.addEventListener("click", () => openSelectedWindow(activeIndex, true));
+  document.querySelector("[data-back-top]")?.addEventListener("click", () => {
+    goToChapter(0);
+    announceChapter(0, true);
+  });
+  document.addEventListener("profilecard:contact", () => {
+    goToChapter(5);
+    announceChapter(5, true);
+  });
+
+  const gridBtn = document.querySelector<HTMLButtonElement>("[data-grid-toggle]");
+  gridBtn?.addEventListener("click", () => {
+    const next = gridBtn.getAttribute("aria-pressed") !== "true";
+    gridBtn.setAttribute("aria-pressed", String(next));
+    rackHandle?.setGrid(next);
+    (window as any).__announce?.(next ? "Wireframe overlay enabled" : "Wireframe overlay disabled");
+  });
+
+  /**
+   * Segmented jump choreography:
+   * 1) `closeDur` (450ms): active content retracts and current drawer glides shut
+   * 2) `scrollDur` (distance-based): pure Apple-eased scroll along the rack while closed
+   * 3) `openDur` (450ms): target drawer slides out and content reveals
+   */
+  const computeJumpPose = (j: JumpState, elapsed: number, n: number) => {
+    const ejects = new Array<number>(n).fill(0);
+
+    // Phase 1: Retract content + close current server bay (450ms)
+    if (elapsed < j.closeDur && j.closeDur > 0) {
+      const tClose = Math.max(0, Math.min(1, elapsed / j.closeDur));
+      const contentIn = appleOut(0, 0.58, tClose);
+      const drawerClose = appleSheet(0.18, 1, tClose);
+      ejects[j.from] = j.startEject * (1 - drawerClose);
+      return {
+        fromUnit: j.from,
+        toUnit: j.to,
+        rackT: 0,
+        ejects,
+        active: j.from,
+        reveal: j.startReveal * (1 - contentIn),
+      };
+    }
+
+    // Phase 2: Dedicated Apple-eased scroll to destination bay
+    const scrollEnd = j.closeDur + j.scrollDur;
+    if (elapsed < scrollEnd && j.scrollDur > 0) {
+      const tScroll = Math.max(0, Math.min(1, (elapsed - j.closeDur) / j.scrollDur));
+      const rackT = appleGlide(0, 1, tScroll);
+      return {
+        fromUnit: j.from,
+        toUnit: j.to,
+        rackT,
+        ejects,
+        active: j.to,
+        reveal: 0,
+      };
+    }
+
+    // Phase 3: Open target server bay + reveal content (450ms)
+    const tOpen = j.openDur > 0 ? Math.max(0, Math.min(1, (elapsed - scrollEnd) / j.openDur)) : 1;
+    const baseEject = j.from === j.to && j.closeDur === 0 ? j.startEject : 0;
+    const baseReveal = j.from === j.to && j.closeDur === 0 ? j.startReveal : 0;
+    const drawerOpen = appleOut(0, 0.72, tOpen);
+    const contentOut = appleOut(0.28, 1, tOpen);
+    ejects[j.to] = baseEject + (1 - baseEject) * drawerOpen;
+
+    return {
+      fromUnit: j.from,
+      toUnit: j.to,
+      rackT: 1,
+      ejects,
+      active: j.to,
+      reveal: baseReveal + (1 - baseReveal) * contentOut,
+    };
+  };
+
+  const applyPanelLayout = (portX: number, portY: number, faceH: number, eject: number) => {
+    const panel = chapters[activeIndex];
+    if (!panel) return;
+
+    panel.style.setProperty("--eject", eject.toFixed(4));
+    panel.style.setProperty("--reveal", currentReveal.toFixed(4));
+
+    if (layoutState.mode === "split" && stageCol && stageClip) {
+      osWindow?.style.removeProperty("--win-reveal");
+
+      const h = panel.offsetHeight || 0;
+      const contentH = Math.max(panel.scrollHeight || 0, h);
+      const headerSafe = 72;
+      const margin = 48;
+      const maxTop = Math.max(headerSafe, window.innerHeight - h - margin);
+      const targetTop = portY - h * 0.5;
+      const y = Math.min(Math.max(targetTop, headerSafe), maxTop);
+      panel.dataset.overflow = contentH > window.innerHeight - headerSafe - margin ? "true" : "false";
+
+      const out = 1 - currentReveal;
+      const edgeX = Math.max(0, portX + 2);
+      const clipRight = Math.max(0, window.innerWidth - edgeX);
+      stageClip.style.clipPath = `inset(0px ${clipRight.toFixed(1)}px 0px 0px)`;
+
+      if (ditherEdgeUrl) {
+        const featherW = Math.min(edgeX, Math.round(18 + 118 * smoothstep(0, 0.25, out)));
+        const solidW = Math.max(0, edgeX - featherW);
+        // Overlap solid layer by 1px into the solid left edge of the Bayer strip to prevent subpixel seams
+        const sizeStr = `${(solidW + 1).toFixed(1)}px 100%, ${Math.max(1, featherW).toFixed(1)}px ${DITHER_TILE_H}px`;
+        const posStr = `0px 0px, ${solidW.toFixed(1)}px 0px`;
+        stageClip.style.maskSize = sizeStr;
+        stageClip.style.webkitMaskSize = sizeStr;
+        stageClip.style.maskPosition = posStr;
+        stageClip.style.webkitMaskPosition = posStr;
+      }
+
+      const colRect = stageCol.getBoundingClientRect();
+      const slideDist = Math.max(colRect.width, portX - colRect.left + 24);
+      const tx = out * slideDist;
+      // Offset Y in compositor transform rather than CSS top so initial WebGL settle causes zero CLS.
+      panel.style.transform =
+        `translate3d(${tx.toFixed(1)}px, ${y.toFixed(1)}px, 0) ` +
+        `rotateY(${(out * -14).toFixed(2)}deg) ` +
+        `scale(${(0.94 + currentReveal * 0.06).toFixed(3)})`;
+    } else {
+      if (stageClip) {
+        stageClip.style.clipPath = "";
+        stageClip.style.maskSize = "";
+        stageClip.style.webkitMaskSize = "";
+        stageClip.style.maskPosition = "";
+        stageClip.style.webkitMaskPosition = "";
+      }
+      delete panel.dataset.overflow;
+      panel.style.transform = "";
+      panel.style.removeProperty("--anchor-y");
+      osWindow?.style.setProperty("--win-reveal", "1");
+    }
+  };
+
+  // Cancel explicit click jumps only on deliberate fresh user scroll (absorb decaying trackpad inertia).
+  const abortJumpToScroll = () => {
+    if (!jump) return;
+    const target = getTargetScrub();
+    const lenis = (window as any).__lenis;
+    lenis?.start?.();
+    lenis?.scrollTo?.(window.scrollY, { immediate: true });
+    const fromIdx = activeIndex;
+    const startEject = lastPose.ejects[fromIdx] ?? 0;
+    jump = null;
+    if (currentReveal < 0.05 || Math.abs(target - scrub) > 0.55 || Math.abs(target - fromIdx) > 1.05) {
+      fastTravel = {
+        phase: "closing",
+        from: fromIdx,
+        to: Math.max(0, Math.min(chapters.length - 1, Math.round(target))),
+        rackS: scrub,
+        t: 0,
+        startReveal: currentReveal,
+        startEject,
+        lastTarget: target,
+        stableFrames: 0,
+      };
+    } else {
+      scrub = target;
+    }
+  };
+
+  window.addEventListener(
+    "wheel",
+    (e) => {
+      if (!jump) return;
+      if (performance.now() - jump.start < 160) return;
+      jump.wheelAccum += Math.abs(e.deltaY);
+      if (jump.wheelAccum >= 75) abortJumpToScroll();
+    },
+    { passive: true },
+  );
+  let touchStartY = 0;
+  window.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.touches[0]) touchStartY = e.touches[0].clientY;
+    },
+    { passive: true },
+  );
+  window.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!jump || performance.now() - jump.start < 160) return;
+      const cy = e.touches[0]?.clientY ?? touchStartY;
+      if (Math.abs(cy - touchStartY) >= 28) abortJumpToScroll();
+    },
+    { passive: true },
+  );
+
+  const computeFastTravelPose = (ft: FastTravelState, target: number, dt: number, n: number) => {
+    const ejects = new Array<number>(n).fill(0);
+
+    if (ft.phase === "closing") {
+      ft.t = Math.min(1, ft.t + dt / 0.24);
+      const revIn = smoothstep(0, 0.5, ft.t);
+      const drClose = smoothstep(0.5, 1, ft.t);
+      ejects[ft.from] = ft.startEject * (1 - drClose);
+      const base = computePose(ft.rackS, n);
+      if (ft.t >= 1) {
+        ft.phase = "scrolling";
+        ft.t = 0;
+        ft.lastTarget = target;
+        ft.stableFrames = 0;
+      }
+      return {
+        fromUnit: base.fromUnit,
+        toUnit: base.toUnit,
+        rackT: base.rackT,
+        ejects,
+        active: ft.from,
+        reveal: ft.startReveal * (1 - revIn),
+      };
+    }
+
+    if (ft.phase === "scrolling") {
+      ft.rackS += (target - ft.rackS) * 0.22;
+      ft.stableFrames = Math.abs(target - ft.lastTarget) < 0.015 ? ft.stableFrames + 1 : 0;
+      ft.lastTarget = target;
+
+      if (Math.abs(target - ft.rackS) < 0.035 && ft.stableFrames >= 3) {
+        ft.rackS = target;
+        ft.to = Math.max(0, Math.min(n - 1, Math.round(target)));
+        ft.phase = "opening";
+        ft.t = 0;
+      }
+
+      const clamped = Math.max(0, Math.min(n - 1, ft.rackS));
+      const fU = Math.min(Math.max(0, Math.floor(clamped)), Math.max(0, n - 2));
+      const rT = n > 1 ? clamped - fU : 0;
+      return {
+        fromUnit: fU,
+        toUnit: Math.min(n - 1, fU + 1),
+        rackT: rT,
+        ejects,
+        active: Math.max(0, Math.min(n - 1, Math.round(ft.rackS))),
+        reveal: 0,
+      };
+    }
+
+    // phase === "opening": if user starts dragging/scrolling far away again, close smoothly and re-scroll
+    if (Math.abs(target - ft.to) > 0.55) {
+      ft.from = ft.to;
+      ft.rackS = ft.to;
+      ft.startReveal = currentReveal;
+      ft.startEject = lastPose.ejects[ft.to] ?? 0;
+      ft.phase = "closing";
+      ft.t = 0;
+      return computeFastTravelPose(ft, target, 0, n);
+    }
+
+    ft.t = Math.min(1, ft.t + dt / 0.72);
+    const destPose = computePose(target, n);
+    const drawerOpen = smoothstep(0, 0.7, ft.t);
+    const contentOut = smoothstep(0.7, 1, ft.t);
+    const destReady = destPose.active === ft.to;
+    ejects[ft.to] = destReady ? (destPose.ejects[ft.to] ?? 1) * drawerOpen : 0;
+    const reveal = destReady ? destPose.reveal * contentOut : 0;
+
+    if (ft.t >= 1) {
+      scrub = target;
+      fastTravel = null;
+    }
+
+    return {
+      fromUnit: destPose.fromUnit,
+      toUnit: destPose.toUnit,
+      rackT: destPose.rackT,
+      ejects,
+      active: destReady ? ft.to : destPose.active,
+      reveal,
+    };
+  };
+
+  let prevTickTime = performance.now();
+  let scrubRaf = 0;
+  const tickScrub = () => {
+    scrubRaf = requestAnimationFrame(tickScrub);
+    const now = performance.now();
+    const dt = Math.min(0.05, Math.max(0.001, (now - prevTickTime) / 1000));
+    prevTickTime = now;
+
+    let pose;
+    if (layoutState.mode === "window") {
+      scrub = activeIndex;
+
+      for (let k = 0; k < windowEjects.length; k++) {
+        const targetEj = k === openedRackUnit ? 1 : 0;
+        windowEjects[k] = reduce
+          ? targetEj
+          : Math.abs(targetEj - windowEjects[k]) < 0.002
+            ? targetEj
+            : windowEjects[k] + (targetEj - windowEjects[k]) * 0.14;
+      }
+
+      currentReveal = 1;
+      pose = {
+        fromUnit: activeIndex,
+        toUnit: activeIndex,
+        rackT: 0,
+        ejects: windowEjects,
+        active: activeIndex,
+        reveal: 1,
+      };
+      lastPose = pose;
+
+      if (rackHandle) {
+        rackHandle.setPose(pose.fromUnit, pose.toUnit, pose.rackT, pose.ejects, pose.active);
+      }
+      if (!rackHandle || reduce) {
+        applyPanelLayout(window.innerWidth * 0.58, window.innerHeight * 0.5, 110, 1);
+      }
+      return;
+    }
+
+    const target = getTargetScrub();
+
+    // Fast multi-chapter scroll, scrollbar drag, or Home/End/PageDown: travel closed along the rack instead of flashing intermediate content.
+    if (
+      !jump &&
+      !fastTravel &&
+      !reduce &&
+      (Math.abs(target - scrub) > 0.55 || Math.abs(target - activeIndex) > 1.05)
+    ) {
+      fastTravel = {
+        phase: currentReveal <= 0.01 && (lastPose.ejects[activeIndex] ?? 0) <= 0.01 ? "scrolling" : "closing",
+        from: activeIndex,
+        to: Math.max(0, Math.min(chapters.length - 1, Math.round(target))),
+        rackS: scrub,
+        t: 0,
+        startReveal: currentReveal,
+        startEject: lastPose.ejects[activeIndex] ?? 0,
+        lastTarget: target,
+        stableFrames: 0,
+      };
+    }
+
+    if (jump) {
+      const elapsed = now - jump.start;
+      pose = computeJumpPose(jump, elapsed, chapters.length);
+      const yNow = jump.startY + (jump.destY - jump.startY) * pose.rackT;
+      window.scrollTo(0, yNow);
+      if (elapsed >= jump.dur) {
+        const lenis = (window as any).__lenis;
+        window.scrollTo(0, jump.destY);
+        lenis?.start?.();
+        lenis?.scrollTo?.(jump.destY, { immediate: true });
+        scrub = jump.to;
+        jump = null;
+      }
+    } else if (fastTravel) {
+      pose = computeFastTravelPose(fastTravel, target, dt, chapters.length);
+    } else {
+      const delta = target - scrub;
+      scrub = reduce || Math.abs(delta) < 0.0004 ? target : scrub + delta * 0.12;
+      pose = computePose(scrub, chapters.length);
+    }
+
+    lastPose = pose;
+    currentReveal = reduce ? 1 : pose.reveal;
+
+    if (pose.active !== activeIndex) {
+      const prevPanel = chapters[activeIndex];
+      const nextPanel = chapters[pose.active];
+      prevPanel?.style.setProperty("--reveal", "0");
+      if (nextPanel) {
+        nextPanel.style.setProperty("--reveal", currentReveal.toFixed(4));
+        if (currentReveal <= 0.001) {
+          nextPanel.style.transform = "translate3d(760px, 0, 0)";
+        }
+      }
+      activeIndex = pose.active;
+      showOnly(activeIndex);
+      updateRail(activeIndex);
+      if (!jump) announceChapter(activeIndex, false);
+    }
+
+    if (rackHandle) {
+      rackHandle.setPose(pose.fromUnit, pose.toUnit, pose.rackT, pose.ejects, pose.active);
+    }
+
+    if (!rackHandle || reduce) {
+      applyPanelLayout(window.innerWidth * 0.58, window.innerHeight * 0.5, 110, 1);
+    }
+  };
+  scrubRaf = requestAnimationFrame(tickScrub);
+
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) bootCurtain.finish({ instant: true });
+    if (layoutState.mode === "window") {
+      showOnly(activeIndex);
+      updateRail(activeIndex);
+      return;
+    }
+    if (jump) return;
+    fastTravel = null;
+    scrub = getTargetScrub();
+    lastPose = computePose(scrub, chapters.length);
+    activeIndex = lastPose.active;
+    currentReveal = reduce ? 1 : lastPose.reveal;
+    showOnly(activeIndex);
+    updateRail(activeIndex);
+  });
+
+  let rackBootPromise: Promise<void> | null = null;
+  const ensureRackBooted = () => {
+    if (!canvas) {
+      bootCurtain.finish({ instant: true });
+      return Promise.resolve();
+    }
+    if (rackBootPromise) return rackBootPromise;
+    rackBootPromise = (async () => {
+      try {
+        bootCurtain.setStage("LOADING FONTS", 0.28);
+        if ("fonts" in document) {
+          await Promise.all([
+            document.fonts.load('400 12px "Maple Mono"'),
+            document.fonts.load('500 12px "Maple Mono"'),
+          ]).catch(() => {});
+        }
+        bootCurtain.setStage("MOUNTING 7U CHASSIS", 0.62);
+        const { mountRack } = await import("../scene/rack");
+        bootCurtain.setStage("COMPILING SHADERS", 0.84);
+        const handle = mountRack(
+          canvas,
+          [
+            { label: "IAM", sub: "about me", u: 2, kind: "compute", flicker: true },
+            { label: "RUNTIME", sub: "my career", u: 4, kind: "compute", flicker: true },
+            { label: "ARTIFACT", sub: "my projects", u: 8, kind: "compute", flicker: true },
+            { label: "DAC", sub: "my music", u: 4, kind: "audio", flicker: true },
+            { label: "DAM", sub: "photography", u: 1, kind: "appliance", flicker: true },
+            { label: "GATEWAY", sub: "connect", u: 1, kind: "network", flicker: true },
+            { label: "UPS / PDU", sub: "site footer", u: 2, kind: "power" },
+          ],
+          {
+            initialMode: layoutState.mode === "split" ? "split" : "front",
+            onFirstFrame: () => {
+              bootCurtain.finish();
+            },
+            onStats: ({ fps, tris }) => {
+              const el = document.querySelector<HTMLElement>("[data-hud]");
+              if (el) {
+                el.textContent = `${fps} fps · ${tris >= 1000 ? (tris / 1000).toFixed(0) + "k" : tris} tris · webgl2`;
+              }
+            },
+          },
+        );
+        if (handle) {
+          rackHandle = handle;
+          handle.setPresentationMode(layoutState.mode === "split" ? "split" : "front");
+          handle.setPose(lastPose.fromUnit, lastPose.toUnit, lastPose.rackT, lastPose.ejects, lastPose.active);
+          handle.setFrameCallback((f) => {
+            applyPanelLayout(f.portX, f.portY, f.faceH, f.eject);
+          });
+          syncRackPaused();
+        } else {
+          bootCurtain.finish();
+        }
+      } catch {
+        bootCurtain.finish();
+      }
+    })();
+    return rackBootPromise;
+  };
+
+  winToggle?.addEventListener("pointerdown", () => ensureRackBooted(), { passive: true, once: true });
+
+  // On compact mobile, the full-screen panel covers the canvas at startup; load WebGL on demand when opening the rack.
+  const deferRackAtBoot =
+    layoutState.mode === "window" && windowOpen && layoutState.windowFrame === "compact";
+  if (canvas && !deferRackAtBoot) {
+    ensureRackBooted();
+  } else {
+    Promise.race([
+      "fonts" in document ? document.fonts.ready : Promise.resolve(),
+      new Promise((resolve) => window.setTimeout(resolve, 750)),
+    ]).then(() => {
+      requestAnimationFrame(() => bootCurtain.finish());
+    });
+  }
+
+  const hddTip = document.querySelector<HTMLElement>("[data-hdd-tip]");
+
+  const handleRackTap = (clientX: number, clientY: number, target: HTMLElement | null) => {
+    if (!rackHandle) return false;
+    if (layoutState.mode === "window" && windowOpen && layoutState.windowFrame === "compact") return false;
+    if (target?.closest("a, button, header, nav, [data-mobile-dock], [data-os-window]")) return false;
+    if (rackHandle.hitHdd(clientX, clientY)) {
+      window.open("https://eve-0607.github.io/", "_blank", "noopener,noreferrer");
+      return true;
+    }
+    const hit = rackHandle.hitUnit(clientX, clientY);
+    if (hit < 0) return false;
+    if (layoutState.mode === "window" && !windowOpen && !reduce) {
+      window.clearTimeout(bayOpenTimer);
+      openedRackUnit = hit;
+      activeIndex = hit;
+      updateWindowChrome(hit);
+      // Brief eject preview on the front-facing bay so the tap feels physically anchored before opening.
+      bayOpenTimer = window.setTimeout(() => {
+        openSelectedWindow(hit);
+      }, 210);
+    } else {
+      goToChapter(hit);
+    }
+    return true;
+  };
+
+  let rackPointerDown: { x: number; y: number; t: number; id: number } | null = null;
+  let lastTouchTapAt = 0;
+
+  // Handle touch taps directly on pointerup so iOS Safari never drops taps over non-button canvas regions.
+  canvas?.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "touch") return;
+    rackPointerDown = { x: e.clientX, y: e.clientY, t: performance.now(), id: e.pointerId };
+  });
+
+  canvas?.addEventListener("pointerup", (e) => {
+    if (e.pointerType !== "touch" || !rackPointerDown || e.pointerId !== rackPointerDown.id) return;
+    const dx = e.clientX - rackPointerDown.x;
+    const dy = e.clientY - rackPointerDown.y;
+    const dt = performance.now() - rackPointerDown.t;
+    rackPointerDown = null;
+    if (Math.hypot(dx, dy) > 14 || dt > 450) return;
+    if (handleRackTap(e.clientX, e.clientY, e.target as HTMLElement | null)) {
+      lastTouchTapAt = performance.now();
+    }
+  });
+
+  canvas?.addEventListener("pointercancel", () => {
+    rackPointerDown = null;
+  });
+
+  // Click the floor-side EVE archive HDD stack or any 3D rack unit directly.
+  window.addEventListener("click", (e) => {
+    if (performance.now() - lastTouchTapAt < 450) return;
+    handleRackTap(e.clientX, e.clientY, e.target as HTMLElement | null);
+  });
+
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      if (!rackHandle || e.pointerType === "touch") return;
+      if (layoutState.mode === "window" && windowOpen && layoutState.windowFrame === "compact") return;
+      const t = e.target as HTMLElement | null;
+      if (t?.closest("a, button, header, nav, [data-mobile-dock], [data-os-window]")) {
+        document.body.style.cursor = "";
+        rackHandle.setHddHover(false);
+        rackHandle.setHoverUnit(-1);
+        hddTip?.classList.add("hidden");
+        return;
+      }
+      const hddHit = rackHandle.hitHdd(e.clientX, e.clientY);
+      rackHandle.setHddHover(hddHit);
+      if (hddHit) {
+        rackHandle.setHoverUnit(-1);
+        document.body.style.cursor = "pointer";
+        if (hddTip) {
+          hddTip.classList.remove("hidden");
+          const tipW = hddTip.offsetWidth || 175;
+          const x = Math.min(window.innerWidth - tipW - 14, Math.max(12, e.clientX - tipW / 2));
+          const y = Math.max(12, e.clientY - 38);
+          hddTip.style.transform = `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
+        }
+        return;
+      }
+      hddTip?.classList.add("hidden");
+      const unitHit = rackHandle.hitUnit(e.clientX, e.clientY);
+      rackHandle.setHoverUnit(unitHit);
+      document.body.style.cursor = unitHit >= 0 ? "pointer" : "";
+    },
+    { passive: true },
+  );
+
+  // Only settle gently when idle mid-transition (never override settled chapters).
+  (window as any).__syncLenis?.(layoutState.mode === "split");
+  let snapTimer = 0;
+
+  const scheduleSnap = () => {
+    window.clearTimeout(snapTimer);
+    snapTimer = window.setTimeout(() => {
+      if (layoutState.mode !== "split" || jump || fastTravel) return;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max <= 0) return;
+      const targetS = (window.scrollY / max) * (chapters.length - 1);
+      const pose = computePose(targetS, chapters.length);
+      if (pose.reveal >= 0.92) return;
+
+      const nearestIdx = Math.round(targetS);
+      const stepSize = max / Math.max(1, chapters.length - 1);
+      const nearestY = nearestIdx * stepSize;
+      if (Math.abs(nearestY - window.scrollY) < 6) return;
+
+      const activeLenis = (window as any).__lenis;
+      if (activeLenis) activeLenis.scrollTo(nearestY, { duration: 0.55 });
+      else window.scrollTo({ top: nearestY, behavior: "smooth" });
+    }, 900);
+  };
+
+  window.addEventListener("scroll", scheduleSnap, { passive: true });
+
+  document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const text = btn.dataset.copy ?? "";
+      try {
+        await navigator.clipboard.writeText(text);
+        const prev = btn.textContent;
+        btn.textContent = "Copied";
+        (window as any).__announce?.(`Copied ${text} to clipboard`);
+        setTimeout(() => (btn.textContent = prev), 1400);
+      } catch {
+        btn.textContent = text;
+      }
+    });
+  });
+
+  const photoDialog = document.querySelector<HTMLDialogElement>("[data-photo-dialog]");
+  const photoImg = document.querySelector<HTMLImageElement>("[data-photo-img]");
+  const photoTitle = document.querySelector<HTMLElement>("[data-photo-title]");
+  const photoMeta = document.querySelector<HTMLElement>("[data-photo-meta]");
+  let lastPhotoTrigger: HTMLButtonElement | null = null;
+
+  document.querySelectorAll<HTMLButtonElement>("[data-photo-open]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (!photoDialog || !photoImg) return;
+      lastPhotoTrigger = btn;
+      photoImg.src = btn.dataset.src ?? "";
+      photoImg.alt = btn.dataset.title ?? "Photo preview";
+      photoImg.classList.remove("hidden");
+      if (photoTitle) photoTitle.textContent = btn.dataset.title ?? "";
+      if (photoMeta) photoMeta.textContent = btn.dataset.meta ?? "";
+      photoDialog.showModal();
+    });
+  });
+
+  document.querySelector("[data-photo-close]")?.addEventListener("click", () => {
+    photoDialog?.close();
+  });
+
+  photoDialog?.addEventListener("click", (e) => {
+    if (e.target === photoDialog) photoDialog.close();
+  });
+
+  photoDialog?.addEventListener("close", () => {
+    if (photoImg) {
+      photoImg.classList.add("hidden");
+      photoImg.removeAttribute("src");
+    }
+    lastPhotoTrigger?.focus();
+    lastPhotoTrigger = null;
+  });
+
+  showOnly(activeIndex);
+  updateRail(activeIndex);
+</script>
