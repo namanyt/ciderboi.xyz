@@ -4,7 +4,7 @@
       "title": "Infrastructure Engineer (Intern)",
       "company": "Enterleap (Evid.AI)",
       "location": "Remote",
-      "start": "2025-08",
+      "start": "2026-08",
       "end": "2026-11",
       "summary": "Established dev, staging, and production environments, CI/CD release workflows, and cloud deployment architecture (Azure, AWS/GCP) ahead of Evid.AI's production rollout.",
       "stack": ["Azure", "CI/CD", "Cloud Architecture", "Linux"]
@@ -34,7 +34,13 @@
       "start": "2022",
       "end": "2024",
       "summary": "Co-built a multi-node bare-metal Minecraft hosting operation across Singapore and Mumbai (3 nodes), managing multi-server BungeeCord and Velocity proxy networks, DDoS mitigation, custom mod development, and a technical support team for creator networks.",
-      "stack": ["Bare Metal", "Linux", "BungeeCord", "Velocity", "DDoS Mitigation"]
+      "stack": [
+        "Bare Metal",
+        "Linux",
+        "BungeeCord",
+        "Velocity",
+        "DDoS Mitigation"
+      ]
     }
   ]
 }
