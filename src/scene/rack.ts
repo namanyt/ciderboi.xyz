@@ -649,13 +649,22 @@ function makeFaceTexture(
     if (vw > 8) {
       ctx.fillStyle = "rgba(0,0,0,.35)";
       ctx.fillRect(vx, pad, vw, H - pad * 2);
-      ctx.fillStyle = "rgba(0,0,0,.85)";
-      for (let y = pad + 3 * scale; y < H - pad; y += 5 * scale) {
-        for (let x = vx + 3 * scale; x < vx + vw - 2; x += 5 * scale) {
-          ctx.beginPath();
-          ctx.arc(x, y, 1.1 * scale, 0, Math.PI * 2);
-          ctx.fill();
-        }
+      const step = 5 * scale;
+      const tile = document.createElement("canvas");
+      tile.width = step;
+      tile.height = step;
+      const tctx = tile.getContext("2d")!;
+      tctx.fillStyle = "rgba(0,0,0,.85)";
+      tctx.beginPath();
+      tctx.arc(step * 0.5, step * 0.5, 1.1 * scale, 0, Math.PI * 2);
+      tctx.fill();
+      const pat = ctx.createPattern(tile, "repeat");
+      if (pat) {
+        ctx.save();
+        ctx.translate(vx + 0.5 * scale, pad + 0.5 * scale);
+        ctx.fillStyle = pat;
+        ctx.fillRect(0, 0, vw - 1 * scale, H - pad * 2 - 1 * scale);
+        ctx.restore();
       }
     }
   }
@@ -1183,7 +1192,7 @@ export function mountRack(
     onFirstFrame?.();
   };
   const isCompactGpu = window.innerWidth < 960 || window.matchMedia("(pointer: coarse)").matches;
-  const maxDpr = isCompactGpu ? 1.5 : 2;
+  const maxDpr = isCompactGpu ? 1.25 : 1.5;
   let renderer: Renderer;
   try {
     renderer = new Renderer({ canvas, alpha: true, antialias: true, dpr: Math.min(window.devicePixelRatio, maxDpr) });
@@ -1231,37 +1240,83 @@ export function mountRack(
   const programs: Program[] = [];
   let totalTris = 2; // includes floor plane
 
-  const createMetalProgram = (
+  type MeshMat = {
+    color: [number, number, number];
+    tex: Texture;
+    useMap: number;
+    unlit: number;
+    rim: number;
+  };
+
+  const texCache = new Map<HTMLCanvasElement, Texture>();
+  const getCanvasTex = (canvasEl: HTMLCanvasElement) => {
+    let tex = texCache.get(canvasEl);
+    if (!tex) {
+      tex = new Texture(gl, { image: canvasEl, generateMipmaps: false, minFilter: gl.LINEAR, magFilter: gl.LINEAR });
+      texCache.set(canvasEl, tex);
+    }
+    return tex;
+  };
+
+  const boxGeoCache = new Map<string, Geometry>();
+  const getBoxGeo = (geoW: number, geoH: number, geoD: number) => {
+    const key = `${geoW}|${geoH}|${geoD}`;
+    let geo = boxGeoCache.get(key);
+    if (!geo) {
+      geo = new Box(gl, { width: geoW, height: geoH, depth: geoD });
+      boxGeoCache.set(key, geo);
+    }
+    return geo;
+  };
+
+  // Single compiled shader program shared across all metal, textured, and unlit meshes
+  const sharedMetalProgram = new Program(gl, {
+    vertex: metalVertex,
+    fragment: metalFragment,
+    uniforms: {
+      uColor: { value: [1, 1, 1] },
+      uLightDir: { value: lightDir },
+      uLightColor: { value: [1.55, 1.18, 0.85] },
+      uAmbient: { value: [0.055, 0.065, 0.085] },
+      uFillDir: { value: [0.65, 0.25, 0.5] },
+      uFillColor: { value: [0.24, 0.36, 0.56] },
+      uRim: { value: 0.48 },
+      uGrid: { value: 0 },
+      uUseMap: { value: 0 },
+      uMap: { value: blankTex },
+      uOpacity: { value: 1 },
+      uUnlit: { value: 0 },
+      uIsFloor: { value: 0 },
+    },
+  });
+  programs.push(sharedMetalProgram);
+
+  const meshMats = new WeakMap<Mesh, MeshMat>();
+  const bindMeshMat = (
+    geometry: Geometry,
     color: [number, number, number],
     map: HTMLCanvasElement | null,
     unlit = false,
     rim = 0.48,
   ) => {
-    const program = new Program(gl, {
-      vertex: metalVertex,
-      fragment: metalFragment,
-      uniforms: {
-        uColor: { value: color },
-        uLightDir: { value: lightDir },
-        uLightColor: { value: [1.55, 1.18, 0.85] },
-        uAmbient: { value: [0.055, 0.065, 0.085] },
-        uFillDir: { value: [0.65, 0.25, 0.5] },
-        uFillColor: { value: [0.24, 0.36, 0.56] },
-        uRim: { value: rim },
-        uGrid: { value: 0 },
-        uUseMap: { value: map ? 1 : 0 },
-        uMap: { value: blankTex },
-        uOpacity: { value: 1 },
-        uUnlit: { value: unlit ? 1 : 0 },
-        uIsFloor: { value: 0 },
-      },
+    const mat: MeshMat = {
+      color: [color[0], color[1], color[2]],
+      tex: map ? getCanvasTex(map) : blankTex,
+      useMap: map ? 1 : 0,
+      unlit: unlit ? 1 : 0,
+      rim,
+    };
+    const mesh = new Mesh(gl, { geometry, program: sharedMetalProgram });
+    mesh.onBeforeRender(() => {
+      const u = sharedMetalProgram.uniforms;
+      u.uColor.value = mat.color;
+      u.uUseMap.value = mat.useMap;
+      u.uMap.value = mat.tex;
+      u.uUnlit.value = mat.unlit;
+      u.uRim.value = mat.rim;
     });
-    if (map) {
-      const tex = new Texture(gl, { image: map, generateMipmaps: false, minFilter: gl.LINEAR, magFilter: gl.LINEAR });
-      program.uniforms.uMap.value = tex;
-    }
-    programs.push(program);
-    return program;
+    meshMats.set(mesh, mat);
+    return mesh;
   };
 
   const makeMesh = (
@@ -1272,10 +1327,9 @@ export function mountRack(
     map: HTMLCanvasElement | null,
     unlit = false,
   ) => {
-    const geometry = new Box(gl, { width: geoW, height: geoH, depth: geoD });
-    const program = createMetalProgram(color, map, unlit);
+    const geometry = getBoxGeo(geoW, geoH, geoD);
     totalTris += 12;
-    return new Mesh(gl, { geometry, program });
+    return bindMeshMat(geometry, color, map, unlit, 0.48);
   };
 
   // Tapered/chamfered Z-aligned cylinder with front & back caps for knobs, toggles, and audio jacks
@@ -1371,9 +1425,8 @@ export function mountRack(
       uv: { size: 2, data: uv },
       index: { data: idx },
     });
-    const program = createMetalProgram(color, null, unlit, rim);
     totalTris += segs * 4;
-    return new Mesh(gl, { geometry, program });
+    return bindMeshMat(geometry, color, null, unlit, rim);
   };
 
   const makeCable = (
@@ -1427,9 +1480,8 @@ export function mountRack(
       uv: { size: 2, data: uvArr },
       index: { data: idxArr },
     });
-    const program = createMetalProgram(color, null, false, 0.14);
     totalTris += segments * radial * 2;
-    const mesh = new Mesh(gl, { geometry, program });
+    const mesh = bindMeshMat(geometry, color, null, false, 0.14);
     (opts.parent ?? root).addChild(mesh);
 
     return {
@@ -1475,12 +1527,11 @@ export function mountRack(
     oledCanvas.height = 104;
     const octx = oledCanvas.getContext("2d")!;
     const oledGeo = new Plane(gl, { width: scr.w - 4, height: scr.h - 4 });
-    const oledProg = createMetalProgram([1, 1, 1], oledCanvas, true, 0);
     totalTris += 2;
-    const oledMesh = new Mesh(gl, { geometry: oledGeo, program: oledProg });
+    const oledMesh = bindMeshMat(oledGeo, [1, 1, 1], oledCanvas, true, 0);
     oledMesh.position.set(scr.x, scr.y, zBase + 3.0);
     faceMesh.addChild(oledMesh);
-    const oledTex = oledProg.uniforms.uMap.value as Texture;
+    const oledTex = meshMats.get(oledMesh)!.tex;
 
     const drawWaveform = (tSec: number, ejLevel: number) => {
       const OW = oledCanvas.width;
@@ -1940,9 +1991,6 @@ export function mountRack(
 
   let hddHoverTarget = 0;
   let lastHddMs = performance.now();
-  const setHddHover = (on: boolean) => {
-    hddHoverTarget = on ? 1 : 0;
-  };
 
   for (const spec of units) {
     const h = spec.u * UNIT;
@@ -2253,17 +2301,19 @@ export function mountRack(
   };
 
   /** Straight level rail deployment along Z (no forward tilt). */
-  const applyUnitEject = (c: (typeof chassis)[number], ej: number) => {
+  const applyUnitEject = (c: (typeof chassis)[number], ej: number, force = false) => {
     const clamped = Math.max(0, Math.min(1, ej));
+    if (!force && Math.abs(clamped - c.ej) <= 1e-5) return false;
     const slide = smoothstep01(0, 1, clamped);
     c.ej = clamped;
     c.mesh.position.z = c.baseZ + slide * EJECT;
     c.mesh.rotation.x = 0;
     c.onEject?.(slide, 0);
-    const col = c.slot.program.uniforms.uColor.value as number[];
+    const col = meshMats.get(c.slot)!.color;
     col[0] = 0.16 + clamped * 0.72;
     col[1] = 0.18 + clamped * 0.46;
     col[2] = 0.2 + clamped * 0.08;
+    return true;
   };
 
   let active = 0;
@@ -2271,9 +2321,16 @@ export function mountRack(
   let targetY = presentationMode === "front" ? -14 : chassis[0] ? -chassis[0].baseY : 0;
   let currentY = targetY;
   root.position.y = currentY;
-  if (chassis[0] && presentationMode !== "front") applyUnitEject(chassis[0], 1);
+  if (chassis[0] && presentationMode !== "front") applyUnitEject(chassis[0], 1, true);
   let frameCb: ((f: FrameInfo) => void) | null = null;
   const targetEjects = chassis.map((_, idx) => (idx === 0 ? 1 : 0));
+
+  const IDLE_GRACE_MS = 2000;
+  let activeUntilMs = performance.now() + IDLE_GRACE_MS;
+  const markActive = (ms = IDLE_GRACE_MS) => {
+    const until = performance.now() + ms;
+    if (until > activeUntilMs) activeUntilMs = until;
+  };
 
   const setActive = (i: number) => {
     manualPose = false;
@@ -2283,6 +2340,7 @@ export function mountRack(
     chassis.forEach((_, idx) => {
       targetEjects[idx] = idx === active ? 1 : 0;
     });
+    markActive();
   };
 
   const setPose = (
@@ -2293,15 +2351,19 @@ export function mountRack(
     activeIdx: number,
   ) => {
     manualPose = true;
-    active = Math.max(0, Math.min(chassis.length - 1, activeIdx));
+    const nextActive = Math.max(0, Math.min(chassis.length - 1, activeIdx));
     const a = chassis[Math.max(0, Math.min(chassis.length - 1, fromUnit))];
     const b = chassis[Math.max(0, Math.min(chassis.length - 1, toUnit))];
-    targetY = presentationMode === "front" ? -14 : -a.baseY + (-b.baseY - -a.baseY) * rackT;
-    currentY = targetY;
+    const nextY = presentationMode === "front" ? -14 : -a.baseY + (-b.baseY - -a.baseY) * rackT;
+    let changed = nextActive !== active || Math.abs(nextY - currentY) > 0.005;
+    active = nextActive;
+    targetY = nextY;
+    currentY = nextY;
     root.position.y = currentY;
     chassis.forEach((ch, idx) => {
-      applyUnitEject(ch, ejects[idx] ?? 0);
+      if (applyUnitEject(ch, ejects[idx] ?? 0)) changed = true;
     });
+    if (changed) markActive();
   };
 
   /**
@@ -2396,6 +2458,7 @@ export function mountRack(
       root.rotation.y = currentRotY;
       root.position.x = currentPosX;
     }
+    markActive();
   };
 
   resize();
@@ -2409,6 +2472,7 @@ export function mountRack(
   let frames = 0;
   let fpsClock = performance.now();
   let fps = 0;
+  let lastRenderMs = 0;
 
   const projectMeshPoint = (mesh: Mesh, lx: number, ly: number, lz: number) => {
     const p = new Vec3(lx, ly, lz);
@@ -2418,28 +2482,70 @@ export function mountRack(
   };
 
   const frame = () => {
-    if (!alive || paused) {
+    if (!alive || paused || document.hidden) {
       raf = 0;
       return;
     }
     raf = requestAnimationFrame(frame);
 
-    currentRotY += (targetRotY - currentRotY) * 0.12;
-    currentPosX += (targetPosX - currentPosX) * 0.12;
-    root.rotation.y = currentRotY;
-    root.position.x = currentPosX;
+    const nowMs = performance.now();
+    const rotDiff = targetRotY - currentRotY;
+    const posXDiff = targetPosX - currentPosX;
+    let isMoving =
+      !firstFrameSent ||
+      nowMs < activeUntilMs ||
+      Math.abs(rotDiff) > 0.0008 ||
+      Math.abs(posXDiff) > 0.05;
+
+    if (Math.abs(rotDiff) > 0.0002) {
+      currentRotY += rotDiff * 0.12;
+      root.rotation.y = currentRotY;
+    }
+    if (Math.abs(posXDiff) > 0.02) {
+      currentPosX += posXDiff * 0.12;
+      root.position.x = currentPosX;
+    }
 
     if (!manualPose) {
-      currentY += (targetY - currentY) * 0.085;
-      root.position.y = currentY;
+      const yDiff = targetY - currentY;
+      if (Math.abs(yDiff) > 0.05) isMoving = true;
+      if (Math.abs(yDiff) > 0.01) {
+        currentY += yDiff * 0.085;
+        root.position.y = currentY;
+      }
 
       chassis.forEach((c, i) => {
-        applyUnitEject(c, c.ej + (targetEjects[i] - c.ej) * 0.045);
+        const diff = targetEjects[i] - c.ej;
+        if (Math.abs(diff) > 0.002) {
+          isMoving = true;
+          applyUnitEject(c, c.ej + diff * 0.045);
+        }
       });
     }
 
+    // Rigid-body fall/settle physics + independent lift-back return on the top EVE drive
+    const dt = Math.min(0.05, Math.max(0, (nowMs - lastHddMs) * 0.001));
+    lastHddMs = nowMs;
+    stepHddPhysics(dt, hddHoverTarget > 0);
+    if (hddSim.mode === "falling" || hddSim.mode === "returning") {
+      isMoving = true;
+    }
+
+    let uidMoving = false;
+    for (let i = 0; i < chassis.length; i++) {
+      const ch = chassis[i];
+      const target = i === hoverUnitIdx || ch.ej > 0.06 ? 1 : 0;
+      if (Math.abs(target - ch.uidLevel) > 0.005) uidMoving = true;
+    }
+    if (uidMoving) isMoving = true;
+
+    // Throttle idle renders to ~15fps when settled so reading doesn't burn 60-144Hz GPU cycles
+    if (!isMoving && nowMs - lastRenderMs < 66) {
+      return;
+    }
+    lastRenderMs = nowMs;
     frames++;
-    const nowMs = performance.now();
+
     if (!reduce && flickerLeds.length > 0) {
       const nowSec = nowMs * 0.001;
       for (const led of flickerLeds) {
@@ -2455,18 +2561,23 @@ export function mountRack(
           : isPulled
             ? 0.34
             : 0.18;
-        const col = led.mesh.program.uniforms.uColor.value as number[];
+        const col = meshMats.get(led.mesh)!.color;
         col[0] = 0.14 + level * 0.26;
         col[1] = 0.36 + level * 0.58;
         col[2] = 0.2 + level * 0.3;
       }
     }
 
-    if (!reduce && dacDisplays.length > 0 && nowMs - lastDacDrawMs >= 33) {
-      lastDacDrawMs = nowMs;
+    if (!reduce && dacDisplays.length > 0 && nowMs - lastDacDrawMs >= 50) {
       const tSec = nowMs * 0.001;
       for (const disp of dacDisplays) {
-        disp.draw(tSec, chassis[disp.unitIdx]?.ej ?? 0);
+        const ch = chassis[disp.unitIdx];
+        if (!ch) continue;
+        // Skip redrawing and uploading the 2D OLED canvas when the DAC bay is off-screen
+        const visible = presentationMode === "front" || ch.ej > 0.02 || Math.abs(ch.baseY + currentY) < 420;
+        if (!visible) continue;
+        lastDacDrawMs = nowMs;
+        disp.draw(tSec, ch.ej);
       }
     }
 
@@ -2475,21 +2586,16 @@ export function mountRack(
       const ch = chassis[i];
       const target = i === hoverUnitIdx || ch.ej > 0.06 ? 1 : 0;
       ch.uidLevel += (target - ch.uidLevel) * (reduce ? 1 : 0.22);
-      const uCol = ch.uidLed.program.uniforms.uColor.value as number[];
+      const uCol = meshMats.get(ch.uidLed)!.color;
       uCol[0] = 0.1 + ch.uidLevel * 0.14;
       uCol[1] = 0.13 + ch.uidLevel * 0.53;
       uCol[2] = 0.18 + ch.uidLevel * 0.82;
     }
 
-    // Rigid-body fall/settle physics + independent lift-back return on the top EVE drive
-    const dt = Math.min(0.05, Math.max(0, (nowMs - lastHddMs) * 0.001));
-    lastHddMs = nowMs;
-    stepHddPhysics(dt, hddHoverTarget > 0);
-
     const eveIdle = reduce ? 0.5 : 0.5 + 0.5 * Math.sin(nowMs * 0.003);
     const eveGlow = hddSim.mode === "fallen" || hddSim.mode === "falling" ? 1 : hddHoverTarget * 0.65;
     for (const led of [eveLed, eveFrontLed]) {
-      const col = led.program.uniforms.uColor.value as number[];
+      const col = meshMats.get(led)!.color;
       col[0] = 0.84 + eveGlow * 0.16;
       col[1] = 0.6 + eveIdle * 0.16 + eveGlow * 0.24;
       col[2] = 0.24 + eveGlow * 0.28;
@@ -2619,13 +2725,16 @@ export function mountRack(
 
   let hoverUnitIdx = -1;
   const setHoverUnit = (i: number) => {
+    if (hoverUnitIdx === i) return;
     hoverUnitIdx = i;
+    markActive();
   };
 
   const setPresentationMode = (mode: PresentationMode) => {
     if (presentationMode === mode) return;
     presentationMode = mode;
     resize();
+    markActive();
     if (reduce) {
       root.updateMatrixWorld();
       renderer.render({ scene: root, camera });
@@ -2640,13 +2749,30 @@ export function mountRack(
         cancelAnimationFrame(raf);
         raf = 0;
       }
-    } else if (alive && !reduce) {
+    } else if (alive && !reduce && !document.hidden) {
       lastHddMs = performance.now();
       fpsClock = lastHddMs;
       frames = 0;
+      markActive();
       if (!raf) raf = requestAnimationFrame(frame);
     }
   };
+
+  const onVisibilityChange = () => {
+    if (document.hidden) {
+      if (raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+    } else if (alive && !paused && !reduce) {
+      lastHddMs = performance.now();
+      fpsClock = lastHddMs;
+      frames = 0;
+      markActive();
+      if (!raf) raf = requestAnimationFrame(frame);
+    }
+  };
+  document.addEventListener("visibilitychange", onVisibilityChange);
 
   return {
     setActive,
@@ -2656,18 +2782,26 @@ export function mountRack(
     hitUnit,
     setHoverUnit,
     hitHdd,
-    setHddHover,
+    setHddHover(on: boolean) {
+      const next = on ? 1 : 0;
+      if (hddHoverTarget === next) return;
+      hddHoverTarget = next;
+      markActive();
+    },
     setFrameCallback(cb) {
       frameCb = cb;
+      markActive(120);
     },
     setGrid(on: boolean) {
       for (const p of programs) p.uniforms.uGrid.value = on ? 1 : 0;
+      markActive(120);
     },
     destroy() {
       alive = false;
       cancelAnimationFrame(raf);
       ro.disconnect();
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     },
   };
 }

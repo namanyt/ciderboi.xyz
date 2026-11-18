@@ -2088,10 +2088,18 @@ const chapterSvh = 200;
   (window as any).__syncLenis?.(layoutState.mode === "split");
   let snapTimer = 0;
 
+  const snapEaseInOut = (t: number) =>
+    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
   const scheduleSnap = () => {
     window.clearTimeout(snapTimer);
     snapTimer = window.setTimeout(() => {
       if (layoutState.mode !== "split" || jump || fastTravel) return;
+      const activeLenis = (window as any).__lenis;
+      if (activeLenis && Math.abs(activeLenis.velocity) > 0.2) {
+        scheduleSnap();
+        return;
+      }
       const max = document.documentElement.scrollHeight - window.innerHeight;
       if (max <= 0) return;
       const targetS = (window.scrollY / max) * (chapters.length - 1);
@@ -2101,12 +2109,18 @@ const chapterSvh = 200;
       const nearestIdx = Math.round(targetS);
       const stepSize = max / Math.max(1, chapters.length - 1);
       const nearestY = nearestIdx * stepSize;
-      if (Math.abs(nearestY - window.scrollY) < 6) return;
+      const dist = Math.abs(nearestY - window.scrollY);
+      if (dist < 6) return;
 
-      const activeLenis = (window as any).__lenis;
-      if (activeLenis) activeLenis.scrollTo(nearestY, { duration: 0.55 });
-      else window.scrollTo({ top: nearestY, behavior: "smooth" });
-    }, 900);
+      const distFrac = Math.min(1, dist / Math.max(1, stepSize));
+      const duration = 0.95 + distFrac * 1.1;
+
+      if (activeLenis) {
+        activeLenis.scrollTo(nearestY, { duration, easing: snapEaseInOut });
+      } else {
+        window.scrollTo({ top: nearestY, behavior: "smooth" });
+      }
+    }, 1100);
   };
 
   window.addEventListener("scroll", scheduleSnap, { passive: true });
