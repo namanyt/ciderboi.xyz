@@ -26,10 +26,11 @@ const li = site.socials.find((s) => s.label === "LinkedIn");
     <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
       <a
         href="/downloads/resume.pdf"
-        download
+        target="_blank"
+        rel="noopener noreferrer"
         class="label-mono inline-flex min-h-[44px] items-center border border-ember/60 bg-ember/10 px-3.5 text-[11px] text-ember transition-colors duration-200 hover:bg-ember/20"
       >
-        Download PDF ↓
+        View PDF ↗
       </a>
       <button
         data-copy={site.email}
@@ -100,7 +101,7 @@ const li = site.socials.find((s) => s.label === "LinkedIn");
       <div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-baseline">
         <div>
           <p class="font-serif text-2xl leading-[1.15] text-paper">
-            B.Tech, Computer Science (Graphics &amp; Gaming)
+            B.Tech, Computer Science &amp; Engineering
           </p>
           <p class="mt-0.5 text-sm text-paper-dim">
             University of Petroleum and Energy Studies · Dehradun
@@ -170,6 +171,8 @@ const li = site.socials.find((s) => s.label === "LinkedIn");
             <li class="flex">
               <a
                 href={`/work/${p.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 class="group flex w-full flex-col justify-between border border-paper/10 bg-white/[0.015] p-4 transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.03]"
               >
                 <div>
@@ -238,6 +241,8 @@ const li = site.socials.find((s) => s.label === "LinkedIn");
               <div class="flex items-baseline justify-between gap-2">
                 <a
                   href={`/work/${p.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   class="inline-flex min-h-[36px] items-center font-serif text-xl leading-[1.15] text-paper transition-colors hover:text-ember"
                 >
                   {p.title}

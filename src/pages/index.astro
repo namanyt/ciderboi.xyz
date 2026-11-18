@@ -70,6 +70,7 @@ const photos = [
   },
 ];
 const chapterCount = 7;
+const chapterSvh = 200;
 ---
 
 <Base jsonLd={profilePageSchema("/", `${site.name} — ${site.role}`, site.description)}>
@@ -148,7 +149,7 @@ const chapterCount = 7;
   {
     /* the spacer gives the page its scroll length; the stage itself is fixed */
   }
-  <div data-spacer aria-hidden="true" style={`height:${chapterCount * 240}svh`}></div>
+  <div data-spacer aria-hidden="true" style={`height:${chapterCount * chapterSvh}svh`}></div>
 
   <div data-stage-clip class="pointer-events-none fixed inset-0 z-10 overflow-hidden">
     <div
@@ -227,6 +228,8 @@ const chapterCount = 7;
               {highlights.map((h) => (
                 <a
                   href={h.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   class="group block border border-paper/10 bg-white/[0.015] px-3.5 py-3 transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.035]"
                 >
                   <div class="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
@@ -257,8 +260,8 @@ const chapterCount = 7;
           <div class="flex items-baseline justify-between gap-4">
             <h2 id="bay-experience-heading" tabindex="-1" class="chapter-title outline-none">Experience</h2>
             <div class="flex items-center gap-4">
-              <a href="/downloads/resume.pdf" download class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-paper-dim hover:text-ember">
-                PDF <span aria-hidden="true">↓</span>
+              <a href="/downloads/resume.pdf" target="_blank" rel="noopener noreferrer" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-paper-dim hover:text-ember">
+                PDF <span aria-hidden="true">↗</span>
               </a>
               <a href="/resume" class="label-mono inline-flex min-h-[36px] items-center gap-1 text-[11px] text-ember hover:underline">
                 Full résumé <span aria-hidden="true">→</span>
@@ -342,6 +345,8 @@ const chapterCount = 7;
 
                     <a
                       href={`/work/${p.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       class="mt-1.5 block text-[15px] leading-snug font-medium text-paper transition-colors group-hover:text-ember"
                     >
                       {p.title}
@@ -368,6 +373,8 @@ const chapterCount = 7;
                     ) : (
                       <a
                         href={`/work/${p.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         class="label-mono shrink-0 text-[10px] text-dim hover:text-ember"
                       >
                         Case study <span aria-hidden="true">→</span>
@@ -739,11 +746,12 @@ const chapterCount = 7;
                 <li>
                   <a
                     href="/downloads/resume.pdf"
-                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="flex items-center justify-between transition-colors hover:text-ember"
                   >
                     <span>Résumé PDF</span>
-                    <span aria-hidden="true" class="font-mono text-[10px] opacity-55">↓</span>
+                    <span aria-hidden="true" class="font-mono text-[10px] opacity-55">↗</span>
                   </a>
                 </li>
               </ul>
@@ -1092,21 +1100,29 @@ const chapterCount = 7;
 
   /**
    * Maps continuous scroll scrub [0 .. N-1] into mechanical phases per unit transition:
-   * 0.00..0.24 open dwell -> 0.24..0.35 content goes IN ->
-   * 0.35..0.44 drawer CLOSES -> 0.44..0.56 rack SCROLLS ->
-   * 0.56..0.65 next drawer PULLS OUT -> 0.65..0.76 next content PRESENTS ->
-   * 0.76..1.00 open dwell.
+   * - No open dwell on the top section (i === 0 start) or bottom section (i === n - 2 end)
+   *   so scrolling from the very top or very bottom responds immediately.
+   * - Small 0.08 dwell on intermediate sections.
+   * Active span [startDwell .. 1 - endDwell]:
+   * 0.00..0.18 content goes IN -> 0.18..0.34 drawer CLOSES ->
+   * 0.34..0.66 rack SCROLLS -> 0.66..0.82 next drawer PULLS OUT ->
+   * 0.82..1.00 next content PRESENTS.
    */
   const computePose = (s: number, n: number) => {
     const clamped = Math.max(0, Math.min(n - 1, s));
     const i = Math.min(Math.max(0, Math.floor(clamped)), Math.max(0, n - 2));
     const u = n > 1 ? clamped - i : 0;
 
-    const contentIn = smoothstep(0.24, 0.35, u);
-    const drawerClose = smoothstep(0.35, 0.44, u);
-    const rackT = smoothstep(0.44, 0.56, u);
-    const drawerOpen = smoothstep(0.56, 0.65, u);
-    const contentOut = smoothstep(0.65, 0.76, u);
+    const startDwell = i === 0 ? 0 : 0.08;
+    const endDwell = i >= n - 2 ? 0 : 0.08;
+    const span = Math.max(0.01, 1 - startDwell - endDwell);
+    const p = Math.max(0, Math.min(1, (u - startDwell) / span));
+
+    const contentIn = smoothstep(0.0, 0.18, p);
+    const drawerClose = smoothstep(0.18, 0.34, p);
+    const rackT = smoothstep(0.34, 0.66, p);
+    const drawerOpen = smoothstep(0.66, 0.82, p);
+    const contentOut = smoothstep(0.82, 1.0, p);
 
     const ejects = new Array<number>(n).fill(0);
     if (n > 1) {
@@ -1116,7 +1132,7 @@ const chapterCount = 7;
       ejects[0] = 1;
     }
 
-    const toNext = u >= 0.5 && n > 1;
+    const toNext = p >= 0.5 && n > 1;
     const active = toNext ? i + 1 : i;
     const reveal = toNext ? contentOut : 1 - contentIn;
 
@@ -1293,7 +1309,7 @@ const chapterCount = 7;
     root.dataset.layout = layoutState.mode;
     root.dataset.windowFrame = layoutState.windowFrame;
     if (spacer) {
-      spacer.style.height = layoutState.mode === "window" ? "0px" : `${chapters.length * 240}svh`;
+      spacer.style.height = layoutState.mode === "window" ? "0px" : `${chapters.length * 200}svh`;
     }
     if (osWindow) osWindow.toggleAttribute("data-lenis-prevent", layoutState.mode === "window" && windowOpen);
     (window as any).__syncLenis?.(layoutState.mode === "split");
