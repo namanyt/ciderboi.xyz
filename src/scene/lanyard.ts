@@ -495,22 +495,21 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
   ctx.lineTo(W - 42, 304);
   ctx.stroke();
 
-  // Non-duplicate high-signal hardware/compute specs
-  const rows: [string, string, string?][] = [
-    ["RECORD", "Γ(1/5) · 300B DIGITS", "#e6a84c"],
-    ["SYSTEMS", "C++ · RUST · GLSL · OGL"],
-    ["INFRA", "LINUX · DOCKER · TAILSCALE"],
-    ["CREATIVE", "CANON 1300D · ABLETON"],
+  // Non-duplicate high-signal pass identity details
+  const rows: [string, string][] = [
+    ["TIMEZONE", "IST · UTC+05:30"],
+    ["WRITING CODE", "SINCE 2014"],
+    ["GITHUB", "@NAMANYT"],
     ["CONTACT", "ME@CIDERBOI.XYZ"],
   ];
 
-  let ry = 352;
-  for (const [k, v, accent] of rows) {
+  let ry = 362;
+  for (const [k, v] of rows) {
     ctx.strokeStyle = "rgba(237, 231, 222, 0.08)";
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(42, ry + 18);
-    ctx.lineTo(W - 42, ry + 18);
+    ctx.moveTo(42, ry + 22);
+    ctx.lineTo(W - 42, ry + 22);
     ctx.stroke();
 
     ctx.textAlign = "left";
@@ -519,42 +518,60 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
     ctx.fillText(k, 42, ry);
 
     ctx.textAlign = "right";
-    ctx.fillStyle = accent ?? "#ede7de";
+    ctx.fillStyle = "#ede7de";
     ctx.font = `500 15.5px ${CARD_MONO}`;
     ctx.fillText(v, W - 42, ry);
-    ry += 52;
+    ry += 62;
   }
 
-  // Vector Code-128 style barcode + 7x7 DataMatrix stamp
-  const bx0 = 42;
-  const by0 = 636;
-  const barBits = "110100110010110111010010110010110100111010011010110010110110010110100111010110";
-  let bx = bx0;
-  ctx.fillStyle = "rgba(237, 231, 222, 0.72)";
-  for (let i = 0; i < barBits.length && bx < W - 128; i++) {
-    const bw = barBits[i] === "1" ? 4.5 : 2.5;
-    if (i % 2 === 0) ctx.fillRect(bx, by0, bw, 54);
-    bx += bw + 1.5;
+  // Code 128B ("ciderboi.xyz", 167 modules) + 25x25 ECC-M QR ("mailto:me@ciderboi.xyz")
+  const bxBoxX = 42;
+  const bxBoxY = 618;
+  const bxBoxW = 352;
+  const bxBoxH = 72;
+  ctx.fillStyle = "#050709";
+  ctx.fillRect(bxBoxX, bxBoxY, bxBoxW, bxBoxH);
+  ctx.strokeStyle = "rgba(237, 231, 222, 0.08)";
+  ctx.lineWidth = 1;
+  ctx.strokeRect(bxBoxX, bxBoxY, bxBoxW, bxBoxH);
+
+  const code128Widths =
+    "2112141411221421121412211122141212411214211341111421121222314212112121412141211321132331112";
+  const barUnit = 1.98;
+  let bx = bxBoxX + (bxBoxW - 167 * barUnit) * 0.5;
+  ctx.fillStyle = "rgba(237, 231, 222, 0.86)";
+  for (let i = 0; i < code128Widths.length; i++) {
+    const bw = Number(code128Widths[i]) * barUnit;
+    if (i % 2 === 0) ctx.fillRect(bx, bxBoxY + 9, bw, bxBoxH - 18);
+    bx += bw;
   }
 
-  // Miniature 7x7 matrix stamp on bottom-right
-  const mx = W - 102;
-  const my = by0 - 4;
-  const cell = 8.5;
-  const matrixMask = [
-    1,1,1,1,1,1,1,
-    1,0,1,0,1,0,1,
-    1,1,0,1,0,1,0,
-    1,0,1,1,0,0,1,
-    1,1,0,0,1,1,0,
-    1,0,1,1,0,1,0,
-    1,1,1,1,1,1,1,
+  // QR v2-M ("mailto:me@ciderboi.xyz") inside clean quiet-zone box aligned to right margin
+  const qrSize = 25;
+  const cell = 3.2;
+  const qrBoxSize = 104;
+  const qrBoxX = W - 42 - qrBoxSize;
+  const qrBoxY = 602;
+  ctx.fillStyle = "#050709";
+  ctx.fillRect(qrBoxX, qrBoxY, qrBoxSize, qrBoxSize);
+  ctx.strokeStyle = "rgba(237, 231, 222, 0.08)";
+  ctx.strokeRect(qrBoxX, qrBoxY, qrBoxSize, qrBoxSize);
+
+  const qrRows = [
+    0x1fd197f, 0x1051541, 0x1748e5d, 0x175f85d, 0x1744f5d,
+    0x104d541, 0x1fd557f, 0x0014600, 0x16e254b, 0x078fd6c,
+    0x11da4b8, 0x17bab0e, 0x0e5efdd, 0x0292bff, 0x0959806,
+    0x17897b3, 0x01fa9fd, 0x001151d, 0x1fdf95b, 0x105571b,
+    0x174b9f2, 0x1759ad7, 0x1753afe, 0x104c074, 0x1fd14d7,
   ];
-  for (let r = 0; r < 7; r++) {
-    for (let c = 0; c < 7; c++) {
-      if (matrixMask[r * 7 + c]) {
-        ctx.fillStyle = r === 3 && c === 3 ? "#d46b42" : "rgba(237, 231, 222, 0.75)";
-        ctx.fillRect(mx + c * cell, my + r * cell, cell - 1, cell - 1);
+  const qrStartX = qrBoxX + (qrBoxSize - qrSize * cell) * 0.5;
+  const qrStartY = qrBoxY + (qrBoxSize - qrSize * cell) * 0.5;
+  ctx.fillStyle = "rgba(237, 231, 222, 0.88)";
+  for (let r = 0; r < qrSize; r++) {
+    const rowMask = qrRows[r];
+    for (let c = 0; c < qrSize; c++) {
+      if ((rowMask >> (qrSize - 1 - c)) & 1) {
+        ctx.fillRect(qrStartX + c * cell, qrStartY + r * cell, cell + 0.08, cell + 0.08);
       }
     }
   }
@@ -563,7 +580,7 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
   ctx.textAlign = "left";
   ctx.fillStyle = "#8a837a";
   ctx.font = `500 13px ${CARD_MONO}`;
-  ctx.fillText("SN // CB-01-300B", 42, H - 52);
+  ctx.fillText("SN // NN-11-03-07", 42, H - 52);
 
   ctx.textAlign = "right";
   ctx.fillStyle = "rgba(212, 107, 66, 0.88)";
