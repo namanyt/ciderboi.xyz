@@ -17,7 +17,7 @@ export const GET: APIRoute = () => {
     `- [Home & Interactive Rack](${origin}/): Overview, selected highlights, career timeline, recent work, music, photography, and links.`,
     `- [Work Index (${projects.length} builds)](${origin}/work): Filterable portfolio covering graphics, games, HPC, systems, full-stack web, and hardware.`,
     `- [About](${origin}/about): Background, engineering philosophy, and creative interests.`,
-    `- [Résumé](${origin}/resume): Structured CV, education (B.Tech CSE [GG], UPES 2025–2029), experience, and stack.`,
+    `- [Résumé](${origin}/resume): Structured CV, education (B.Tech CSE, UPES 2025–2029), experience, and stack.`,
     `- [Music](${origin}/music): Independent instrumental and electronic discography.`,
     `- [Contact](${origin}/contact): Direct email (${site.email}) and social profiles.`,
     `- [Résumé PDF](${origin}/downloads/resume.pdf): Printable CV document.`,
