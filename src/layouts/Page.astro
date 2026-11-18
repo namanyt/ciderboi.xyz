@@ -9,21 +9,22 @@ export interface Props {
   description?: string;
   path: string;
   eyebrow?: string;
-  wide?: boolean;
+  wide?: boolean | "xl";
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const { title, description, path, eyebrow, wide = false, jsonLd } = Astro.props;
+const widthClass = wide === "xl" ? "max-w-[82rem]" : wide ? "max-w-6xl" : "max-w-3xl";
 ---
 
 <Base title={title} description={description} path={path} jsonLd={jsonLd}>
   <SubpageBackdrop />
 
-  <SubNav path={path} />
+  <SubNav path={path} wide={wide} />
 
   <div
     data-dither-column
-    class:list={["shell relative z-10 w-full pt-6 pb-16 sm:pt-12 sm:pb-24", wide ? "max-w-6xl" : "max-w-3xl"]}
+    class:list={["shell relative z-10 w-full pt-6 pb-16 sm:pt-12 sm:pb-24", widthClass]}
   >
     <header class="pb-6 sm:pb-10">
       {eyebrow && <p class="label-mono text-[11px] text-ember">{eyebrow}</p>}
