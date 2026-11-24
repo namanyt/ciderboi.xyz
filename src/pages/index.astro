@@ -114,7 +114,7 @@ const chapterSvh = 200;
         pointer-events: auto !important;
         transform: none !important;
         padding: 2.5rem 0 !important;
-        border-top: 1px solid rgba(236, 232, 224, 0.1);
+        border-top: 1px solid var(--color-paper-line);
       }
       .stage::before {
         display: none !important;
@@ -630,7 +630,7 @@ const chapterSvh = 200;
                     </span>
                     <span
                       aria-hidden="true"
-                      class="h-[6px] w-[6px] rounded-[1px] border border-black/60 bg-[#0a0c0e] transition-colors group-hover:bg-led group-hover:shadow-[0_0_6px_var(--color-led)]"
+                      class="h-[6px] w-[6px] rounded-[1px] border border-black/60 bg-slot transition-colors group-hover:bg-led group-hover:shadow-[0_0_6px_var(--color-led)]"
                     />
                   </div>
                   <span aria-hidden="true" class="label-mono text-[10px] text-dim transition-colors group-hover:text-ember">
@@ -867,7 +867,7 @@ const chapterSvh = 200;
               class:list={[
                 "absolute top-1/2 -left-[3px] h-[5px] w-[5px] -translate-y-1/2 rounded-[1px] transition-all duration-200 group-hover:bg-ember",
                 i === 0
-                  ? "bg-ember shadow-[0_0_8px_rgba(212,107,66,0.75)]"
+                  ? "bg-ember shadow-[0_0_12px_var(--color-ember-glow)]"
                   : "bg-paper/25",
               ]}
             />
@@ -920,7 +920,7 @@ const chapterSvh = 200;
     <span class="inline-flex items-center gap-1.5 font-mono text-[9.5px] tracking-[0.26em] text-paper-dim uppercase transition-colors duration-200 group-hover:text-ember">
       <span
         aria-hidden="true"
-        class="h-[4px] w-[4px] rounded-[1px] bg-ember shadow-[0_0_6px_rgba(212,107,66,0.85)]"
+        class="h-[4px] w-[4px] rounded-[1px] bg-ember shadow-[0_0_10px_var(--color-ember-glow-strong)]"
       />
       <span>Scroll</span>
     </span>
@@ -1402,7 +1402,7 @@ const chapterSvh = 200;
       const lbl = railLabels[i];
       if (dot) {
         dot.classList.toggle("bg-ember", on);
-        dot.classList.toggle("shadow-[0_0_8px_rgba(212,107,66,0.75)]", on);
+        dot.classList.toggle("shadow-[0_0_12px_var(--color-ember-glow)]", on);
         dot.classList.toggle("bg-paper/25", !on);
       }
       if (num) {

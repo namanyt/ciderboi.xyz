@@ -1,4 +1,5 @@
 import { Box, Camera, Geometry, Mesh, Plane, Program, Renderer, Texture, Transform, Vec3 } from "ogl";
+import { getScenePalette, type ScenePalette } from "../lib/theme";
 
 export type RackUnitSpec = {
   u: number;
@@ -85,6 +86,7 @@ const fragment = /* glsl */ `
   uniform vec3 uFillDir;
   uniform vec3 uFillColor;
   uniform float uRim;
+  uniform vec3 uRimColor;
   uniform float uGrid;
   uniform float uUseMap;
   uniform sampler2D uMap;
@@ -104,7 +106,10 @@ const fragment = /* glsl */ `
     }
 
     vec3 n = normalize(vNormal);
-    float ndl = max(dot(n, normalize(uLightDir)), 0.0);
+    vec3 lDir = normalize(uLightDir);
+    // Soft half-Lambert wrap so shadows feather gently across bevels & knobs
+    float rawNdl = dot(n, lDir);
+    float ndl = pow(clamp((rawNdl + 0.35) / 1.35, 0.0, 1.0), 1.15);
 
     vec3 base = uColor;
     float texAlpha = 1.0;
@@ -114,24 +119,24 @@ const fragment = /* glsl */ `
       if (uIsFloor > 0.5) texAlpha = tex.a;
     }
 
-    float fill = max(dot(n, normalize(uFillDir)), 0.0);
+    float fill = clamp((dot(n, normalize(uFillDir)) + 0.35) / 1.35, 0.0, 1.0);
 
-    vec3 color = base * (uAmbient + uLightColor * ndl + uFillColor * fill * 0.4);
+    vec3 color = base * (uAmbient + uLightColor * ndl + uFillColor * fill * 0.44);
 
-    // specular
-    vec3 h = normalize(normalize(uLightDir) + vView);
-    float specPow = uIsFloor > 0.5 ? 28.0 : 52.0;
-    float specStr = uIsFloor > 0.5 ? 0.24 : 0.55;
+    // Broad feathered brushed-anodized satin highlight
+    vec3 h = normalize(lDir + vView);
+    float specPow = uIsFloor > 0.5 ? 14.0 : 24.0;
+    float specStr = uIsFloor > 0.5 ? 0.14 : 0.32;
     float spec = pow(max(dot(n, h), 0.0), specPow) * specStr;
-    color += uLightColor * spec * (0.3 + 0.7 * ndl);
+    color += uLightColor * spec * (0.35 + 0.65 * ndl);
 
-    // fresnel rim
-    float fres = pow(1.0 - max(dot(n, vView), 0.0), 3.0);
-    color += vec3(1.0, 0.78, 0.55) * fres * uRim;
+    // Feathered grazing fresnel rim
+    float fres = smoothstep(0.0, 0.94, pow(1.0 - max(dot(n, vView), 0.0), 2.35));
+    color += uRimColor * fres * (uRim * 0.78);
 
-    // cheap occlusion: vertical cabinet faces darken toward their bottom edge
+    // Softened vertical occlusion
     if (uIsFloor < 0.5) {
-      color *= mix(0.62, 1.0, smoothstep(0.0, 0.42, vUv.y));
+      color *= mix(0.68, 1.0, smoothstep(0.0, 0.52, vUv.y));
     }
 
     // debug view: UV/tessellation grid
@@ -168,8 +173,8 @@ const DAC_LAYOUT = {
   xlr: { x: -30, y: -38, r: 11.5, name: "BAL 4-PIN XLR" },
   trs: { x: 2, y: -38, r: 7.8, name: "PHONES" },
   rca: [
-    { x: 26, y: -24, r: 5.2, ring: [0.76, 0.78, 0.82] as [number, number, number], css: "#cdd3d9", name: "COAX" },
-    { x: 26, y: -50, r: 5.2, ring: [0.74, 0.31, 0.21] as [number, number, number], css: "#c95b3c", name: "AUX" },
+    { x: 26, y: -24, r: 5.2, name: "COAX" },
+    { x: 26, y: -50, r: 5.2, name: "AUX" },
   ],
 } as const;
 
@@ -183,6 +188,7 @@ function makeFaceTexture(
   u: number,
   kind: RackUnitSpec["kind"],
   flicker: boolean,
+  palette: ScenePalette,
 ): { canvas: HTMLCanvasElement; leds: LedSpec[] } {
   const c = document.createElement("canvas");
   const scale = 3;
@@ -251,8 +257,8 @@ function makeFaceTexture(
         ctx.fillRect(px + 2 * scale, py + 2.2 * scale, portW - 4 * scale, portH - 3.8 * scale);
         ctx.fillRect(px + 4 * scale, py + 1 * scale, portW - 8 * scale, 1.5 * scale);
 
-        // gold pins
-        ctx.fillStyle = "#c99e48";
+        // plated contacts
+        ctx.fillStyle = palette.rack.pinMetalCss;
         for (let p = 0; p < 4; p++) {
           ctx.fillRect(px + (3 + p * 1.6) * scale, py + 2.5 * scale, 0.8 * scale, 2 * scale);
         }
@@ -261,7 +267,7 @@ function makeFaceTexture(
         const activePort = (r * 12 + col) % 5 === 0 || (r === 0 && col < 4);
         const ledX = px + portW - 2.6 * scale;
         const ledY = py + 0.8 * scale;
-        ctx.fillStyle = activePort ? (col % 2 === 0 ? "#5fd97a" : "#e0a34a") : "#1c2227";
+        ctx.fillStyle = activePort ? (col % 2 === 0 ? palette.tokens.led : palette.tokens.amber) : "#1c2227";
         ctx.fillRect(ledX, ledY, 1.8 * scale, 1.2 * scale);
         if (flicker && activePort && col % 2 === 0) {
           leds.push({
@@ -322,7 +328,7 @@ function makeFaceTexture(
     ctx.lineWidth = 0.8 * scale;
     ctx.strokeRect(oledX, oledY, oledW, oledH);
 
-    ctx.fillStyle = "#5fd97a";
+    ctx.fillStyle = palette.tokens.led;
     ctx.font = `${5.5 * scale}px ${CANVAS_MONO}`;
     ctx.textAlign = "left";
     ctx.fillText("ONLINE · 230V", oledX + 6 * scale, oledY + 11 * scale);
@@ -334,7 +340,7 @@ function makeFaceTexture(
     for (let seg = 0; seg < 10; seg++) {
       const sx = oledX + (6 + seg * 7.5) * scale;
       const sy = oledY + oledH - 12 * scale;
-      ctx.fillStyle = seg < 6 ? "#5fd97a" : seg < 8 ? "#e0a34a" : "#1f252b";
+      ctx.fillStyle = seg < 6 ? palette.tokens.led : seg < 8 ? palette.tokens.amber : "#1f252b";
       ctx.fillRect(sx, sy, 5.5 * scale, 5 * scale);
     }
 
@@ -375,7 +381,7 @@ function makeFaceTexture(
     const lcdX = pad + 8 * scale;
     ctx.fillStyle = "#090c10";
     ctx.fillRect(lcdX, hdrY + 4 * scale, 110 * scale, hdrH - 8 * scale);
-    ctx.fillStyle = "#e0a34a";
+    ctx.fillStyle = palette.tokens.amber;
     ctx.font = `${5.5 * scale}px ${CANVAS_MONO}`;
     ctx.textAlign = "left";
     ctx.fillText("ARTIFACT // ONLINE", lcdX + 6 * scale, hdrY + 13.5 * scale);
@@ -383,7 +389,7 @@ function makeFaceTexture(
     ["PWR", "ACT", "NET", "HEALTH"].forEach((lbl, idx) => {
       const bx = lcdX + (122 + idx * 30) * scale;
       const by = hdrY + 9 * scale;
-      ctx.fillStyle = idx === 1 ? "#e0a34a" : "#5fd97a";
+      ctx.fillStyle = idx === 1 ? palette.tokens.amber : palette.tokens.led;
       ctx.beginPath();
       ctx.arc(bx, by, 2 * scale, 0, Math.PI * 2);
       ctx.fill();
@@ -429,8 +435,8 @@ function makeFaceTexture(
           ctx.fillRect(bx + 4 * scale, by + (6 + s * 6.5) * scale, bayW - 18 * scale, 2.5 * scale);
         }
 
-        // amber eject release button on right
-        ctx.fillStyle = "#b85c38";
+        // accent eject release button on right
+        ctx.fillStyle = palette.rack.ejectButtonCss;
         ctx.fillRect(bx + bayW - 9 * scale, by + 6 * scale, 5 * scale, bayH - 12 * scale);
 
         // activity LED
@@ -494,7 +500,7 @@ function makeFaceTexture(
     ctx.font = `500 ${4.6 * scale}px ${CANVAS_MONO}`;
     ctx.textAlign = "left";
     ctx.fillText("REFERENCE MASTERING DAC // 32-BIT · 192kHz", panelX + 8 * scale, pad + 10 * scale);
-    ctx.fillStyle = "rgba(224,154,84,0.72)";
+    ctx.fillStyle = palette.tokens.amber;
     ctx.textAlign = "right";
     ctx.fillText("MODEL DAC-04", faceRight - 8 * scale, pad + 10 * scale);
 
@@ -549,7 +555,7 @@ function makeFaceTexture(
         const a = startA + frac * (endA - startA) - Math.PI * 0.5;
         const rIn = kr + 2.5 * scale;
         const rOut = kr + (t === 0 || t === k.ticks - 1 || t === Math.floor(k.ticks / 2) ? 6.2 : 4.5) * scale;
-        ctx.strokeStyle = k.hero && t >= k.ticks - 2 ? "rgba(224,142,74,0.78)" : "rgba(214,221,228,0.52)";
+        ctx.strokeStyle = k.hero && t >= k.ticks - 2 ? palette.tokens.amber : "rgba(214,221,228,0.52)";
         ctx.lineWidth = (t === Math.floor(k.ticks / 2) ? 1.15 : 0.85) * scale;
         ctx.beginPath();
         ctx.moveTo(kx + Math.cos(a) * rIn, ky + Math.sin(a) * rIn);
@@ -591,7 +597,7 @@ function makeFaceTexture(
     for (const rca of DAC_LAYOUT.rca) {
       const [rx, ry] = dacLocalToCanvas(rca.x, rca.y, W, H);
       const rr = (rca.r / DAC_FACE_W) * W;
-      ctx.strokeStyle = rca.css;
+      ctx.strokeStyle = rca.name === "AUX" ? palette.rack.auxRingCss : palette.rack.coaxRingCss;
       ctx.lineWidth = 1.2 * scale;
       ctx.beginPath();
       ctx.arc(rx, ry, rr, 0, Math.PI * 2);
@@ -674,7 +680,7 @@ function makeFaceTexture(
   ctx.fillRect(lx, pad, lw, H - pad * 2);
 
   ctx.textAlign = "left";
-  ctx.fillStyle = "#f7f2ea";
+  ctx.fillStyle = palette.tokens.paper;
   ctx.font = `500 ${10.5 * scale}px ${CANVAS_MONO}`;
   ctx.fillText(label, lx + 5 * scale, H * 0.52);
 
@@ -763,7 +769,7 @@ function makeSideTexture(label: string, u: number, unitDepth: number) {
   return c;
 }
 
-function makeFloorTexture(floorSize: number, offsetX: number, offsetZ: number) {
+function makeFloorTexture(floorSize: number, offsetX: number, offsetZ: number, palette: ScenePalette) {
   const c = document.createElement("canvas");
   const W = 2040;
   const H = 2040;
@@ -839,9 +845,9 @@ function makeFloorTexture(floorSize: number, offsetX: number, offsetZ: number) {
           vy + vh * 0.5,
           vw * 0.72,
         );
-        plenum.addColorStop(0, "#10212b");
-        plenum.addColorStop(0.55, "#090f14");
-        plenum.addColorStop(1, "#050709");
+        plenum.addColorStop(0, palette.rack.plenumTop);
+        plenum.addColorStop(0.55, palette.rack.plenumMid);
+        plenum.addColorStop(1, palette.rack.plenumBot);
         ctx.fillStyle = plenum;
         ctx.fillRect(vx, vy, vw, vh);
 
@@ -867,7 +873,7 @@ function makeFloorTexture(floorSize: number, offsetX: number, offsetZ: number) {
             // Open vent throat into dark plenum
             ctx.fillStyle = "#040709";
             ctx.fillRect(sx, sy, slotW, slotH);
-            ctx.fillStyle = "rgba(110, 168, 196, 0.08)";
+            ctx.fillStyle = palette.rack.plenumTintCss;
             ctx.fillRect(sx + 1, sy + 1, slotW - 2, 1.5);
           }
         }
@@ -958,10 +964,11 @@ function makeFloorTexture(floorSize: number, offsetX: number, offsetZ: number) {
   ctx.save();
   ctx.globalCompositeOperation = "destination-in";
   const [fx, fz] = worldToCanvas(110, 100);
-  const fade = ctx.createRadialGradient(fx, fz, W * 0.14, fx, fz, W * 0.39);
+  const fade = ctx.createRadialGradient(fx, fz, W * 0.08, fx, fz, W * 0.42);
   fade.addColorStop(0, "rgba(255, 255, 255, 1)");
-  fade.addColorStop(0.5, "rgba(255, 255, 255, 0.88)");
-  fade.addColorStop(0.78, "rgba(255, 255, 255, 0.25)");
+  fade.addColorStop(0.38, "rgba(255, 255, 255, 0.86)");
+  fade.addColorStop(0.68, "rgba(255, 255, 255, 0.36)");
+  fade.addColorStop(0.86, "rgba(255, 255, 255, 0.10)");
   fade.addColorStop(1, "rgba(255, 255, 255, 0)");
   ctx.fillStyle = fade;
   ctx.fillRect(0, 0, W, H);
@@ -987,7 +994,7 @@ function drawSparkle(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: n
   ctx.restore();
 }
 
-function makeHddTopTexture(isEve: boolean) {
+function makeHddTopTexture(isEve: boolean, palette: ScenePalette) {
   const c = document.createElement("canvas");
   const W = 280;
   const H = 396;
@@ -1040,7 +1047,7 @@ function makeHddTopTexture(isEve: boolean) {
   const ly = 28;
   const lw = W - 52;
   const lh = 204;
-  ctx.fillStyle = isEve ? "#ede7de" : "#dad4ca";
+  ctx.fillStyle = isEve ? palette.tokens.paper : "#dad4ca";
   ctx.fillRect(lx, ly, lw, lh);
   ctx.strokeStyle = "rgba(0,0,0,0.4)";
   ctx.lineWidth = 1.5;
@@ -1052,16 +1059,16 @@ function makeHddTopTexture(isEve: boolean) {
     ctx.fillRect(lx, ly, lw, 90);
 
     // Three-star sparkle emblem (large hero sparkle + 2 smaller accent sparkles)
-    drawSparkle(ctx, lx + 44, ly + 45, 22, "#f9d67a");
-    drawSparkle(ctx, lx + 68, ly + 28, 9, "#ffe9a8");
-    drawSparkle(ctx, lx + 71, ly + 59, 6, "#e0a34a");
+    drawSparkle(ctx, lx + 44, ly + 45, 22, palette.rack.eveSparkles[0]);
+    drawSparkle(ctx, lx + 68, ly + 28, 9, palette.rack.eveSparkles[1]);
+    drawSparkle(ctx, lx + 71, ly + 59, 6, palette.rack.eveSparkles[2]);
 
-    ctx.fillStyle = "#f7f2ea";
+    ctx.fillStyle = palette.tokens.paper;
     ctx.font = `500 34px ${CANVAS_MONO}`;
     ctx.textAlign = "left";
     ctx.fillText("Eve", lx + 90, ly + 56, lw - 104);
 
-    ctx.fillStyle = "#d46b42";
+    ctx.fillStyle = palette.rack.eveRibbonCss;
     ctx.fillRect(lx, ly + 90, lw, 4);
 
     ctx.fillStyle = "#1c2026";
@@ -1075,7 +1082,7 @@ function makeHddTopTexture(isEve: boolean) {
   } else {
     ctx.fillStyle = "#262b32";
     ctx.fillRect(lx, ly, lw, 34);
-    ctx.fillStyle = "#ede7de";
+    ctx.fillStyle = palette.tokens.paper;
     ctx.font = `500 13px ${CANVAS_MONO}`;
     ctx.textAlign = "left";
     ctx.fillText("COLD STORAGE // SAS", lx + 14, ly + 22);
@@ -1225,6 +1232,7 @@ export function mountRack(
   root.position.y = 0;
   root.rotation.y = currentRotY;
 
+  const palette = getScenePalette();
   const lightDir = new Vec3(-0.45, 0.7, 0.62).normalize();
 
   const metalVertex = vertex;
@@ -1269,6 +1277,17 @@ export function mountRack(
     return geo;
   };
 
+  const quadGeoCache = new Map<string, Geometry>();
+  const getQuadGeo = (geoW: number, geoH: number) => {
+    const key = `${geoW}|${geoH}`;
+    let geo = quadGeoCache.get(key);
+    if (!geo) {
+      geo = new Plane(gl, { width: geoW, height: geoH });
+      quadGeoCache.set(key, geo);
+    }
+    return geo;
+  };
+
   // Single compiled shader program shared across all metal, textured, and unlit meshes
   const sharedMetalProgram = new Program(gl, {
     vertex: metalVertex,
@@ -1276,11 +1295,12 @@ export function mountRack(
     uniforms: {
       uColor: { value: [1, 1, 1] },
       uLightDir: { value: lightDir },
-      uLightColor: { value: [1.55, 1.18, 0.85] },
-      uAmbient: { value: [0.055, 0.065, 0.085] },
+      uLightColor: { value: palette.rack.keyLight },
+      uAmbient: { value: palette.rack.ambient },
       uFillDir: { value: [0.65, 0.25, 0.5] },
-      uFillColor: { value: [0.24, 0.36, 0.56] },
+      uFillColor: { value: palette.rack.fillLight },
       uRim: { value: 0.48 },
+      uRimColor: { value: palette.rack.rimColor },
       uGrid: { value: 0 },
       uUseMap: { value: 0 },
       uMap: { value: blankTex },
@@ -1332,7 +1352,20 @@ export function mountRack(
     return bindMeshMat(geometry, color, map, unlit, 0.48);
   };
 
-  // Tapered/chamfered Z-aligned cylinder with front & back caps for knobs, toggles, and audio jacks
+  const makeQuadMesh = (
+    geoW: number,
+    geoH: number,
+    color: [number, number, number],
+    map: HTMLCanvasElement | null,
+    unlit = false,
+    rim = 0.48,
+  ) => {
+    const geometry = getQuadGeo(geoW, geoH);
+    totalTris += 2;
+    return bindMeshMat(geometry, color, map, unlit, rim);
+  };
+
+  // Tapered/chamfered Z-aligned cylinder; defaults to omitting hidden -Z back caps when mounted flush
   const makeCylinderMesh = (
     rBack: number,
     rFront: number,
@@ -1341,15 +1374,19 @@ export function mountRack(
     color: [number, number, number],
     unlit = false,
     rim = 0.14,
+    opts: { backCap?: boolean; sideWall?: boolean } = {},
   ) => {
     const segs = Math.max(3, radialSegs);
+    const hasBackCap = opts.backCap ?? false;
+    const hasSideWall = opts.sideWall ?? true;
     const hz = depth * 0.5;
     const slope = (rBack - rFront) / Math.max(1e-4, depth);
-    const vertCount = (segs + 1) * 2 + (segs + 2) * 2;
+    const vertCount = (hasSideWall ? (segs + 1) * 2 : 0) + (segs + 2) + (hasBackCap ? segs + 2 : 0);
+    const triCount = (hasSideWall ? segs * 2 : 0) + segs + (hasBackCap ? segs : 0);
     const pos = new Float32Array(vertCount * 3);
     const norm = new Float32Array(vertCount * 3);
     const uv = new Float32Array(vertCount * 2);
-    const idx = new Uint16Array(segs * 12);
+    const idx = new Uint16Array(triCount * 3);
 
     let v = 0;
     const pushVert = (x: number, y: number, z: number, nx: number, ny: number, nz: number, u: number, vv: number) => {
@@ -1364,21 +1401,21 @@ export function mountRack(
       return v++;
     };
 
-    // Side wall rings: back (-hz) and front (+hz)
     const sideBase = v;
-    for (let j = 0; j <= segs; j++) {
-      const th = (j / segs) * Math.PI * 2;
-      const c = Math.cos(th);
-      const s = Math.sin(th);
-      const nLen = Math.hypot(c, s, slope) || 1;
-      const nx = c / nLen;
-      const ny = s / nLen;
-      const nz = slope / nLen;
-      pushVert(c * rBack, s * rBack, -hz, nx, ny, nz, j / segs, 0);
-      pushVert(c * rFront, s * rFront, hz, nx, ny, nz, j / segs, 1);
+    if (hasSideWall) {
+      for (let j = 0; j <= segs; j++) {
+        const th = (j / segs) * Math.PI * 2;
+        const c = Math.cos(th);
+        const s = Math.sin(th);
+        const nLen = Math.hypot(c, s, slope) || 1;
+        const nx = c / nLen;
+        const ny = s / nLen;
+        const nz = slope / nLen;
+        pushVert(c * rBack, s * rBack, -hz, nx, ny, nz, j / segs, 0);
+        pushVert(c * rFront, s * rFront, hz, nx, ny, nz, j / segs, 1);
+      }
     }
 
-    // Front (+Z) cap center + rim, Back (-Z) cap center + rim
     const frontCenter = pushVert(0, 0, hz, 0, 0, 1, 0.5, 0.5);
     const frontStart = v;
     for (let j = 0; j <= segs; j++) {
@@ -1388,35 +1425,43 @@ export function mountRack(
       pushVert(c * rFront, s * rFront, hz, 0, 0, 1, 0.5 + 0.5 * c, 0.5 + 0.5 * s);
     }
 
-    const backCenter = pushVert(0, 0, -hz, 0, 0, -1, 0.5, 0.5);
-    const backStart = v;
-    for (let j = 0; j <= segs; j++) {
-      const th = (j / segs) * Math.PI * 2;
-      const c = Math.cos(th);
-      const s = Math.sin(th);
-      pushVert(c * rBack, s * rBack, -hz, 0, 0, -1, 0.5 + 0.5 * c, 0.5 + 0.5 * s);
+    let backCenter = 0;
+    let backStart = 0;
+    if (hasBackCap) {
+      backCenter = pushVert(0, 0, -hz, 0, 0, -1, 0.5, 0.5);
+      backStart = v;
+      for (let j = 0; j <= segs; j++) {
+        const th = (j / segs) * Math.PI * 2;
+        const c = Math.cos(th);
+        const s = Math.sin(th);
+        pushVert(c * rBack, s * rBack, -hz, 0, 0, -1, 0.5 + 0.5 * c, 0.5 + 0.5 * s);
+      }
     }
 
     let k = 0;
     for (let j = 0; j < segs; j++) {
-      const b0 = sideBase + j * 2;
-      const f0 = b0 + 1;
-      const b1 = b0 + 2;
-      const f1 = b0 + 3;
-      idx[k++] = b0;
-      idx[k++] = b1;
-      idx[k++] = f0;
-      idx[k++] = b1;
-      idx[k++] = f1;
-      idx[k++] = f0;
+      if (hasSideWall) {
+        const b0 = sideBase + j * 2;
+        const f0 = b0 + 1;
+        const b1 = b0 + 2;
+        const f1 = b0 + 3;
+        idx[k++] = b0;
+        idx[k++] = b1;
+        idx[k++] = f0;
+        idx[k++] = b1;
+        idx[k++] = f1;
+        idx[k++] = f0;
+      }
 
       idx[k++] = frontCenter;
       idx[k++] = frontStart + j;
       idx[k++] = frontStart + j + 1;
 
-      idx[k++] = backCenter;
-      idx[k++] = backStart + j + 1;
-      idx[k++] = backStart + j;
+      if (hasBackCap) {
+        idx[k++] = backCenter;
+        idx[k++] = backStart + j + 1;
+        idx[k++] = backStart + j;
+      }
     }
 
     const geometry = new Geometry(gl, {
@@ -1425,7 +1470,7 @@ export function mountRack(
       uv: { size: 2, data: uv },
       index: { data: idx },
     });
-    totalTris += segs * 4;
+    totalTris += triCount;
     return bindMeshMat(geometry, color, null, unlit, rim);
   };
 
@@ -1514,7 +1559,7 @@ export function mountRack(
 
   // Builds the 3D controls & live oscilloscope OLED display onto the 4U studio DAC front panel
   const buildDacHardware = (faceMesh: Mesh, unitIdx: number) => {
-    const zBase = 0.5;
+    const zBase = 0;
 
     // Recessed OLED bezel + live dynamic waveform Texture (single Plane well forward of bezel to avoid z-fighting)
     const scr = DAC_LAYOUT.screen;
@@ -1536,16 +1581,16 @@ export function mountRack(
     const drawWaveform = (tSec: number, ejLevel: number) => {
       const OW = oledCanvas.width;
       const OH = oledCanvas.height;
-      octx.fillStyle = "#06090c";
+      octx.fillStyle = palette.rack.oledBg;
       octx.fillRect(0, 0, OW, OH);
 
       // Subtle dark satin inner rim around the OLED glass
-      octx.strokeStyle = "#262c34";
+      octx.strokeStyle = palette.rack.oledBorder;
       octx.lineWidth = 3;
       octx.strokeRect(1.5, 1.5, OW - 3, OH - 3);
 
       // Faint oscilloscope grid divisions
-      octx.strokeStyle = "rgba(110, 210, 145, 0.1)";
+      octx.strokeStyle = palette.rack.oledGridCss;
       octx.lineWidth = 1;
       for (let gx = 32; gx < OW - 16; gx += 32) {
         octx.beginPath();
@@ -1560,12 +1605,12 @@ export function mountRack(
       octx.stroke();
 
       // Top telemetry strip
-      octx.fillStyle = "#88af9e";
+      octx.fillStyle = palette.rack.oledTelemetryCss;
       octx.font = `500 10px ${CANVAS_MONO}`;
       octx.textAlign = "left";
       octx.fillText("192kHz / 32B", 12, 16);
 
-      octx.fillStyle = "#5fd97a";
+      octx.fillStyle = palette.tokens.led;
       octx.textAlign = "right";
       octx.fillText("PCM · LOCK", OW - 12, 16);
 
@@ -1589,9 +1634,9 @@ export function mountRack(
         octx.stroke();
       };
 
-      drawLoopWave(1.1, "rgba(102, 214, 145, 0.42)", 1.6);
-      drawLoopWave(0, "rgba(238, 156, 78, 0.28)", 4.6);
-      drawLoopWave(0, "#f2ab61", 2.1);
+      drawLoopWave(1.1, palette.rack.oledWaveSecondaryCss, 1.6);
+      drawLoopWave(0, palette.rack.oledWaveHaloCss, 4.6);
+      drawLoopWave(0, palette.rack.oledWaveCoreCss, 2.1);
 
       oledTex.needsUpdate = true;
     };
@@ -1599,17 +1644,18 @@ export function mountRack(
     drawWaveform(0.9, 0.75);
     dacDisplays.push({ unitIdx, draw: drawWaveform });
 
-    // Precision machined rotary knobs (skirt + chamfered knurled body + brushed cap + copper/ember indicator bar)
+    // Precision machined rotary knobs (skirt + chamfered knurled body + brushed cap + indicator bar)
     for (const k of DAC_LAYOUT.knobs) {
-      const skirt = makeCylinderMesh(k.r + 1.2, k.r, 2.5, 24, [0.1, 0.115, 0.135]);
+      const radialSegs = k.hero ? 18 : 12;
+      const skirt = makeCylinderMesh(k.r + 1.2, k.r, 2.5, radialSegs, [0.1, 0.115, 0.135]);
       skirt.position.set(k.x, k.y, zBase + 1.25);
       faceMesh.addChild(skirt);
 
-      const barrel = makeCylinderMesh(k.r * 0.94, k.r * 0.87, k.d, k.hero ? 28 : 22, [0.22, 0.25, 0.29], false, 0.18);
+      const barrel = makeCylinderMesh(k.r * 0.94, k.r * 0.87, k.d, radialSegs, [0.22, 0.25, 0.29], false, 0.18);
       barrel.position.set(k.x, k.y, zBase + 2.4 + k.d * 0.5);
       faceMesh.addChild(barrel);
 
-      const cap = makeCylinderMesh(k.r * 0.72, k.r * 0.69, 1.2, 22, [0.32, 0.35, 0.39]);
+      const cap = makeCylinderMesh(k.r * 0.72, k.r * 0.69, 1.2, radialSegs, [0.32, 0.35, 0.39]);
       cap.position.set(k.x, k.y, zBase + 2.4 + k.d + 0.55);
       faceMesh.addChild(cap);
 
@@ -1618,14 +1664,14 @@ export function mountRack(
       dialPivot.rotation.z = -k.angle;
       faceMesh.addChild(dialPivot);
 
-      const ptr = makeMesh(k.hero ? 2.1 : 1.5, k.r * 0.54, 1.6, [0.88, 0.48, 0.22], null);
+      const ptr = makeMesh(k.hero ? 2.1 : 1.5, k.r * 0.54, 1.6, palette.rack.knobIndicator, null);
       ptr.position.set(0, k.r * 0.42, 0);
       dialPivot.addChild(ptr);
     }
 
     // Bat-handle toggle switches (washer + hex nut + angled stainless lever)
     for (const t of DAC_LAYOUT.toggles) {
-      const washer = makeCylinderMesh(5.3, 5.1, 1.1, 16, [0.09, 0.1, 0.12]);
+      const washer = makeCylinderMesh(5.3, 5.1, 1.1, 8, [0.09, 0.1, 0.12]);
       washer.position.set(t.x, t.y, zBase + 0.55);
       faceMesh.addChild(washer);
 
@@ -1638,26 +1684,35 @@ export function mountRack(
       pivot.rotation.x = t.up ? -0.55 : 0.55;
       faceMesh.addChild(pivot);
 
-      const bat = makeCylinderMesh(1.1, 1.95, 14.0, 12, [0.64, 0.68, 0.74]);
+      const bat = makeCylinderMesh(1.1, 1.95, 14.0, 6, [0.64, 0.68, 0.74]);
       bat.position.set(0, 0, 6.8);
       pivot.addChild(bat);
 
-      const tip = makeCylinderMesh(1.95, 0.9, 1.6, 12, [0.72, 0.76, 0.82]);
+      const tip = makeCylinderMesh(1.95, 0.9, 1.6, 6, [0.72, 0.76, 0.82]);
       tip.position.set(0, 0, 14.5);
       pivot.addChild(tip);
     }
 
     // Balanced 4-pin Neutrik-style XLR headphone jack + gold pins
     const xlr = DAC_LAYOUT.xlr;
-    const xlrFlange = makeCylinderMesh(xlr.r, xlr.r * 0.95, 2.6, 20, [0.08, 0.09, 0.11]);
+    const xlrFlange = makeCylinderMesh(xlr.r, xlr.r * 0.95, 2.6, 14, [0.08, 0.09, 0.11]);
     xlrFlange.position.set(xlr.x, xlr.y, zBase + 1.3);
     faceMesh.addChild(xlrFlange);
 
-    const xlrBezel = makeCylinderMesh(xlr.r * 0.82, xlr.r * 0.8, 3.8, 20, [0.44, 0.48, 0.53]);
+    const xlrBezel = makeCylinderMesh(xlr.r * 0.82, xlr.r * 0.8, 3.8, 14, [0.44, 0.48, 0.53]);
     xlrBezel.position.set(xlr.x, xlr.y, zBase + 1.9);
     faceMesh.addChild(xlrBezel);
 
-    const xlrCore = makeCylinderMesh(xlr.r * 0.65, xlr.r * 0.65, 4.0, 16, [0.02, 0.024, 0.03]);
+    const xlrCore = makeCylinderMesh(
+      xlr.r * 0.65,
+      xlr.r * 0.65,
+      4.0,
+      10,
+      [0.02, 0.024, 0.03],
+      false,
+      0.14,
+      { sideWall: false },
+    );
     xlrCore.position.set(xlr.x, xlr.y, zBase + 2.0);
     faceMesh.addChild(xlrCore);
 
@@ -1671,7 +1726,7 @@ export function mountRack(
       [-2.2, -2.8],
       [2.2, -2.8],
     ]) {
-      const pin = makeCylinderMesh(0.95, 0.85, 4.3, 8, [0.85, 0.67, 0.27]);
+      const pin = makeCylinderMesh(0.95, 0.85, 4.3, 4, palette.rack.pinMetal);
       pin.position.set(xlr.x + px, xlr.y + py, zBase + 2.15);
       faceMesh.addChild(pin);
     }
@@ -1682,11 +1737,20 @@ export function mountRack(
     trsNut.position.set(trs.x, trs.y, zBase + 1.25);
     faceMesh.addChild(trsNut);
 
-    const trsGold = makeCylinderMesh(trs.r * 0.78, trs.r * 0.75, 4.0, 18, [0.84, 0.64, 0.25]);
+    const trsGold = makeCylinderMesh(trs.r * 0.78, trs.r * 0.75, 4.0, 12, palette.rack.pinMetal);
     trsGold.position.set(trs.x, trs.y, zBase + 2.0);
     faceMesh.addChild(trsGold);
 
-    const trsBore = makeCylinderMesh(trs.r * 0.43, trs.r * 0.43, 4.3, 12, [0.015, 0.018, 0.022]);
+    const trsBore = makeCylinderMesh(
+      trs.r * 0.43,
+      trs.r * 0.43,
+      4.3,
+      8,
+      [0.015, 0.018, 0.022],
+      false,
+      0.14,
+      { sideWall: false },
+    );
     trsBore.position.set(trs.x, trs.y, zBase + 2.15);
     faceMesh.addChild(trsBore);
 
@@ -1696,15 +1760,30 @@ export function mountRack(
       col.position.set(rca.x, rca.y, zBase + 1.1);
       faceMesh.addChild(col);
 
-      const ins = makeCylinderMesh(rca.r * 0.78, rca.r * 0.75, 4.2, 14, rca.ring);
+      const ins = makeCylinderMesh(
+        rca.r * 0.78,
+        rca.r * 0.75,
+        4.2,
+        10,
+        rca.name === "AUX" ? palette.rack.auxRing : [0.76, 0.78, 0.82],
+      );
       ins.position.set(rca.x, rca.y, zBase + 2.1);
       faceMesh.addChild(ins);
 
-      const tip = makeCylinderMesh(rca.r * 0.48, rca.r * 0.44, 5.0, 12, [0.84, 0.65, 0.26]);
+      const tip = makeCylinderMesh(rca.r * 0.48, rca.r * 0.44, 5.0, 6, palette.rack.pinMetal);
       tip.position.set(rca.x, rca.y, zBase + 2.5);
       faceMesh.addChild(tip);
 
-      const bore = makeCylinderMesh(rca.r * 0.24, rca.r * 0.24, 5.3, 8, [0.015, 0.018, 0.022]);
+      const bore = makeCylinderMesh(
+        rca.r * 0.24,
+        rca.r * 0.24,
+        5.3,
+        5,
+        [0.015, 0.018, 0.022],
+        false,
+        0.14,
+        { sideWall: false },
+      );
       bore.position.set(rca.x, rca.y, zBase + 2.65);
       faceMesh.addChild(bore);
     }
@@ -1722,7 +1801,7 @@ export function mountRack(
   const floorSize = 2400;
   const floorOffsetX = -40;
   const floorOffsetZ = 140;
-  const floorTexCanvas = makeFloorTexture(floorSize, floorOffsetX, floorOffsetZ);
+  const floorTexCanvas = makeFloorTexture(floorSize, floorOffsetX, floorOffsetZ, palette);
   const floorTex = new Texture(gl, {
     image: floorTexCanvas,
     generateMipmaps: false,
@@ -1738,11 +1817,12 @@ export function mountRack(
     uniforms: {
       uColor: { value: [1, 1, 1] },
       uLightDir: { value: lightDir },
-      uLightColor: { value: [1.35, 1.06, 0.8] },
-      uAmbient: { value: [0.095, 0.11, 0.135] },
+      uLightColor: { value: palette.rack.floorKeyLight },
+      uAmbient: { value: palette.rack.floorAmbient },
       uFillDir: { value: [0.65, 0.25, 0.5] },
-      uFillColor: { value: [0.24, 0.36, 0.56] },
+      uFillColor: { value: palette.rack.fillLight },
       uRim: { value: 0.08 },
+      uRimColor: { value: palette.rack.rimColor },
       uGrid: { value: 0 },
       uUseMap: { value: 1 },
       uMap: { value: floorTex },
@@ -1800,13 +1880,14 @@ export function mountRack(
   const hddW = 92;
   const hddH = 22;
   const hddD = 132;
-  const archiveHddTex = makeHddTopTexture(false);
-  const eveHddTex = makeHddTopTexture(true);
+  const archiveHddTex = makeHddTopTexture(false, palette);
+  const eveHddTex = makeHddTopTexture(true, palette);
 
   const buildHdd = (isEve: boolean) => {
     const drive = makeMesh(hddW, hddH, hddD, [0.12, 0.135, 0.16], null);
-    const plate = makeMesh(hddW * 0.96, 1, hddD * 0.96, [1, 1, 1], isEve ? eveHddTex : archiveHddTex);
-    plate.position.set(0, hddH / 2 + 0.55, 0);
+    const plate = makeQuadMesh(hddW * 0.96, hddD * 0.96, [1, 1, 1], isEve ? eveHddTex : archiveHddTex);
+    plate.rotation.x = -Math.PI / 2;
+    plate.position.set(0, hddH / 2 + 0.5, 0);
     drive.addChild(plate);
 
     // Subtle brushed rail trim along the SATA connector edge
@@ -1832,13 +1913,14 @@ export function mountRack(
   const eveHdd = buildHdd(true);
   hddGroup.addChild(eveHdd);
 
-  const eveLed = makeMesh(5, 0.9, 5, [0.88, 0.68, 0.28], null, true);
+  const eveLed = makeQuadMesh(5, 5, palette.rack.eveLedBase, null, true, 0);
+  eveLed.rotation.x = -Math.PI / 2;
   eveLed.position.set(30, hddH / 2 + 0.85, -46);
   eveHdd.addChild(eveLed);
 
-  // Subtle front-bezel gold indicator so EVE stands out atop the 4-drive stack before hover
-  const eveFrontLed = makeMesh(14, 2.8, 1.2, [0.88, 0.68, 0.28], null, true);
-  eveFrontLed.position.set(-22, 3, hddD / 2 + 0.65);
+  // Subtle front-bezel accent indicator so EVE stands out atop the 4-drive stack before hover
+  const eveFrontLed = makeQuadMesh(14, 2.8, palette.rack.eveLedBase, null, true, 0);
+  eveFrontLed.position.set(-22, 3, hddD / 2 + 0.55);
   eveHdd.addChild(eveFrontLed);
 
   const floorContactY = (rx: number) => (hddD / 2) * Math.sin(rx) + (hddH / 2) * Math.cos(rx);
@@ -2002,7 +2084,14 @@ export function mountRack(
           ? 210
           : 460;
     const baseZ = frontZ - unitDepth / 2;
-    const { canvas: face, leds } = makeFaceTexture(spec.label, spec.sub, spec.u, spec.kind, Boolean(spec.flicker));
+    const { canvas: face, leds } = makeFaceTexture(
+      spec.label,
+      spec.sub,
+      spec.u,
+      spec.kind,
+      Boolean(spec.flicker),
+      palette,
+    );
     const sideTex = makeSideTexture(spec.label, spec.u, unitDepth);
 
     // chassis body
@@ -2011,27 +2100,27 @@ export function mountRack(
     mesh.position.set(0, y, baseZ);
     root.addChild(mesh);
 
-    // Printed face (child of chassis)
-    const faceMesh = makeMesh(WIDTH * 0.995, h * 0.98, 1, [1, 1, 1], face);
-    faceMesh.position.set(0, 0, unitDepth / 2 + 0.6);
+    // Printed face (child quad flush on chassis front)
+    const faceMesh = makeQuadMesh(WIDTH * 0.995, h * 0.98, [1, 1, 1], face);
+    faceMesh.position.set(0, 0, unitDepth / 2 + 0.65);
     mesh.addChild(faceMesh);
 
     // Top-right UID navigation beacon (glows cool blue when the unit is hovered for selection)
     const uidX = WIDTH * 0.995 * 0.5 - 22;
     const uidY = h * 0.98 * 0.5 - 12;
     const uidBezel = makeMesh(11, 4.6, 0.5, [0.06, 0.07, 0.085], null);
-    uidBezel.position.set(uidX, uidY, 0.55);
+    uidBezel.position.set(uidX, uidY, 0.28);
     faceMesh.addChild(uidBezel);
 
-    const uidLed = makeMesh(8.4, 2.4, 0.85, [0.1, 0.13, 0.18], null, true);
-    uidLed.position.set(uidX, uidY, 0.72);
+    const uidLed = makeQuadMesh(8.4, 2.4, palette.rack.uidBase, null, true, 0);
+    uidLed.position.set(uidX, uidY, 0.56);
     faceMesh.addChild(uidLed);
 
     // Occasional flickering green activity LEDs mounted flush on the front face
     const unitIdx = chassis.length;
     for (const led of leds) {
-      const ledMesh = makeMesh(led.w ?? 3.4, led.h ?? 3.4, 0.5, [0.2, 0.49, 0.27], null, true);
-      ledMesh.position.set((led.ux - 0.5) * WIDTH * 0.995, (0.5 - led.uy) * h * 0.98, 0.65);
+      const ledMesh = makeQuadMesh(led.w ?? 3.4, led.h ?? 3.4, [0.2, 0.49, 0.27], null, true, 0);
+      ledMesh.position.set((led.ux - 0.5) * WIDTH * 0.995, (0.5 - led.uy) * h * 0.98, 0.25);
       faceMesh.addChild(ledMesh);
       flickerLeds.push({ mesh: ledMesh, unitIdx, phase: led.phase, rate: led.rate });
     }
@@ -2041,8 +2130,9 @@ export function mountRack(
     }
 
     // Detailed right (+X) side wall (exposed to the camera as drawer extends)
-    const sideMesh = makeMesh(1, h * 0.96, unitDepth * 0.98, [1, 1, 1], sideTex);
-    sideMesh.position.set(WIDTH / 2 + 0.6, 0, 0);
+    const sideMesh = makeQuadMesh(unitDepth * 0.98, h * 0.96, [1, 1, 1], sideTex);
+    sideMesh.rotation.y = Math.PI / 2;
+    sideMesh.position.set(WIDTH / 2 + 0.65, 0, 0);
     mesh.addChild(sideMesh);
 
     // Front-left port lip where content extrudes out of the chassis
@@ -2062,8 +2152,8 @@ export function mountRack(
     }
 
     // Deep recessed bay cavity behind unit
-    const cavity = makeMesh(WIDTH * 0.99, h * 0.96, 4, [0.02, 0.024, 0.03], null);
-    cavity.position.set(0, y, -RACK_DEPTH / 2 + 8);
+    const cavity = makeQuadMesh(WIDTH * 0.99, h * 0.96, [0.02, 0.024, 0.03], null);
+    cavity.position.set(0, y, -RACK_DEPTH / 2 + 10);
     root.addChild(cavity);
 
     chassis.push({ mesh, slot, uidLed, uidLevel: 0, spec, baseY: y, baseZ, h, depth: unitDepth, ej: 0 });
@@ -2072,8 +2162,8 @@ export function mountRack(
 
   // fake contact shadow under each chassis
   for (const c of chassis) {
-    const shadow = makeMesh(WIDTH * 1.02, 1, 2, [0.0, 0.0, 0.0], null);
-    shadow.position.set(0, c.baseY - c.h / 2 - 1, frontZ + 1);
+    const shadow = makeQuadMesh(WIDTH * 1.02, 1, [0.0, 0.0, 0.0], null);
+    shadow.position.set(0, c.baseY - c.h / 2 - 1, frontZ + 2);
     root.addChild(shadow);
   }
 
@@ -2094,7 +2184,7 @@ export function mountRack(
     ],
     5.2,
     [0.08, 0.09, 0.105],
-    { segments: 24, radial: 6 },
+    { segments: 12, radial: 5 },
   );
   makeCable(
     [
@@ -2106,7 +2196,7 @@ export function mountRack(
     ],
     3.6,
     [0.14, 0.155, 0.18],
-    { segments: 22, radial: 6 },
+    { segments: 11, radial: 5 },
   );
   makeCable(
     [
@@ -2116,8 +2206,8 @@ export function mountRack(
       new Vec3(trunkX - 2, floorY + 32, trunkZ + 14),
     ],
     2.6,
-    [0.64, 0.3, 0.19],
-    { segments: 20, radial: 6 },
+    palette.rack.cableTrunkAccent,
+    { segments: 10, radial: 4 },
   );
   makeCable(
     [
@@ -2127,7 +2217,7 @@ export function mountRack(
     ],
     4.0,
     [0.08, 0.09, 0.105],
-    { segments: 18, radial: 6 },
+    { segments: 9, radial: 4 },
   );
 
   // Small velcro cable-tie straps clamping the right vertical bundle to the side rails
@@ -2168,13 +2258,14 @@ export function mountRack(
       return isShallow ? [p0, p1, p2, p3, pEnd] : [p0, p1, p2, p3];
     };
 
-    const pwrCable = makeCable(buildCtrl(0, 0), 3.3, [0.085, 0.095, 0.115], { segments: 18, radial: 6 });
+    const pwrCable = makeCable(buildCtrl(0, 0), 3.3, [0.085, 0.095, 0.115], { segments: 9, radial: 4 });
 
-    // Secondary muted ember/ochre data drop on storage/DSP/media/gateway bays
+    // Secondary muted indigo/periwinkle data drop on storage/DSP/media/gateway bays
     const hasAux = idx === 1 || idx === 2 || idx === 3 || idx === 4 || idx === 5;
-    const auxColor: [number, number, number] = idx % 2 === 1 ? [0.68, 0.34, 0.21] : [0.66, 0.52, 0.26];
+    const auxColor: [number, number, number] =
+      idx % 2 === 1 ? palette.rack.cableAuxPrimary : palette.rack.cableAuxSecondary;
     const auxCable = hasAux
-      ? makeCable(buildCtrl(0, 0, 1.18, 9, -14), 2.1, auxColor, { segments: 18, radial: 6 })
+      ? makeCable(buildCtrl(0, 0, 1.18, 9, -14), 2.1, auxColor, { segments: 8, radial: 4 })
       : null;
 
     // On GATEWAY (1U network bay), add messy-clean RJ45 front patch jumpers + sweeping SFP+ uplinks
@@ -2210,13 +2301,13 @@ export function mountRack(
           ],
           radius,
           col,
-          { segments: 16, radial: 6, parent: c.mesh },
+          { segments: 9, radial: 4, parent: c.mesh },
         );
       };
 
       addFrontPatch(-190, 5.5, -131, -5.5, 19, 22, 2.0, [0.1, 0.115, 0.135]);
-      addFrontPatch(-161, -5.5, -80, 5.5, 25, 26, 2.0, [0.7, 0.35, 0.21]);
-      addFrontPatch(-110, -5.5, -51, 5.5, 16, 18, 1.85, [0.68, 0.54, 0.27]);
+      addFrontPatch(-161, -5.5, -80, 5.5, 25, 26, 2.0, palette.rack.cablePatchPrimary);
+      addFrontPatch(-110, -5.5, -51, 5.5, 16, 18, 1.85, palette.rack.cablePatchSecondary);
 
       // Dual SFP+ uplinks curving cleanly under the "GATEWAY" label around the right rack ear to side trunk
       const makeUplink = (yPort: number, yUnder: number, xBend: number, r: number, col: [number, number, number]) => {
@@ -2235,11 +2326,11 @@ export function mountRack(
           pts[3].set(trunkX - 2, c.baseY - 14, Math.min(rz - 55, 60));
           return pts;
         };
-        const uplink = makeCable(buildUplink(0, 0), r, col, { segments: 20, radial: 6 });
+        const uplink = makeCable(buildUplink(0, 0), r, col, { segments: 11, radial: 4 });
         return (slide: number, tilt: number) => uplink.update(buildUplink(slide, tilt));
       };
 
-      const u1 = makeUplink(5.5, -19, trunkX - 4, 2.05, [0.7, 0.35, 0.21]);
+      const u1 = makeUplink(5.5, -19, trunkX - 4, 2.05, palette.rack.cablePatchPrimary);
       const u2 = makeUplink(-5.5, -24, trunkX + 2, 2.25, [0.1, 0.115, 0.135]);
       gatewaySync = (slide: number, tilt: number) => {
         u1(slide, tilt);
@@ -2265,7 +2356,7 @@ export function mountRack(
     ],
     4.8,
     [0.038, 0.042, 0.05],
-    { segments: 22, radial: 6 },
+    { segments: 13, radial: 5 },
   );
   makeCable(
     [
@@ -2276,8 +2367,8 @@ export function mountRack(
       new Vec3(-332, floorY - 5, 222),
     ],
     3.1,
-    [0.36, 0.16, 0.1],
-    { segments: 22, radial: 6 },
+    palette.rack.cableConduitAccent,
+    { segments: 13, radial: 4 },
   );
   // Casual coiled spare power loop resting on the lit cold-aisle tile beside the front-left foot
   makeCable(
@@ -2292,7 +2383,7 @@ export function mountRack(
     ],
     2.8,
     [0.048, 0.054, 0.064],
-    { segments: 24, radial: 6 },
+    { segments: 16, radial: 4 },
   );
 
   const smoothstep01 = (e0: number, e1: number, x: number) => {
@@ -2310,9 +2401,11 @@ export function mountRack(
     c.mesh.rotation.x = 0;
     c.onEject?.(slide, 0);
     const col = meshMats.get(c.slot)!.color;
-    col[0] = 0.16 + clamped * 0.72;
-    col[1] = 0.18 + clamped * 0.46;
-    col[2] = 0.2 + clamped * 0.08;
+    const [siR, siG, siB] = palette.rack.slotInactive;
+    const [saR, saG, saB] = palette.rack.slotActiveDelta;
+    col[0] = siR + clamped * saR;
+    col[1] = siG + clamped * saG;
+    col[2] = siB + clamped * saB;
     return true;
   };
 
@@ -2587,18 +2680,21 @@ export function mountRack(
       const target = i === hoverUnitIdx || ch.ej > 0.06 ? 1 : 0;
       ch.uidLevel += (target - ch.uidLevel) * (reduce ? 1 : 0.22);
       const uCol = meshMats.get(ch.uidLed)!.color;
-      uCol[0] = 0.1 + ch.uidLevel * 0.14;
-      uCol[1] = 0.13 + ch.uidLevel * 0.53;
-      uCol[2] = 0.18 + ch.uidLevel * 0.82;
+      const [ubR, ubG, ubB] = palette.rack.uidBase;
+      const [uaR, uaG, uaB] = palette.rack.uidActiveDelta;
+      uCol[0] = ubR + ch.uidLevel * uaR;
+      uCol[1] = ubG + ch.uidLevel * uaG;
+      uCol[2] = ubB + ch.uidLevel * uaB;
     }
 
     const eveIdle = reduce ? 0.5 : 0.5 + 0.5 * Math.sin(nowMs * 0.003);
     const eveGlow = hddSim.mode === "fallen" || hddSim.mode === "falling" ? 1 : hddHoverTarget * 0.65;
+    const [ebR, ebG, ebB] = palette.rack.eveLedBase;
     for (const led of [eveLed, eveFrontLed]) {
       const col = meshMats.get(led)!.color;
-      col[0] = 0.84 + eveGlow * 0.16;
-      col[1] = 0.6 + eveIdle * 0.16 + eveGlow * 0.24;
-      col[2] = 0.24 + eveGlow * 0.28;
+      col[0] = Math.min(1, ebR * 0.9 + eveIdle * 0.08 + eveGlow * 0.28);
+      col[1] = Math.min(1, ebG * 0.9 + eveIdle * 0.1 + eveGlow * 0.26);
+      col[2] = Math.min(1, ebB * 0.95 + eveGlow * 0.08);
     }
     if (nowMs - fpsClock > 500) {
       fps = Math.round((frames * 1000) / (nowMs - fpsClock));

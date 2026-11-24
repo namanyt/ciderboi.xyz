@@ -16,12 +16,12 @@
       <path
         class="gyro-body"
         d="M0 0L7.2 14.8L0 11.4L-7.2 14.8Z"
-        fill="#ede7de"
-        stroke="#0c0e11"
+        fill="var(--color-paper, #e6e9f2)"
+        stroke="var(--color-rack, #0b0d12)"
         stroke-width="1.35"
         stroke-linejoin="round"
       />
-      <circle class="gyro-pivot" cx="0" cy="8.5" r="1.45" fill="#d46b42" />
+      <circle class="gyro-pivot" cx="0" cy="8.5" r="1.45" fill="var(--color-ember, #8288ec)" />
     </svg>
   </div>
 </div>
@@ -65,15 +65,15 @@
   }
 
   .gyro-cursor[data-mode="interactive"] .gyro-arrow .gyro-body {
-    fill: #f4b18e;
+    fill: var(--color-cursor-hover);
   }
 
   .gyro-cursor[data-mode="interactive"] .gyro-arrow .gyro-pivot {
-    fill: #0c0e11;
+    fill: var(--color-rack);
   }
 
   .gyro-cursor[data-mode="rack"] .gyro-arrow .gyro-pivot {
-    fill: #5fd97a;
+    fill: var(--color-led);
   }
 
   .gyro-ripple {
@@ -84,7 +84,7 @@
     height: 34px;
     margin-left: -17px;
     margin-top: -17px;
-    border: 1px solid #d46b42;
+    border: 1px solid var(--color-ember);
     border-radius: 9999px;
     opacity: 0;
     transform: translate3d(-100px, -100px, 0) scale(0.35);

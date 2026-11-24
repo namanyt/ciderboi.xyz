@@ -52,7 +52,7 @@ const focusAreas = [
         data-lanyard-fallback
         class="hidden border border-paper/12 bg-white/[0.015] p-4"
       >
-          <div class="relative aspect-square overflow-hidden border border-paper/10 bg-[radial-gradient(75%_75%_at_50%_42%,#1d2229_0%,#0d1014_78%,#090b0d_100%)]">
+          <div class="relative aspect-square overflow-hidden border border-paper/10 bg-[radial-gradient(75%_75%_at_50%_42%,var(--color-face-hi)_0%,var(--color-panel)_78%,var(--color-slot)_100%)]">
             <picture class="block h-full w-full">
               <source
                 type="image/avif"
@@ -227,7 +227,7 @@ const focusAreas = [
                   </span>
                   <span
                     aria-hidden="true"
-                    class="h-[6px] w-[6px] rounded-[1px] border border-black/60 bg-[#0a0c0e] transition-colors group-hover:bg-led group-hover:shadow-[0_0_6px_var(--color-led)]"
+                    class="h-[6px] w-[6px] rounded-[1px] border border-black/60 bg-slot transition-colors group-hover:bg-led group-hover:shadow-[0_0_6px_var(--color-led)]"
                   />
                 </div>
                 <span aria-hidden="true" class="label-mono text-[10.5px] text-dim transition-colors group-hover:text-ember">
@@ -276,7 +276,7 @@ const focusAreas = [
       cornerRadius: 0.35,
       strapLength: 0,
       elasticity: 0.15,
-      damping: 0.85,
+      damping: 0.92,
       breeze: 0.65,
       plainStrap: true,
       finish: "holographic",

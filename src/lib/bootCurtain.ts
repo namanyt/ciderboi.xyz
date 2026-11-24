@@ -1,3 +1,5 @@
+import { getThemeTokens, hexToRgbTuple } from "./theme";
+
 export type BootCurtainController = {
   setStage: (label: string, progress: number) => void;
   finish: (opts?: { instant?: boolean }) => void;
@@ -19,12 +21,13 @@ const BAYER_8 = [
 ].map((row) => row.map((v) => (v + 0.5) / 64));
 
 const computePackedSlotBlack = () => {
+  const [r, g, b] = hexToRgbTuple(getThemeTokens().slot);
   const u32 = new Uint32Array(1);
   const u8 = new Uint8ClampedArray(u32.buffer);
-  // Match --color-slot (#07090b) at full opacity
-  u8[0] = 7;
-  u8[1] = 9;
-  u8[2] = 11;
+  // Match --color-slot at full opacity (resolved from CSS theme tokens)
+  u8[0] = r;
+  u8[1] = g;
+  u8[2] = b;
   u8[3] = 255;
   return u32[0];
 };
@@ -143,7 +146,7 @@ export function createBootCurtain(): BootCurtainController {
     if (ledEl) {
       ledEl.classList.remove("bg-ember", "animate-pulse");
       ledEl.classList.add("bg-led");
-      ledEl.style.boxShadow = "0 0 8px rgba(95, 217, 122, 0.75)";
+      ledEl.style.boxShadow = "0 0 8px color-mix(in srgb, var(--color-led) 75%, transparent)";
     }
     if (statusEl) statusEl.textContent = "ONLINE // READY";
     if (barEl) barEl.style.transform = "scaleX(1)";

@@ -1,4 +1,5 @@
 import { Camera, Geometry, Mesh, Program, Renderer, Texture, Transform, Vec3 } from "ogl";
+import { getScenePalette, hexToRgbCss, hexToRgba, type ScenePalette } from "../lib/theme";
 
 export type LanyardOptions = {
   name: string;
@@ -55,6 +56,10 @@ const makeCardFragment = (holo: boolean) => /* glsl */ `
   uniform vec3 uFillDir;
   uniform vec3 uFillColor;
   uniform float uRim;
+  uniform vec3 uPaperCol;
+  uniform vec3 uAmberCol;
+  uniform vec3 uEmberCol;
+  uniform vec3 uIceCol;
   uniform sampler2D uMap;
 
   varying vec3 vNormal;
@@ -66,18 +71,18 @@ const makeCardFragment = (holo: boolean) => /* glsl */ `
     vec3 v = normalize(vView);
     vec3 base = texture2D(uMap, vUv).rgb;
 
-    float ndl = max(dot(n, uLightDir), 0.0);
-    float fill = max(dot(n, uFillDir), 0.0);
-    vec3 lit = base * (uAmbient + uLightColor * ndl * 0.78 + uFillColor * fill * 0.36);
+    float ndl = clamp((dot(n, uLightDir) + 0.32) / 1.32, 0.0, 1.0);
+    float fill = clamp((dot(n, uFillDir) + 0.32) / 1.32, 0.0, 1.0);
+    vec3 lit = base * (uAmbient + uLightColor * ndl * 0.72 + uFillColor * fill * 0.38);
 
-    // Broad satin anodized sheen matching homepage ProfileCard finish
+    // Feathered satin finish matching ProfileCard softness
     vec3 h = normalize(uLightDir + v);
-    float satin = pow(max(dot(n, h), 0.0), 22.0) * 0.16;
-    lit += vec3(0.929, 0.906, 0.871) * satin * (0.35 + 0.65 * ndl);
+    float satin = pow(max(dot(n, h), 0.0), 14.0) * 0.11;
+    lit += uPaperCol * satin * (0.35 + 0.65 * ndl);
 
     float ndv = max(dot(n, v), 0.0);
-    float fres = pow(1.0 - ndv, 3.0);
-    lit += vec3(0.902, 0.659, 0.298) * fres * (uRim * 0.42);
+    float fres = pow(1.0 - ndv, 2.35);
+    lit += uAmberCol * fres * (uRim * 0.28);
 
     ${
       holo
@@ -86,24 +91,20 @@ const makeCardFragment = (holo: boolean) => /* glsl */ `
     float tilt = clamp(length(n.xy) * 2.0, 0.0, 1.0);
     float shift = n.x * 1.4 - n.y * 1.1 + (1.0 - ndv) * 0.7;
 
-    // ProfileCard-matched smooth 118deg satin foil + soft radial glare (subtle, zero hard grid/rainbow)
+    // ProfileCard-matched smooth 118deg satin foil + feathered radial glare
     float diag = fract((cardU * 0.47 - vUv.y * 0.88) * 1.15 + shift * 0.35);
     float wave = 0.5 - 0.5 * cos(diag * 6.28318);
-    vec3 cAmber = vec3(0.902, 0.659, 0.298);
-    vec3 cEmber = vec3(0.831, 0.420, 0.259);
-    vec3 cPaper = vec3(0.929, 0.906, 0.871);
-    vec3 cSlate = vec3(0.345, 0.478, 0.620);
-    vec3 foilCol = mix(mix(cAmber, cEmber, wave), mix(cPaper, cSlate, wave), smoothstep(0.2, 0.85, diag));
+    vec3 foilCol = mix(mix(uAmberCol, uEmberCol, wave), mix(uPaperCol, uIceCol, wave), smoothstep(0.18, 0.88, diag));
 
     float luma = dot(base, vec3(0.299, 0.587, 0.114));
     float darkProtect = mix(1.0, 0.14, smoothstep(0.08, 0.42, luma));
 
     vec2 glareCtr = vec2(0.5 + clamp(n.x * 0.9, -0.4, 0.4), 0.56 - clamp(n.y * 0.9, -0.4, 0.4));
     float gDist = length(vec2(cardU, vUv.y) - glareCtr);
-    float glareSpot = pow(max(0.0, 1.0 - gDist * 1.35), 2.4) * (0.025 + tilt * 0.15);
-    vec3 glareTint = mix(cAmber * 0.4, cPaper, max(0.0, 1.0 - gDist * 2.0));
+    float glareSpot = pow(max(0.0, 1.0 - gDist * 1.08), 1.8) * (0.02 + tilt * 0.12);
+    vec3 glareTint = mix(uAmberCol * 0.35, uPaperCol, max(0.0, 1.0 - gDist * 1.65));
 
-    float foilStrength = (0.015 + tilt * 0.12 + fres * 0.08) * darkProtect;
+    float foilStrength = (0.012 + tilt * 0.1 + fres * 0.06) * darkProtect;
     lit += foilCol * foilStrength + glareTint * glareSpot * (0.4 + 0.6 * darkProtect);
     `
         : ""
@@ -146,6 +147,7 @@ const metalFragment = /* glsl */ `
   uniform vec3 uAmbient;
   uniform vec3 uFillDir;
   uniform vec3 uFillColor;
+  uniform vec3 uMetalRim;
 
   varying vec3 vNormal;
   varying vec3 vView;
@@ -156,17 +158,17 @@ const metalFragment = /* glsl */ `
     vec3 v = normalize(vView);
     vec3 base = vColor.rgb;
 
-    float ndl = max(dot(n, uLightDir), 0.0);
-    float fill = max(dot(n, uFillDir), 0.0);
-    vec3 lit = base * (uAmbient + uLightColor * ndl + uFillColor * fill * 0.45);
+    float ndl = clamp((dot(n, uLightDir) + 0.32) / 1.32, 0.0, 1.0);
+    float fill = clamp((dot(n, uFillDir) + 0.32) / 1.32, 0.0, 1.0);
+    vec3 lit = base * (uAmbient + uLightColor * ndl + uFillColor * fill * 0.48);
 
     vec3 h = normalize(uLightDir + v);
-    float spec = pow(max(dot(n, h), 0.0), 48.0) * 0.42;
-    lit += uLightColor * spec * (0.25 + 0.75 * ndl);
+    float spec = pow(max(dot(n, h), 0.0), 18.0) * 0.24;
+    lit += uLightColor * spec * (0.3 + 0.7 * ndl);
 
     float ndv = max(dot(n, v), 0.0);
-    float fres = pow(1.0 - ndv, 2.8);
-    lit += vec3(0.95, 0.76, 0.56) * fres * vColor.a;
+    float fres = pow(1.0 - ndv, 2.35);
+    lit += uMetalRim * fres * vColor.a * 0.78;
 
     gl_FragColor = vec4(lit, 1.0);
   }
@@ -193,7 +195,7 @@ const strapVertex = /* glsl */ `
 `;
 
 const makeStrapFragment = (weave: boolean) => /* glsl */ `
-  precision highp float;
+  precision mediump float;
 
   uniform vec3 uLightDir;
   varying vec3 vNormal;
@@ -221,11 +223,11 @@ const makeStrapFragment = (weave: boolean) => /* glsl */ `
 const CARD_MONO = '"Maple Mono", ui-monospace, monospace';
 const CARD_SERIF = '"Instrument Serif", Georgia, serif';
 
-// High-DPI packed texture atlas: front half [0..1016), 16px gutter, back half [1032..2048)
-const HALF_W = 1016;
-const BACK_X = 1032;
-const ATLAS_W = 2048;
-const ATLAS_H = 1474;
+// Supersampled packed texture atlas: front half [0..696), 16px gutter, back half [712..1408)
+const HALF_W = 696;
+const BACK_X = 712;
+const ATLAS_W = 1408;
+const ATLAS_H = 1014;
 const LOGICAL_FRONT_W = 640;
 const LOGICAL_FRONT_H = 928;
 const LOGICAL_BACK_W = 560;
@@ -264,15 +266,17 @@ function drawGlowDot(ctx: CanvasRenderingContext2D, cx: number, cy: number, size
 }
 
 let cachedDotPattern: CanvasPattern | null = null;
-function getDotPattern(ctx: CanvasRenderingContext2D): CanvasPattern | null {
-  if (cachedDotPattern) return cachedDotPattern;
+let cachedDotColor = "";
+function getDotPattern(ctx: CanvasRenderingContext2D, paperHex: string): CanvasPattern | null {
+  if (cachedDotPattern && cachedDotColor === paperHex) return cachedDotPattern;
   const tile = document.createElement("canvas");
   tile.width = 24;
   tile.height = 24;
   const tctx = tile.getContext("2d");
   if (!tctx) return null;
-  tctx.fillStyle = "rgba(237, 231, 222, 0.04)";
+  tctx.fillStyle = hexToRgba(paperHex, 0.045);
   tctx.fillRect(4, 4, 1.5, 1.5);
+  cachedDotColor = paperHex;
   cachedDotPattern = ctx.createPattern(tile, "repeat");
   return cachedDotPattern;
 }
@@ -281,7 +285,9 @@ function drawFrontHalf(
   ctx: CanvasRenderingContext2D,
   opts: LanyardOptions,
   portraitImg: HTMLImageElement | null,
+  palette: ScenePalette,
 ) {
+  const { tokens } = palette;
   const W = LOGICAL_FRONT_W;
   const H = LOGICAL_FRONT_H;
 
@@ -294,9 +300,9 @@ function drawFrontHalf(
   ctx.imageSmoothingQuality = "high";
 
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, "#171b22");
-  bg.addColorStop(0.55, "#0d1015");
-  bg.addColorStop(1, "#080a0d");
+  bg.addColorStop(0, tokens.face);
+  bg.addColorStop(0.55, tokens.panel);
+  bg.addColorStop(1, tokens.slot);
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
@@ -304,9 +310,9 @@ function drawFrontHalf(
   const py = 0;
   const ph = 708;
   const pBg = ctx.createRadialGradient(W * 0.5, ph * 0.44, 30, W * 0.5, ph * 0.48, W * 0.72);
-  pBg.addColorStop(0, "#1d2229");
-  pBg.addColorStop(0.75, "#0d1014");
-  pBg.addColorStop(1, "#090b0d");
+  pBg.addColorStop(0, tokens.faceHi);
+  pBg.addColorStop(0.75, tokens.panel);
+  pBg.addColorStop(1, tokens.slot);
   ctx.fillStyle = pBg;
   ctx.fillRect(0, py, W, ph);
 
@@ -329,32 +335,32 @@ function drawFrontHalf(
     ctx.filter = "none";
 
     const vig = ctx.createRadialGradient(W * 0.5, ph * 0.46, W * 0.18, W * 0.5, ph * 0.46, W * 0.62);
-    vig.addColorStop(0, "rgba(9,11,13,0)");
-    vig.addColorStop(0.65, "rgba(9,11,13,0.32)");
-    vig.addColorStop(1, "rgba(9,11,13,0.92)");
+    vig.addColorStop(0, hexToRgba(tokens.slot, 0));
+    vig.addColorStop(0.65, hexToRgba(tokens.slot, 0.34));
+    vig.addColorStop(1, hexToRgba(tokens.slot, 0.92));
     ctx.fillStyle = vig;
     ctx.fillRect(0, py, W, ph);
 
     const vertScrim = ctx.createLinearGradient(0, 0, 0, ph);
-    vertScrim.addColorStop(0, "rgba(9,11,13,0.58)");
-    vertScrim.addColorStop(0.24, "rgba(9,11,13,0)");
-    vertScrim.addColorStop(0.68, "rgba(9,11,13,0)");
-    vertScrim.addColorStop(1, "#090b0e");
+    vertScrim.addColorStop(0, hexToRgba(tokens.slot, 0.58));
+    vertScrim.addColorStop(0.24, hexToRgba(tokens.slot, 0));
+    vertScrim.addColorStop(0.68, hexToRgba(tokens.slot, 0));
+    vertScrim.addColorStop(1, tokens.slot);
     ctx.fillStyle = vertScrim;
     ctx.fillRect(0, py, W, ph);
     ctx.restore();
   }
 
   // Lower nameplate bar + tiled dot matrix (zero per-dot draw loop)
-  ctx.fillStyle = "#0b0d10";
+  ctx.fillStyle = tokens.rack;
   ctx.fillRect(0, ph, W, H - ph);
-  const pat = getDotPattern(ctx);
+  const pat = getDotPattern(ctx, tokens.paper);
   if (pat) {
     ctx.fillStyle = pat;
     ctx.fillRect(24, ph + 8, W - 48, H - ph - 32);
   }
 
-  ctx.strokeStyle = "rgba(237, 231, 222, 0.14)";
+  ctx.strokeStyle = hexToRgba(tokens.paper, 0.14);
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(0, ph);
@@ -362,39 +368,39 @@ function drawFrontHalf(
   ctx.stroke();
 
   // Top lanyard punch slot cutout
-  ctx.fillStyle = "#050709";
+  ctx.fillStyle = "#05070a";
   drawRoundedRectPath(ctx, W / 2 - 52, 34, 104, 18, 9);
   ctx.fill();
-  ctx.strokeStyle = "rgba(237, 231, 222, 0.24)";
+  ctx.strokeStyle = hexToRgba(tokens.paper, 0.24);
   ctx.lineWidth = 2;
   ctx.stroke();
 
   // Top header strip
   ctx.font = `500 21px ${CARD_MONO}`;
-  ctx.fillStyle = "rgba(237, 231, 222, 0.68)";
+  ctx.fillStyle = hexToRgba(tokens.paper, 0.68);
   ctx.textAlign = "left";
   ctx.fillText("ID // 01", 42, 92);
-  drawGlowDot(ctx, W - 47, 83, 10, "#e6a84c", "230, 168, 76");
+  drawGlowDot(ctx, W - 47, 83, 10, tokens.amber, hexToRgbCss(tokens.amber));
 
   // Nameplate typography
   ctx.textAlign = "left";
-  ctx.fillStyle = "#ede7de";
+  ctx.fillStyle = tokens.paper;
   ctx.font = `400 72px ${CARD_SERIF}`;
   ctx.fillText(opts.name, 42, ph + 88);
 
-  ctx.fillStyle = "#d46b42";
+  ctx.fillStyle = tokens.ember;
   ctx.font = `500 24px ${CARD_MONO}`;
   ctx.fillText(opts.handle.toUpperCase(), 44, ph + 132);
 
   ctx.textAlign = "right";
-  ctx.fillStyle = "#aca59b";
+  ctx.fillStyle = tokens.paperDim;
   ctx.font = `500 20px ${CARD_MONO}`;
   ctx.fillText("ONLINE", W - 44, ph + 131);
-  drawGlowDot(ctx, W - 141, ph + 123, 10, "#5fd97a", "95, 217, 122");
+  drawGlowDot(ctx, W - 141, ph + 123, 10, tokens.led, hexToRgbCss(tokens.led));
 
   // Outer pass hairline border matching 3D cornerRadius
   const cornerPx = Math.round(Math.min(W, H) * 0.5 * (opts.cornerRadius ?? 0.35));
-  ctx.strokeStyle = "rgba(237, 231, 222, 0.16)";
+  ctx.strokeStyle = hexToRgba(tokens.paper, 0.16);
   ctx.lineWidth = 3;
   drawRoundedRectPath(ctx, 10, 10, W - 20, H - 20, Math.max(20, cornerPx - 10));
   ctx.stroke();
@@ -402,7 +408,8 @@ function drawFrontHalf(
   ctx.restore();
 }
 
-function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
+function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions, palette: ScenePalette) {
+  const { tokens, lanyard } = palette;
   const W = LOGICAL_BACK_W;
   const H = LOGICAL_BACK_H;
 
@@ -416,63 +423,63 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
   ctx.imageSmoothingQuality = "high";
 
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, "#14181f");
-  bg.addColorStop(0.55, "#0c0f14");
-  bg.addColorStop(1, "#07090c");
+  bg.addColorStop(0, tokens.rackHi);
+  bg.addColorStop(0.55, tokens.rack);
+  bg.addColorStop(1, tokens.slot);
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
   // Faint background dot matrix
-  const pat = getDotPattern(ctx);
+  const pat = getDotPattern(ctx, tokens.paper);
   if (pat) {
     ctx.fillStyle = pat;
     ctx.fillRect(16, 16, W - 32, H - 32);
   }
 
   // Punch slot cutout
-  ctx.fillStyle = "#050709";
+  ctx.fillStyle = "#05070a";
   drawRoundedRectPath(ctx, W / 2 - 44, 34, 88, 16, 8);
   ctx.fill();
-  ctx.strokeStyle = "rgba(237, 231, 222, 0.2)";
+  ctx.strokeStyle = hexToRgba(tokens.paper, 0.2);
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
-  // Magnetic stripe + ember conductive trace
-  ctx.fillStyle = "#050608";
+  // Magnetic stripe + indigo conductive trace
+  ctx.fillStyle = "#05060a";
   ctx.fillRect(18, 86, W - 36, 56);
   const stripeGrad = ctx.createLinearGradient(18, 86, W - 18, 142);
-  stripeGrad.addColorStop(0, "rgba(230, 168, 76, 0.08)");
-  stripeGrad.addColorStop(0.5, "rgba(212, 107, 66, 0.14)");
-  stripeGrad.addColorStop(1, "rgba(88, 122, 158, 0.08)");
+  stripeGrad.addColorStop(0, lanyard.stripeStops[0]);
+  stripeGrad.addColorStop(0.5, lanyard.stripeStops[1]);
+  stripeGrad.addColorStop(1, lanyard.stripeStops[2]);
   ctx.fillStyle = stripeGrad;
   ctx.fillRect(18, 86, W - 36, 56);
-  ctx.fillStyle = "rgba(212, 107, 66, 0.65)";
+  ctx.fillStyle = lanyard.stripeTraceCss;
   ctx.fillRect(18, 141, W - 36, 2);
 
   // Header & tagline
   ctx.textAlign = "left";
-  ctx.fillStyle = "#d46b42";
+  ctx.fillStyle = tokens.ember;
   ctx.font = `500 14px ${CARD_MONO}`;
   ctx.fillText("SPEC // HARDWARE PASS", 42, 192);
 
-  ctx.fillStyle = "#ede7de";
+  ctx.fillStyle = tokens.paper;
   ctx.font = `italic 400 32px ${CARD_SERIF}`;
   ctx.fillText("Engineering imagination,", 42, 236);
   ctx.fillText("one pixel at a time.", 42, 272);
 
-  // Copper/gold EMV smartchip graphic (top right)
+  // Brushed titanium EMV smartchip graphic (top right)
   const cx = W - 114;
   const cy = 180;
   const cw = 72;
   const ch = 54;
   const chipGrad = ctx.createLinearGradient(cx, cy, cx + cw, cy + ch);
-  chipGrad.addColorStop(0, "#d8a256");
-  chipGrad.addColorStop(0.5, "#b37c36");
-  chipGrad.addColorStop(1, "#7c5222");
+  chipGrad.addColorStop(0, lanyard.chipStops[0]);
+  chipGrad.addColorStop(0.5, lanyard.chipStops[1]);
+  chipGrad.addColorStop(1, lanyard.chipStops[2]);
   ctx.fillStyle = chipGrad;
   drawRoundedRectPath(ctx, cx, cy, cw, ch, 8);
   ctx.fill();
-  ctx.strokeStyle = "#0a0c0f";
+  ctx.strokeStyle = tokens.rack;
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(cx + 22, cy);
@@ -488,7 +495,7 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
   ctx.stroke();
 
   // Divider below header
-  ctx.strokeStyle = "rgba(237, 231, 222, 0.12)";
+  ctx.strokeStyle = hexToRgba(tokens.paper, 0.12);
   ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.moveTo(42, 304);
@@ -505,7 +512,7 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
 
   let ry = 362;
   for (const [k, v] of rows) {
-    ctx.strokeStyle = "rgba(237, 231, 222, 0.08)";
+    ctx.strokeStyle = hexToRgba(tokens.paper, 0.08);
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(42, ry + 22);
@@ -513,12 +520,12 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
     ctx.stroke();
 
     ctx.textAlign = "left";
-    ctx.fillStyle = "#8a837a";
+    ctx.fillStyle = tokens.dim;
     ctx.font = `500 14.5px ${CARD_MONO}`;
     ctx.fillText(k, 42, ry);
 
     ctx.textAlign = "right";
-    ctx.fillStyle = "#ede7de";
+    ctx.fillStyle = tokens.paper;
     ctx.font = `500 15.5px ${CARD_MONO}`;
     ctx.fillText(v, W - 42, ry);
     ry += 62;
@@ -529,9 +536,9 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
   const bxBoxY = 618;
   const bxBoxW = 352;
   const bxBoxH = 72;
-  ctx.fillStyle = "#050709";
+  ctx.fillStyle = tokens.slot;
   ctx.fillRect(bxBoxX, bxBoxY, bxBoxW, bxBoxH);
-  ctx.strokeStyle = "rgba(237, 231, 222, 0.08)";
+  ctx.strokeStyle = hexToRgba(tokens.paper, 0.08);
   ctx.lineWidth = 1;
   ctx.strokeRect(bxBoxX, bxBoxY, bxBoxW, bxBoxH);
 
@@ -539,7 +546,7 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
     "2112141411221421121412211122141212411214211341111421121222314212112121412141211321132331112";
   const barUnit = 1.98;
   let bx = bxBoxX + (bxBoxW - 167 * barUnit) * 0.5;
-  ctx.fillStyle = "rgba(237, 231, 222, 0.86)";
+  ctx.fillStyle = hexToRgba(tokens.paper, 0.86);
   for (let i = 0; i < code128Widths.length; i++) {
     const bw = Number(code128Widths[i]) * barUnit;
     if (i % 2 === 0) ctx.fillRect(bx, bxBoxY + 9, bw, bxBoxH - 18);
@@ -552,9 +559,9 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
   const qrBoxSize = 104;
   const qrBoxX = W - 42 - qrBoxSize;
   const qrBoxY = 602;
-  ctx.fillStyle = "#050709";
+  ctx.fillStyle = tokens.slot;
   ctx.fillRect(qrBoxX, qrBoxY, qrBoxSize, qrBoxSize);
-  ctx.strokeStyle = "rgba(237, 231, 222, 0.08)";
+  ctx.strokeStyle = hexToRgba(tokens.paper, 0.08);
   ctx.strokeRect(qrBoxX, qrBoxY, qrBoxSize, qrBoxSize);
 
   const qrRows = [
@@ -566,7 +573,7 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
   ];
   const qrStartX = qrBoxX + (qrBoxSize - qrSize * cell) * 0.5;
   const qrStartY = qrBoxY + (qrBoxSize - qrSize * cell) * 0.5;
-  ctx.fillStyle = "rgba(237, 231, 222, 0.88)";
+  ctx.fillStyle = hexToRgba(tokens.paper, 0.88);
   for (let r = 0; r < qrSize; r++) {
     const rowMask = qrRows[r];
     for (let c = 0; c < qrSize; c++) {
@@ -578,18 +585,18 @@ function drawBackHalf(ctx: CanvasRenderingContext2D, opts: LanyardOptions) {
 
   // Serial + interactive hint
   ctx.textAlign = "left";
-  ctx.fillStyle = "#8a837a";
+  ctx.fillStyle = tokens.dim;
   ctx.font = `500 13px ${CARD_MONO}`;
   ctx.fillText("SN // NN-11-03-07", 42, H - 52);
 
   ctx.textAlign = "right";
-  ctx.fillStyle = "rgba(212, 107, 66, 0.88)";
+  ctx.fillStyle = hexToRgba(tokens.ember, 0.9);
   ctx.font = `500 13px ${CARD_MONO}`;
   ctx.fillText("CLICK TO FLIP · DRAG TO SWING", W - 42, H - 52);
 
   // Outer pass hairline border matching 3D cornerRadius
   const cornerPx = Math.round(Math.min(W, H) * 0.5 * (opts.cornerRadius ?? 0.35));
-  ctx.strokeStyle = "rgba(237, 231, 222, 0.16)";
+  ctx.strokeStyle = hexToRgba(tokens.paper, 0.16);
   ctx.lineWidth = 2.5;
   drawRoundedRectPath(ctx, 9, 9, W - 18, H - 18, Math.max(20, cornerPx - 9));
   ctx.stroke();
@@ -610,7 +617,7 @@ function buildCardGeometries(
   const hh = cardH * 0.5;
   const hz = cardD * 0.5;
   const r = Math.min(hw, hh) * Math.max(0.02, Math.min(0.48, radiusRatio));
-  const arcSegs = 8;
+  const arcSegs = 5;
 
   const corners: [number, number, number][] = [
     [hw - r, hh - r, 0],
@@ -795,7 +802,7 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
   const size = opts.size ?? 0.8;
   const cornerRadius = opts.cornerRadius ?? 0.35;
   const elasticity = opts.elasticity ?? 0.15;
-  const damping = opts.damping ?? 0.85;
+  const damping = opts.damping ?? 0.92;
   const breeze = opts.breeze ?? 0.65;
   const strapLength = opts.strapLength ?? 0;
   const useHolo = (opts.finish ?? "holographic") === "holographic";
@@ -803,7 +810,7 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
 
   const rawDpr = window.devicePixelRatio || 1;
   const isCoarse = window.matchMedia("(pointer: coarse)").matches;
-  const getTargetDpr = () => Math.min(window.devicePixelRatio || 1, isCoarse ? 1.75 : 3.0);
+  const getTargetDpr = () => Math.min(window.devicePixelRatio || 1, isCoarse ? 1.5 : 2.0);
 
   let renderer: Renderer;
   try {
@@ -830,15 +837,17 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
   const probe = new Vec3(0, 1, 0).applyMatrix4(camera.projectionViewMatrix);
   const tanHalf = 1 / Math.max(0.0001, probe.y * camera.position.z);
 
+  const palette = getScenePalette();
+
   // Shared pre-normalized lighting vectors
   const lightDir = new Vec3(-0.45, 0.72, 0.78).normalize();
   const fillDir = new Vec3(0.6, 0.2, 0.5).normalize();
   const lightUniforms = {
     uLightDir: { value: lightDir },
-    uLightColor: { value: [1.45, 1.22, 0.96] },
-    uAmbient: { value: [0.22, 0.23, 0.25] },
+    uLightColor: { value: palette.lanyard.keyLight },
+    uAmbient: { value: palette.lanyard.ambient },
     uFillDir: { value: fillDir },
-    uFillColor: { value: [0.32, 0.44, 0.64] },
+    uFillColor: { value: palette.lanyard.fillLight },
   };
 
   // Single 1024x737 packed atlas canvas for both card faces
@@ -847,8 +856,8 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
   atlasCanvas.height = ATLAS_H;
   const atlasCtx = atlasCanvas.getContext("2d")!;
 
-  drawFrontHalf(atlasCtx, opts, null);
-  drawBackHalf(atlasCtx, opts);
+  drawFrontHalf(atlasCtx, opts, null, palette);
+  drawBackHalf(atlasCtx, opts, palette);
 
   const useMips = renderer.isWebgl2;
   const atlasTex = new Texture(gl, {
@@ -872,6 +881,10 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
     uniforms: {
       ...lightUniforms,
       uRim: { value: 0.38 },
+      uPaperCol: { value: palette.lanyard.foilPaper },
+      uAmberCol: { value: palette.lanyard.foilHighlight },
+      uEmberCol: { value: palette.lanyard.foilAccent },
+      uIceCol: { value: palette.lanyard.foilIce },
       uMap: { value: atlasTex },
     },
   });
@@ -880,7 +893,10 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
     vertex: metalVertex,
     fragment: metalFragment,
     cullFace: gl.BACK,
-    uniforms: lightUniforms,
+    uniforms: {
+      ...lightUniforms,
+      uMetalRim: { value: palette.lanyard.metalRim },
+    },
   });
 
   const strapProg = new Program(gl, {
@@ -915,11 +931,16 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
   // Load portrait & fonts cleanly without redundant back-card rebakes
   const portraitImg = new Image();
   portraitImg.decoding = "async";
-  let fontsDone = false;
+  const fontsReadyAtBoot =
+    typeof document.fonts?.check === "function" &&
+    document.fonts.check(`400 72px ${CARD_SERIF}`) &&
+    document.fonts.check(`italic 400 32px ${CARD_SERIF}`) &&
+    document.fonts.check(`500 24px ${CARD_MONO}`);
+  let fontsDone = fontsReadyAtBoot;
 
   const uploadFront = () => {
     if (!alive) return;
-    drawFrontHalf(atlasCtx, opts, portraitImg.complete && portraitImg.naturalWidth > 0 ? portraitImg : null);
+    drawFrontHalf(atlasCtx, opts, portraitImg.complete && portraitImg.naturalWidth > 0 ? portraitImg : null, palette);
     atlasTex.needsUpdate = true;
     if (!loopReady) return;
     if (reduce) renderFrame();
@@ -929,8 +950,8 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
   const uploadBothForFonts = () => {
     if (!alive || fontsDone) return;
     fontsDone = true;
-    drawFrontHalf(atlasCtx, opts, portraitImg.complete && portraitImg.naturalWidth > 0 ? portraitImg : null);
-    drawBackHalf(atlasCtx, opts);
+    drawFrontHalf(atlasCtx, opts, portraitImg.complete && portraitImg.naturalWidth > 0 ? portraitImg : null, palette);
+    drawBackHalf(atlasCtx, opts, palette);
     atlasTex.needsUpdate = true;
     if (!loopReady) return;
     if (reduce) renderFrame();
@@ -946,7 +967,7 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
     }
   };
   portraitImg.src = opts.avatar;
-  if (document.fonts) {
+  if (!fontsDone && document.fonts) {
     Promise.all([
       document.fonts.load(`400 72px ${CARD_SERIF}`),
       document.fonts.load(`italic 400 32px ${CARD_SERIF}`),
@@ -977,8 +998,8 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
   cardBody.addChild(hardwareMesh);
 
   // Woven lanyard strap ribbon driven by Verlet chain (analytic Catmull-Rom tangent, DYNAMIC_DRAW)
-  const NODES = 8;
-  const strapSegs = 12;
+  const NODES = 6;
+  const strapSegs = 8;
   const strapW = 0.28 * size;
   const strapVertCount = (strapSegs + 1) * 2;
   const strapPos = new Float32Array(strapVertCount * 3);
@@ -1097,6 +1118,7 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
       canvas.style.removeProperty("width");
       canvas.style.removeProperty("height");
       camera.perspective({ aspect: w / h });
+      markActive();
     }
 
     strapDrop = (0.64 + strapLength * 1.4) * size;
@@ -1117,7 +1139,6 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
     if (!grabbed) {
       nodes[0].set(0, topAnchorY, 0);
     }
-    markActive();
   };
 
   const getRect = () => {
@@ -1328,16 +1349,16 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
         return;
       }
       const d = angleDiff(flipped ? Math.PI : 0, cardState.ry);
-      cardState.oy = (d >= 0 ? 1 : -1) * 10.5;
-      markActive(2600);
+      cardState.oy = (d >= 0 ? 1 : -1) * 9.2;
+      markActive(2400);
       return;
     }
 
-    claspVel.x = Math.max(-7.0, Math.min(7.0, dragVel.x * 0.55));
-    claspVel.y = Math.max(-5.0, Math.min(5.0, dragVel.y * 0.45));
-    cardState.oy += Math.max(-7, Math.min(7, -dragVel.x * 0.45));
-    cardState.oz += Math.max(-3.5, Math.min(3.5, dragVel.x * 0.18));
-    markActive(4500);
+    claspVel.x = Math.max(-5.5, Math.min(5.5, dragVel.x * 0.42));
+    claspVel.y = Math.max(-3.8, Math.min(3.8, dragVel.y * 0.32));
+    cardState.oy += Math.max(-5.2, Math.min(5.2, -dragVel.x * 0.32));
+    cardState.oz += Math.max(-2.8, Math.min(2.8, dragVel.x * 0.12));
+    markActive(3800);
   };
 
   const onCanvasDown = (e: PointerEvent) => {
@@ -1396,7 +1417,10 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
 
     const subSteps = 5;
     const h = dt / subSteps;
-    const tangDamp = Math.pow(Math.max(0.28, 1 - damping * 0.62), h);
+    const tangDamp = Math.pow(Math.max(0.16, 1 - damping * 0.74), h);
+    const zDamp = 5.0 + damping * 2.8;
+    const rollDamp = 5.2 + damping * 3.4;
+    const yawDampPow = Math.max(0.008, 0.032 - damping * 0.022);
     const breezeX = breeze * (0.38 * Math.sin(nowSec * 0.95) + 0.18 * Math.sin(nowSec * 1.8 + 1.1));
     const breezeZ = breeze * (0.12 * Math.cos(nowSec * 0.78 + 0.6));
     const gravity = -24.0;
@@ -1438,7 +1462,7 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
       } else {
         claspVel.x += breezeX * h;
         claspVel.y += gravity * h;
-        claspVel.z += (breezeZ - claspPos.z * 14.0 - claspVel.z * 5.0) * h;
+        claspVel.z += (breezeZ - claspPos.z * 14.0 - claspVel.z * zDamp) * h;
 
         claspPos.x += claspVel.x * h;
         claspPos.y += claspVel.y * h;
@@ -1474,7 +1498,7 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
 
         const strapAngle = Math.atan2(claspPos.x, Math.max(0.2, topAnchorY - claspPos.y));
         const eqRz = strapAngle * 0.48 + Math.max(-0.18, Math.min(0.18, claspVel.x * 0.045));
-        const angAcc = (eqRz - cardState.rz) * 54.0 - cardState.oz * 5.2;
+        const angAcc = (eqRz - cardState.rz) * 48.0 - cardState.oz * rollDamp;
         cardState.oz += angAcc * h;
         cardState.rz = Math.max(-0.7, Math.min(0.7, cardState.rz + cardState.oz * h));
 
@@ -1535,12 +1559,12 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
 
     const baseYaw = flipped ? Math.PI : 0;
     if (grabbed) {
-      cardState.oy += Math.max(-16, Math.min(16, -dragVel.x * 1.8 * dt)) + angleDiff(baseYaw, cardState.ry) * 4.5 * dt;
+      cardState.oy += Math.max(-14, Math.min(14, -dragVel.x * 1.45 * dt)) + angleDiff(baseYaw, cardState.ry) * 4.5 * dt;
     } else {
       const restRy = baseYaw + breeze * 0.08 * Math.sin(nowSec * 0.8 + 0.5);
-      cardState.oy += angleDiff(restRy, cardState.ry) * 26.0 * dt;
+      cardState.oy += angleDiff(restRy, cardState.ry) * 24.0 * dt;
     }
-    cardState.oy *= Math.pow(grabbed ? 0.04 : 0.03, dt);
+    cardState.oy *= Math.pow(grabbed ? 0.03 : yawDampPow, dt);
     cardState.ry += cardState.oy * dt;
   };
 
@@ -1572,7 +1596,6 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
     cardGroup.rotation.set(cardState.rx, cardState.ry, cardState.rz);
     updateStrapGeometry(forceStrap);
     scene.updateMatrixWorld();
-    camera.updateMatrixWorld();
     updateHitBounds();
     renderer.render({ scene, camera, update: false, sort: false, frustumCull: false });
   };

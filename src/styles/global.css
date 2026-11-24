@@ -3,7 +3,9 @@
 @theme {
   --color-rack: #0c0e11;
   --color-rack-hi: #13171b;
+  --color-rack-glow: #15191f;
   --color-ink-2: #121519;
+  --color-panel: #0d1014;
   --color-face: #1b1f25;
   --color-face-hi: #242930;
   --color-slot: #07090b;
@@ -11,12 +13,47 @@
   --color-paper-dim: #aca59b;
   --color-dim: #928b82;
   --color-led: #5fd97a;
-  --color-amber: #e6a84c;
-  --color-ember: #d46b42;
+  --color-amber: #b4b5e6;
+  --color-ember: #8c8fd4;
+  --color-accent-deep: #484b9e;
+  --color-ice: #667e99;
 
   --font-serif: "Instrument Serif", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "Maple Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+:root {
+  --color-selection: color-mix(in srgb, var(--color-accent-deep) 38%, transparent);
+  --color-ember-glow: color-mix(in srgb, var(--color-ember) 56%, transparent);
+  --color-ember-glow-strong: color-mix(in srgb, var(--color-ember) 68%, transparent);
+  --color-ember-tint: color-mix(in srgb, var(--color-ember) 7%, transparent);
+  --color-ember-badge-glow: color-mix(in srgb, var(--color-accent-deep) 24%, transparent);
+  --color-accent-radial: color-mix(in srgb, var(--color-accent-deep) 10%, transparent);
+  --color-amber-ring: color-mix(in srgb, var(--color-amber) 38%, transparent);
+  --color-amber-glow: color-mix(in srgb, var(--color-amber) 11%, transparent);
+  --color-paper-line: color-mix(in srgb, var(--color-paper) 10%, transparent);
+  --color-paper-faint: color-mix(in srgb, var(--color-paper) 3%, transparent);
+  --color-paper-border: color-mix(in srgb, var(--color-paper) 16%, transparent);
+  --color-paper-soft: color-mix(in srgb, var(--color-paper) 22%, transparent);
+  --color-paper-muted: color-mix(in srgb, var(--color-paper) 55%, transparent);
+  --color-rule-underline: color-mix(in srgb, var(--color-ember) 48%, transparent);
+  --color-rack-glass: color-mix(in srgb, var(--color-rack) 97%, transparent);
+  --color-rack-scrim-hi: color-mix(in srgb, var(--color-rack) 80%, transparent);
+  --color-rack-scrim-mid: color-mix(in srgb, var(--color-rack) 44%, transparent);
+  --color-rack-scrim-lo: color-mix(in srgb, var(--color-rack) 25%, transparent);
+  --color-rack-scrim-band: color-mix(in srgb, var(--color-rack) 68%, transparent);
+  --shadow-ember-md: 0 0 12px var(--color-ember-glow);
+
+  --color-scrollbar: #2f353c;
+  --color-tag-hi: #ded7cc;
+  --color-tag-lo: #c6bfb4;
+  --color-cursor-hover: #c9caeb;
+  --color-trail-outer: #8588c8;
+  --color-trail-core: #b2b4e4;
+  --color-chip-hi: #d8a256;
+  --color-chip-mid: #b37c36;
+  --color-chip-lo: #7c5222;
 }
 
 @layer base {
@@ -26,12 +63,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scrollbar-width: thin;
-    scrollbar-color: #2f353c transparent;
+    scrollbar-color: var(--color-scrollbar) transparent;
   }
 
   body {
     margin: 0;
-    background: radial-gradient(65% 60% at 72% 48%, #15191f 0%, var(--color-rack) 72%);
+    background: radial-gradient(75% 70% at 70% 48%, var(--color-rack-glow) 0%, var(--color-rack) 78%);
     background-attachment: fixed;
     color: var(--color-paper);
     font-family: var(--font-sans);
@@ -42,7 +79,7 @@
   }
 
   ::selection {
-    background: rgba(212, 107, 66, 0.38);
+    background: var(--color-selection);
   }
 
   :focus-visible {
@@ -122,8 +159,8 @@
 
   /* the active unit reads as "selected" */
   .unit[data-active="true"] .unit-chassis {
-    border-color: rgba(224, 163, 74, 0.45);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px rgba(224, 163, 74, 0.12);
+    border-color: var(--color-amber-ring);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px var(--color-amber-glow);
   }
 
   /* blanking panel — fills unused rack space */
@@ -165,8 +202,8 @@
 
   /* asset tag */
   .tag {
-    background: linear-gradient(180deg, #ded7cc, #c6bfb4);
-    color: #1a1c1f;
+    background: linear-gradient(180deg, var(--color-tag-hi), var(--color-tag-lo));
+    color: var(--color-rack);
     border-radius: 1px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
   }
@@ -286,14 +323,14 @@ html.lenis body {
   }
 
   .rule {
-    border-top: 1px solid rgba(232, 226, 217, 0.1);
+    border-top: 1px solid var(--color-paper-line);
   }
 
   .link-underline {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.28em;
-    text-decoration-color: rgba(201, 99, 60, 0.5);
+    text-decoration-color: var(--color-rule-underline);
     transition: color 180ms ease, text-decoration-color 180ms ease;
   }
 
@@ -339,8 +376,8 @@ html.lenis body {
   pointer-events: none;
   background: radial-gradient(
     ellipse 46% 44% at 50% 50%,
-    rgba(12, 14, 17, 0.8) 22%,
-    rgba(12, 14, 17, 0.44) 58%,
+    var(--color-rack-scrim-hi) 22%,
+    var(--color-rack-scrim-mid) 58%,
     rgba(12, 14, 17, 0) 96%
   );
   backdrop-filter: blur(4px);
@@ -371,10 +408,10 @@ html.lenis body {
 .page-dither-scrim {
   background: linear-gradient(
     90deg,
-    rgba(12, 14, 17, 0.25) 0%,
-    rgba(12, 14, 17, 0.68) 12%,
-    rgba(12, 14, 17, 0.68) 88%,
-    rgba(12, 14, 17, 0.25) 100%
+    var(--color-rack-scrim-lo) 0%,
+    var(--color-rack-scrim-band) 12%,
+    var(--color-rack-scrim-band) 88%,
+    var(--color-rack-scrim-lo) 100%
   );
   backdrop-filter: blur(2.5px);
   -webkit-backdrop-filter: blur(2.5px);
@@ -450,12 +487,12 @@ html[data-layout="split"] .stage[data-active="true"][data-overflow="true"] {
   overflow-x: hidden;
   padding-right: 1rem;
   scrollbar-width: thin;
-  scrollbar-color: rgba(232, 226, 217, 0.2) transparent;
+  scrollbar-color: var(--color-paper-soft) transparent;
 }
 
 html[data-layout="window"][data-window-open="true"] header {
   background: var(--color-rack);
-  border-bottom: 1px solid rgba(232, 226, 217, 0.08);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-paper) 8%, transparent);
 }
 
 html[data-layout="split"] [data-os-window] {
@@ -519,15 +556,15 @@ html[data-layout="window"] [data-os-window] {
 
 html[data-layout="window"][data-window-frame="floating"] [data-os-window] {
   width: min(100%, 44rem);
-  border: 1px solid rgba(232, 226, 217, 0.16);
+  border: 1px solid var(--color-paper-border);
   border-radius: 0.375rem;
-  background: rgba(12, 14, 17, 0.97);
+  background: var(--color-rack-glass);
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
 html[data-layout="window"][data-window-frame="compact"] [data-os-window] {
   min-height: calc(100dvh - 3.5rem - 4.75rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-  border-top: 1px solid rgba(232, 226, 217, 0.12);
+  border-top: 1px solid color-mix(in srgb, var(--color-paper) 12%, transparent);
   background: var(--color-rack);
 }
 

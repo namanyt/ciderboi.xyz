@@ -15,14 +15,14 @@ interface Props {
 const {
   cellSize = 20,
   ditherSize = 6,
-  radius = 120,
-  ditherRadius = 82,
-  exponent = 2.0,
-  pulseMs = 1000,
-  gridOpacity = 0.045,
-  fillOpacity = 0.075,
-  intensity = 0.23,
-  trailDecayMs = 580,
+  radius = 135,
+  ditherRadius = 104,
+  exponent = 1.6,
+  pulseMs = 1050,
+  gridOpacity = 0.042,
+  fillOpacity = 0.06,
+  intensity = 0.17,
+  trailDecayMs = 620,
 } = Astro.props;
 ---
 
@@ -43,9 +43,16 @@ const {
 ></canvas>
 
 <script>
+  import { getThemeTokens, hexToRgbCss } from "../lib/theme";
+
   const canvas = document.querySelector<HTMLCanvasElement>("[data-cursor-dither-bg]");
 
   if (canvas) {
+    const theme = getThemeTokens();
+    const paperRgb = hexToRgbCss(theme.paper);
+    const trailOuterRgb = hexToRgbCss(theme.trailOuter);
+    const trailCoreRgb = hexToRgbCss(theme.trailCore);
+
     const num = (key: string, fallback: number) => {
       const v = Number(canvas.dataset[key]);
       return Number.isFinite(v) ? v : fallback;
@@ -102,7 +109,7 @@ const {
       cols = Math.ceil(width / CELL) + 1;
       rows = Math.ceil(height / CELL) + 1;
 
-      baseCtx.fillStyle = `rgba(237, 231, 222, ${GRID_ALPHA})`;
+      baseCtx.fillStyle = `rgba(${paperRgb}, ${GRID_ALPHA})`;
       const offset = CELL * 0.5;
       for (let r = 0; r < rows; r++) {
         const y = r * CELL + offset;
@@ -290,7 +297,7 @@ const {
       const dx = px < inL ? inL - px : px > inR ? px - inR : 0;
       const dy = py < inT ? inT - py : py > inB ? py - inB : 0;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      const feather = 96;
+      const feather = 124;
       if (dist >= feather) return 1;
       const t = dist / feather;
       const smooth = t * t * (3 - 2 * t);
@@ -332,8 +339,8 @@ const {
           const y = r * CELL + offset;
           const ease = k * k * stageAttenuation(x, y, activeStageRect);
           const rad = 1 + ease * 0.7;
-          // Warm matte Mocha-peach tinted grid dot wake
-          ctx.fillStyle = `rgba(227, 155, 116, ${(FILL_ALPHA * ease).toFixed(4)})`;
+          // Cool periwinkle-indigo grid dot wake (from theme tokens)
+          ctx.fillStyle = `rgba(${trailOuterRgb}, ${(FILL_ALPHA * ease).toFixed(4)})`;
           ctx.fillRect(x - rad * 0.5, y - rad * 0.5, rad, rad);
         }
       }
@@ -382,11 +389,11 @@ const {
 
             if (field > 0.02 && field > bRow[gx & 7]) {
               const alpha = Math.min(INTENSITY, INTENSITY * (0.42 + field * 0.72));
-              // Pastel Mocha-Ember: muted peach-terracotta wake (#e39b74) -> dusty honey core (#ecd198)
+              // Cool indigo wake (--color-trail-outer) -> periwinkle-ice core (--color-trail-core)
               ctx.fillStyle =
                 field > 0.65
-                  ? `rgba(236, 209, 152, ${alpha.toFixed(4)})`
-                  : `rgba(227, 155, 116, ${alpha.toFixed(4)})`;
+                  ? `rgba(${trailCoreRgb}, ${alpha.toFixed(4)})`
+                  : `rgba(${trailOuterRgb}, ${alpha.toFixed(4)})`;
               ctx.fillRect(gx * DITHER, gy * DITHER, block, block);
             }
           }

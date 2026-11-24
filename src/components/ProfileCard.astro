@@ -134,8 +134,8 @@ const {
     flex-direction: column;
     overflow: hidden;
     border-radius: 0;
-    border: 1px solid rgba(237, 231, 222, 0.16);
-    background: linear-gradient(165deg, #161a20 0%, #0b0d10 100%);
+    border: 1px solid var(--color-paper-border);
+    background: linear-gradient(165deg, var(--color-face) 0%, var(--color-slot) 100%);
     transform-style: preserve-3d;
     transform: rotateX(var(--rx)) rotateY(var(--ry));
     transition: border-color 220ms ease, box-shadow 220ms ease;
@@ -147,26 +147,27 @@ const {
   }
 
   .pc-wrap[data-hovered="true"] .pc-card {
-    border-color: rgba(230, 168, 76, 0.38);
+    border-color: var(--color-amber-ring);
     box-shadow:
       0 28px 56px -16px rgba(0, 0, 0, 0.94),
-      0 0 22px -10px rgba(212, 107, 66, 0.22),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      0 0 36px -8px var(--color-ember-badge-glow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .pc-visual {
     position: relative;
     aspect-ratio: 4 / 4.65;
     overflow: hidden;
-    background: radial-gradient(75% 75% at 50% 42%, #1d2229 0%, #0d1014 78%, #090b0d 100%);
+    background: radial-gradient(75% 75% at 50% 42%, var(--color-face-hi) 0%, var(--color-panel) 78%, var(--color-slot) 100%);
   }
 
   .pc-pattern {
     position: absolute;
     inset: -12%;
     opacity: 0.22;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cpath d='M6 8h6v3H9v9H6V8zm18 11h-3v-9h-3V7h6v12zM14 26h8v2h-8z' fill='%23ede7de' fill-opacity='0.28'/%3E%3Ccircle cx='30' cy='6' r='1' fill='%23e6a84c' fill-opacity='0.45'/%3E%3C/svg%3E");
-    background-size: 36px 36px;
+    background: linear-gradient(135deg, var(--color-paper) 20%, var(--color-amber) 100%);
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cpath d='M6 8h6v3H9v9H6V8zm18 11h-3v-9h-3V7h6v12zM14 26h8v2h-8z' fill='%23fff' fill-opacity='0.28'/%3E%3Ccircle cx='30' cy='6' r='1' fill='%23fff' fill-opacity='0.45'/%3E%3C/svg%3E");
+    mask-size: 36px 36px;
     transform: translate3d(calc(var(--px) * -0.45), calc(var(--py) * -0.45), 0);
   }
 
@@ -177,16 +178,16 @@ const {
     background-image:
       repeating-linear-gradient(
         118deg,
-        rgba(230, 168, 76, 0.34) 0%,
-        rgba(212, 107, 66, 0.22) 10%,
-        rgba(237, 231, 222, 0.28) 18%,
-        rgba(88, 122, 158, 0.24) 28%,
-        rgba(230, 168, 76, 0.32) 38%
+        color-mix(in srgb, var(--color-amber) 34%, transparent) 0%,
+        color-mix(in srgb, var(--color-accent-deep) 28%, transparent) 10%,
+        color-mix(in srgb, var(--color-paper) 28%, transparent) 18%,
+        color-mix(in srgb, var(--color-ice) 26%, transparent) 28%,
+        color-mix(in srgb, var(--color-amber) 32%, transparent) 38%
       ),
       radial-gradient(
         circle at var(--mx) var(--my),
-        rgba(237, 231, 222, 0.42) 0%,
-        rgba(230, 168, 76, 0.14) 42%,
+        color-mix(in srgb, var(--color-paper) 42%, transparent) 0%,
+        var(--color-amber-glow) 42%,
         transparent 74%
       );
     background-size: 240% 240%, 100% 100%;
@@ -217,8 +218,8 @@ const {
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(180deg, rgba(9, 11, 13, 0.45) 0%, transparent 24%),
-      linear-gradient(0deg, rgba(9, 11, 13, 0.72) 0%, transparent 32%);
+      linear-gradient(180deg, color-mix(in srgb, var(--color-slot) 45%, transparent) 0%, transparent 24%),
+      linear-gradient(0deg, color-mix(in srgb, var(--color-slot) 72%, transparent) 0%, transparent 32%);
   }
 
   .pc-glare {
@@ -227,12 +228,12 @@ const {
     opacity: calc(var(--card-op) * var(--glare-max));
     background: radial-gradient(
       farthest-corner circle at var(--mx) var(--my),
-      rgba(237, 231, 222, 0.42) 0%,
-      rgba(230, 168, 76, 0.18) 28%,
-      rgba(12, 14, 17, 0.12) 68%
+      color-mix(in srgb, var(--color-paper) 30%, transparent) 0%,
+      color-mix(in srgb, var(--color-amber) 14%, transparent) 34%,
+      color-mix(in srgb, var(--color-rack) 10%, transparent) 78%
     );
     mix-blend-mode: overlay;
-    transition: opacity 220ms ease;
+    transition: opacity 260ms ease;
   }
 
   .pc-tag {
@@ -248,7 +249,7 @@ const {
     font-size: 9.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(237, 231, 222, 0.55);
+    color: var(--color-paper-muted);
   }
 
   .pc-tag-dot {
@@ -264,8 +265,8 @@ const {
     justify-content: space-between;
     gap: 10px;
     padding: 10px 12px;
-    background: #0b0d10;
-    border-top: 1px solid rgba(237, 231, 222, 0.1);
+    background: var(--color-slot);
+    border-top: 1px solid var(--color-paper-line);
   }
 
   .pc-identity {
@@ -307,8 +308,8 @@ const {
   .pc-btn {
     pointer-events: auto;
     flex-shrink: 0;
-    border: 1px solid rgba(237, 231, 222, 0.22);
-    background: rgba(237, 231, 222, 0.03);
+    border: 1px solid var(--color-paper-soft);
+    background: var(--color-paper-faint);
     padding: 5px 10px;
     font-family: var(--font-mono);
     font-size: 10px;
@@ -322,7 +323,7 @@ const {
   .pc-btn:hover {
     border-color: var(--color-ember);
     color: var(--color-ember);
-    background: rgba(212, 107, 66, 0.08);
+    background: var(--color-ember-tint);
   }
 
   @media (max-width: 639px) {

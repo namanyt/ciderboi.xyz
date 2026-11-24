@@ -83,7 +83,7 @@ const ytThumb = (url?: string) => {
               rel="noopener noreferrer"
               class="group flex w-full flex-col overflow-hidden border border-paper/12 bg-white/[0.015] transition-all duration-200 hover:-translate-y-0.5 hover:border-ember/60 hover:bg-white/[0.035]"
             >
-              <div class="relative aspect-[16/10] w-full overflow-hidden border-b border-paper/10 bg-[#0d1014]">
+              <div class="relative aspect-[16/10] w-full overflow-hidden border-b border-paper/10 bg-panel">
                 {thumb ? (
                   <img
                     src={thumb}
@@ -93,7 +93,7 @@ const ytThumb = (url?: string) => {
                     class="h-full w-full object-cover opacity-85 transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-100"
                   />
                 ) : (
-                  <div class="flex h-full w-full flex-col justify-between bg-[radial-gradient(circle_at_70%_20%,rgba(232,126,64,0.09),transparent_62%)] p-5">
+                  <div class="flex h-full w-full flex-col justify-between bg-[radial-gradient(circle_at_70%_20%,var(--color-accent-radial),transparent_62%)] p-5">
                     <div class="flex items-center justify-between">
                       <span class="font-mono text-[10.5px] tracking-[0.12em] text-dim uppercase">
                         {p.category}
@@ -117,13 +117,13 @@ const ytThumb = (url?: string) => {
                 )}
 
                 {thumb && p.video && (
-                  <span class="label-mono absolute bottom-2.5 left-2.5 border border-paper/20 bg-[#0c0e11]/85 px-2 py-0.5 text-[10.5px] text-paper backdrop-blur-xs">
+                  <span class="label-mono absolute bottom-2.5 left-2.5 border border-paper/20 bg-rack/85 px-2 py-0.5 text-[10.5px] text-paper backdrop-blur-xs">
                     ▶ Play study
                   </span>
                 )}
 
                 {thumb && leadMetric && (
-                  <span class="label-mono absolute top-2.5 right-2.5 border border-paper/15 bg-[#0c0e11]/85 px-2 py-0.5 text-[10.5px] text-paper-dim backdrop-blur-xs">
+                  <span class="label-mono absolute top-2.5 right-2.5 border border-paper/15 bg-rack/85 px-2 py-0.5 text-[10.5px] text-paper-dim backdrop-blur-xs">
                     <strong class="font-normal text-paper">{leadMetric.value}</strong>{" "}
                     {leadMetric.label}
                   </span>
