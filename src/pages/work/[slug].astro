@@ -164,7 +164,7 @@ const next = getProject(ordered[(ordered.indexOf(project.id) + 1) % ordered.leng
           {project.images
             .filter((i) => i.src !== project.cover)
             .map((img) => (
-              <figure>
+              <figure class:list={[img.wide && "sm:col-span-2"]}>
                 <img
                   src={img.src}
                   alt={img.alt}

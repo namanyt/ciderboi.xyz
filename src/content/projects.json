@@ -101,6 +101,12 @@
           "src": "/work/gamma-1d5-300b/validate.avif",
           "alt": "Validation script comparing decimal and hexadecimal output",
           "caption": "Independent verification"
+        },
+        {
+          "src": "/work/gamma-1d5-300b/record.avif",
+          "alt": "Official y-cruncher world records table listing Nitya Naman for Gamma(1/5) at 300,000,000,000 decimal digits",
+          "caption": "y-cruncher world records listing",
+          "wide": true
         }
       ],
       "metrics": [

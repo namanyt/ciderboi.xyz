@@ -23,7 +23,7 @@ export type Site = {
 
 export type Link = { label: string; url: string };
 export type LogEntry = { date: string; text: string };
-export type ProjectImage = { src: string; alt: string; caption?: string };
+export type ProjectImage = { src: string; alt: string; caption?: string; wide?: boolean };
 export type Metric = { value: string; label: string };
 
 export type ProjectVideo = { url: string; caption?: string };
