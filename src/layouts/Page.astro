@@ -8,16 +8,19 @@ export interface Props {
   title: string;
   description?: string;
   path: string;
+  ogImage?: string;
+  ogType?: "website" | "profile";
+  ogAlt?: string;
   eyebrow?: string;
   wide?: boolean | "xl";
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, path, eyebrow, wide = false, jsonLd } = Astro.props;
+const { title, description, path, ogImage, ogType, ogAlt, eyebrow, wide = false, jsonLd } = Astro.props;
 const widthClass = wide === "xl" ? "max-w-[82rem]" : wide ? "max-w-6xl" : "max-w-3xl";
 ---
 
-<Base title={title} description={description} path={path} jsonLd={jsonLd}>
+<Base title={title} description={description} path={path} ogImage={ogImage} ogType={ogType} ogAlt={ogAlt} jsonLd={jsonLd}>
   <SubpageBackdrop />
 
   <SubNav path={path} wide={wide} />
