@@ -1,0 +1,53 @@
+---
+{/* Persistent full-screen directional Bayer dither curtain for client route transitions & slow-load feedback. */}
+---
+
+<div
+  data-route-sweep
+  transition:persist="route-sweep"
+  aria-hidden="true"
+  class="pointer-events-none fixed inset-0 z-[80] hidden items-center justify-center select-none print:hidden"
+>
+  <canvas
+    data-route-sweep-canvas
+    class="pointer-events-none fixed inset-0 block h-full w-full"
+  ></canvas>
+
+  <div
+    data-route-sweep-hud
+    class="relative z-10 flex w-[min(82vw,16.5rem)] flex-col gap-2.5 px-4 py-3 opacity-0 transition-opacity duration-150"
+  >
+    <div class="flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span
+          class="inline-block h-[6px] w-[6px] rounded-[1px] bg-ember animate-pulse"
+          style="box-shadow: var(--shadow-ember-md);"
+        ></span>
+        <span data-route-sweep-title class="label-mono text-[10px] tracking-[0.16em] text-paper">
+          ROUTE // SYNC
+        </span>
+      </div>
+      <span data-route-sweep-dir class="label-mono text-[9.5px] tracking-[0.12em] text-dim/75">→</span>
+    </div>
+
+    <div class="h-px w-full overflow-hidden bg-paper/12">
+      <div
+        data-route-sweep-bar
+        class="h-full w-full origin-left bg-ember/85 transition-transform duration-150 ease-out"
+        style="transform: scaleX(0.18);"
+      ></div>
+    </div>
+
+    <p
+      data-route-sweep-status
+      class="label-mono text-[9.5px] tracking-[0.12em] text-dim"
+    >
+      LOADING...
+    </p>
+  </div>
+</div>
+
+<script>
+  import { initRouteTransitions } from "../lib/routeTransition";
+  initRouteTransitions();
+</script>

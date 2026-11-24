@@ -7,7 +7,7 @@ export interface Props {
   wide?: boolean | "xl";
 }
 
-const { path, variant = "sub", wide = false } = Astro.props;
+const { path, variant = "sub" } = Astro.props;
 
 const nav = [
   { label: "Work", href: "/work" },
@@ -22,21 +22,14 @@ const isHome = variant === "home";
 
 <header
   class:list={[
-    "inset-x-0 top-0 z-30 pt-[env(safe-area-inset-top)]",
+    "inset-x-0 top-0 z-30 border-b pt-[env(safe-area-inset-top)]",
     isHome
-      ? "fixed bg-gradient-to-b from-rack via-rack/92 to-transparent"
-      : "sticky border-b border-paper/10 bg-rack/90 backdrop-blur-md",
+      ? "fixed border-transparent bg-gradient-to-b from-rack via-rack/92 to-transparent"
+      : "sticky border-paper/10 bg-rack/90 backdrop-blur-md",
   ]}
 >
   <div
-    class:list={[
-      "mx-auto flex h-13 w-full items-center justify-between gap-2 px-4 sm:h-14 sm:gap-6 sm:px-6",
-      isHome
-        ? "max-w-[1920px] lg:px-8 xl:px-10"
-        : wide === "xl"
-          ? "max-w-[82rem] lg:px-10"
-          : "max-w-6xl lg:px-10",
-    ]}
+    class="mx-auto flex h-13 w-full max-w-[1920px] items-center justify-between gap-2 px-4 sm:h-14 sm:gap-6 sm:px-6 lg:px-8 xl:px-10"
   >
     <a
       href="/"

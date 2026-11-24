@@ -5,6 +5,7 @@
 
 <div
   id="gyro-cursor"
+  transition:persist="gyro-cursor"
   aria-hidden="true"
   class="gyro-cursor pointer-events-none fixed left-0 top-0 z-[9999] opacity-0 transition-opacity duration-150"
 >
@@ -268,6 +269,13 @@
     window.addEventListener("blur", () => {
       visible = false;
       container.style.opacity = "0";
+    });
+
+    // Preserve cursor-hiding root class and re-evaluate hover state across ClientRouter swaps
+    document.addEventListener("astro:after-swap", () => {
+      if (!initialized) return;
+      root.classList.add("has-gyro-cursor");
+      setModeForTarget(document.elementFromPoint(targetX, targetY));
     });
 
     // Optional programmable cursor API matching scripted gyro cursor controls

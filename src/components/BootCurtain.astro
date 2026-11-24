@@ -52,6 +52,10 @@
   (function () {
     var curtain = document.querySelector("[data-boot-curtain]");
     if (!curtain) return;
+    if (window.__routeSweepActive) {
+      curtain.remove();
+      return;
+    }
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       curtain.style.display = "none";
       return;

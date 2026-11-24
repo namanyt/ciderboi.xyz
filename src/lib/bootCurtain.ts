@@ -1,38 +1,13 @@
-import { getThemeTokens, hexToRgbTuple } from "./theme";
+import { BAYER_8, BAYER_CELL, getPackedSlotColor } from "./bayer";
 
 export type BootCurtainController = {
   setStage: (label: string, progress: number) => void;
   finish: (opts?: { instant?: boolean }) => void;
 };
 
-const CELL = 6;
+const CELL = BAYER_CELL;
 const DISSOLVE_MS = 1000;
-
-// Normalized 8x8 Bayer ordered dithering thresholds in (0, 1)
-const BAYER_8 = [
-  [0, 32, 8, 40, 2, 34, 10, 42],
-  [48, 16, 56, 24, 50, 18, 58, 26],
-  [12, 44, 4, 36, 14, 46, 6, 38],
-  [60, 28, 52, 20, 62, 30, 54, 22],
-  [3, 35, 11, 43, 1, 33, 9, 41],
-  [51, 19, 59, 27, 49, 17, 57, 25],
-  [15, 47, 7, 39, 13, 45, 5, 37],
-  [63, 31, 55, 23, 61, 29, 53, 21],
-].map((row) => row.map((v) => (v + 0.5) / 64));
-
-const computePackedSlotBlack = () => {
-  const [r, g, b] = hexToRgbTuple(getThemeTokens().slot);
-  const u32 = new Uint32Array(1);
-  const u8 = new Uint8ClampedArray(u32.buffer);
-  // Match --color-slot at full opacity (resolved from CSS theme tokens)
-  u8[0] = r;
-  u8[1] = g;
-  u8[2] = b;
-  u8[3] = 255;
-  return u32[0];
-};
-
-const PACKED_BLACK = computePackedSlotBlack();
+const PACKED_BLACK = getPackedSlotColor();
 
 /** Drives the initial solid-black rack boot curtain and its 1s Bayer dither dissolve. */
 export function createBootCurtain(): BootCurtainController {

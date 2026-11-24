@@ -14,6 +14,7 @@ const socials = {
 export default defineConfig({
   site: "https://ciderboi.xyz",
   devToolbar: { enabled: false },
+  prefetch: { defaultStrategy: "hover" },
   redirects: Object.fromEntries(
     Object.entries(socials).map(([from, to]) => [from, { destination: to, status: 308 }]),
   ),

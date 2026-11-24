@@ -79,8 +79,6 @@ const ytThumb = (url?: string) => {
           <li data-bucket={bucket} class="flex">
             <a
               href={`/work/${p.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
               class="group flex w-full flex-col overflow-hidden border border-paper/12 bg-white/[0.015] transition-all duration-200 hover:-translate-y-0.5 hover:border-ember/60 hover:bg-white/[0.035]"
             >
               <div class="relative aspect-[16/10] w-full overflow-hidden border-b border-paper/10 bg-panel">
@@ -173,30 +171,36 @@ const ytThumb = (url?: string) => {
   </section>
 
   <script>
-    const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-work-filter]"));
-    const cards = Array.from(document.querySelectorAll<HTMLLIElement>("[data-work-grid] > li"));
-    const countEl = document.querySelector<HTMLElement>("[data-work-count]");
+    const initWorkFilters = () => {
+      const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-work-filter]"));
+      const cards = Array.from(document.querySelectorAll<HTMLLIElement>("[data-work-grid] > li"));
+      const countEl = document.querySelector<HTMLElement>("[data-work-count]");
+      if (!buttons.length) return;
 
-    buttons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const filter = btn.dataset.workFilter ?? "all";
-        const label = btn.dataset.workLabel ?? "All";
-        let visible = 0;
-        buttons.forEach((b) => {
-          b.setAttribute("aria-pressed", String(b === btn));
+      buttons.forEach((btn) => {
+        if (btn.dataset.filterBound === "true") return;
+        btn.dataset.filterBound = "true";
+        btn.addEventListener("click", () => {
+          const filter = btn.dataset.workFilter ?? "all";
+          const label = btn.dataset.workLabel ?? "All";
+          let visible = 0;
+          buttons.forEach((b) => {
+            b.setAttribute("aria-pressed", String(b === btn));
+          });
+          cards.forEach((card) => {
+            const show = filter === "all" || card.dataset.bucket === filter;
+            card.classList.toggle("hidden", !show);
+            if (show) visible++;
+          });
+          if (countEl) {
+            countEl.textContent =
+              filter === "all"
+                ? `${visible} builds · sorted newest first`
+                : `${visible} ${label} builds · sorted newest first`;
+          }
         });
-        cards.forEach((card) => {
-          const show = filter === "all" || card.dataset.bucket === filter;
-          card.classList.toggle("hidden", !show);
-          if (show) visible++;
-        });
-        if (countEl) {
-          countEl.textContent =
-            filter === "all"
-              ? `${visible} builds · sorted newest first`
-              : `${visible} ${label} builds · sorted newest first`;
-        }
       });
-    });
+    };
+    document.addEventListener("astro:page-load", initWorkFilters);
   </script>
 </Page>

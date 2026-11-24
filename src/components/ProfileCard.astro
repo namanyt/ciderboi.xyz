@@ -346,151 +346,193 @@ const {
 </style>
 
 <script>
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const isTouchOnly = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-  const cards = document.querySelectorAll<HTMLElement>("[data-profile-card]");
+  let cleanupProfileCards: (() => void) | null = null;
 
-  cards.forEach((wrap) => {
-    const contactBtn = wrap.querySelector<HTMLButtonElement>("[data-card-contact]");
-    contactBtn?.addEventListener("click", () => {
-      wrap.dispatchEvent(new CustomEvent("profilecard:contact", { bubbles: true }));
-    });
+  const initProfileCards = (): (() => void) => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isTouchOnly = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    const cards = document.querySelectorAll<HTMLElement>("[data-profile-card]");
+    const ac = new AbortController();
+    const rafs: Array<() => void> = [];
 
-    if (reduce) return;
-
-    const strength = Number(wrap.dataset.tiltStrength ?? 10);
-    const parallaxMax = Number(wrap.dataset.parallax ?? 5);
-    const mobileTilt = wrap.dataset.mobileTilt === "true";
-
-    let tRx = 0;
-    let tRy = 0;
-    let tMx = 50;
-    let tMy = 50;
-    let tPx = 0;
-    let tPy = 0;
-    let tOp = 0;
-
-    let cRx = 0;
-    let cRy = 0;
-    let cMx = 50;
-    let cMy = 50;
-    let cPx = 0;
-    let cPy = 0;
-    let cOp = 0;
-
-    let rafId = 0;
-
-    const isStageSettled = () => {
-      const stage = wrap.closest<HTMLElement>("[data-chapter]");
-      if (!stage) return true;
-      if (stage.dataset.active !== "true") return false;
-      const rev = Number(stage.style.getPropertyValue("--reveal") || "1");
-      return rev >= 0.92;
-    };
-
-    const tick = () => {
-      if (!isStageSettled()) {
-        tRx = 0;
-        tRy = 0;
-        tPx = 0;
-        tPy = 0;
-        tOp = 0;
-        wrap.dataset.hovered = "false";
-      }
-
-      const k = 0.14;
-      cRx += (tRx - cRx) * k;
-      cRy += (tRy - cRy) * k;
-      cMx += (tMx - cMx) * k;
-      cMy += (tMy - cMy) * k;
-      cPx += (tPx - cPx) * k;
-      cPy += (tPy - cPy) * k;
-      cOp += (tOp - cOp) * k;
-
-      wrap.style.setProperty("--rx", `${cRx.toFixed(2)}deg`);
-      wrap.style.setProperty("--ry", `${cRy.toFixed(2)}deg`);
-      wrap.style.setProperty("--mx", `${cMx.toFixed(1)}%`);
-      wrap.style.setProperty("--my", `${cMy.toFixed(1)}%`);
-      wrap.style.setProperty("--px", `${cPx.toFixed(2)}px`);
-      wrap.style.setProperty("--py", `${cPy.toFixed(2)}px`);
-      wrap.style.setProperty("--card-op", cOp.toFixed(3));
-
-      const settled =
-        Math.abs(tRx - cRx) < 0.02 &&
-        Math.abs(tRy - cRy) < 0.02 &&
-        Math.abs(tPx - cPx) < 0.02 &&
-        Math.abs(tPy - cPy) < 0.02 &&
-        Math.abs(tOp - cOp) < 0.005;
-
-      if (settled && tOp === 0 && tRx === 0 && tRy === 0) {
-        rafId = 0;
-        return;
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-
-    const startLoop = () => {
-      if (!rafId) rafId = requestAnimationFrame(tick);
-    };
-
-    const applyNormalized = (nx: number, ny: number, activeOp = 1) => {
-      const cx = Math.max(-1, Math.min(1, nx));
-      const cy = Math.max(-1, Math.min(1, ny));
-      tRy = cx * strength * 0.65;
-      tRx = -cy * strength * 0.65;
-      tMx = 50 + cx * 45;
-      tMy = 50 + cy * 45;
-      tPx = -cx * parallaxMax;
-      tPy = -cy * parallaxMax;
-      tOp = activeOp;
-      startLoop();
-    };
-
-    wrap.addEventListener("pointerenter", (e) => {
-      if (e.pointerType === "touch" || !isStageSettled()) return;
-      const r = wrap.getBoundingClientRect();
-      if (!r.width || !r.height) return;
-      wrap.dataset.hovered = "true";
-      applyNormalized(((e.clientX - r.left) / r.width - 0.5) * 2, ((e.clientY - r.top) / r.height - 0.5) * 2, 1);
-    });
-
-    wrap.addEventListener("pointermove", (e) => {
-      if (e.pointerType === "touch" || !isStageSettled()) return;
-      const r = wrap.getBoundingClientRect();
-      if (!r.width || !r.height) return;
-      wrap.dataset.hovered = "true";
-      applyNormalized(((e.clientX - r.left) / r.width - 0.5) * 2, ((e.clientY - r.top) / r.height - 0.5) * 2, 1);
-    });
-
-    wrap.addEventListener("pointerleave", () => {
-      wrap.dataset.hovered = "false";
-      tRx = 0;
-      tRy = 0;
-      tMx = 50;
-      tMy = 50;
-      tPx = 0;
-      tPy = 0;
-      tOp = 0;
-      startLoop();
-    });
-
-    // Only activate orientation tilt on touch/mobile devices so laptop/desktop sensors never drift on load
-    if (mobileTilt && isTouchOnly && "DeviceOrientationEvent" in window) {
-      let baseBeta: number | null = null;
-      let baseGamma: number | null = null;
-      window.addEventListener(
-        "deviceorientation",
-        (ev) => {
-          if (ev.beta == null || ev.gamma == null || !isStageSettled()) return;
-          if (wrap.dataset.hovered === "true") return;
-          if (baseBeta === null) baseBeta = ev.beta;
-          if (baseGamma === null) baseGamma = ev.gamma;
-          const dx = Math.max(-25, Math.min(25, ev.gamma - baseGamma)) / 25;
-          const dy = Math.max(-25, Math.min(25, ev.beta - baseBeta)) / 25;
-          applyNormalized(dx, dy, 0.45);
+    cards.forEach((wrap) => {
+      const contactBtn = wrap.querySelector<HTMLButtonElement>("[data-card-contact]");
+      contactBtn?.addEventListener(
+        "click",
+        () => {
+          wrap.dispatchEvent(new CustomEvent("profilecard:contact", { bubbles: true }));
         },
-        { passive: true },
+        { signal: ac.signal },
       );
-    }
+
+      if (reduce) return;
+
+      const strength = Number(wrap.dataset.tiltStrength ?? 10);
+      const parallaxMax = Number(wrap.dataset.parallax ?? 5);
+      const mobileTilt = wrap.dataset.mobileTilt === "true";
+
+      let tRx = 0;
+      let tRy = 0;
+      let tMx = 50;
+      let tMy = 50;
+      let tPx = 0;
+      let tPy = 0;
+      let tOp = 0;
+
+      let cRx = 0;
+      let cRy = 0;
+      let cMx = 50;
+      let cMy = 50;
+      let cPx = 0;
+      let cPy = 0;
+      let cOp = 0;
+
+      let rafId = 0;
+      rafs.push(() => {
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = 0;
+        }
+      });
+
+      const isStageSettled = () => {
+        const stage = wrap.closest<HTMLElement>("[data-chapter]");
+        if (!stage) return true;
+        if (stage.dataset.active !== "true") return false;
+        const rev = Number(stage.style.getPropertyValue("--reveal") || "1");
+        return rev >= 0.92;
+      };
+
+      const tick = () => {
+        if (!isStageSettled()) {
+          tRx = 0;
+          tRy = 0;
+          tPx = 0;
+          tPy = 0;
+          tOp = 0;
+          wrap.dataset.hovered = "false";
+        }
+
+        const k = 0.14;
+        cRx += (tRx - cRx) * k;
+        cRy += (tRy - cRy) * k;
+        cMx += (tMx - cMx) * k;
+        cMy += (tMy - cMy) * k;
+        cPx += (tPx - cPx) * k;
+        cPy += (tPy - cPy) * k;
+        cOp += (tOp - cOp) * k;
+
+        wrap.style.setProperty("--rx", `${cRx.toFixed(2)}deg`);
+        wrap.style.setProperty("--ry", `${cRy.toFixed(2)}deg`);
+        wrap.style.setProperty("--mx", `${cMx.toFixed(1)}%`);
+        wrap.style.setProperty("--my", `${cMy.toFixed(1)}%`);
+        wrap.style.setProperty("--px", `${cPx.toFixed(2)}px`);
+        wrap.style.setProperty("--py", `${cPy.toFixed(2)}px`);
+        wrap.style.setProperty("--card-op", cOp.toFixed(3));
+
+        const settled =
+          Math.abs(tRx - cRx) < 0.02 &&
+          Math.abs(tRy - cRy) < 0.02 &&
+          Math.abs(tPx - cPx) < 0.02 &&
+          Math.abs(tPy - cPy) < 0.02 &&
+          Math.abs(tOp - cOp) < 0.005;
+
+        if (settled && tOp === 0 && tRx === 0 && tRy === 0) {
+          rafId = 0;
+          return;
+        }
+        rafId = requestAnimationFrame(tick);
+      };
+
+      const startLoop = () => {
+        if (!rafId) rafId = requestAnimationFrame(tick);
+      };
+
+      const applyNormalized = (nx: number, ny: number, activeOp = 1) => {
+        const cx = Math.max(-1, Math.min(1, nx));
+        const cy = Math.max(-1, Math.min(1, ny));
+        tRy = cx * strength * 0.65;
+        tRx = -cy * strength * 0.65;
+        tMx = 50 + cx * 45;
+        tMy = 50 + cy * 45;
+        tPx = -cx * parallaxMax;
+        tPy = -cy * parallaxMax;
+        tOp = activeOp;
+        startLoop();
+      };
+
+      wrap.addEventListener(
+        "pointerenter",
+        (e) => {
+          if (e.pointerType === "touch" || !isStageSettled()) return;
+          const r = wrap.getBoundingClientRect();
+          if (!r.width || !r.height) return;
+          wrap.dataset.hovered = "true";
+          applyNormalized(((e.clientX - r.left) / r.width - 0.5) * 2, ((e.clientY - r.top) / r.height - 0.5) * 2, 1);
+        },
+        { signal: ac.signal },
+      );
+
+      wrap.addEventListener(
+        "pointermove",
+        (e) => {
+          if (e.pointerType === "touch" || !isStageSettled()) return;
+          const r = wrap.getBoundingClientRect();
+          if (!r.width || !r.height) return;
+          wrap.dataset.hovered = "true";
+          applyNormalized(((e.clientX - r.left) / r.width - 0.5) * 2, ((e.clientY - r.top) / r.height - 0.5) * 2, 1);
+        },
+        { signal: ac.signal },
+      );
+
+      wrap.addEventListener(
+        "pointerleave",
+        () => {
+          wrap.dataset.hovered = "false";
+          tRx = 0;
+          tRy = 0;
+          tMx = 50;
+          tMy = 50;
+          tPx = 0;
+          tPy = 0;
+          tOp = 0;
+          startLoop();
+        },
+        { signal: ac.signal },
+      );
+
+      // Only activate orientation tilt on touch/mobile devices so laptop/desktop sensors never drift on load
+      if (mobileTilt && isTouchOnly && "DeviceOrientationEvent" in window) {
+        let baseBeta: number | null = null;
+        let baseGamma: number | null = null;
+        window.addEventListener(
+          "deviceorientation",
+          (ev) => {
+            if (ev.beta == null || ev.gamma == null || !isStageSettled()) return;
+            if (wrap.dataset.hovered === "true") return;
+            if (baseBeta === null) baseBeta = ev.beta;
+            if (baseGamma === null) baseGamma = ev.gamma;
+            const dx = Math.max(-25, Math.min(25, ev.gamma - baseGamma)) / 25;
+            const dy = Math.max(-25, Math.min(25, ev.beta - baseBeta)) / 25;
+            applyNormalized(dx, dy, 0.45);
+          },
+          { passive: true, signal: ac.signal },
+        );
+      }
+    });
+
+    return () => {
+      ac.abort();
+      rafs.forEach((cancel) => cancel());
+    };
+  };
+
+  document.addEventListener("astro:before-swap", () => {
+    cleanupProfileCards?.();
+    cleanupProfileCards = null;
+  });
+  document.addEventListener("astro:page-load", () => {
+    cleanupProfileCards?.();
+    cleanupProfileCards = initProfileCards();
   });
 </script>

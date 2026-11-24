@@ -229,8 +229,6 @@ const chapterSvh = 200;
               {highlights.map((h) => (
                 <a
                   href={h.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   class="group block border border-paper/10 bg-white/[0.015] px-3 py-2.5 transition-colors duration-200 hover:border-ember/55 hover:bg-white/[0.035] xl:px-3.5 xl:py-3"
                 >
                   <div class="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
@@ -243,7 +241,7 @@ const chapterSvh = 200;
                       aria-hidden="true"
                       class="font-mono text-[11px] opacity-55 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
                     >
-                      ↗
+                      →
                     </span>
                   </p>
                   <p class="mt-1 line-clamp-2 text-[12px] leading-snug text-paper-dim">
@@ -346,8 +344,6 @@ const chapterSvh = 200;
 
                     <a
                       href={`/work/${p.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       class="mt-1.5 block text-[15px] leading-snug font-medium text-paper transition-colors group-hover:text-ember"
                     >
                       {p.title}
@@ -374,8 +370,6 @@ const chapterSvh = 200;
                     ) : (
                       <a
                         href={`/work/${p.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         class="label-mono shrink-0 text-[10px] text-dim hover:text-ember"
                       >
                         Case study <span aria-hidden="true">→</span>
@@ -994,28 +988,49 @@ const chapterSvh = 200;
   import type { Handle } from "../scene/rack";
   import { createBootCurtain } from "../lib/bootCurtain";
 
-  const bootCurtain = createBootCurtain();
-  bootCurtain.setStage("LOADING FONTS", 0.22);
+  let cleanupHome: (() => void) | null = null;
 
-  const BAY_META = [
-    { code: "IAM", title: "About" },
-    { code: "RUNTIME", title: "Experience" },
-    { code: "ARTIFACT", title: "Projects" },
-    { code: "DAC", title: "Music" },
-    { code: "DAM", title: "Photos" },
-    { code: "GATEWAY", title: "Connect" },
-    { code: "UPS / PDU", title: "Footer" },
-  ];
+  const mountHome = (): (() => void) | null => {
+    const canvas = document.querySelector<HTMLCanvasElement>("[data-rack-canvas]");
+    if (!canvas) return null;
 
-  const getLayoutState = (w = window.innerWidth, h = window.innerHeight) => {
-    const aspect = w / Math.max(1, h);
-    const mode: "split" | "window" = w >= 960 && h >= 540 && aspect >= 1.02 ? "split" : "window";
-    const windowFrame: "floating" | "compact" = w >= 560 && h >= 640 ? "floating" : "compact";
-    return { mode, windowFrame };
-  };
+    const ac = new AbortController();
+    let homeAlive = true;
 
-  const canvas = document.querySelector<HTMLCanvasElement>("[data-rack-canvas]");
-  const spacer = document.querySelector<HTMLElement>("[data-spacer]");
+    const isSpaNav = Boolean((window as any).__routeSweepActive);
+    const bootCurtain = createBootCurtain();
+    if (isSpaNav) {
+      bootCurtain.finish({ instant: true });
+    } else {
+      bootCurtain.setStage("LOADING FONTS", 0.22);
+    }
+
+    const reportStage = (label: string, progress: number) => {
+      if (isSpaNav) {
+        (window as any).__setRouteStage?.(label, progress);
+      } else {
+        bootCurtain.setStage(label, progress);
+      }
+    };
+
+    const BAY_META = [
+      { code: "IAM", title: "About" },
+      { code: "RUNTIME", title: "Experience" },
+      { code: "ARTIFACT", title: "Projects" },
+      { code: "DAC", title: "Music" },
+      { code: "DAM", title: "Photos" },
+      { code: "GATEWAY", title: "Connect" },
+      { code: "UPS / PDU", title: "Footer" },
+    ];
+
+    const getLayoutState = (w = window.innerWidth, h = window.innerHeight) => {
+      const aspect = w / Math.max(1, h);
+      const mode: "split" | "window" = w >= 960 && h >= 540 && aspect >= 1.02 ? "split" : "window";
+      const windowFrame: "floating" | "compact" = w >= 560 && h >= 640 ? "floating" : "compact";
+      return { mode, windowFrame };
+    };
+
+    const spacer = document.querySelector<HTMLElement>("[data-spacer]");
   const chapters = Array.from(document.querySelectorAll<HTMLElement>("[data-chapter]"));
   const stageClip = document.querySelector<HTMLElement>("[data-stage-clip]");
   const stageCol = document.querySelector<HTMLElement>("[data-stage-col]");
@@ -1362,7 +1377,7 @@ const chapterSvh = 200;
     }
   };
 
-  window.addEventListener("resize", syncLayout);
+  window.addEventListener("resize", syncLayout, { signal: ac.signal });
 
   // Initialize non-active chapters retracted inside their server bay (never flashing "out")
   chapters.forEach((c, i) => {
@@ -1538,10 +1553,14 @@ const chapterSvh = 200;
     goToChapter(0);
     announceChapter(0, true);
   });
-  document.addEventListener("profilecard:contact", () => {
-    goToChapter(5);
-    announceChapter(5, true);
-  });
+  document.addEventListener(
+    "profilecard:contact",
+    () => {
+      goToChapter(5);
+      announceChapter(5, true);
+    },
+    { signal: ac.signal },
+  );
 
   const gridBtn = document.querySelector<HTMLButtonElement>("[data-grid-toggle]");
   gridBtn?.addEventListener("click", () => {
@@ -1703,7 +1722,7 @@ const chapterSvh = 200;
       jump.wheelAccum += Math.abs(e.deltaY);
       if (jump.wheelAccum >= 75) abortJumpToScroll();
     },
-    { passive: true },
+    { passive: true, signal: ac.signal },
   );
   let touchStartY = 0;
   window.addEventListener(
@@ -1711,7 +1730,7 @@ const chapterSvh = 200;
     (e) => {
       if (e.touches[0]) touchStartY = e.touches[0].clientY;
     },
-    { passive: true },
+    { passive: true, signal: ac.signal },
   );
   window.addEventListener(
     "touchmove",
@@ -1720,7 +1739,7 @@ const chapterSvh = 200;
       const cy = e.touches[0]?.clientY ?? touchStartY;
       if (Math.abs(cy - touchStartY) >= 28) abortJumpToScroll();
     },
-    { passive: true },
+    { passive: true, signal: ac.signal },
   );
 
   const computeFastTravelPose = (ft: FastTravelState, target: number, dt: number, n: number) => {
@@ -1810,6 +1829,10 @@ const chapterSvh = 200;
   let prevTickTime = performance.now();
   let scrubRaf = 0;
   const tickScrub = () => {
+    if (!homeAlive) {
+      scrubRaf = 0;
+      return;
+    }
     scrubRaf = requestAnimationFrame(tickScrub);
     const now = performance.now();
     const dt = Math.min(0.05, Math.max(0.001, (now - prevTickTime) / 1000));
@@ -1920,42 +1943,50 @@ const chapterSvh = 200;
   };
   scrubRaf = requestAnimationFrame(tickScrub);
 
-  window.addEventListener("pageshow", (e) => {
-    if (e.persisted) bootCurtain.finish({ instant: true });
-    if (layoutState.mode === "window") {
+  window.addEventListener(
+    "pageshow",
+    (e) => {
+      if (e.persisted) bootCurtain.finish({ instant: true });
+      if (layoutState.mode === "window") {
+        showOnly(activeIndex);
+        updateRail(activeIndex);
+        return;
+      }
+      if (jump) return;
+      fastTravel = null;
+      scrub = getTargetScrub();
+      lastPose = computePose(scrub, chapters.length);
+      activeIndex = lastPose.active;
+      currentReveal = reduce ? 1 : lastPose.reveal;
       showOnly(activeIndex);
       updateRail(activeIndex);
-      return;
-    }
-    if (jump) return;
-    fastTravel = null;
-    scrub = getTargetScrub();
-    lastPose = computePose(scrub, chapters.length);
-    activeIndex = lastPose.active;
-    currentReveal = reduce ? 1 : lastPose.reveal;
-    showOnly(activeIndex);
-    updateRail(activeIndex);
-  });
+    },
+    { signal: ac.signal },
+  );
 
   let rackBootPromise: Promise<void> | null = null;
+  let resolveSpaRackReady: (() => void) | null = null;
   const ensureRackBooted = () => {
     if (!canvas) {
       bootCurtain.finish({ instant: true });
+      resolveSpaRackReady?.();
       return Promise.resolve();
     }
     if (rackBootPromise) return rackBootPromise;
     rackBootPromise = (async () => {
       try {
-        bootCurtain.setStage("LOADING FONTS", 0.28);
+        reportStage("LOADING FONTS", 0.36);
         if ("fonts" in document) {
           await Promise.all([
             document.fonts.load('400 12px "Maple Mono"'),
             document.fonts.load('500 12px "Maple Mono"'),
           ]).catch(() => {});
         }
-        bootCurtain.setStage("MOUNTING 7U CHASSIS", 0.62);
+        if (!homeAlive) return;
+        reportStage("MOUNTING 7U CHASSIS", 0.66);
         const { mountRack } = await import("../scene/rack");
-        bootCurtain.setStage("COMPILING SHADERS", 0.84);
+        if (!homeAlive) return;
+        reportStage("COMPILING SHADERS", 0.86);
         const handle = mountRack(
           canvas,
           [
@@ -1971,6 +2002,7 @@ const chapterSvh = 200;
             initialMode: layoutState.mode === "split" ? "split" : "front",
             onFirstFrame: () => {
               bootCurtain.finish();
+              resolveSpaRackReady?.();
             },
             onStats: ({ fps, tris }) => {
               const el = document.querySelector<HTMLElement>("[data-hud]");
@@ -1980,6 +2012,10 @@ const chapterSvh = 200;
             },
           },
         );
+        if (!homeAlive) {
+          handle?.destroy();
+          return;
+        }
         if (handle) {
           rackHandle = handle;
           handle.setPresentationMode(layoutState.mode === "split" ? "split" : "front");
@@ -1990,9 +2026,11 @@ const chapterSvh = 200;
           syncRackPaused();
         } else {
           bootCurtain.finish();
+          resolveSpaRackReady?.();
         }
       } catch {
         bootCurtain.finish();
+        resolveSpaRackReady?.();
       }
     })();
     return rackBootPromise;
@@ -2004,6 +2042,11 @@ const chapterSvh = 200;
   const deferRackAtBoot =
     layoutState.mode === "window" && windowOpen && layoutState.windowFrame === "compact";
   if (canvas && !deferRackAtBoot) {
+    if (isSpaNav) {
+      (window as any).__pendingRouteReady = new Promise<void>((res) => {
+        resolveSpaRackReady = res;
+      });
+    }
     ensureRackBooted();
   } else {
     Promise.race([
@@ -2067,10 +2110,14 @@ const chapterSvh = 200;
   });
 
   // Click the floor-side EVE archive HDD stack or any 3D rack unit directly.
-  window.addEventListener("click", (e) => {
-    if (performance.now() - lastTouchTapAt < 450) return;
-    handleRackTap(e.clientX, e.clientY, e.target as HTMLElement | null);
-  });
+  window.addEventListener(
+    "click",
+    (e) => {
+      if (performance.now() - lastTouchTapAt < 450) return;
+      handleRackTap(e.clientX, e.clientY, e.target as HTMLElement | null);
+    },
+    { signal: ac.signal },
+  );
 
   window.addEventListener(
     "pointermove",
@@ -2104,7 +2151,7 @@ const chapterSvh = 200;
       rackHandle.setHoverUnit(unitHit);
       document.body.style.cursor = unitHit >= 0 ? "pointer" : "";
     },
-    { passive: true },
+    { passive: true, signal: ac.signal },
   );
 
   // Only settle gently when idle mid-transition (never override settled chapters).
@@ -2146,7 +2193,7 @@ const chapterSvh = 200;
     }, 1100);
   };
 
-  window.addEventListener("scroll", scheduleSnap, { passive: true });
+  window.addEventListener("scroll", scheduleSnap, { passive: true, signal: ac.signal });
 
   const scrollCue = document.querySelector<HTMLButtonElement>("[data-scroll-cue]");
   const syncScrollCue = () => {
@@ -2156,7 +2203,7 @@ const chapterSvh = 200;
     scrollCue.tabIndex = hidden ? -1 : 0;
   };
   syncScrollCue();
-  window.addEventListener("scroll", syncScrollCue, { passive: true });
+  window.addEventListener("scroll", syncScrollCue, { passive: true, signal: ac.signal });
   scrollCue?.addEventListener("click", () => {
     goToChapter(1);
     announceChapter(1, true);
@@ -2215,4 +2262,31 @@ const chapterSvh = 200;
 
   showOnly(activeIndex);
   updateRail(activeIndex);
+
+    return () => {
+      homeAlive = false;
+      ac.abort();
+      if (scrubRaf) {
+        cancelAnimationFrame(scrubRaf);
+        scrubRaf = 0;
+      }
+      window.clearTimeout(chapterAnnounceTimer);
+      window.clearTimeout(winAnimTimer);
+      window.clearTimeout(bayOpenTimer);
+      window.clearTimeout(snapTimer);
+      rackHandle?.destroy();
+      rackHandle = null;
+      document.body.style.cursor = "";
+      resolveSpaRackReady = null;
+    };
+  };
+
+  document.addEventListener("astro:before-swap", () => {
+    cleanupHome?.();
+    cleanupHome = null;
+  });
+  document.addEventListener("astro:page-load", () => {
+    cleanupHome?.();
+    cleanupHome = mountHome();
+  });
 </script>

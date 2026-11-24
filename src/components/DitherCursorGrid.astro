@@ -45,9 +45,13 @@ const {
 <script>
   import { getThemeTokens, hexToRgbCss } from "../lib/theme";
 
-  const canvas = document.querySelector<HTMLCanvasElement>("[data-cursor-dither-bg]");
+  let cleanupDither: (() => void) | null = null;
 
-  if (canvas) {
+  const mountDitherGrid = (): (() => void) | null => {
+    const canvas = document.querySelector<HTMLCanvasElement>("[data-cursor-dither-bg]");
+    if (!canvas) return null;
+
+    const ac = new AbortController();
     const theme = getThemeTokens();
     const paperRgb = hexToRgbCss(theme.paper);
     const trailOuterRgb = hexToRgbCss(theme.trailOuter);
@@ -90,6 +94,7 @@ const {
     let height = 0;
     let dpr = 1;
     let raf = 0;
+    let alive = true;
 
     type TrailPoint = { x: number; y: number; born: number };
     const trail: TrailPoint[] = [];
@@ -310,11 +315,11 @@ const {
     document.querySelectorAll(".stage").forEach((el) => {
       stageObserver.observe(el, { attributes: true, attributeFilter: ["data-active"] });
     });
-    window.addEventListener("resize", () => syncActiveStageMask(), { passive: true });
+    window.addEventListener("resize", () => syncActiveStageMask(), { passive: true, signal: ac.signal });
     syncActiveStageMask();
 
     const tick = (now: number) => {
-      if (!ctx) return;
+      if (!alive || !ctx) return;
 
       // Prune expired trail points and dot pulses
       for (let i = trail.length - 1; i >= 0; i--) {
@@ -400,7 +405,7 @@ const {
         }
       }
 
-      if (trail.length > 0 || activeDots.size > 0) {
+      if (alive && (trail.length > 0 || activeDots.size > 0)) {
         raf = requestAnimationFrame(tick);
       } else {
         raf = 0;
@@ -408,7 +413,7 @@ const {
     };
 
     const wake = () => {
-      if (!raf && !reduce) {
+      if (alive && !raf && !reduce) {
         raf = requestAnimationFrame(tick);
       }
     };
@@ -441,16 +446,35 @@ const {
         lastPy = y;
         wake();
       },
-      { passive: true },
+      { passive: true, signal: ac.signal },
     );
 
     const clearLast = () => {
       lastPx = null;
       lastPy = null;
     };
-    window.addEventListener("pointerleave", clearLast);
-    window.addEventListener("blur", clearLast);
-    window.addEventListener("resize", resize);
+    window.addEventListener("pointerleave", clearLast, { signal: ac.signal });
+    window.addEventListener("blur", clearLast, { signal: ac.signal });
+    window.addEventListener("resize", resize, { signal: ac.signal });
     resize();
-  }
+
+    return () => {
+      alive = false;
+      ac.abort();
+      stageObserver.disconnect();
+      if (raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+    };
+  };
+
+  document.addEventListener("astro:before-swap", () => {
+    cleanupDither?.();
+    cleanupDither = null;
+  });
+  document.addEventListener("astro:page-load", () => {
+    cleanupDither?.();
+    cleanupDither = mountDitherGrid();
+  });
 </script>

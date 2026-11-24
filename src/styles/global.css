@@ -64,6 +64,7 @@
     -moz-osx-font-smoothing: grayscale;
     scrollbar-width: thin;
     scrollbar-color: var(--color-scrollbar) transparent;
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -75,11 +76,23 @@
     font-size: 1rem;
     line-height: 1.55;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   ::selection {
     background: var(--color-selection);
+  }
+
+  /* RouteSweep renders directional Bayer sweeps natively on canvas so ViewTransition root snapshots never freeze GyroCursor */
+  html {
+    view-transition-name: none;
+  }
+
+  ::view-transition,
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 
   :focus-visible {

@@ -16,6 +16,7 @@ export type LanyardOptions = {
   plainStrap?: boolean;
   finish?: "holographic" | "matte";
   imageFit?: "contain" | "cover";
+  onReady?: () => void;
 };
 
 export type LanyardHandle = {
@@ -909,6 +910,12 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
   });
 
   let alive = true;
+  let readySent = false;
+  const emitReady = () => {
+    if (readySent) return;
+    readySent = true;
+    opts.onReady?.();
+  };
   let raf = 0;
   let isVisible = true;
   let loopReady = false;
@@ -938,10 +945,17 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
     document.fonts.check(`500 24px ${CARD_MONO}`);
   let fontsDone = fontsReadyAtBoot;
 
+  let portraitDone = false;
+  const checkReady = () => {
+    if (portraitDone && fontsDone) emitReady();
+  };
+
   const uploadFront = () => {
     if (!alive) return;
+    portraitDone = true;
     drawFrontHalf(atlasCtx, opts, portraitImg.complete && portraitImg.naturalWidth > 0 ? portraitImg : null, palette);
     atlasTex.needsUpdate = true;
+    checkReady();
     if (!loopReady) return;
     if (reduce) renderFrame();
     else markActive(300);
@@ -953,6 +967,7 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
     drawFrontHalf(atlasCtx, opts, portraitImg.complete && portraitImg.naturalWidth > 0 ? portraitImg : null, palette);
     drawBackHalf(atlasCtx, opts, palette);
     atlasTex.needsUpdate = true;
+    checkReady();
     if (!loopReady) return;
     if (reduce) renderFrame();
     else markActive(300);
@@ -964,6 +979,9 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
   portraitImg.onerror = () => {
     if (!portraitImg.src.endsWith("/img/pfp-480.webp")) {
       portraitImg.src = "/img/pfp-480.webp";
+    } else {
+      portraitDone = true;
+      checkReady();
     }
   };
   portraitImg.src = opts.avatar;
@@ -975,6 +993,7 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
       document.fonts.ready,
     ]).then(uploadBothForFonts);
   }
+  const readyGuardTimer = window.setTimeout(emitReady, 450);
 
   const scene = new Transform();
   const cardW = 2.0 * size;
@@ -1692,6 +1711,7 @@ export function mountLanyard(canvas: HTMLCanvasElement, opts: LanyardOptions): L
   return {
     destroy() {
       alive = false;
+      window.clearTimeout(readyGuardTimer);
       cancelAnimationFrame(raf);
       io?.disconnect();
       ro.disconnect();

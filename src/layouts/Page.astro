@@ -59,18 +59,23 @@ const widthClass = wide === "xl" ? "max-w-[82rem]" : wide ? "max-w-6xl" : "max-w
   </div>
 </Base>
 <script>
-  document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const text = btn.dataset.copy ?? "";
-      try {
-        await navigator.clipboard.writeText(text);
-        const prev = btn.textContent;
-        btn.textContent = "Copied";
-        (window as any).__announce?.(`Copied ${text} to clipboard`);
-        setTimeout(() => (btn.textContent = prev), 1400);
-      } catch {
-        btn.textContent = text;
-      }
+  const initCopyButtons = () => {
+    document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((btn) => {
+      if (btn.dataset.copyBound === "true") return;
+      btn.dataset.copyBound = "true";
+      btn.addEventListener("click", async () => {
+        const text = btn.dataset.copy ?? "";
+        try {
+          await navigator.clipboard.writeText(text);
+          const prev = btn.textContent;
+          btn.textContent = "Copied";
+          (window as any).__announce?.(`Copied ${text} to clipboard`);
+          setTimeout(() => (btn.textContent = prev), 1400);
+        } catch {
+          btn.textContent = text;
+        }
+      });
     });
-  });
+  };
+  document.addEventListener("astro:page-load", initCopyButtons);
 </script>

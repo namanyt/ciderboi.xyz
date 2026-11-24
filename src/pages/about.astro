@@ -258,15 +258,36 @@ const focusAreas = [
 </Page>
 
 <script>
-  import { mountLanyard } from "../scene/lanyard";
+  import { mountLanyard, type LanyardHandle } from "../scene/lanyard";
 
-  const canvas = document.querySelector<HTMLCanvasElement>("[data-lanyard-canvas]");
-  const slot = document.querySelector<HTMLElement>("[data-lanyard-slot]");
-  const fallback = document.querySelector<HTMLElement>("[data-lanyard-fallback]");
+  let lanyardHandle: LanyardHandle | null = null;
 
-  if (canvas) {
+  const cleanupAbout = () => {
+    lanyardHandle?.destroy();
+    lanyardHandle = null;
+  };
+
+  const initAbout = () => {
+    cleanupAbout();
+    const canvas = document.querySelector<HTMLCanvasElement>("[data-lanyard-canvas]");
+    const slot = document.querySelector<HTMLElement>("[data-lanyard-slot]");
+    const fallback = document.querySelector<HTMLElement>("[data-lanyard-fallback]");
+    if (!canvas) return;
+
     const d = canvas.dataset;
-    const handle = mountLanyard(canvas, {
+    const setStage = (window as any).__setRouteStage as ((label: string, progress: number) => void) | undefined;
+    setStage?.("MOUNTING 3D BADGE...", 0.78);
+
+    let resolveReady!: () => void;
+    if ((window as any).__routeSweepActive) {
+      (window as any).__pendingRouteReady = new Promise<void>((res) => {
+        resolveReady = res;
+      });
+    } else {
+      resolveReady = () => {};
+    }
+
+    lanyardHandle = mountLanyard(canvas, {
       name: d.name ?? "Nitya Naman",
       handle: d.handle ?? "@ciderboi",
       role: d.role ?? "",
@@ -281,15 +302,19 @@ const focusAreas = [
       plainStrap: true,
       finish: "holographic",
       imageFit: "contain",
+      onReady: () => resolveReady(),
     });
 
-    if (!handle) {
+    if (!lanyardHandle) {
       slot?.classList.add("hidden");
       fallback?.classList.remove("hidden");
+      resolveReady();
     }
+  };
 
-    window.addEventListener("pagehide", () => handle?.destroy(), { once: true });
-  }
+  document.addEventListener("astro:page-load", initAbout);
+  document.addEventListener("astro:before-swap", cleanupAbout);
+  window.addEventListener("pagehide", cleanupAbout);
 </script>
 
 <noscript>

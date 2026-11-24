@@ -5,7 +5,9 @@ import "@fontsource/instrument-serif/400-italic.css";
 import "@fontsource/maple-mono/400.css";
 import "@fontsource/maple-mono/500.css";
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
 import GyroCursor from "../components/GyroCursor.astro";
+import RouteSweep from "../components/RouteSweep.astro";
 import { site } from "../lib/content";
 import { buildJsonLdGraph } from "../lib/seo";
 
@@ -49,6 +51,7 @@ const structuredData = buildJsonLdGraph(jsonLd);
     <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="LLM Full Context" />
 
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <ClientRouter fallback="none" />
     <slot name="head" />
   </head>
 
@@ -60,7 +63,7 @@ const structuredData = buildJsonLdGraph(jsonLd);
       Skip to content
     </a>
 
-    <p id="sr-announce" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+    <p id="sr-announce" transition:persist="sr-announce" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
 
     <main id="main" tabindex="-1" class="outline-none">
       <slot />
@@ -115,7 +118,21 @@ const structuredData = buildJsonLdGraph(jsonLd);
       };
 
       (window as any).__syncLenis = syncLenis;
+      (window as any).__syncPageScroll = () => {
+        if (lenis) {
+          lenis.scrollTo(window.scrollY, { immediate: true, force: true });
+          lenis.resize();
+        }
+      };
       syncLenis(document.documentElement.dataset.layout !== "window");
+
+      document.addEventListener("astro:page-load", () => {
+        syncLenis(document.documentElement.dataset.layout !== "window");
+        if (lenis) {
+          lenis.scrollTo(window.scrollY, { immediate: true, force: true });
+          lenis.resize();
+        }
+      });
 
       const srEl = document.getElementById("sr-announce");
       let srTimer = 0;
@@ -128,6 +145,7 @@ const structuredData = buildJsonLdGraph(jsonLd);
         }, 20);
       };
     </script>
+    <RouteSweep />
     <GyroCursor />
   </body>
 </html>
