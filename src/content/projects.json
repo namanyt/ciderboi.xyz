@@ -314,6 +314,85 @@
       ]
     },
     {
+      "id": "vizdial",
+      "title": "Vizdial",
+      "tagline": "Frosted 120 FPS OpenGL radial audio visualizer for Linux",
+      "summary": "A C++20 / Qt6 OpenGL radial spectrum visualizer driven by a 5-zone logarithmic dual-window FFTW3F DSP pipeline, PipeWire/PulseAudio monitor capture, and native KDE Wayland frosted blur.",
+      "detail": "Built in C++20 with Qt6 OpenGL 3.3 and a custom GLSL fragment shader for smooth Euclidean ray anti-aliasing, tip glow, and a closed 360-degree ring with 180-degree mirrored wings (up to 512 total rays). Audio capture runs over PipeWire/PulseAudio monitor streams into a dual-window FFTW3F engine spanning 20 Hz to 20 kHz — combining an 8192-sample window zero-padded to 32768 bins for sub-bass separation with a 2048-sample high-frequency window for crisp transients. Five configurable logarithmic frequency zones support live per-zone gain, sensitivity, calm deadzone damping, and local/global AGC tracking with hot-reloaded config and shader edits, native KF6WindowSystem Wayland blur isolation, and a packaged Arch Linux PKGBUILD release.",
+      "category": "Graphics",
+      "year": 2026,
+      "status": "completed",
+      "featured": false,
+      "order": 6,
+      "stack": [
+        "C++20",
+        "OpenGL 3.3",
+        "GLSL",
+        "Qt6",
+        "FFTW3",
+        "PipeWire",
+        "CMake"
+      ],
+      "links": [
+        {
+          "label": "Source",
+          "url": "https://github.com/namanyt/vizdial"
+        },
+        {
+          "label": "Release v0.1.0",
+          "url": "https://github.com/namanyt/vizdial/releases/tag/v0.1.0"
+        }
+      ],
+      "cover": "/work/vizdial/preview.avif",
+      "clip": {
+        "src": "/work/vizdial/demo.mp4",
+        "webm": "/work/vizdial/demo.webm",
+        "poster": "/work/vizdial/demo-poster.avif",
+        "alt": "Vizdial animating radial spectrum over a blurred desktop",
+        "caption": "Live 120 FPS radial shader & KWin frosted blur"
+      },
+      "images": [
+        {
+          "src": "/work/vizdial/preview.avif",
+          "alt": "Vizdial radial audio visualizer with auto KDE and Matugen theme over frosted Wayland glass",
+          "caption": "Auto theme (KDE Accent / Matugen + KWin frosted blur)"
+        },
+        {
+          "src": "/work/vizdial/monochrome.avif",
+          "alt": "Vizdial radial audio visualizer in silver-white monochrome palette",
+          "caption": "Monochrome palette (--monochrome / key C)"
+        }
+      ],
+      "metrics": [
+        {
+          "value": "120 FPS",
+          "label": "OpenGL shader"
+        },
+        {
+          "value": "5",
+          "label": "log DSP zones"
+        },
+        {
+          "value": "32,768",
+          "label": "FFT bins (bass)"
+        },
+        {
+          "value": "20–20k",
+          "label": "Hz coverage"
+        }
+      ],
+      "log": [
+        {
+          "date": "2026-11",
+          "text": "Built dual-window FFTW3F pipeline (8192/2048 samples), 5-zone log spectrum shaping, and 360-degree seam-blended GLSL radial shader."
+        },
+        {
+          "date": "2026-11",
+          "text": "Added native KDE Wayland KF6 blur isolation, live keyboard tuning with hot-reload, and shipped v0.1.0 Arch Linux package."
+        }
+      ]
+    },
+    {
       "id": "collective-brain",
       "title": "Collective Brain",
       "tagline": "Shared vector-memory MCP server engineered for a ~340 MB CPU-only footprint",
@@ -323,7 +402,7 @@
       "year": 2026,
       "status": "completed",
       "featured": false,
-      "order": 6,
+      "order": 7,
       "stack": [
         "Python",
         "Qdrant",
@@ -374,7 +453,7 @@
       "year": 2026,
       "status": "completed",
       "featured": false,
-      "order": 7,
+      "order": 8,
       "stack": [
         "TouchDesigner",
         "Generative Graphics",
@@ -410,7 +489,7 @@
       "year": 2019,
       "status": "ongoing",
       "featured": false,
-      "order": 8,
+      "order": 9,
       "stack": [
         "Ubuntu",
         "Docker",
@@ -466,7 +545,7 @@
       "year": 2026,
       "status": "ongoing",
       "featured": false,
-      "order": 9,
+      "order": 10,
       "stack": [
         "Python",
         "SQLite"
@@ -522,7 +601,7 @@
       "year": 2025,
       "status": "completed",
       "featured": false,
-      "order": 10,
+      "order": 11,
       "stack": [
         "C"
       ],
@@ -572,7 +651,7 @@
       "year": 2023,
       "status": "completed",
       "featured": false,
-      "order": 11,
+      "order": 12,
       "stack": [
         "TypeScript",
         "Next.js"
@@ -618,7 +697,7 @@
       "year": 2024,
       "status": "completed",
       "featured": false,
-      "order": 12,
+      "order": 13,
       "stack": [
         "Unity",
         "C#"
@@ -649,7 +728,7 @@
       "year": 2024,
       "status": "completed",
       "featured": false,
-      "order": 13,
+      "order": 14,
       "stack": [
         "Arduino",
         "Flutter",
@@ -681,7 +760,7 @@
       "year": 2025,
       "status": "completed",
       "featured": false,
-      "order": 14,
+      "order": 15,
       "stack": [
         "Rust",
         "Dioxus"

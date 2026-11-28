@@ -159,8 +159,29 @@ const next = getProject(ordered[(ordered.indexOf(project.id) + 1) % ordered.leng
     </div>
 
     {
-      project.images.filter((i) => i.src !== project.cover).length > 0 && (
-        <div class="grid gap-6 pb-8 sm:grid-cols-2">
+      (project.clip || project.images.filter((i) => i.src !== project.cover).length > 0) && (
+        <div class="grid items-start gap-6 pb-8 sm:grid-cols-2">
+          {project.clip && (
+            <figure>
+              <div class="aspect-[16/10] w-full overflow-hidden border border-paper/10 bg-[#0b0e14]">
+                <video
+                  data-demo-clip
+                  poster={project.clip.poster}
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  preload="auto"
+                  aria-label={project.clip.alt}
+                  class="h-full w-full object-contain"
+                >
+                  {project.clip.webm && <source src={project.clip.webm} type="video/webm" />}
+                  <source src={project.clip.src} type="video/mp4" />
+                </video>
+              </div>
+              {project.clip.caption && <figcaption class="label mt-2">{project.clip.caption}</figcaption>}
+            </figure>
+          )}
           {project.images
             .filter((i) => i.src !== project.cover)
             .map((img) => (
@@ -178,6 +199,23 @@ const next = getProject(ordered[(ordered.indexOf(project.id) + 1) % ordered.leng
         </div>
       )
     }
+
+    <script>
+      const syncDemoClips = () => {
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        document.querySelectorAll<HTMLVideoElement>("[data-demo-clip]").forEach((v) => {
+          v.muted = true;
+          if (reduced) {
+            v.pause();
+            v.removeAttribute("autoplay");
+            v.controls = true;
+          } else {
+            v.play().catch(() => {});
+          }
+        });
+      };
+      document.addEventListener("astro:page-load", syncDemoClips);
+    </script>
 
     <footer class="rule flex flex-wrap items-center justify-between gap-3 pt-5 sm:pt-8">
       <div class="flex flex-wrap items-center gap-5">

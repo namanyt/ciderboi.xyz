@@ -9,7 +9,7 @@ import {
 } from "./content";
 
 const origin = site.url.replace(/\/$/, "");
-const SITE_UPDATED_AT = "2026-11-24";
+const SITE_UPDATED_AT = "2026-11-28";
 
 export const personId = `${origin}/#person`;
 export const websiteId = `${origin}/#website`;
@@ -307,7 +307,20 @@ export function projectSchema(project: Project): Record<string, unknown>[] {
             ...(ytId ? { thumbnailUrl: `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` } : {}),
           },
         }
-      : {}),
+      : project.clip
+        ? {
+            video: {
+              "@type": "VideoObject",
+              name: project.clip.caption ?? project.title,
+              description: project.summary,
+              contentUrl: new URL(project.clip.src, site.url).toString(),
+              uploadDate,
+              ...(project.clip.poster || project.cover
+                ? { thumbnailUrl: new URL(project.clip.poster ?? project.cover!, site.url).toString() }
+                : {}),
+            },
+          }
+        : {}),
   };
 
   const pageNode: Record<string, unknown> = {
@@ -402,7 +415,8 @@ export type SitemapRoute = {
 };
 
 function latestProjectDate(project: Project): string {
-  if (project.id === "gamma-1d5-300b") return SITE_UPDATED_AT;
+  if (project.id === "vizdial") return "2026-11-27";
+  if (project.id === "gamma-1d5-300b") return "2026-11-24";
   const dates = project.log
     .map((entry) => entry.date.match(/\d{4}(?:-\d{2})?(?:-\d{2})?/)?.[0])
     .filter((d): d is string => Boolean(d))

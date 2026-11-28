@@ -27,6 +27,7 @@ export type ProjectImage = { src: string; alt: string; caption?: string; wide?: 
 export type Metric = { value: string; label: string };
 
 export type ProjectVideo = { url: string; caption?: string };
+export type ProjectClip = { src: string; webm?: string; poster?: string; alt: string; caption?: string };
 
 export type Project = {
   id: string;
@@ -43,6 +44,7 @@ export type Project = {
   links: Link[];
   cover: string | null;
   video?: ProjectVideo;
+  clip?: ProjectClip;
   images: ProjectImage[];
   metrics?: Metric[];
   log: LogEntry[];
